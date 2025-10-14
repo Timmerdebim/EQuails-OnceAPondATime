@@ -18,7 +18,7 @@ public class Dialogue : MonoBehaviour
     [ContextMenu("Start Dialogue")]
     private void StartDialogue()
     {
-        dialogueBox.AnimateIn();
+        dialogueBox.OpenDialogue();
         dialogueBox.SetText(messages[index]);
         index++;
     }
@@ -36,12 +36,12 @@ public class Dialogue : MonoBehaviour
             index++;
             if (index >= messages.Length)
             {
-                dialogueBox.AnimateOut();
+                dialogueBox.CloseDialogue();
                 index = 0;
                 return;
             }
             dialogueBox.SetText(messages[index]);
-            dialogueBox.AnimateNewMessage();
+            dialogueBox.NewMessage();
         }
 
     }

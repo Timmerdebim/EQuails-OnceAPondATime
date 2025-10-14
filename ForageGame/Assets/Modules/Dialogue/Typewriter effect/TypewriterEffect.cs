@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -6,13 +8,19 @@ namespace Assets.Modules.Dialogue.Typewriter_effect
 {
     public static class TypewriterEffect
     {
-        public static async void TypewriteText(this TextMeshProUGUI textbox, string message, bool underscore = true, float typeDelay = 0.05f, float clickSpeedMultiplication = 3f)
+        public static async Task TypewriteText(this TextMeshProUGUI textbox, string message, CancellationToken ctx, bool underscore = true, float typeDelay = 0.05f, float clickSpeedMultiplication = 3f)
         {
             textbox.text = "";
             string text = "";
 
             for (int i = 0; i < message.Length; ++i)
             {
+                if (ctx.IsCancellationRequested)
+                {
+                    textbox.text = message;
+                    return;
+                }
+
                 text += message[i];
                 string append = (underscore && i < message.Length - 1) ? "_" : "";
                 textbox.text = text + append;

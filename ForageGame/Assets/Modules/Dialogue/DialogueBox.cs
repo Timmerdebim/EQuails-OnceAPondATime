@@ -1,5 +1,7 @@
 ﻿using Assets.Modules.Dialogue.Typewriter_effect;
 using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -13,14 +15,22 @@ namespace Assets.Modules.Dialogue
         [SerializeField] AnimationCurve newMessageAnimation;
         [SerializeField] float openCloseDuration;
 
+        CancellationTokenSource ctxSource;
+
         private void Start()
         {
             canvas.gameObject.SetActive(false);
             canvas.transform.localScale = Vector3.zero;
         }
 
-        [ContextMenu("Animate In")]
-        public async void AnimateIn()
+        public void OpenDialogue()
+        {
+            ctxSource?.Cancel();
+            ctxSource = new CancellationTokenSource();
+            AnimateIn(ctxSource.Token);
+        }
+
+        private async Task AnimateIn(CancellationToken ctx)
         {
             canvas.gameObject.SetActive(true);
             canvas.transform.localScale = Vector3.zero;
@@ -28,19 +38,37 @@ namespace Assets.Modules.Dialogue
             float elapsedTime = 0f;
             while (elapsedTime < openCloseDuration)
             {
+                if (ctx.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 float scale = openCloseAnimation.Evaluate(elapsedTime / openCloseDuration);
                 canvas.transform.localScale = new Vector3(scale, scale, scale);
                 elapsedTime += Time.deltaTime;
                 await System.Threading.Tasks.Task.Yield();
             }
+
+            canvas.transform.localScale = Vector3.one;
         }
 
-        [ContextMenu("Animate Out")]
-        public async void AnimateOut()
+        public void CloseDialogue()
+        {
+            ctxSource?.Cancel();
+            ctxSource = new CancellationTokenSource();
+            AnimateOut(ctxSource.Token);
+        }
+
+        private async Task AnimateOut(CancellationToken ctx)
         {
             float elapsedTime = 0f;
             while (elapsedTime < openCloseDuration)
             {
+                if(ctx.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 float scale = openCloseAnimation.Evaluate(1 - (elapsedTime / openCloseDuration));
                 canvas.transform.localScale = new Vector3(scale, scale, scale);
                 elapsedTime += Time.deltaTime;
@@ -50,22 +78,34 @@ namespace Assets.Modules.Dialogue
             canvas.gameObject.SetActive(false);
         }
 
-        public void SetText(string text)
+        public void NewMessage()
         {
-            dialogueText.TypewriteText(text);
+            ctxSource?.Cancel();
+            ctxSource = new CancellationTokenSource();
+            AnimateNewMessage(ctxSource.Token);
         }
 
-        public async void AnimateNewMessage()
+        private async void AnimateNewMessage(CancellationToken ctx)
         {
             float elapsedTime = 0f;
             while (elapsedTime < newMessageAnimation[newMessageAnimation.length-1].time)
             {
+                if (ctx.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 float scale = newMessageAnimation.Evaluate(elapsedTime);
                 canvas.transform.localScale = scale * Vector3.one;
                 elapsedTime += Time.deltaTime;
                 await System.Threading.Tasks.Task.Yield();
             }
             canvas.transform.localScale = Vector3.one;
+        }
+
+        public void SetText(string text)
+        {
+            dialogueText.TypewriteText(text, ctxSource.Token);
         }
     }
 }
