@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class DuckHitbox : MonoBehaviour {
     LineRenderer lineEffect;
     BoxCollider hitboxCollider;
@@ -28,6 +29,7 @@ public class DuckHitbox : MonoBehaviour {
         else {
             lineEffect.enabled = false;
         }
+
 
         // if it was enabled last frame but not this frame, clear hitsThisActivation
         if (prevEnabled && !hitboxCollider.enabled) {
