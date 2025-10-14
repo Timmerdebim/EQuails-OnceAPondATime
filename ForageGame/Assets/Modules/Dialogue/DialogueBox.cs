@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Modules.Dialogue.Typewriter_effect;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -51,7 +52,7 @@ namespace Assets.Modules.Dialogue
 
         public void SetText(string text)
         {
-            dialogueText.text = text;
+            dialogueText.TypewriteText(text);
         }
 
         public async void AnimateNewMessage()

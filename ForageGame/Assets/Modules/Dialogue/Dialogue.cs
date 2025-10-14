@@ -16,23 +16,33 @@ public class Dialogue : MonoBehaviour
     [SerializeField] DialogueBox dialogueBox;
 
     [ContextMenu("Start Dialogue")]
-    public void StartDialogue()
+    private void StartDialogue()
     {
         dialogueBox.AnimateIn();
         dialogueBox.SetText(messages[index]);
+        index++;
     }
 
     [ContextMenu("Next Message")]
     public void Next()
     {
-        index++;
-        if (index >= messages.Length)
+        print("Next Message");
+        if(index <= 0)
         {
-            dialogueBox.AnimateOut();
-            index = 0;
-            return;
+            StartDialogue();
         }
-        dialogueBox.SetText(messages[index]);
-        dialogueBox.AnimateNewMessage();
+        else
+        {
+            index++;
+            if (index >= messages.Length)
+            {
+                dialogueBox.AnimateOut();
+                index = 0;
+                return;
+            }
+            dialogueBox.SetText(messages[index]);
+            dialogueBox.AnimateNewMessage();
+        }
+
     }
 }
