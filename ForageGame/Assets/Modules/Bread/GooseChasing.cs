@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class GooseChasing : StateMachineBehaviour
-{
+public class GooseChasing : StateMachineBehaviour {
     BigGoose goose;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         GameObject obj = animator.gameObject;
@@ -10,6 +10,10 @@ public class GooseChasing : StateMachineBehaviour
         if (goose == null) {
             Debug.LogError("GooseChasing: No BigGoose found on " + obj.name);
         }
+
+        goose.navMeshAgent.speed = goose.chaseSpeed;
+        goose.navMeshAgent.isStopped = false;
+        goose.attackHitbox.enabled = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -26,11 +30,18 @@ public class GooseChasing : StateMachineBehaviour
         //     goose.velocity = Vector3.zero;
         // }
         goose.navMeshAgent.SetDestination(goose.closestDuck.transform.position);
+        goose.velocity = goose.navMeshAgent.velocity;
+        // set rotation to velocity direction
+        if (goose.navMeshAgent.velocity != Vector3.zero) {
+            goose.rotation = Quaternion.LookRotation(
+                new Vector3(goose.navMeshAgent.velocity.x, 0, goose.navMeshAgent.velocity.z),
+                Vector3.up
+            );
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         goose.velocity = Vector3.zero;
     }
 

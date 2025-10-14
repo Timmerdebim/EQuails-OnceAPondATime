@@ -3,6 +3,9 @@ using UnityEngine;
 
 
 public class DuckHitbox : MonoBehaviour {
+
+    public int attackDamage = 24;
+    
     LineRenderer lineEffect;
     BoxCollider hitboxCollider;
 
@@ -17,7 +20,7 @@ public class DuckHitbox : MonoBehaviour {
         lineEffect = GetComponent<LineRenderer>();
         // hide it, not disable it
         lineEffect.enabled = false;
-        Debug.Log("DuckHitbox Awake");
+        
     }
 
     // Update is called once per frame
@@ -49,6 +52,11 @@ public class DuckHitbox : MonoBehaviour {
         if (this.hitsThisActivation.Contains(other.gameObject)) {
             return;
         }
+        
+        // exclude own parents
+        if (other.transform.IsChildOf(this.transform.parent)) {
+            return;
+        }
 
         hitsThisActivation.Add(other.gameObject);
         Debug.Log("DuckHitbox triggered by: " + other.name);
@@ -59,7 +67,7 @@ public class DuckHitbox : MonoBehaviour {
             return;
         }
         else {
-            hc.Hit(24);
+            hc.Hit(attackDamage);
         }
 
         // other.gameObject.SendMessage("Hit", 1, SendMessageOptions.DontRequireReceiver);

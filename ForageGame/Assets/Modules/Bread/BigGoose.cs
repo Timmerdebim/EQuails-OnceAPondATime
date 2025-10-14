@@ -7,6 +7,7 @@ public class BigGoose : MonoBehaviour {
     public Animator animator;
     public HealthComponent healthComponent;
     public NavMeshAgent navMeshAgent;
+    public BoxCollider attackHitbox;
     
     public float chaseSpeed = 5f;
     
@@ -23,6 +24,7 @@ public class BigGoose : MonoBehaviour {
         if (healthComponent == null) {
             Debug.LogError("Bread: No HealthComponent found on " + gameObject.name);
         }
+        attackHitbox.enabled = false;
     }
 
     // Update is called once per frame
@@ -44,7 +46,7 @@ public class BigGoose : MonoBehaviour {
         // Debug.Log("closestDuckDist: " + closestDuckDist);
         
         // apply velocity and rotation
-        transform.position += velocity * Time.deltaTime;
+        // transform.position += velocity * Time.deltaTime;
         transform.rotation = rotation;
     }
 }

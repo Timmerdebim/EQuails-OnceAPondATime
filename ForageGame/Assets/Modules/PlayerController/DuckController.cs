@@ -57,6 +57,7 @@ public class DuckController : MonoBehaviour, ICharacterController {
     private void Awake() {
         // Assign the characterController to the motor
         motor.CharacterController = this;
+
         TryGetComponent<PlayerInteract>(out playerInteract);
         
         // hitbox collider

@@ -1,24 +1,38 @@
 using UnityEngine;
 
-public class GooseAttacking : StateMachineBehaviour
-{
+public class GooseAttacking : StateMachineBehaviour {
+    BigGoose goose;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        GameObject obj = animator.gameObject;
+        goose = obj.GetComponent<BigGoose>();
+        if (goose == null) {
+            Debug.LogError("GooseChasing: No BigGoose found on " + obj.name);
+        }
+
+        goose.velocity = Vector3.zero;
+        goose.navMeshAgent.velocity = Vector3.zero;
+        goose.navMeshAgent.isStopped = true;
+        goose.attackHitbox.enabled = false;
+    }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        // face toward duck
+        if (goose.closestDuck != null) {
+            Vector3 directionToDuck = (goose.closestDuck.transform.position - goose.transform.position).normalized;
+            goose.rotation = Quaternion.LookRotation(
+                new Vector3(directionToDuck.x, 0, directionToDuck.z),
+                Vector3.up
+            );
+        }
+    }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        goose.attackHitbox.enabled = false;
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
