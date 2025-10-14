@@ -14,17 +14,18 @@ public class GooseChasing : StateMachineBehaviour
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        // move towards closestDuck
-        if (goose.closestDuck != null) {
-            Vector3 directionToDuck = (goose.closestDuck.transform.position - goose.transform.position).normalized;
-            goose.velocity = directionToDuck * goose.chaseSpeed;
-            goose.rotation = Quaternion.LookRotation(
-                new Vector3(directionToDuck.x, 0, directionToDuck.z),
-                Vector3.up
-            );
-        } else {
-            goose.velocity = Vector3.zero;
-        }
+        // // move towards closestDuck
+        // if (goose.closestDuck != null) {
+        //     Vector3 directionToDuck = (goose.closestDuck.transform.position - goose.transform.position).normalized;
+        //     goose.velocity = directionToDuck * goose.chaseSpeed;
+        //     goose.rotation = Quaternion.LookRotation(
+        //         new Vector3(directionToDuck.x, 0, directionToDuck.z),
+        //         Vector3.up
+        //     );
+        // } else {
+        //     goose.velocity = Vector3.zero;
+        // }
+        goose.navMeshAgent.SetDestination(goose.closestDuck.transform.position);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

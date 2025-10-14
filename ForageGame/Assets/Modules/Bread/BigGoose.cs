@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BigGoose : MonoBehaviour {
     private static readonly int ClosestDuckDist = Animator.StringToHash("closestDuckDist");
 
     public Animator animator;
     public HealthComponent healthComponent;
+    public NavMeshAgent navMeshAgent;
     
     public float chaseSpeed = 5f;
     
