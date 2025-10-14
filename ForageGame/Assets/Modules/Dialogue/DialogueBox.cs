@@ -25,8 +25,7 @@ namespace Assets.Modules.Dialogue
 
         public void OpenDialogue()
         {
-            ctxSource?.Cancel();
-            ctxSource = new CancellationTokenSource();
+            CancelAnimation();
             AnimateIn(ctxSource.Token);
         }
 
@@ -54,8 +53,7 @@ namespace Assets.Modules.Dialogue
 
         public void CloseDialogue()
         {
-            ctxSource?.Cancel();
-            ctxSource = new CancellationTokenSource();
+            CancelAnimation();
             AnimateOut(ctxSource.Token);
         }
 
@@ -78,13 +76,6 @@ namespace Assets.Modules.Dialogue
             canvas.gameObject.SetActive(false);
         }
 
-        public void NewMessage()
-        {
-            ctxSource?.Cancel();
-            ctxSource = new CancellationTokenSource();
-            AnimateNewMessage(ctxSource.Token);
-        }
-
         private async void AnimateNewMessage(CancellationToken ctx)
         {
             float elapsedTime = 0f;
@@ -103,8 +94,17 @@ namespace Assets.Modules.Dialogue
             canvas.transform.localScale = Vector3.one;
         }
 
+        private void CancelAnimation()
+        {
+            ctxSource?.Cancel();
+            ctxSource?.Token.WaitHandle.WaitOne();
+            ctxSource = new CancellationTokenSource();
+        }
+
         public void SetText(string text)
         {
+            CancelAnimation();
+            AnimateNewMessage(ctxSource.Token);
             dialogueText.TypewriteText(text, ctxSource.Token);
         }
     }

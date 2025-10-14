@@ -8,7 +8,7 @@ namespace Assets.Modules.Dialogue.Typewriter_effect
 {
     public static class TypewriterEffect
     {
-        public static async Task TypewriteText(this TextMeshProUGUI textbox, string message, CancellationToken ctx, bool underscore = true, float typeDelay = 0.05f, float clickSpeedMultiplication = 3f)
+        public static async Task TypewriteText(this TextMeshProUGUI textbox, string message, CancellationToken ctx, bool underscore = true, float typeDelay = 0.15f, float clickSpeedMultiplication = 2f)
         {
             textbox.text = "";
             string text = "";

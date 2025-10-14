@@ -41,7 +41,6 @@ public class Dialogue : MonoBehaviour
                 return;
             }
             dialogueBox.SetText(messages[index]);
-            dialogueBox.NewMessage();
         }
 
     }
