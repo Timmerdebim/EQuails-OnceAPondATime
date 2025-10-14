@@ -25,8 +25,6 @@ public class DuckPlayer : MonoBehaviour {
         //if (Input.GetMouseButtonDown(0)) {
         //    Cursor.lockState = CursorLockMode.Locked;
         //}
-        
-
     }
 
     private void LateUpdate() {
@@ -51,24 +49,19 @@ public class DuckPlayer : MonoBehaviour {
     }
 
     public void OnDash(InputAction.CallbackContext context) {
-        // jump for now
-        // read digital
-        // var p = context.action.IsPressed();
-        // var q = context.action.WasPressedThisFrame();
-        // var r = context.action.WasReleasedThisFrame();
-        // pretty print
-        // Debug.Log($"dash: {p} {q} {r}");
-        // if pressed this frame, call dash
         if (context.action.WasPressedThisFrame()) {
             duck.timeSinceDashInput = 0;
+            duck.animator.SetTrigger("dash");
         }
     }
     
     public void OnAttack1(InputAction.CallbackContext context)
     {
         duck.attackType = DuckController.AttackType.light;
-        duck.attacking = context.action.WasPressedThisFrame();
-        // duck.playerInteract.Attack1(context);
+
+        if (context.action.WasPressedThisFrame()) {
+            duck.animator.SetInteger("attackType", 1);
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
