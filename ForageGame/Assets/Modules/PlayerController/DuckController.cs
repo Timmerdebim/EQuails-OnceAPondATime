@@ -8,6 +8,9 @@ public class DuckController : MonoBehaviour, ICharacterController {
     public Animator animator;
     private static readonly int IsDead = Animator.StringToHash("isDead");
 
+    [Header("Movement")]
+    public bool gravityEnabled = true;
+
     [Header("Walking")] public float moveSpeed = 5f;
     public float orientationSharpness = 100f;
 
@@ -111,9 +114,8 @@ public class DuckController : MonoBehaviour, ICharacterController {
     /// This is the ONLY place where you can set the character's velocity
     /// </summary>
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime) {
-        Vector2 newVelocity = velocity;
-        currentVelocity = new Vector3(velocity.x, 0, velocity.y);
-        velocity = newVelocity;
+        bool grounded = motor.GroundingStatus.IsStableOnGround;
+        currentVelocity = new Vector3(velocity.x, gravityEnabled && !grounded ? Physics.gravity.y : 0, velocity.y);
     }
 
     /// <summary>

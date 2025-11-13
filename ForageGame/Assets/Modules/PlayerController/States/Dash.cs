@@ -31,6 +31,7 @@ public class Dash : StateMachineBehaviour, IState {
             duck.trailRenderer.startColor = Color.yellow;
             duck.trailRenderer.endColor = Color.yellow;
         }
+        duck.gravityEnabled = false;
 
     }
 
@@ -55,7 +56,7 @@ public class Dash : StateMachineBehaviour, IState {
         duck.timeSinceDashInput = null;
         duck.trailRenderer.emitting = false;
         duck.motor.CollidableLayers.value |= (1 << LayerMask.NameToLayer("Throughdashable"));
-
+        duck.gravityEnabled = true;
     }
     
     // OnStateMove is called right after Animator.OnAnimatorMove()

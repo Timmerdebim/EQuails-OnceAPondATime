@@ -14,6 +14,7 @@ namespace KinematicCharacterController.Examples {
         public float MaxDistance;
         public float DistanceMovementSpeed = 5f;
         public float DistanceMovementSharpness = 10f;
+        public bool fixedY = true;
 
         [Header("Rotation")] public bool InvertX = false;
         public bool InvertY = false;
@@ -43,6 +44,7 @@ namespace KinematicCharacterController.Examples {
         private RaycastHit[] _obstructions = new RaycastHit[MaxObstructions];
         private float _obstructionTime;
         private Vector3 _currentFollowPosition;
+        private float fixedYValue;
 
         private const int MaxObstructions = 32;
 
@@ -67,6 +69,7 @@ namespace KinematicCharacterController.Examples {
             FollowTransform = t;
             PlanarDirection = FollowTransform.forward;
             _currentFollowPosition = FollowTransform.position;
+            fixedYValue = _currentFollowPosition.y - PlanarDirection.y;
         }
 
         public void Update() {
@@ -75,8 +78,12 @@ namespace KinematicCharacterController.Examples {
             float deltaTime = Time.deltaTime;
             TargetDistance = Mathf.Clamp(TargetDistance, MinDistance, MaxDistance);
 
+            Vector3 followTransformPosition = FollowTransform.position;
+            if (fixedY) {
+                followTransformPosition.y = fixedYValue;
+            }
             // Find the smoothed follow position
-            _currentFollowPosition = Vector3.Lerp(_currentFollowPosition, FollowTransform.position,
+            _currentFollowPosition = Vector3.Lerp(_currentFollowPosition, followTransformPosition,
                 1f - Mathf.Exp(-FollowingSharpness * deltaTime));
             
             // Find the smoothed camera orbit position
