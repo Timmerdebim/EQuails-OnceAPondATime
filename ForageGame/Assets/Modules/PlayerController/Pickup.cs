@@ -28,9 +28,6 @@ public class Pickup : MonoBehaviour
                 case PickupType.ThroughDash:
                     duck.dashType = DuckController.DashType.throughDash;
                     break;
-                default:
-                    Debug.LogError("Pickup: Unknown pickup type " + PickupType.ThroughDash);
-                    break;
             }
             Destroy(gameObject);
         }

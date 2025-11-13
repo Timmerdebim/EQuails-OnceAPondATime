@@ -6,6 +6,7 @@ using KinematicCharacterController;
 public class DuckController : MonoBehaviour, ICharacterController {
     public KinematicCharacterMotor motor;
     public Animator animator;
+    private static readonly int IsDead = Animator.StringToHash("isDead");
 
     [Header("Walking")] public float moveSpeed = 5f;
     public float orientationSharpness = 100f;
@@ -50,6 +51,9 @@ public class DuckController : MonoBehaviour, ICharacterController {
     //Interaction
     public PlayerInteract playerInteract;
     
+    // Health
+    private HealthComponent healthComponent;
+    
     // SECTION: COLLISIONS
     private readonly Collider[] _probedColliders = new Collider[8];
 
@@ -66,9 +70,18 @@ public class DuckController : MonoBehaviour, ICharacterController {
             hitboxCollider = GetComponentInChildren<BoxCollider>();
         }
         hitboxCollider.enabled = false;
-        
         trailRenderer.emitting = false;
+        
+        if (healthComponent == null) {
+            healthComponent = GetComponent<HealthComponent>();
+        }
+        
 
+    }
+    
+    void Reset() {
+        motor = GetComponent<KinematicCharacterMotor>();
+        
     }
     
     /// <summary>
@@ -76,7 +89,11 @@ public class DuckController : MonoBehaviour, ICharacterController {
     /// This is called before the character begins its movement update
     /// </summary>
     public void BeforeCharacterUpdate(float deltaTime) {
-
+        // check death
+        if (healthComponent.isDead()) {
+            // motor.enabled = false;
+            animator.SetBool(IsDead, true);
+        }
     }
 
     /// <summary>

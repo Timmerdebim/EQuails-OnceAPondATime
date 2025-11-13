@@ -1,9 +1,11 @@
+using KinematicCharacterController;
 using UnityEngine;
 
-public class Idle : StateMachineBehaviour, IState {
+public class Flutter : StateMachineBehaviour, IState {
     protected DuckController duck;
-    protected Vector2 duckDir;
-    protected Vector2 dashVelocity;
+    
+    float startY = 0f;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -11,48 +13,46 @@ public class Idle : StateMachineBehaviour, IState {
         GameObject obj = animator.gameObject;
         // get duck controller
         duck = obj.GetComponent<DuckController>();
-        if (duck == null) {
-            Debug.LogError("Idle: No DuckController found on " + obj.name);
-        }
+        
+        // move up 
+        // duck.motor.HasPlanarConstraint = false;
+        // duck.transform.position += new Vector3(0, 4f, 0);
+        duck.motor.HasPlanarConstraint = false;
+        startY = obj.transform.position.y;
+        duck.motor.SetPosition(duck.transform.position + new  Vector3(0, 4f, 0));
+        // do not move the CameraFollowPoint child object
+        duck.cameraFollowPoint.transform.localPosition = new Vector3(0, -2f, 0);
+        
+        // duck.motor.rigid
+
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (duck.interactInput) {
-            duck.playerInteract?.Interact();
-        }
-        else {
-            duck.playerInteract?.StopInteract();
-        }
+        duck.timeSinceDashInput += Time.deltaTime;
         UpdateProperties();
+    }
+
+    public void UpdateProperties() {
+        // duck.velocity = 
+        duck.velocity = MovementUtils.inputToVelocity(duck) / 2;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (duck.interactInput) { duck.playerInteract?.StopInteract(); }
-
+        // reset y
+        Vector3 pos = duck.transform.position;
+        pos.y = startY;
+        duck.motor.SetPosition(pos);
+        // duck.motor.
+        // duck.motor.
+        // duck.cameraFollowPoint.transform.localPosition = Vector3.zero;
+        // duck.motor.HasPlanarConstraint = true;
     }
-
     
-    public void UpdateProperties() {
-        duck.velocity = MovementUtils.inputToVelocity(duck);
-        float deltaTime = Time.deltaTime;
-        if (deltaTime > 0) {
-            // Smoothly interpolate from current to target look direction
-            Vector3 smoothedLookInputDirection = Vector3.Slerp(duck.motor.CharacterForward,
-                new Vector3(duck.moveInputVector.x, 0, duck.moveInputVector.y),
-                1 - Mathf.Exp(-duck.orientationSharpness * deltaTime)).normalized;
-
-            // Set the current rotation (which will be used by the KinematicCharacterMotor)
-            if (smoothedLookInputDirection.sqrMagnitude > 0f) {
-                duck.rotation = Quaternion.LookRotation(smoothedLookInputDirection, duck.motor.CharacterUp);
-            }
-        }
-    }
-
-
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{

@@ -68,4 +68,14 @@ public class DuckPlayer : MonoBehaviour {
     {
         duck.interactInput = context.action.IsPressed();
     }
+    
+    public void OnFlutter(InputAction.CallbackContext context)
+    {
+        if (context.action.WasPressedThisFrame()) {
+            duck.animator.SetBool("flutterPressed", true);
+        }
+        if (context.action.WasReleasedThisFrame()) {
+            duck.animator.SetBool("flutterPressed", false);
+        }
+    }
 }

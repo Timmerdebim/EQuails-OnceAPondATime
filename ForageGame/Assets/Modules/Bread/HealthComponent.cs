@@ -43,7 +43,17 @@ public class HealthComponent : MonoBehaviour
     
     void Die() {
         Debug.Log(gameObject.name + " died.");
-        // play death animation, sound, etc.
-        Destroy(gameObject);
+        // call owner's death function if it exists
+        // var deathHandler = GetComponent<IDeathHandler>();
+        // if (deathHandler != null) {
+        //     deathHandler.OnDeath();
+        // }
+        // else {
+        //     Destroy(gameObject);
+        // }
+    }
+    
+    public bool isDead() {
+        return currentHealth <= 0;
     }
 }
