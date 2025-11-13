@@ -14,7 +14,7 @@ public class DuckController : MonoBehaviour, ICharacterController {
     [Header("Walking")] public float moveSpeed = 5f;
     public float orientationSharpness = 100f;
 
-    [Header("Abilities")] public float dashSpeed = 30f;
+    [Header("Abilities")] public float dashSpeed = 60f;
     public float dashTime = 0.15f;
 
     [Header("Misc")] public List<Collider> ignoredColliders = new List<Collider>();
