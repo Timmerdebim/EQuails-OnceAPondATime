@@ -48,6 +48,7 @@ public class Flutter : StateMachineBehaviour, IState {
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         duck.gravityEnabled = true;
+
         // reset y
         // Vector3 pos = duck.transform.position;
         // pos.y = startY;

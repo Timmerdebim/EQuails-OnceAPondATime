@@ -4,6 +4,8 @@ public class HealthComponent : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
+    
+    public ParticleSystem hitParticles;
 
     public float iFramesDuration = 0.5f; // Invincibility frames duration in seconds
     private float iFramesTimer = 0f;
@@ -35,6 +37,13 @@ public class HealthComponent : MonoBehaviour
             iFramesTimer = iFramesDuration; // reset invincibility timer
         }
         currentHealth -= damage;
+        
+        // assume hit particles are burst at time 0
+        if (hitParticles) {
+            hitParticles.time = 0f;
+            hitParticles.Play();
+        }
+        
         Debug.Log(gameObject.name + " took " + damage + " damage. Current health: " + currentHealth);
         if (currentHealth <= 0) {
             Die();

@@ -22,6 +22,7 @@ public class DuckController : MonoBehaviour, ICharacterController {
 
     public LayerMask interactionLayer;
     public TrailRenderer trailRenderer;
+    public ParticleSystem hitParticleRenderer;
     
     public enum AttackType {
         none,
@@ -74,6 +75,8 @@ public class DuckController : MonoBehaviour, ICharacterController {
         }
         hitboxCollider.enabled = false;
         trailRenderer.emitting = false;
+        hitParticleRenderer.Stop();
+        hitParticleRenderer.time = 0;
         
         if (healthComponent == null) {
             healthComponent = GetComponent<HealthComponent>();
