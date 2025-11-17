@@ -13,13 +13,21 @@ public class GooseAttacking : StateMachineBehaviour
     [Header("Attack Properties")]
     [Tooltip("How fast the goose moves forward during the lunge.")]
     public float lungeSpeed = 15f;
+    
+    // --- NEW PROPERTIES FOR COLLISION ---
+    [Header("Lunge Collision")]
+    [Tooltip("The layers that the goose will collide with during its lunge (e.g., Walls, Obstacles).")]
+    public LayerMask collisionLayerMask;
+    [Tooltip("The radius of the goose for collision detection. Should be about half the goose's width.")]
+    public float collisionRadius = 0.5f;
+    // ------------------------------------
 
     // Private state variables
     private BigGoose goose;
     private Transform gooseTransform;
     private float timer;
+    private RaycastHit hitInfo; // Stores info about what the spherecast hits
 
-    // An enum to clearly manage which part of the attack we're in.
     private enum AttackPhase { WindUp, Lunge, Cooldown }
     private AttackPhase currentPhase;
 
@@ -34,16 +42,13 @@ public class GooseAttacking : StateMachineBehaviour
             return;
         }
 
-        // Stop all previous movement and disable agent-controlled rotation for the attack.
         goose.StopNavMovement();
         goose.navMeshAgent.updateRotation = false; 
         goose.attackHitbox.enabled = false;
 
-        // Initialize the attack state
         timer = 0f;
         currentPhase = AttackPhase.WindUp;
         
-        // Immediately face the target to begin the telegraph
         if (goose.closestDuck != null)
         {
             Vector3 directionToDuck = (goose.closestDuck.transform.position - gooseTransform.position).normalized;
@@ -54,7 +59,6 @@ public class GooseAttacking : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // If goose or the duck is gone, do nothing. The animator will transition out.
         if (goose == null || goose.closestDuck == null) return;
 
         timer += Time.deltaTime;
@@ -68,16 +72,13 @@ public class GooseAttacking : StateMachineBehaviour
                 ProcessLunge();
                 break;
             case AttackPhase.Cooldown:
-                // During cooldown, the goose does nothing but wait.
-                // The state will exit via an Animator transition when the animation clip finishes.
-
+                // Do nothing, wait for animator transition.
                 break;
         }
     }
 
     private void ProcessWindUp()
     {
-        // Continue to face the duck during the wind-up to show focus
         Vector3 directionToDuck = (goose.closestDuck.transform.position - gooseTransform.position).normalized;
         goose.rotation = Quaternion.LookRotation(new Vector3(directionToDuck.x, 0, directionToDuck.z));
 
@@ -85,21 +86,58 @@ public class GooseAttacking : StateMachineBehaviour
         {
             timer = 0f;
             currentPhase = AttackPhase.Lunge;
-            goose.attackHitbox.enabled = true; // Activate the attack!
+            goose.attackHitbox.enabled = true;
         }
     }
 
     private void ProcessLunge()
     {
-        // Manually move the goose forward. This creates the lunge effect.
-        gooseTransform.position += gooseTransform.forward * lungeSpeed * Time.deltaTime;
+        // --- REWRITTEN LUNGE LOGIC WITH COLLISION DETECTION ---
+        
+        // 1. Calculate how far we INTEND to move this frame.
+        float distanceToMove = lungeSpeed * Time.deltaTime;
 
+        // 2. Perform a SphereCast to see if we'll hit anything on the designated layers.
+        bool willCollide = Physics.SphereCast(
+            gooseTransform.position, 
+            collisionRadius, 
+            gooseTransform.forward, 
+            out hitInfo, 
+            distanceToMove, 
+            collisionLayerMask
+        );
+
+        // 3. Move based on the result of the cast.
+        if (willCollide)
+        {
+            // If we hit something, only move up to the point of contact.
+            gooseTransform.position += gooseTransform.forward * hitInfo.distance;
+            // Instantly stop the lunge and go into cooldown.
+            EndLunge();
+        }
+        else
+        {
+            // If the path is clear, move the full distance.
+            gooseTransform.position += gooseTransform.forward * distanceToMove;
+        }
+        
+        // --- END OF NEW LOGIC ---
+
+        // Check if the lunge duration has ended
         if (timer >= lungeDuration)
         {
-            timer = 0f;
-            currentPhase = AttackPhase.Cooldown;
-            goose.attackHitbox.enabled = false; // Deactivate the attack.
+            EndLunge();
         }
+    }
+    
+    /// <summary>
+    /// Helper function to cleanly end the lunge phase and enter cooldown.
+    /// </summary>
+    private void EndLunge()
+    {
+        timer = 0f;
+        currentPhase = AttackPhase.Cooldown;
+        goose.attackHitbox.enabled = false;
     }
 
     // OnStateExit is called when a transition ends
@@ -107,7 +145,6 @@ public class GooseAttacking : StateMachineBehaviour
     {
         if (goose != null)
         {
-            // Safety measure: always disable hitbox when exiting.
             goose.attackHitbox.enabled = false;
             goose.navMeshAgent.updateRotation = true; 
         }

@@ -24,7 +24,7 @@ public class Dash : StateMachineBehaviour, IState {
 
 
         if (duck.dashType == DuckController.DashType.throughDash) {
-            duck.motor.CollidableLayers.value &= ~(1 << LayerMask.NameToLayer("Throughdashable"));
+            duck.motor.CollidableLayers.value &= ~(1 << LayerMask.NameToLayer("Obstacle"));
             duck.trailRenderer.startColor = Color.black;
             duck.trailRenderer.endColor = Color.black;
         } else {
@@ -55,7 +55,7 @@ public class Dash : StateMachineBehaviour, IState {
     {
         duck.timeSinceDashInput = null;
         duck.trailRenderer.emitting = false;
-        duck.motor.CollidableLayers.value |= (1 << LayerMask.NameToLayer("Throughdashable"));
+        duck.motor.CollidableLayers.value |= (1 << LayerMask.NameToLayer("Obstacle"));
         duck.gravityEnabled = true;
     }
     
