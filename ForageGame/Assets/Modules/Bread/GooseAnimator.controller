@@ -37,6 +37,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9d7ccfb1e993ccfa73d883afe90eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkRadius: 7
 --- !u!1107 &-5500947717474820434
 AnimatorStateMachine:
   serializedVersion: 6
@@ -227,6 +228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70857cef3cca6980b98deee37d8759d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windUpDuration: 0.7
+  lungeDuration: 0.3
+  cooldownDuration: 1
+  lungeSpeed: 15
 --- !u!1101 &3433985875501826094
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -237,7 +242,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: closestDuckDist
-    m_EventTreshold: 2
+    m_EventTreshold: 10
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5043457676335275704}
   m_Solo: 0
