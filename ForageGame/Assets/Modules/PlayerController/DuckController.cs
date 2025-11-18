@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using KinematicCharacterController;
@@ -56,7 +57,10 @@ public class DuckController : MonoBehaviour, ICharacterController {
     public PlayerInteract playerInteract;
     
     // Health
-    private HealthComponent healthComponent;
+    // private HealthComponent healthComponent;
+    public DuckUI duckUI;
+    public float energy = 100f;
+    public float maxEnergy = 100f;
     
     // SECTION: COLLISIONS
     private readonly Collider[] _probedColliders = new Collider[8];
@@ -81,13 +85,17 @@ public class DuckController : MonoBehaviour, ICharacterController {
         }
 
         
-        if (healthComponent == null) {
-            healthComponent = GetComponent<HealthComponent>();
-        }
-        
+        // if (healthComponent == null) {
+        //     healthComponent = GetComponent<HealthComponent>();
+        // }
+        // healthComponent.hitHandler = hitHandler;
 
     }
-    
+
+    public void Update() {
+        duckUI.SetEnergy(energy);
+    }
+
     void Reset() {
         motor = GetComponent<KinematicCharacterMotor>();
         
@@ -99,7 +107,7 @@ public class DuckController : MonoBehaviour, ICharacterController {
     /// </summary>
     public void BeforeCharacterUpdate(float deltaTime) {
         // check death
-        if (healthComponent.isDead()) {
+        if (energy <= 0) {
             // motor.enabled = false;
             animator.SetBool(IsDead, true);
         }
