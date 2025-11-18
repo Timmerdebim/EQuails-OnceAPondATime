@@ -50,9 +50,6 @@ public class DuckHitbox : MonoBehaviour {
         for (int i = 0; i < size; i++) {
             // Debug.Log( "Hitbox overlap with: " + overlapBoxResults[i].gameObject.name);
             Collider hitCollider = overlapBoxResults[i];
-            // if (hitCollider.gameObject == this.gameObject) {
-            //     continue; // ignore self
-            // }
             // if already hit this activation, ignore
             if (hitsThisActivation.Contains(hitCollider.gameObject)) {
                 continue;
@@ -65,53 +62,16 @@ public class DuckHitbox : MonoBehaviour {
             
             
             HealthComponent hc = hitCollider.gameObject.GetComponent<HealthComponent>();
-            if (!hc) {
-                // Debug.Log("DuckHitbox: No HealthComponent found on " + hitCollider.gameObject.name);
-                continue;
-            }
-            else {
+            IHitHandler hh = hitCollider.gameObject.GetComponent<IHitHandler>();
+            // gameObject.get
+            if (hc) {
                 hc.Hit(attackDamage);
             }
 
-            // Debug.Log(hitCollider.gameObject.name);
+            if (hh) {
+               hh.Hit(attackDamage);
+            }
+
         }
     }
-
-    // // public void OnTrigge
-    //
-    // // public void OnCollisionStay(Collision other) {
-    // //     throw new NotImplementedException();
-    // // }
-    //
-    // public void OnCollisionStay(Collision other) {
-    //     // layer must be attackable
-    //     // if (other.gameObject.layer == LayerMask.NameToLayer("Attack")) {
-    //     //     Debug.Log("DuckHitbox triggered by: " + other.name);
-    //     //     
-    //     // }
-    //
-    //     // if (this.hitsThisActivation.Contains(other.gameObject)) {
-    //     //     return;
-    //     // }
-    //     //
-    //     // // exclude own parents
-    //     // if (other.transform.IsChildOf(this.transform.parent)) {
-    //     //     return;
-    //     // }
-    //
-    //     hitsThisActivation.Add(other.gameObject);
-    //     Debug.Log("DuckHitbox triggered by: " + other.gameObject.name);
-    //     // get healthcomponent of other
-    //     HealthComponent hc = other.gameObject.GetComponent<HealthComponent>();
-    //     if (!hc) {
-    //         Debug.Log("DuckHitbox: No HealthComponent found on " + other.gameObject.name);
-    //         return;
-    //     }
-    //     else {
-    //         hc.Hit(attackDamage);
-    //     }
-    //
-    //     // other.gameObject.SendMessage("Hit", 1, SendMessageOptions.DontRequireReceiver);
-    //     // damage
-    // }
 }
