@@ -1,15 +1,16 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using KinematicCharacterController;
 
-
 public class DuckController : MonoBehaviour, ICharacterController {
-    public KinematicCharacterMotor motor;
+    [Header("Components")] public KinematicCharacterMotor motor;
     public Animator animator;
+    public DuckEnergy duckEnergy; // Reference to the new DuckEnergy component
+
     private static readonly int IsDead = Animator.StringToHash("isDead");
 
-    [Header("Movement")]
-    public bool gravityEnabled = true;
+    [Header("Movement")] public bool gravityEnabled = true;
 
     [Header("Walking")] public float moveSpeed = 5f;
     public float orientationSharpness = 100f;
@@ -19,16 +20,16 @@ public class DuckController : MonoBehaviour, ICharacterController {
 
     [Header("Misc")] public List<Collider> ignoredColliders = new List<Collider>();
     public Transform cameraFollowPoint;
-
     public LayerMask interactionLayer;
     public TrailRenderer trailRenderer;
     public ParticleSystem hitParticleRenderer;
-    
+
     public enum AttackType {
         none,
         light,
         heavy
     }
+
     public bool attacking = false;
     public AttackType attackType = AttackType.none;
     public float lightAttackTime = 0.2f;
@@ -39,8 +40,9 @@ public class DuckController : MonoBehaviour, ICharacterController {
         dash,
         throughDash
     }
+
     public DashType dashType = DashType.throughDash;
-    
+
     public BoxCollider hitboxCollider;
 
     // state
@@ -54,55 +56,56 @@ public class DuckController : MonoBehaviour, ICharacterController {
 
     //Interaction
     public PlayerInteract playerInteract;
-    
-    // Health
-    private HealthComponent healthComponent;
-    
+
     // SECTION: COLLISIONS
     private readonly Collider[] _probedColliders = new Collider[8];
-
 
     private void Awake() {
         // Assign the characterController to the motor
         motor.CharacterController = this;
 
-        TryGetComponent<PlayerInteract>(out playerInteract);
-        
-        // hitbox collider
-        // get child
+        // Get components on this GameObject
+        if (playerInteract == null) TryGetComponent(out playerInteract);
+        if (duckEnergy == null) TryGetComponent(out duckEnergy);
+        if (duckEnergy == null) {
+            Debug.LogError("DuckEnergy component not found on this character. Please add one.", this);
+        }
+
         if (hitboxCollider == null) {
             hitboxCollider = GetComponentInChildren<BoxCollider>();
         }
+
         hitboxCollider.enabled = false;
         trailRenderer.emitting = false;
-        if (hitParticleRenderer == null) {
+
+        if (hitParticleRenderer != null) {
             hitParticleRenderer.Stop();
-            hitParticleRenderer.time = 0; 
+            hitParticleRenderer.Clear(); // Use Clear() instead of setting time to 0
         }
-
-        
-        if (healthComponent == null) {
-            healthComponent = GetComponent<HealthComponent>();
-        }
-        
-
     }
-    
+
+    public void Update() {
+        // Check death using the energy component's public property
+        if (duckEnergy != null && duckEnergy.currentMaxEnergy <= 0) {
+            animator.SetBool(IsDead, true);
+        }
+    }
+
     void Reset() {
+        // This function is called in the editor when the component is added or reset.
+        // It's a good place to automatically find required components.
         motor = GetComponent<KinematicCharacterMotor>();
-        
+        animator = GetComponent<Animator>();
+        duckEnergy = GetComponent<DuckEnergy>();
+        playerInteract = GetComponent<PlayerInteract>();
     }
-    
+
     /// <summary>
     /// (Called by KinematicCharacterMotor during its update cycle)
     /// This is called before the character begins its movement update
     /// </summary>
     public void BeforeCharacterUpdate(float deltaTime) {
-        // check death
-        if (healthComponent.isDead()) {
-            // motor.enabled = false;
-            animator.SetBool(IsDead, true);
-        }
+
     }
 
     /// <summary>
@@ -131,13 +134,8 @@ public class DuckController : MonoBehaviour, ICharacterController {
     public void AfterCharacterUpdate(float deltaTime) {
         int colliders = motor.CharacterOverlap(motor.TransientPosition, motor.TransientRotation, _probedColliders,
             interactionLayer, QueryTriggerInteraction.Collide);
-        // list colliders
         for (int i = 0; i < colliders; i++) {
             Collider col = _probedColliders[i];
-            // Debug.Log(col.name);
-            // if (col.name == "shadeDash") {
-            //     currentDashState = throughDashState;
-            // }
         }
     }
 
@@ -149,11 +147,7 @@ public class DuckController : MonoBehaviour, ICharacterController {
             return true;
         }
 
-        if (ignoredColliders.Contains(coll)) {
-            return false;
-        }
-
-        return true;
+        return !ignoredColliders.Contains(coll);
     }
 
     public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint,
@@ -175,7 +169,5 @@ public class DuckController : MonoBehaviour, ICharacterController {
     }
 
     public void OnDiscreteCollisionDetected(Collider hitCollider) {
-        // print
-        // Debug.Log("Discrete Collision Detected: " + hitCollider.name);
     }
 }
