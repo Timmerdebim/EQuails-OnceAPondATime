@@ -534,14 +534,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4470162231319502564}
   serializedVersion: 8
-  lengthInSec: 5
-  simulationSpeed: 1
+  lengthInSec: 1
+  simulationSpeed: 20
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -662,7 +662,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1363,7 +1363,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -2740,12 +2740,12 @@ ParticleSystem:
         m_RotationOrder: 4
     m_Range: {x: 0, y: 1}
   ForceModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      minMaxState: 3
+      scalar: -5
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2796,9 +2796,9 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      minMaxState: 3
+      scalar: -5
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2849,9 +2849,9 @@ ParticleSystem:
         m_RotationOrder: 4
     z:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      minMaxState: 3
+      scalar: -5
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2900,8 +2900,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    inWorldSpace: 0
-    randomizePerFrame: 0
+    inWorldSpace: 1
+    randomizePerFrame: 1
   ExternalForcesModule:
     serializedVersion: 2
     enabled: 0
@@ -5594,7 +5594,7 @@ MonoBehaviour:
   animator: {fileID: 6270842771944399772}
   gravityEnabled: 1
   moveSpeed: 5
-  orientationSharpness: 10
+  orientationSharpness: 100
   dashSpeed: 15
   dashTime: 0.2
   ignoredColliders: []
@@ -5603,13 +5603,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   trailRenderer: {fileID: 2249766242556336178}
-  hitParticleRenderer: {fileID: 0}
+  hitParticleRenderer: {fileID: 2486612863259856435}
   attacking: 0
   attackType: 0
   lightAttackTime: 0.2
   heavyAttackTime: 0.5
   dashType: 2
-  hitboxCollider: {fileID: 0}
+  hitboxCollider: {fileID: 5992530469086333362}
   velocity: {x: 0, y: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   moveInputVector: {x: 0, y: 0}
@@ -5642,6 +5642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  hitParticles: {fileID: 2486612863259856435}
   iFramesDuration: 0.5
 --- !u!195 &581384844510639492
 NavMeshAgent:
