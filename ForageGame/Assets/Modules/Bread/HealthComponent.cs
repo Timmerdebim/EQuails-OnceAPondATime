@@ -14,6 +14,9 @@ public class HealthComponent : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        if (hitParticles) {
+            hitParticles.Stop();
+        }
     }
 
     // Update is called once per frame
