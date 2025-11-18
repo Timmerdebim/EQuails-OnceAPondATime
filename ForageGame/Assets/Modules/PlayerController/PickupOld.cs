@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Pickup : MonoBehaviour
+public class PickupOld : MonoBehaviour
 {
     public enum PickupType {
         ThroughDash,
