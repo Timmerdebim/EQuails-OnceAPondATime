@@ -12,16 +12,13 @@ public class Dead : StateMachineBehaviour, IState {
         if (duck == null) {
             Debug.LogError("Dead: No DuckController found on " + obj.name);
         }
-        // set velocity to zero
-        duck.velocity = Vector2.zero;
-        // set rotation to upside down
-        duck.rotation = Quaternion.identity;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // do nothing
+        UpdateProperties();
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
@@ -32,6 +29,8 @@ public class Dead : StateMachineBehaviour, IState {
 
     public void UpdateProperties() {
         duck.velocity = Vector2.zero;
-        duck.rotation = Quaternion.identity;
+        // make it spin continuously
+        var time = Time.time;
+        duck.rotation = Quaternion.Euler(0, 0, time * 100);
     }
 }

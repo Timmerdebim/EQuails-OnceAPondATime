@@ -32,6 +32,7 @@ public class Dash : StateMachineBehaviour, IState {
             duck.trailRenderer.endColor = Color.yellow;
         }
         duck.gravityEnabled = false;
+        duck.duckEnergy.UseEnergy(10);
 
     }
 

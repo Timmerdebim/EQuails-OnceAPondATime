@@ -24,17 +24,18 @@ public class DuckHitHandler : IHitHandler {
             // Debug.Log(gameObject.name + " is invincible and took no damage.");
             return; // currently in invincibility frames
         } else {
-            iFramesTimer = iFramesDuration; // reset invincibility timer
+            iFramesTimer = iFramesDuration; // reset invincibility ti mer
         }
-        duck.energy -= damage;
+        duck.duckEnergy.TakeDamage(damage);
+        
         
         // assume hit particles are burst at time 0
         if (hitParticles) {
             hitParticles.time = 0f;
             hitParticles.Play();
         }
-        Debug.Log(gameObject.name + " took " + damage + " damage. Current health: " + duck.energy);
-        if (duck.energy <= 0) {
+        Debug.Log(gameObject.name + " took " + damage + " damage. Current health: " + duck.duckEnergy.currentMaxEnergy);
+        if (duck.duckEnergy.energy <= 0) {
             Debug.Log("bro died");
         }
     }
