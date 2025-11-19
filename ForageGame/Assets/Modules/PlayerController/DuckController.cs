@@ -105,7 +105,6 @@ public class DuckController : MonoBehaviour, ICharacterController {
     /// This is called before the character begins its movement update
     /// </summary>
     public void BeforeCharacterUpdate(float deltaTime) {
-
     }
 
     /// <summary>
@@ -123,8 +122,11 @@ public class DuckController : MonoBehaviour, ICharacterController {
     /// This is the ONLY place where you can set the character's velocity
     /// </summary>
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime) {
-        bool grounded = motor.GroundingStatus.IsStableOnGround;
-        currentVelocity = new Vector3(velocity.x, gravityEnabled && !grounded ? Physics.gravity.y : 0, velocity.y);
+        currentVelocity = new Vector3(velocity.x, currentVelocity.y, velocity.y);
+        Vector3 gravityVec = Physics.gravity * deltaTime;
+        if (gravityEnabled) {
+            currentVelocity += gravityVec;
+        }
     }
 
     /// <summary>
@@ -137,9 +139,12 @@ public class DuckController : MonoBehaviour, ICharacterController {
         for (int i = 0; i < colliders; i++) {
             Collider col = _probedColliders[i];
         }
+
     }
 
     public void PostGroundingUpdate(float deltaTime) {
+        animator.SetBool("grounded", motor.GroundingStatus.FoundAnyGround);
+        Debug.Log(motor.GroundingStatus.FoundAnyGround);
     }
 
     public bool IsColliderValidForCollisions(Collider coll) {

@@ -39,8 +39,6 @@ public class Idle : StateMachineBehaviour, IState {
     public void UpdateProperties() {
         duck.velocity = MovementUtils.inputToVelocity(duck);
         // apply gravity
-        Vector3 gravity = Physics.gravity;
-        duck.velocity += new Vector2(gravity.x, gravity.y) * Time.deltaTime;
         float deltaTime = Time.deltaTime;
         if (deltaTime > 0) {
             // Smoothly interpolate from current to target look direction
