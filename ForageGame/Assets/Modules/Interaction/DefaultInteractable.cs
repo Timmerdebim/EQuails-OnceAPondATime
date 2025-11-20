@@ -10,6 +10,8 @@ namespace Assets.Modules.Interaction
 
         public UnityEvent onInteract; // Event to invoke when interacting
         public UnityEvent onStopInteract; // Event to invoke when stopping interaction
+        public UnityEvent onFocus;
+        public UnityEvent OnUnfocus;
 
         private void Start()
         {
@@ -20,12 +22,16 @@ namespace Assets.Modules.Interaction
         {
             print("Focused on " + gameObject.name);
 
+            onFocus?.Invoke();
+
             PopupPrompt?.Activate();
         }
 
         public virtual void Unfocus()
         {
             print("Unfocused from " + gameObject.name);
+
+            OnUnfocus?.Invoke();
 
             PopupPrompt?.Deactivate();
         }

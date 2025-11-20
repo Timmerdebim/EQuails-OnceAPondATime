@@ -19,20 +19,16 @@ public class Dialogue : MonoBehaviour
         "Good luck on your journey!"
     };
 
+    [SerializeField] string normalLeaveMessage = null;
+    [SerializeField] string rudeLeaveMessage = null;
+
     int index = 0;
 
     [SerializeField] DialogueBox dialogueBox;
 
     Task textWriting;
-    CancellationTokenSource textCtxSource = new CancellationTokenSource();
 
-    [ContextMenu("Start Dialogue")]
-    private void StartDialogue()
-    {
-        dialogueBox.OpenDialogue();
-        textWriting = dialogueBox.SetText(messages[index], textCtxSource.Token);
-        index++;
-    }
+    CancellationTokenSource textCtxSource = new CancellationTokenSource();
 
     private void EndDialogue()
     {
@@ -40,33 +36,75 @@ public class Dialogue : MonoBehaviour
         index = 0;
     }
 
-    [ContextMenu("Next Message")]
-    public void Next()
+    private Task Speak(string message)
     {
-        print("Next Message");
         if(index <= 0)
         {
-            StartDialogue();
+            dialogueBox.OpenDialogue();
+        }
+
+        return dialogueBox.SetText(message, textCtxSource.Token);
+    }
+
+    [ContextMenu("Next Message")]
+    public async void Next()
+    {
+        print("Next Message");
+
+        if(textWriting != null && !textWriting.IsCompleted)
+        {
+            textCtxSource.Cancel();
+            if(textWriting != null && !textWriting.IsCompleted)
+            {
+                await textWriting;
+            }
+            textCtxSource = new CancellationTokenSource();
+            return;
+        }
+
+        if (index > messages.Length - 1)
+        {
+            EndDialogue();
+            return;
+        }
+
+        textWriting = Speak(messages[index]);
+
+        index++;
+    }
+
+    public void WalkAway()
+    {
+        if(index <= 0)
+        {
+            //This means we are not in conversation
+            if(normalLeaveMessage != null)
+            {
+                textWriting = ShortMessage(normalLeaveMessage);
+            }
         }
         else
         {
-            if(textWriting != null && !textWriting.IsCompleted)
+            //This means we are in conversation, so it's rude to leave
+            if(rudeLeaveMessage != null)
             {
-                textCtxSource.Cancel();
-                textCtxSource = new CancellationTokenSource();
-                return;
+                textWriting = ShortMessage(rudeLeaveMessage);
             }
-            
-            index++;
-            
-            if (index >= messages.Length)
-            {
-                EndDialogue();
-                return;
-            }
-
-            textWriting = dialogueBox.SetText(messages[index], textCtxSource.Token);
         }
+    }
 
+    private async Task ShortMessage(string message)
+    {
+        // Called when the player rudely walks away from the conversation
+
+        await Speak(message);
+
+        float timeWaited = 0;
+        while (!textCtxSource.IsCancellationRequested && timeWaited < 3000)
+        {
+            await Task.Delay(10);
+            timeWaited += 10;
+        }
+        EndDialogue();
     }
 }
