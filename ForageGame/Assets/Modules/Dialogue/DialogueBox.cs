@@ -15,7 +15,10 @@ namespace Assets.Modules.Dialogue
         [SerializeField] AnimationCurve newMessageAnimation;
         [SerializeField] float openCloseDuration;
 
-        CancellationTokenSource ctxSource;
+        //CancellationTokenSource textCtxSource;
+        CancellationTokenSource animationCtxSource;
+        Task animateOut;
+        Task animateIn;
 
         private void Start()
         {
@@ -23,10 +26,16 @@ namespace Assets.Modules.Dialogue
             canvas.transform.localScale = Vector3.zero;
         }
 
-        public void OpenDialogue()
+        public async void OpenDialogue()
         {
-            CancelAnimation();
-            AnimateIn(ctxSource.Token);
+            await CancelAnimations();
+            animateIn = AnimateIn(animationCtxSource.Token);
+        }
+
+        public async void CloseDialogue()
+        {
+            await CancelAnimations();
+            animateOut = AnimateOut(animationCtxSource.Token);
         }
 
         private async Task AnimateIn(CancellationToken ctx)
@@ -49,12 +58,6 @@ namespace Assets.Modules.Dialogue
             }
 
             canvas.transform.localScale = Vector3.one;
-        }
-
-        public void CloseDialogue()
-        {
-            CancelAnimation();
-            AnimateOut(ctxSource.Token);
         }
 
         private async Task AnimateOut(CancellationToken ctx)
@@ -94,18 +97,32 @@ namespace Assets.Modules.Dialogue
             canvas.transform.localScale = Vector3.one;
         }
 
-        private void CancelAnimation()
+        private async Task CancelAnimations()
         {
-            ctxSource?.Cancel();
-            ctxSource?.Token.WaitHandle.WaitOne();
-            ctxSource = new CancellationTokenSource();
+            //textCtxSource?.Cancel();
+            //textCtxSource?.Token.WaitHandle.WaitOne();
+            //textCtxSource = new CancellationTokenSource();
+
+            animationCtxSource?.Cancel();
+
+            if (animateIn?.IsCompleted == false) { await animateIn; }
+            if (animateOut?.IsCompleted == false) { await animateOut; }
+
+            animationCtxSource = new CancellationTokenSource();
         }
 
-        public void SetText(string text)
+        public async Task SetText(string text, CancellationToken ctx)
         {
-            CancelAnimation();
-            AnimateNewMessage(ctxSource.Token);
-            dialogueText.TypewriteText(text, ctxSource.Token);
+            await CancelAnimations();
+            Task typewriting = dialogueText.TypewriteText(text, ctx);
+
+            if (animateIn?.IsCompleted == false)
+            {
+                await animateIn;
+            }
+            AnimateNewMessage(ctx);
+
+            await typewriting;
         }
     }
 }
