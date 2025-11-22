@@ -1,24 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6271437755244123034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Swamp.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/StreamingAssets/FMOD/Desktop/Swamp.bank
-  Name: Swamp
-  StudioPath: bank:/Swamp
-  lastModified: 638991793493580554
-  FileSizes: []
-  Exists: 1
---- !u!114 &-6251721076494529530
+--- !u!114 &-8433909794243130480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28,43 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Rain
+  m_Name: snapshot:/DuckAmbience
   m_EditorClassIdentifier: 
-  Path: event:/Rain
+  Path: snapshot:/DuckAmbience
   Guid:
-    Data1: 266849729
-    Data2: 1207344119
-    Data3: -828037210
-    Data4: 1263880672
+    Data1: -1715740613
+    Data2: 1210138865
+    Data3: 1309243550
+    Data4: -347668224
   Banks:
-  - {fileID: -6271437755244123034}
-  IsStream: 1
+  - {fileID: 3929215567152425302}
+  IsStream: 0
   Is3D: 0
   IsOneShot: 0
-  Parameters:
-  - {fileID: 4459063131914041064}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 115700
---- !u!114 &-6115567299827924257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/StreamingAssets/FMOD/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638991793483890242
-  FileSizes: []
-  Exists: 1
---- !u!114 &-1476601890778402875
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &-5967379127343127821
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,10 +42,10 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638991793483903971
+  lastModified: 638994307228288469
   FileSizes:
   - Name: 
-    Value: 866
+    Value: 1050
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -97,22 +60,24 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -1476601890778402875}
-  - {fileID: -6115567299827924257}
-  - {fileID: -6271437755244123034}
+  - {fileID: -5967379127343127821}
+  - {fileID: 3929215567152425302}
+  - {fileID: 2319339570952460669}
   EditorEvents:
-  - {fileID: -6251721076494529530}
+  - {fileID: -8433909794243130480}
+  - {fileID: 6593401700713129211}
+  - {fileID: 2881797675185421521}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -6115567299827924257}
+  - {fileID: 3929215567152425302}
   StringsBanks:
-  - {fileID: -1476601890778402875}
+  - {fileID: -5967379127343127821}
   cacheVersion: 131856
-  cacheTime: 638991793493580554
+  cacheTime: 638994307237256316
   SerializableEventsDict:
   - key: event:/Rain
     index: 0
---- !u!114 &4459063131914041064
+--- !u!114 &2016886940396912448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,12 +87,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Rain/Next Theme
+  m_Name: parameter:/RainTheme/Next Theme
   m_EditorClassIdentifier: 
   Name: Next Theme
   StudioPath: 
   Min: 0
-  Max: 3
+  Max: 1
   Default: 0
   ID:
     data1: 791302249
@@ -135,8 +100,97 @@ MonoBehaviour:
   Type: 2
   IsGlobal: 0
   Labels:
-  - Ambiance
   - Piano
   - Orchestra
-  - End
   Exists: 1
+--- !u!114 &2319339570952460669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Swamp.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/Swamp.bank
+  Name: Swamp
+  StudioPath: bank:/Swamp
+  lastModified: 638994307237256316
+  FileSizes: []
+  Exists: 1
+--- !u!114 &2881797675185421521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RainTheme
+  m_EditorClassIdentifier: 
+  Path: event:/RainTheme
+  Guid:
+    Data1: 915055842
+    Data2: 1272728366
+    Data3: 1222959788
+    Data4: 830151803
+  Banks:
+  - {fileID: 2319339570952460669}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 2016886940396912448}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 100800
+--- !u!114 &3929215567152425302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638994307228275319
+  FileSizes: []
+  Exists: 1
+--- !u!114 &6593401700713129211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RainAmbiance
+  m_EditorClassIdentifier: 
+  Path: event:/RainAmbiance
+  Guid:
+    Data1: -325478709
+    Data2: 1321753636
+    Data3: -50108011
+    Data4: -1812603455
+  Banks:
+  - {fileID: 2319339570952460669}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 18000
