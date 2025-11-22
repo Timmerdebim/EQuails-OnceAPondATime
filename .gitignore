@@ -6,11 +6,11 @@ ForageGame/ProjectSettings/EditorBuildSettings.asset
 !/[Aa]ssets/Plugins/FMOD/**/lib/*
 
 # Don't ignore images and gizmos used by FMOD in the Unity Editor.
-!/[Aa]ssets/Gizmos/FMOD/*
-!/[Aa]ssets/Editor Default Resources/FMOD/*
+!ForageGame/[Aa]ssets/Gizmos/FMOD/*
+!ForageGame/[Aa]ssets/Editor Default Resources/FMOD/*
 
 # Ignore the Cache folder since it is updated locally.
-/[Aa]ssets/Plugins/FMOD/Cache/*
+ForageGame/[Aa]ssets/Plugins/FMOD/Cache/*
 
 # If the source bank files are kept outside of the StreamingAssets folder then these can be ignored.
 # Log files can be ignored.
@@ -18,3 +18,4 @@ fmod_editor.log
 
 # We only need the banks for now, otherwise the .wav files will get way too big
 AudioAssets/
+ForageGame/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
