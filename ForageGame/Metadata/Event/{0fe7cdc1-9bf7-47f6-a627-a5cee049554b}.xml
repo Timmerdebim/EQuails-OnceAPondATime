@@ -32,6 +32,7 @@
 		<relationship name="groupTracks">
 			<destination>{be5480a9-8f03-4bef-86a5-c3bdca817597}</destination>
 			<destination>{9a8d4bf8-12ff-4ed8-b8bc-6a4c88b3a366}</destination>
+			<destination>{d3eddbb1-e2f3-45ee-9a4c-5a98d226480b}</destination>
 		</relationship>
 		<relationship name="timeline">
 			<destination>{c98d03d9-6840-499c-b650-aca6a719ae85}</destination>
@@ -90,6 +91,15 @@
 			<destination>{c61f4061-3a22-4516-aac6-e116d4e5bae3}</destination>
 		</relationship>
 	</object>
+	<object class="GroupTrack" id="{d3eddbb1-e2f3-45ee-9a4c-5a98d226480b}">
+		<relationship name="modules">
+			<destination>{43f316fc-5104-4e99-ae96-b60767ed36b1}</destination>
+			<destination>{286c5da1-658e-4c46-a376-2a54d42565cb}</destination>
+		</relationship>
+		<relationship name="mixerGroup">
+			<destination>{95a76118-a73c-470c-92a6-b6638e9c12cb}</destination>
+		</relationship>
+	</object>
 	<object class="Timeline" id="{c98d03d9-6840-499c-b650-aca6a719ae85}">
 		<relationship name="modules">
 			<destination>{547ed256-5a2f-4f0b-b303-c1b8efae7b8d}</destination>
@@ -98,6 +108,8 @@
 			<destination>{ec2158c0-a555-4a9a-b480-b23b66422452}</destination>
 			<destination>{97c86021-7f5a-477d-96b7-e6cd4113757e}</destination>
 			<destination>{170731a1-af19-402c-b9e8-d4c39dd33b2d}</destination>
+			<destination>{43f316fc-5104-4e99-ae96-b60767ed36b1}</destination>
+			<destination>{286c5da1-658e-4c46-a376-2a54d42565cb}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{2ab2943f-999d-47a5-a644-9e8f0765332f}</destination>
@@ -239,6 +251,48 @@
 		</relationship>
 		<relationship name="panner">
 			<destination>{bb5a3315-c842-40c7-b91e-af33d0b41a4e}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{814703b6-8091-416c-8088-532533a85505}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{43f316fc-5104-4e99-ae96-b60767ed36b1}">
+		<property name="start">
+			<value>15.200000000000001</value>
+		</property>
+		<property name="length">
+			<value>4</value>
+		</property>
+		<property name="commandType">
+			<value>3</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{b3209f0e-fbe4-4c7e-98ca-d2d7dcc00906}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{286c5da1-658e-4c46-a376-2a54d42565cb}">
+		<property name="start">
+			<value>68.799999999999997</value>
+		</property>
+		<property name="length">
+			<value>4</value>
+		</property>
+		<property name="commandType">
+			<value>3</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{b3209f0e-fbe4-4c7e-98ca-d2d7dcc00906}</destination>
+		</relationship>
+	</object>
+	<object class="EventMixerGroup" id="{95a76118-a73c-470c-92a6-b6638e9c12cb}">
+		<property name="name">
+			<value>Audio 1</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{2324911d-ea69-41e6-a199-e6ecc6b5bd24}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{2ed1ca6e-c66a-4d1b-ad09-c41ba0024d11}</destination>
 		</relationship>
 		<relationship name="output">
 			<destination>{814703b6-8091-416c-8088-532533a85505}</destination>
@@ -457,6 +511,12 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{bb5a3315-c842-40c7-b91e-af33d0b41a4e}" />
+	<object class="MixerBusEffectChain" id="{2324911d-ea69-41e6-a199-e6ecc6b5bd24}">
+		<relationship name="effects">
+			<destination>{4cb67ec4-165e-45f9-b4fc-3c0b3de62d04}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{2ed1ca6e-c66a-4d1b-ad09-c41ba0024d11}" />
 	<object class="ParameterCondition" id="{54577519-4b66-469c-a389-d5cc9c9ccb69}">
 		<property name="minimum">
 			<value>1</value>
@@ -527,6 +587,7 @@
 	</object>
 	<object class="MixerBusFader" id="{cb6bfb01-3846-4aca-9515-02c7b2909a1a}" />
 	<object class="MixerBusFader" id="{c96026ad-f40f-48a7-850d-b0debc42de78}" />
+	<object class="MixerBusFader" id="{4cb67ec4-165e-45f9-b4fc-3c0b3de62d04}" />
 	<object class="AutomationPoint" id="{a15c70f8-8581-4d6f-b3f6-09f120bb2ade}">
 		<property name="position">
 			<value>19.199999999999999</value>
