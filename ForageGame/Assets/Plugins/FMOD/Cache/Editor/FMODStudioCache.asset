@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7239617052386125915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/FlowerField.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/FlowerField.bank
+  Name: FlowerField
+  StudioPath: bank:/FlowerField
+  lastModified: 638998729653157459
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-5967379127343127821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,10 +33,10 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638996691958303637
+  lastModified: 638998725573467586
   FileSizes:
   - Name: 
-    Value: 1050
+    Value: 1188
   Exists: 1
 --- !u!114 &-5822413383391630073
 MonoBehaviour:
@@ -101,6 +119,33 @@ MonoBehaviour:
   - Piano
   - Orchestra
   Exists: 1
+--- !u!114 &-1325460635993339505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LyriaKalimba
+  m_EditorClassIdentifier: 
+  Path: event:/LyriaKalimba
+  Guid:
+    Data1: -1817708164
+    Data2: 1095766681
+    Data3: 1695026055
+    Data4: -548317238
+  Banks:
+  - {fileID: -7239617052386125915}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 9
+  MaxDistance: 35
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,17 +162,19 @@ MonoBehaviour:
   - {fileID: -5967379127343127821}
   - {fileID: 3929215567152425302}
   - {fileID: 2319339570952460669}
+  - {fileID: -7239617052386125915}
   EditorEvents:
   - {fileID: -5822413383391630073}
   - {fileID: 4908017385451315613}
   - {fileID: -3083245267300596428}
+  - {fileID: -1325460635993339505}
   EditorParameters: []
   MasterBanks:
   - {fileID: 3929215567152425302}
   StringsBanks:
   - {fileID: -5967379127343127821}
   cacheVersion: 131856
-  cacheTime: 638996691958584839
+  cacheTime: 638998729653157459
   SerializableEventsDict:
   - key: snapshot:/DuckAmbience
     index: 0
@@ -135,6 +182,8 @@ MonoBehaviour:
     index: 1
   - key: event:/RainTheme
     index: 2
+  - key: event:/LyriaKalimba
+    index: 3
 --- !u!114 &2319339570952460669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +199,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Swamp.bank
   Name: Swamp
   StudioPath: bank:/Swamp
-  lastModified: 638996691958584839
+  lastModified: 638998725587972102
   FileSizes: []
   Exists: 1
 --- !u!114 &3929215567152425302
@@ -168,7 +217,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638996691958140328
+  lastModified: 638998725573450556
   FileSizes: []
   Exists: 1
 --- !u!114 &4908017385451315613
