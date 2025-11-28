@@ -9,9 +9,9 @@ using System;
 public class Item : ScriptableObject
 {
     public string itemName;
-    public string description { get; private set; }
+    public string description;
     public Sprite icon;
-    public bool isConsumable { get; private set; }
-    float consumableEnergy;
+    public bool isConsumable;
+    public float consumableEnergy;
     public GameObject worldPrefab; // The prefab to spawn when dropped
 }

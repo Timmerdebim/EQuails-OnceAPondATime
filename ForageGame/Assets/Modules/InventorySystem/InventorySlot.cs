@@ -2,10 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour, IPointerClickHandler
+public class InventorySlot : MonoBehaviour
 {
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text slotNumberText;
+    [SerializeField] private Image slotImage;
+    [SerializeField] private Color selectedColor;
+    [SerializeField] private Color notSelectedColor;
+
 
     private int slotIndex;
     private InventorySystem inventory;
@@ -18,6 +22,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
         if (slotNumberText != null)
             slotNumberText.text = (index + 1).ToString();
+        if (slotImage != null)
+            slotImage.color = notSelectedColor;
 
         ClearSlot();
     }
@@ -36,13 +42,23 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         itemIcon.enabled = false;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void SetSelected(bool isSelected)
     {
-        if (currentItem != null && eventData.button == PointerEventData.InputButton.Right)
-        {
-            // Drop item at player's position
-            Vector3 dropPosition = Camera.main.transform.position + Camera.main.transform.forward * 2f;
-            inventory.DropItem(slotIndex, dropPosition);
-        }
+        if (isSelected)
+            slotImage.color = selectedColor;
+        else
+            slotImage.color = notSelectedColor;
     }
+
+
+
+    // public void OnPointerClick(PointerEventData eventData)
+    // {
+    //     if (currentItem != null && eventData.button == PointerEventData.InputButton.Right)
+    //     {
+    //         // Drop item at player's position
+    //         Vector3 dropPosition = Camera.main.transform.position + Camera.main.transform.forward * 2f;
+    //         inventory.DropItem(slotIndex, dropPosition);
+    //     }
+    // }
 }

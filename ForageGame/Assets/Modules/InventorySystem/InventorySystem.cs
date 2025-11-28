@@ -11,8 +11,13 @@ public class InventorySystem : MonoBehaviour
     [Header("Item Database")]
     public Item[] itemDatabase;
 
+    [Header("Other")]
+    public Transform player;
+    public DuckEnergy duckEnergy;
+
     private Item[] hotbarItems;
     private InventorySlot[] hotbarSlots;
+    private int selectedSlot = 0;
 
     public static InventorySystem Instance { get; private set; }
 
@@ -43,6 +48,8 @@ public class InventorySystem : MonoBehaviour
             slot.Initialize(i, this);
             hotbarSlots[i] = slot;
         }
+
+        SelectSlot(0);
     }
 
     public bool PickupItem(Item item)
@@ -62,22 +69,58 @@ public class InventorySystem : MonoBehaviour
         return false;
     }
 
-    public void DropItem(int slotIndex, Vector3 dropPosition)
+    public void DropItem()
     {
-        if (slotIndex < 0 || slotIndex >= hotbarSize) return;
-        if (hotbarItems[slotIndex] == null) return;
+        if (selectedSlot < 0 || selectedSlot >= hotbarSize) return;
+        if (hotbarItems[selectedSlot] == null) return;
 
-        Item itemToDrop = hotbarItems[slotIndex];
+        Item itemToDrop = hotbarItems[selectedSlot];
 
         // Spawn the item in the world
         if (itemToDrop.worldPrefab != null)
         {
+            // Get player position
+            Vector3 dropPosition = player.position; // TODO: move down to ground
+            dropPosition.y = 0.5f;
             Instantiate(itemToDrop.worldPrefab, dropPosition, Quaternion.identity);
         }
 
         // Remove from hotbar
-        hotbarItems[slotIndex] = null;
-        hotbarSlots[slotIndex].ClearSlot();
+        RemoveItem(selectedSlot);
+    }
+
+    public void ConsumeItem()
+    {
+        if (selectedSlot < 0 || selectedSlot >= hotbarSize) return;
+        if (hotbarItems[selectedSlot] == null) return;
+
+        Item itemToConsume = hotbarItems[selectedSlot];
+
+        // Spawn the item in the world
+        if (itemToConsume.isConsumable)
+        {
+            // Get player position
+            duckEnergy.AddEnergy(itemToConsume.consumableEnergy);
+            // Remove from hotbar
+            RemoveItem(selectedSlot);
+        }
+        else Debug.Log("Item cannot be consumed");
+    }
+
+    public void RemoveItem(int index)
+    {
+        hotbarItems[index] = null;
+        hotbarSlots[index].ClearSlot();
+    }
+
+
+
+    public void SelectSlot(int index)
+    {
+        selectedSlot = index;
+
+        for (int i = 0; i < hotbarSize; i++)
+            hotbarSlots[i].SetSelected(i == index);
     }
 
     public Item GetItemById(string itemName)
