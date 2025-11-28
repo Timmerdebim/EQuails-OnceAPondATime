@@ -122,11 +122,16 @@ public class DuckController : MonoBehaviour, ICharacterController {
     /// This is the ONLY place where you can set the character's velocity
     /// </summary>
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime) {
+        // 1. Apply planar velocity (X and Z)
         currentVelocity = new Vector3(velocity.x, currentVelocity.y, velocity.y);
+    
+        // 2. Apply gravity
         Vector3 gravityVec = Physics.gravity * deltaTime;
         if (gravityEnabled) {
             currentVelocity += gravityVec;
         }
+        // 3. Clamp to terminal velocity (only on downward velocity)
+        currentVelocity.y = Mathf.Min(currentVelocity.y, 0f);
     }
 
     /// <summary>

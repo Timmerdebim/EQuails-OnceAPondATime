@@ -58,6 +58,8 @@ public class Dash : StateMachineBehaviour, IState {
         duck.trailRenderer.emitting = false;
         duck.motor.CollidableLayers.value |= (1 << LayerMask.NameToLayer("Obstacle"));
         duck.gravityEnabled = true;
+        // reset velocity
+        duck.velocity = Vector2.zero;
     }
     
     // OnStateMove is called right after Animator.OnAnimatorMove()
