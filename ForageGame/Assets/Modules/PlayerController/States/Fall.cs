@@ -1,36 +1,27 @@
-using KinematicCharacterController;
 using UnityEngine;
 
-public class Flutter : StateMachineBehaviour
+public class Fall : StateMachineBehaviour
 {
     protected DuckController duck;
-    protected float timeSinceFlutterInput;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         GameObject obj = animator.gameObject;
         duck = obj.GetComponent<DuckController>();
+        if (duck == null)
+            Debug.LogError("Fall: No DuckController found on " + obj.name);
 
         duck.animator.SetBool("isBusy", true);
-        duck.PhysicsGravity(false);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeSinceFlutterInput += Time.deltaTime;
-        if (timeSinceFlutterInput > duck.flutterDuration)
-        {
-            duck.animator.SetBool("isBusy", false);
-            return;
-        }
-        duck.PhysicsVelocity(duck.hopMoveSpeed, duck._viewDirection);
-        duck.rb.AddForce(new Vector3(0, duck.flutterSpringForce * (duck.flutterHeight - duck.transform.position.y), 0), ForceMode.Force);
+        duck.PhysicsVelocity(duck.walkMoveSpeed, duck._viewDirection);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         duck.animator.SetBool("isBusy", false);
         duck.PhysicsVelocity(0, new Vector2(0, 0));
-        duck.PhysicsGravity(true);
     }
 }

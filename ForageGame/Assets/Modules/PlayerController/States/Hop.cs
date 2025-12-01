@@ -1,10 +1,11 @@
+using System;
 using KinematicCharacterController;
 using UnityEngine;
 
-public class Flutter : StateMachineBehaviour
+public class Hop : StateMachineBehaviour
 {
     protected DuckController duck;
-    protected float timeSinceFlutterInput;
+    protected float timeSinceHopInput;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -12,25 +13,23 @@ public class Flutter : StateMachineBehaviour
         duck = obj.GetComponent<DuckController>();
 
         duck.animator.SetBool("isBusy", true);
-        duck.PhysicsGravity(false);
+        duck.rb.AddForce(new Vector3(0, duck.hopImpulse, 0), ForceMode.Impulse);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeSinceFlutterInput += Time.deltaTime;
-        if (timeSinceFlutterInput > duck.flutterDuration)
+        timeSinceHopInput += Time.deltaTime;
+        if (timeSinceHopInput > duck.hopDuration)
         {
             duck.animator.SetBool("isBusy", false);
             return;
         }
         duck.PhysicsVelocity(duck.hopMoveSpeed, duck._viewDirection);
-        duck.rb.AddForce(new Vector3(0, duck.flutterSpringForce * (duck.flutterHeight - duck.transform.position.y), 0), ForceMode.Force);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         duck.animator.SetBool("isBusy", false);
         duck.PhysicsVelocity(0, new Vector2(0, 0));
-        duck.PhysicsGravity(true);
     }
 }

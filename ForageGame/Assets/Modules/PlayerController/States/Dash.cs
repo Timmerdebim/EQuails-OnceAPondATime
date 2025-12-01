@@ -1,76 +1,52 @@
 using UnityEngine;
 
-public class Dash : StateMachineBehaviour, IState {
+public class Dash : StateMachineBehaviour
+{
     protected DuckController duck;
-    protected Vector2 duckDir;
-    protected Vector2 dashVelocity;
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    protected float timeSinceDashStart;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // get gameobject this is attached to
         GameObject obj = animator.gameObject;
-        // get duck controller
         duck = obj.GetComponent<DuckController>();
-        duckDir = duck.velocity;
-        // if original velocity is zero, set to forward
-        if (duckDir == Vector2.zero) {
-            // base on duck.rotation
-            var forward = duck.rotation * Vector3.forward;
-            duckDir = new Vector2(forward.x, forward.z);
-        }
 
-        dashVelocity = duckDir.normalized * duck.dashSpeed;
         duck.trailRenderer.emitting = true;
 
-
-        if (duck.dashType == DuckController.DashType.throughDash) {
-            duck.motor.CollidableLayers.value &= ~(1 << LayerMask.NameToLayer("Obstacle"));
+        if (duck.dashType == DuckController.DashType.throughDash)
+        {
             duck.trailRenderer.startColor = Color.black;
             duck.trailRenderer.endColor = Color.black;
-        } else {
+        }
+        else
+        {
             duck.trailRenderer.startColor = Color.yellow;
             duck.trailRenderer.endColor = Color.yellow;
         }
-        duck.gravityEnabled = false;
-        duck.duckEnergy.UseEnergy(10);
 
+        duck.animator.SetBool("isBusy", true);
+        timeSinceDashStart = 0f;
+        duck.PhysicsGravity(false);
+        duck.PhysicsVelocity(duck.dashMoveSpeed, duck._viewDirection);
+
+        duck.duckEnergy.UseEnergy(10);
     }
 
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.timeSinceDashInput += Time.deltaTime;
-        UpdateProperties();
+        timeSinceDashStart += Time.deltaTime;
+        if (timeSinceDashStart > duck.dashDuration)
+        {
+            duck.animator.SetBool("isBusy", false);
+            return;
+        }
     }
 
-    public void UpdateProperties() {
-        duck.velocity = dashVelocity;
-        duck.rotation = Quaternion.LookRotation(
-            new Vector3(dashVelocity.x, 0, dashVelocity.y),
-            duck.motor.CharacterUp
-        );
-    }
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.timeSinceDashInput = null;
+        duck.animator.SetBool("isBusy", false);
+        timeSinceDashStart = 0f;
         duck.trailRenderer.emitting = false;
-        duck.motor.CollidableLayers.value |= (1 << LayerMask.NameToLayer("Obstacle"));
-        duck.gravityEnabled = true;
-        // reset velocity
-        duck.velocity = Vector2.zero;
+        duck.PhysicsGravity(true);
+        duck.PhysicsVelocity(0, new Vector2(0, 0));
     }
-    
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }
