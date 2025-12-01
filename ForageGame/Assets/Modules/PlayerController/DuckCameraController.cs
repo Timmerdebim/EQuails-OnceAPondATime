@@ -3,102 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KinematicCharacterController.Examples {
-    public class DuckCameraController : MonoBehaviour {
-        [Header("Framing")] public Camera Camera;
-        public Vector2 FollowPointFraming = new Vector2(0f, 0f);
-        public float FollowingSharpness = 10000f;
+namespace KinematicCharacterController.Examples
+{
+    public class DuckCameraController : MonoBehaviour
+    {
+        public float followZDistance;
+        public float followFixedY;
+        public float followSharpness;
+        public Transform player;
 
-        [Header("Distance")] public float DefaultDistance;
-        public float MinDistance;
-        public float MaxDistance;
-        public float DistanceMovementSpeed = 5f;
-        public float DistanceMovementSharpness = 10f;
-        public bool fixedY = true;
+        public void Update()
+        {
+            if (!player) return;
 
-        [Header("Rotation")] public bool InvertX = false;
-        public bool InvertY = false;
-        [Range(-90f, 90f)] public float DefaultVerticalAngle = 20f;
-        [Range(-90f, 90f)] public float MinVerticalAngle = -90f;
-        [Range(-90f, 90f)] public float MaxVerticalAngle = 90f;
-        public float RotationSpeed = 1f;
-        public float RotationSharpness = 10000f;
-        public bool RotateWithPhysicsMover = false;
+            Vector3 targetPos = player.position;
+            targetPos.y = followFixedY;
+            targetPos.z -= followZDistance;
 
-        [Header("Obstruction")] public float ObstructionCheckRadius = 0.2f;
-        public LayerMask ObstructionLayers = -1;
-        public float ObstructionSharpness = 10000f;
-        public List<Collider> IgnoredColliders = new List<Collider>();
-
-        public Transform Transform { get; private set; }
-        public Transform FollowTransform { get; private set; }
-
-        public Vector3 PlanarDirection { get; set; }
-        public float TargetDistance { get; set; }
-
-        private bool _distanceIsObstructed;
-        private float _currentDistance;
-        private float _targetVerticalAngle;
-        private RaycastHit _obstructionHit;
-        private int _obstructionCount;
-        private RaycastHit[] _obstructions = new RaycastHit[MaxObstructions];
-        private float _obstructionTime;
-        private Vector3 _currentFollowPosition;
-        private float fixedYValue;
-
-        private const int MaxObstructions = 32;
-
-        void OnValidate() {
-            DefaultDistance = Mathf.Clamp(DefaultDistance, MinDistance, MaxDistance);
-            DefaultVerticalAngle = Mathf.Clamp(DefaultVerticalAngle, MinVerticalAngle, MaxVerticalAngle);
-        }
-
-        void Awake() {
-            Transform = this.transform;
-
-            _currentDistance = DefaultDistance;
-            TargetDistance = _currentDistance;
-
-            _targetVerticalAngle = 0f;
-
-            PlanarDirection = Vector3.forward;
-        }
-
-        // Set the transform that the camera will orbit around
-        public void SetFollowTransform(Transform t) {
-            FollowTransform = t;
-            PlanarDirection = FollowTransform.forward;
-            _currentFollowPosition = FollowTransform.position;
-            fixedYValue = _currentFollowPosition.y - PlanarDirection.y;
-        }
-
-        public void Update() {
-            if (!FollowTransform) return;
-
-            float deltaTime = Time.deltaTime;
-            TargetDistance = Mathf.Clamp(TargetDistance, MinDistance, MaxDistance);
-
-            Vector3 followTransformPosition = FollowTransform.position;
-            if (fixedY) {
-                followTransformPosition.y = fixedYValue;
-            }
-            // Find the smoothed follow position
-            _currentFollowPosition = Vector3.Lerp(_currentFollowPosition, followTransformPosition,
-                1f - Mathf.Exp(-FollowingSharpness * deltaTime));
-            
-            // Find the smoothed camera orbit position
-            Vector3 targetPosition = _currentFollowPosition - ((Transform.rotation * Vector3.forward) * _currentDistance);
-
-            // Handle framing
-            targetPosition += Transform.right * FollowPointFraming.x;
-            targetPosition += Transform.up * FollowPointFraming.y;
-
-            // nvm if nan
-            if (float.IsNaN(targetPosition.x) || float.IsNaN(targetPosition.y) || float.IsNaN(targetPosition.z)) {
-                return;
-            }
-            // Apply position
-            Transform.position = targetPosition;
+            transform.position = Vector3.Lerp(transform.position, targetPos, followSharpness * Time.deltaTime);
         }
     }
 }
