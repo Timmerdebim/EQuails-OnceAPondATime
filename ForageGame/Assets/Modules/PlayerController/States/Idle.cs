@@ -8,8 +8,6 @@ public class Idle : StateMachineBehaviour
     {
         GameObject obj = animator.gameObject;
         duck = obj.GetComponent<DuckController>();
-        if (duck == null)
-            Debug.LogError("Idle: No DuckController found on " + obj.name);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

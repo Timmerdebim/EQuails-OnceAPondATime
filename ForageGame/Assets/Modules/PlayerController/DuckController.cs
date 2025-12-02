@@ -10,25 +10,25 @@ public class DuckController : MonoBehaviour
     public DuckEnergy duckEnergy;
     public Rigidbody rb;
 
-    private static readonly int IsDead = Animator.StringToHash("isDead");
-
     [Header("Walk")]
     public float walkMoveSpeed = 5f;
     [Header("Dash")]
     public float dashMoveSpeed = 60f;
-    public float dashDuration = 0.15f;
+    public float dashEnergy = 10f;
     [Header("Hop")]
-    public float hopMoveSpeed = 10f;
+    public float hopMoveSpeed = 3f;
     public float hopImpulse = 10f;
-    public float hopDuration = 10f;
+    public float hopEnergy = 10f;
     [Header("Flutter")]
-    public float flutterMoveSpeed = 10f;
-    public float flutterHeight = 10f;
-    public float flutterSpringForce = 10f;
-    public float flutterDuration = 10f;
+    public float flutterMoveSpeed = 3f;
+    public float flutterHeight = 6f;
+    public float flutterNaturalFrequency = 3f; // i aint explaining this - pick up a textbook on dampening systems or smth
+    public float flutterEnergy = 10f; // this is energy per second
     [Header("Attack")]
-    public float attackMoveSpeed = 10f;
-    public float attackDuration = 10f;
+    public float attackMoveSpeed = 40f;
+    public float attackEnergy = 10f;
+    [Header("Fall")]
+    public float fallMoveSpeed = 3f;
 
 
     [Header("Misc")]
@@ -79,35 +79,37 @@ public class DuckController : MonoBehaviour
     {
         // Check death using the energy component's public property
         if (duckEnergy != null && duckEnergy.currentMaxEnergy <= 0)
-            animator.SetBool(IsDead, true);
+            animator.SetBool("isDead", true);
     }
 
+    public Vector2 _inputDirection { get; private set; }
     public Vector2 _viewDirection { get; private set; }
-    private Vector3 targetVelocity;
+    public Vector3 duckVelocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update
+    public Vector3 duckForce;
 
-    public void PhysicsVelocity(float magnitude, Vector2 direction)
+    public void SetDuckVelocity(Vector2 direction, float magnitude)
     {
-        // Direction is a normalized Vector2 (typically the looking direction)
-        targetVelocity = new Vector3(direction.x, 0, direction.y).normalized * magnitude;
-    }
-    public void PhysicsGravity(bool isActive)
-    {
-        rb.useGravity = isActive;
+        duckVelocity = new Vector3(direction.x, 0, direction.y) * magnitude;
+        duckVelocity.y = rb.linearVelocity.y;
     }
 
     void FixedUpdate()
     {
-        rb.linearVelocity = targetVelocity;
+        rb.linearVelocity = duckVelocity;
+        rb.AddForce(duckForce, ForceMode.Force);
     }
+
+    // ------------ INPUTS ------------
 
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 moveInput = context.ReadValue<Vector2>();
+        _inputDirection = moveInput.normalized;
 
         if (moveInput.magnitude > 0.1f)
         {
             animator.SetBool("isMoving", true);
-            _viewDirection = moveInput.normalized;
+            _viewDirection = _inputDirection;
         }
         else
             animator.SetBool("isMoving", false);
@@ -115,13 +117,13 @@ public class DuckController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.action.WasPressedThisFrame())
+        if (context.action.WasPressedThisFrame() && duckEnergy.energy > dashEnergy)
             animator.SetTrigger("dash");
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.action.WasPressedThisFrame())
+        if (context.action.WasPressedThisFrame() && duckEnergy.energy > attackEnergy)
             animator.SetTrigger("attack");
     }
 
@@ -132,7 +134,7 @@ public class DuckController : MonoBehaviour
 
     public void OnFlutter(InputAction.CallbackContext context)
     {
-        if (context.action.WasPressedThisFrame())
+        if (context.action.WasPressedThisFrame() && duckEnergy.energy > flutterEnergy)
             animator.SetBool("flutter", true);
         if (context.action.WasReleasedThisFrame())
             animator.SetBool("flutter", false);
@@ -140,7 +142,19 @@ public class DuckController : MonoBehaviour
 
     public void OnHop(InputAction.CallbackContext context)
     {
-        if (context.action.WasPressedThisFrame())
+        if (context.action.WasPressedThisFrame() && duckEnergy.energy > hopEnergy)
             animator.SetTrigger("hop");
+    }
+
+    // ------------ GROUND CHECK ------------
+
+    void OnCollisionStay(Collision collision)
+    {
+        animator.SetBool("isGrounded", true);
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        animator.SetBool("isGrounded", false);
     }
 }

@@ -8,9 +8,6 @@ public class Dead : StateMachineBehaviour
     {
         GameObject obj = animator.gameObject;
         duck = obj.GetComponent<DuckController>();
-        if (duck == null)
-            Debug.LogError("Dead: No DuckController found on " + obj.name);
-        duck.animator.SetBool("isBusy", true);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

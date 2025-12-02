@@ -8,8 +8,6 @@ public class Move : StateMachineBehaviour
     {
         GameObject obj = animator.gameObject;
         duck = obj.GetComponent<DuckController>();
-        if (duck == null)
-            Debug.LogError("Move: No DuckController found on " + obj.name);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,12 +17,12 @@ public class Move : StateMachineBehaviour
         else
             duck.playerInteract?.StopInteract();
 
-        duck.PhysicsVelocity(duck.walkMoveSpeed, duck._viewDirection);
+        duck.SetDuckVelocity(duck._inputDirection, duck.walkMoveSpeed);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (duck.interactInput) duck.playerInteract?.StopInteract();
-        duck.PhysicsVelocity(0, new Vector2(0, 0));
+        duck.SetDuckVelocity(duck._viewDirection, 0);
     }
 }

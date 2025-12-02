@@ -8,20 +8,15 @@ public class Fall : StateMachineBehaviour
     {
         GameObject obj = animator.gameObject;
         duck = obj.GetComponent<DuckController>();
-        if (duck == null)
-            Debug.LogError("Fall: No DuckController found on " + obj.name);
-
-        duck.animator.SetBool("isBusy", true);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.PhysicsVelocity(duck.walkMoveSpeed, duck._viewDirection);
+        duck.SetDuckVelocity(duck._inputDirection, duck.fallMoveSpeed);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.animator.SetBool("isBusy", false);
-        duck.PhysicsVelocity(0, new Vector2(0, 0));
+        duck.SetDuckVelocity(duck._viewDirection, 0);
     }
 }
