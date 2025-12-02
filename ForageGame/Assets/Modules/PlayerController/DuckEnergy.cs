@@ -6,8 +6,8 @@ public class DuckEnergy : MonoBehaviour
 {
     [Header("Energy Settings")]
     [SerializeField] private float maxEnergy = 100f;
-    [SerializeField] private float energyRegenRate = 10f;  // energy regenerated per second
-    [SerializeField] private float energyRegenDelay = 3f;  // seconds delay before regen starts
+    [SerializeField] private float energyRegenRate = 10f; // energy regenerated per second
+    [SerializeField] private float energyRegenDelay = 3f; // seconds delay before regen starts
 
     [Header("UI Settings")]
     [Tooltip("RectTransform of the energy bar GameObject")]
@@ -32,12 +32,6 @@ public class DuckEnergy : MonoBehaviour
         UpdateMaxEnergy();
         energy = currentMaxEnergy;
         timeSinceEnergyUsed = energyRegenDelay; // Start ready to regenerate
-
-        // Just a safety check so you don't forget to assign in Inspector
-        if (energyFill == null)
-            Debug.LogWarning("Energy Bar RectTransform not assigned.", this);
-        if (damageFill == null)
-            Debug.LogWarning("Damage Bar RectTransform not assigned.", this);
     }
 
     private void Update()

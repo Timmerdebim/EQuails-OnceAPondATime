@@ -72,13 +72,6 @@ public class DuckController : MonoBehaviour
         }
     }
 
-    public void Update()
-    {
-        // Check death using the energy component's public property
-        if (duckEnergy != null && duckEnergy.currentMaxEnergy <= 0)
-            animator.SetBool("isDead", true);
-    }
-
     public Vector2 _inputDirection { get; private set; }
     public Vector2 _viewDirection { get; private set; }
     public Vector3 duckVelocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update

@@ -38,7 +38,7 @@ public class DuckHitHandler : IHitHandler
         }
         Debug.Log(gameObject.name + " took " + damage + " damage. Current health: " + duck.duckEnergy.currentMaxEnergy);
         if (duck.duckEnergy.energy <= 0)
-            Debug.Log("bro died");
+            duck.animator.SetBool("isDead", true);
     }
 
     // Update is called once per frame
