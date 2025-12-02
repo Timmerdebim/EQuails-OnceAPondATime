@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DuckEnergy : MonoBehaviour
+public class DuckEnergy : MonoBehaviour, IHitHandler
 {
     [Header("Energy Settings")]
     [SerializeField] private float maxEnergy = 100f;
@@ -32,12 +32,22 @@ public class DuckEnergy : MonoBehaviour
         UpdateMaxEnergy();
         energy = currentMaxEnergy;
         timeSinceEnergyUsed = energyRegenDelay; // Start ready to regenerate
+
+        if (hitParticles) hitParticles.Stop();
     }
 
     private void Update()
     {
         RegenerateEnergy();
         UpdateEnergyBar();
+
+        // update invincibility timer (only when needed)
+        if (iFramesTimer > 0f)
+        {
+            iFramesTimer -= Time.deltaTime;
+            if (iFramesTimer < 0f)
+                iFramesTimer = 0f;
+        }
     }
 
     private void RegenerateEnergy()
@@ -119,6 +129,29 @@ public class DuckEnergy : MonoBehaviour
             if (currentMaxEnergy < 0.1f) energyGap = 0f;
             float damageX = Mathf.Max(0, damage / maxEnergy - energyGap);
             damageFill.sizeDelta = new Vector2(damageX, 0.8f);
+        }
+    }
+
+    // ------------ TAKE DAMAGE ------------
+
+    public ParticleSystem hitParticles;
+    public float iFramesDuration = 0.5f; // Invincibility frames duration in seconds
+    private float iFramesTimer = 0f;
+
+    public void Hit(float damage)
+    {
+        if (iFramesTimer > 0f) return; // currently in invincibility frames
+
+        iFramesTimer = iFramesDuration; // reset invincibility timer
+
+        TakeDamage(damage);
+        Debug.Log(gameObject.name + " took " + damage + " damage.");
+
+        // assume hit particles are burst at time 0
+        if (hitParticles)
+        {
+            hitParticles.time = 0f;
+            hitParticles.Play();
         }
     }
 }

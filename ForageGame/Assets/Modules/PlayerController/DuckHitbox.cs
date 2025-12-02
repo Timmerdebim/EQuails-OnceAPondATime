@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class DuckHitbox : MonoBehaviour
 {
     public int attackDamage = 24;
@@ -52,11 +51,8 @@ public class DuckHitbox : MonoBehaviour
             if (hitCollider.transform.IsChildOf(this.transform.parent))
                 continue;
 
-            HealthComponent hc = hitCollider.gameObject.GetComponent<HealthComponent>();
             IHitHandler hh = hitCollider.gameObject.GetComponent<IHitHandler>();
-            // gameObject.get
-            if (hc) hc.Hit(attackDamage);
-            if (hh) hh.Hit(attackDamage);
+            hh.Hit(attackDamage);
         }
     }
 }
