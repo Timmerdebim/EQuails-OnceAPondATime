@@ -12,7 +12,7 @@ namespace KinematicCharacterController.Examples
         public float followSharpness;
         public Transform player;
 
-        public void Update()
+        void LateUpdate()
         {
             if (!player) return;
 

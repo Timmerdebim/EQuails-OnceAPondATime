@@ -30,13 +30,10 @@ public class DuckController : MonoBehaviour
     [Header("Fall")]
     public float fallMoveSpeed = 3f;
 
-
     [Header("Misc")]
     public LayerMask interactionLayer;
     public TrailRenderer trailRenderer;
     public ParticleSystem hitParticleRenderer;
-
-
 
     public enum DashType
     {
@@ -95,6 +92,7 @@ public class DuckController : MonoBehaviour
 
     void FixedUpdate()
     {
+        duckVelocity.y = rb.linearVelocity.y;
         rb.linearVelocity = duckVelocity;
         rb.AddForce(duckForce, ForceMode.Force);
     }

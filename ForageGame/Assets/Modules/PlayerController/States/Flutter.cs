@@ -26,6 +26,7 @@ public class Flutter : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        duck.duckForce = new Vector3(0, 0, 0);
         duck.SetDuckVelocity(duck._viewDirection, 0);
         duck.rb.useGravity = true;
     }
