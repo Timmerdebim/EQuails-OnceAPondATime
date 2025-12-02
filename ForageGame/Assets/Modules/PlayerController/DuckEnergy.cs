@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,13 +11,13 @@ public class DuckEnergy : MonoBehaviour
 
     [Header("UI Settings")]
     [Tooltip("RectTransform of the energy bar GameObject")]
-    [SerializeField] private RectTransform energyBarRectTransform;
+    [SerializeField] private RectTransform energyFill;
 
     [Tooltip("RectTransform of the damage bar GameObject")]
-    [SerializeField] private RectTransform damageBarRectTransform;
+    [SerializeField] private RectTransform damageFill;
 
     // Current values
-    public float energy { get; private set;}
+    public float energy { get; private set; }
     public float damage { get; set; }
 
     // Derived max energy after damage is considered
@@ -33,16 +34,16 @@ public class DuckEnergy : MonoBehaviour
         timeSinceEnergyUsed = energyRegenDelay; // Start ready to regenerate
 
         // Just a safety check so you don't forget to assign in Inspector
-        if (energyBarRectTransform == null)
+        if (energyFill == null)
             Debug.LogWarning("Energy Bar RectTransform not assigned.", this);
-        if (damageBarRectTransform == null)
+        if (damageFill == null)
             Debug.LogWarning("Damage Bar RectTransform not assigned.", this);
     }
 
     private void Update()
     {
         RegenerateEnergy();
-        UpdateEnergyBarPositions();
+        UpdateEnergyBar();
     }
 
     private void RegenerateEnergy()
@@ -58,10 +59,8 @@ public class DuckEnergy : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Attempts to use energy. Returns true if successful.
-    /// Resets the regen timer if energy is used.
-    /// </summary>
+    // Attempts to use energy. Returns true if successful.
+    // Resets the regen timer if energy is used.
     public bool UseEnergy(float amount)
     {
         if (amount <= 0)
@@ -81,18 +80,14 @@ public class DuckEnergy : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Adds energy up to the current max.
-    /// </summary>
+    // Adds energy up to the current max.
     public void AddEnergy(float amount)
     {
         if (amount <= 0) return;
         energy = Mathf.Min(energy + amount, currentMaxEnergy);
     }
 
-    /// <summary>
-    /// Takes damage and updates max energy accordingly.
-    /// </summary>
+    // Takes damage and updates max energy accordingly.
     public void TakeDamage(float amount)
     {
         damage += amount;
@@ -104,32 +99,32 @@ public class DuckEnergy : MonoBehaviour
         energy = Mathf.Clamp(energy, 0f, currentMaxEnergy);
     }
 
-    /// <summary>
-    /// Updates the cached max energy after considering damage.
-    /// </summary>
+    // Updates the cached max energy after considering damage.
     private void UpdateMaxEnergy()
     {
         currentMaxEnergy = maxEnergy - damage;
     }
 
-    /// <summary>
-    /// Updates the UI bars positions based on current energy and damage.
-    /// Assumes the full width is 100 units (adjust if your bar width differs).
-    /// </summary>
-    private void UpdateEnergyBarPositions()
+    // Updates the UI bars positions based on current energy and damage.
+    // Assumes the full width is 100 units (adjust if your bar width differs).
+    private void UpdateEnergyBar()
     {
-        if (energyBarRectTransform != null)
+        if (energyFill != null)
         {
             // Move energy bar left as energy decreases (anchored at right)
-            float energyPosX = -(100f - energy);
-            energyBarRectTransform.anchoredPosition = new Vector2(energyPosX, energyBarRectTransform.anchoredPosition.y);
+            float energyGap = 0.005f;
+            if (damage < 0.1f) energyGap = 0f;
+            float energyX = Mathf.Max(0, energy / maxEnergy - energyGap);
+            energyFill.sizeDelta = new Vector2(energyX, 0.8f);
         }
 
-        if (damageBarRectTransform != null)
+        if (damageFill != null)
         {
             // Move damage bar right as damage increases (anchored at left)
-            float damagePosX = 100f - damage;
-            damageBarRectTransform.anchoredPosition = new Vector2(damagePosX, damageBarRectTransform.anchoredPosition.y);
+            float energyGap = 0.005f;
+            if (currentMaxEnergy < 0.1f) energyGap = 0f;
+            float damageX = Mathf.Max(0, damage / maxEnergy - energyGap);
+            damageFill.sizeDelta = new Vector2(damageX, 0.8f);
         }
     }
 }
