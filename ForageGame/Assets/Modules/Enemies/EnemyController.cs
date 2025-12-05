@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     public Animator animator;
     public NavMeshAgent navMeshAgent;
     public SpriteRenderer spriteRenderer;
+    public DuckController player;
 
     [Header("Roam")]
     public float roamSpeed = 5f;
@@ -25,7 +26,7 @@ public class EnemyController : MonoBehaviour
     public float searchSpeed = 5f;
 
     // Tracking
-    public DuckController player;
+    [Header("Misc")]
     public Vector3 lastSeenPlayerPos;
 
 

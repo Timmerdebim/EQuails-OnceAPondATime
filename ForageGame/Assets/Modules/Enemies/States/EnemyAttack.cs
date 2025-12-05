@@ -25,6 +25,7 @@ public class EnemyAttack : StateMachineBehaviour
 
         timer = 0f;
         currentPhase = AttackPhase.WindUp;
+        enemy.navMeshAgent.enabled = false; // Disable NavMeshAgent
         // Look in (and lock in) correct direction
         targetDir = enemy.player.transform.position - enemy.transform.position;
         if (targetDir.x < 0) enemy.spriteRenderer.flipX = true;
@@ -61,7 +62,6 @@ public class EnemyAttack : StateMachineBehaviour
             currentPhase = AttackPhase.Lunge;
             // Start Lunge
             enemy.attackHitbox.enabled = true;
-            enemy.navMeshAgent.enabled = false; // Disable NavMeshAgent
         }
     }
 

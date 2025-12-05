@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    LayerMask interactablesLayer;
+    [SerializeField] private LayerMask interactablesLayer;
     [SerializeField] private float interactionRadius = 3f;
 
     private IInteractable focusedInteractable;
@@ -13,11 +13,6 @@ public class PlayerInteract : MonoBehaviour
     bool interacting;
     float lastScanTime;
     float scanInterval = 0.2f; // Scan for interactables every 0.2 seconds
-
-    private void Awake()
-    {
-        interactablesLayer = LayerMask.GetMask("Interactable");
-    }
 
     private void Update()
     {
@@ -39,11 +34,11 @@ public class PlayerInteract : MonoBehaviour
         foreach (Collider col in nearbyInteractables)
         {
             IInteractable interactable;
-            if(col.TryGetComponent<IInteractable>(out interactable)) 
+            if (col.TryGetComponent<IInteractable>(out interactable))
             {
                 currentNearbyInteractables.Add(interactable, col.transform);
             }
-        }   
+        }
 
         if (currentNearbyInteractables.Count == 0)
         {
@@ -52,7 +47,7 @@ public class PlayerInteract : MonoBehaviour
         }
 
         EvaluateInteractableRelevance(currentNearbyInteractables);
-        
+
     }
 
     /// <summary>
@@ -63,7 +58,7 @@ public class PlayerInteract : MonoBehaviour
     {
         float smallestLossFunction = Mathf.Infinity;
         //The most relevant interactable is the one which best minimizes the loss function
-        (IInteractable interactable, Transform transform) mostRelevantInteractable = ( null, null);
+        (IInteractable interactable, Transform transform) mostRelevantInteractable = (null, null);
 
         foreach (var interactable_ in nearbyInteractables)
         {
@@ -93,7 +88,7 @@ public class PlayerInteract : MonoBehaviour
     /// </summary>
     public void Interact()
     {
-        if(focusedInteractable == null || interacting) { return; }
+        if (focusedInteractable == null || interacting) { return; }
 
         interacting = true;
         focusedInteractable.Interact(StopInteract);
@@ -104,7 +99,7 @@ public class PlayerInteract : MonoBehaviour
     /// </summary>
     public void StopInteract()
     {
-        if(!interacting) { return; }
+        if (!interacting) { return; }
         focusedInteractable?.StopInteract();
         interacting = false;
         ScanInteractables();

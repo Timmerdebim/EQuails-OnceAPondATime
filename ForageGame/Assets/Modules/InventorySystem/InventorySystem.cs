@@ -81,7 +81,6 @@ public class InventorySystem : MonoBehaviour
         {
             // Get player position
             Vector3 dropPosition = player.position; // TODO: move down to ground
-            dropPosition.y = 0.5f;
             Instantiate(itemToDrop.worldPrefab, dropPosition, Quaternion.identity);
         }
 
