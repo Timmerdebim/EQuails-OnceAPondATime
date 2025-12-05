@@ -7,41 +7,48 @@ namespace Assets.Modules.Interaction
     public class DefaultInteractable : MonoBehaviour, IInteractable
     {
         InteractablePrompt PopupPrompt; // UI element to prompt the player to interact
-        AudioSource interactSound; // Sound to play when interacting
+
+        public UnityEvent onInteract; // Event to invoke when interacting
+        public UnityEvent onStopInteract; // Event to invoke when stopping interaction
+        public UnityEvent onFocus;
+        public UnityEvent OnUnfocus;
 
         private void Start()
         {
             PopupPrompt = GetComponentInChildren<InteractablePrompt>(true);
-            interactSound = GetComponentInChildren<AudioSource>(true);
         }
 
-        public void Focus()
+        public virtual void Focus()
         {
             print("Focused on " + gameObject.name);
+
+            onFocus?.Invoke();
 
             PopupPrompt?.Activate();
         }
 
-        public void Unfocus()
+        public virtual void Unfocus()
         {
             print("Unfocused from " + gameObject.name);
+
+            OnUnfocus?.Invoke();
 
             PopupPrompt?.Deactivate();
         }
 
-        public void Interact(UnityAction StopInteractionCallback)
+        public virtual void Interact(UnityAction StopInteractionCallback)
         {
             print("Interacting with " + gameObject.name);
 
-            interactSound?.Play();
+            onInteract?.Invoke();
             GetComponentInChildren<Renderer>().material.color = Color.cyan;
         }
 
-        public void StopInteract()
+        public virtual void StopInteract()
         {
             print("Stopped interacting with " + gameObject.name);
 
-            interactSound?.Stop();
+            onStopInteract?.Invoke();
             GetComponentInChildren<Renderer>().material.color = Color.gray;
         }
 
