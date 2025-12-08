@@ -33,10 +33,10 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639008028809877038
+  lastModified: 639008347900488327
   FileSizes:
   - Name: 
-    Value: 1416
+    Value: 1552
   Exists: 1
 --- !u!114 &-5822413383391630073
 MonoBehaviour:
@@ -64,6 +64,34 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
+  Length: 0
+--- !u!114 &-4956859251680384342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BrackenWords
+  m_EditorClassIdentifier: 
+  Path: event:/BrackenWords
+  Guid:
+    Data1: -473889798
+    Data2: 1310666558
+    Data3: 1772529799
+    Data4: -898168805
+  Banks:
+  - {fileID: 1011369922214249550}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 2811660592273888443}
+  MinDistance: 2.2
+  MaxDistance: 20
   Length: 0
 --- !u!114 &-3083245267300596428
 MonoBehaviour:
@@ -194,13 +222,15 @@ MonoBehaviour:
   - {fileID: -3083245267300596428}
   - {fileID: -1325460635993339505}
   - {fileID: 7521773337722035053}
+  - {fileID: 3825239823158037001}
+  - {fileID: -4956859251680384342}
   EditorParameters: []
   MasterBanks:
   - {fileID: 3929215567152425302}
   StringsBanks:
   - {fileID: -5967379127343127821}
   cacheVersion: 131856
-  cacheTime: 639008036464646430
+  cacheTime: 639008347900488327
   SerializableEventsDict:
   - key: snapshot:/DuckAmbience
     index: 0
@@ -212,6 +242,30 @@ MonoBehaviour:
     index: 3
   - key: event:/BrackenGibberish
     index: 4
+--- !u!114 &328749943882108943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenGibberish 2/Syllable Count
+  m_EditorClassIdentifier: 
+  Name: Syllable Count
+  StudioPath: 
+  Min: 0
+  Max: 10
+  Default: 0
+  ID:
+    data1: 3978991329
+    data2: 2372632911
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &1011369922214249550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +281,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Characters.bank
   Name: Characters
   StudioPath: bank:/Characters
-  lastModified: 639008036464646430
+  lastModified: 639008347900357738
   FileSizes: []
   Exists: 1
 --- !u!114 &2319339570952460669
@@ -248,6 +302,66 @@ MonoBehaviour:
   lastModified: 638998725587972102
   FileSizes: []
   Exists: 1
+--- !u!114 &2811660592273888443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenWords/Word Bracken
+  m_EditorClassIdentifier: 
+  Name: Word Bracken
+  StudioPath: 
+  Min: 0
+  Max: 7
+  Default: 0
+  ID:
+    data1: 274850559
+    data2: 3350807691
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Hey
+  - Yes
+  - No
+  - Please
+  - Thanks
+  - No way
+  - Damn
+  - Yay
+  Exists: 1
+--- !u!114 &3825239823158037001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BrackenGibberish 2
+  m_EditorClassIdentifier: 
+  Path: event:/BrackenGibberish 2
+  Guid:
+    Data1: 1021086085
+    Data2: 1252893694
+    Data3: 107013041
+    Data4: -380138914
+  Banks:
+  - {fileID: 1011369922214249550}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 328749943882108943}
+  MinDistance: 2.2
+  MaxDistance: 20
+  Length: 2750
 --- !u!114 &3929215567152425302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +377,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639008028809855084
+  lastModified: 639008347900479398
   FileSizes: []
   Exists: 1
 --- !u!114 &4197800700082662143
