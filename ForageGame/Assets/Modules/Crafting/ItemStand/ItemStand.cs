@@ -6,14 +6,15 @@ public class ItemStand : MonoBehaviour
 {
     private WorldItem heldItem;
     [SerializeField] bool doAnimation;
-    [SerializeField] AnimationCurve rotationAnimationCurve;
-    [SerializeField] AnimationCurve heightAnimationCurve;
+    [SerializeField] float animationSpeed;
+    [SerializeField] float heightAnimationAmplitude;
+    [SerializeField] float rotationAnimationAmplitude;
     [SerializeField] float baseHeight;
 
     [SerializeField] float suckRadius = 1f;
     private NearbyList<WorldItem> nearbyItems;
     private const float pickupDistance = 0.1f; // Minimum distance to pop the item into the stand
-    private const float suckForce = 1f;
+    [SerializeField]private float suckForce = 1f;
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public class ItemStand : MonoBehaviour
             if (distance <= suckRadius)
             {
                 Vector3 dir = (transform.position - item.transform.position).normalized;
-                float forceFactor = (1 / (distance / suckRadius) ) * suckForce; //suck force divided by normalised distance
+                float forceFactor = (1 / (distance / suckRadius + 1) ) * suckForce; //suck force divided by normalised distance
                 
                 item.transform.Translate(dir * forceFactor);
             }
@@ -67,11 +68,11 @@ public class ItemStand : MonoBehaviour
     private void Animate()
     {
         float time = Time.time;
-        float rotationAngle = rotationAnimationCurve.Evaluate(time % rotationAnimationCurve.keys[rotationAnimationCurve.length - 1].time) * 360f;
-        float heightOffset = heightAnimationCurve.Evaluate(time % heightAnimationCurve.keys[heightAnimationCurve.length - 1].time);
+        float rotationAngle = rotationAnimationAmplitude * Mathf.Sin(1.1f * time * animationSpeed);
+        float heightOffset = heightAnimationAmplitude * transform.lossyScale.y * Mathf.Sin(time * animationSpeed);
 
         heldItem.transform.localPosition = new Vector3(0, baseHeight + heightOffset, 0);
-        heldItem.transform.localRotation = Quaternion.Euler(0, rotationAngle, 0);
+        heldItem.transform.localRotation = Quaternion.Euler(0, 0, rotationAngle);
     }
 
     private void RemoveItem()
