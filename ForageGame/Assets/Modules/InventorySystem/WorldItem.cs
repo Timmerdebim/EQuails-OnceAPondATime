@@ -6,12 +6,15 @@ public class WorldItem : MonoBehaviour, IInteractable
 {
     public Item itemData;
 
+    public UnityEvent onPickup;
+
     public void Interact(UnityAction StopInteractionCallback)
     {
         bool wasPickedUp = InventorySystem.Instance.PickupItem(itemData);
 
         if (wasPickedUp)
         {
+            onPickup?.Invoke();
             Destroy(gameObject);
         }
     }
