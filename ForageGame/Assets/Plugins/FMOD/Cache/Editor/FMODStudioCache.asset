@@ -33,10 +33,10 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638998725573467586
+  lastModified: 639008028809877038
   FileSizes:
   - Name: 
-    Value: 1188
+    Value: 1416
   Exists: 1
 --- !u!114 &-5822413383391630073
 MonoBehaviour:
@@ -146,6 +146,30 @@ MonoBehaviour:
   MinDistance: 9
   MaxDistance: 35
   Length: 0
+--- !u!114 &-235760179821588476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenGibberish/Syllable Delay
+  m_EditorClassIdentifier: 
+  Name: Syllable Delay
+  StudioPath: 
+  Min: 0
+  Max: 0.5
+  Default: 0
+  ID:
+    data1: 2784431254
+    data2: 2104672315
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,18 +187,20 @@ MonoBehaviour:
   - {fileID: 3929215567152425302}
   - {fileID: 2319339570952460669}
   - {fileID: -7239617052386125915}
+  - {fileID: 1011369922214249550}
   EditorEvents:
   - {fileID: -5822413383391630073}
   - {fileID: 4908017385451315613}
   - {fileID: -3083245267300596428}
   - {fileID: -1325460635993339505}
+  - {fileID: 7521773337722035053}
   EditorParameters: []
   MasterBanks:
   - {fileID: 3929215567152425302}
   StringsBanks:
   - {fileID: -5967379127343127821}
   cacheVersion: 131856
-  cacheTime: 639007015261725395
+  cacheTime: 639008036464646430
   SerializableEventsDict:
   - key: snapshot:/DuckAmbience
     index: 0
@@ -184,6 +210,26 @@ MonoBehaviour:
     index: 2
   - key: event:/LyriaKalimba
     index: 3
+  - key: event:/BrackenGibberish
+    index: 4
+--- !u!114 &1011369922214249550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Characters.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/Characters.bank
+  Name: Characters
+  StudioPath: bank:/Characters
+  lastModified: 639008036464646430
+  FileSizes: []
+  Exists: 1
 --- !u!114 &2319339570952460669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,8 +263,32 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638998725573450556
+  lastModified: 639008028809855084
   FileSizes: []
+  Exists: 1
+--- !u!114 &4197800700082662143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenGibberish/Pitch
+  m_EditorClassIdentifier: 
+  Name: Pitch
+  StudioPath: 
+  Min: -5
+  Max: 5
+  Default: 0
+  ID:
+    data1: 1222555329
+    data2: 4003267989
+  Type: 0
+  IsGlobal: 0
+  Labels: []
   Exists: 1
 --- !u!114 &4908017385451315613
 MonoBehaviour:
@@ -247,3 +317,57 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 18000
+--- !u!114 &6750318386463868914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenGibberish/Syllable Count
+  m_EditorClassIdentifier: 
+  Name: Syllable Count
+  StudioPath: 
+  Min: 0
+  Max: 10
+  Default: 0
+  ID:
+    data1: 3978991329
+    data2: 2372632911
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &7521773337722035053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BrackenGibberish
+  m_EditorClassIdentifier: 
+  Path: event:/BrackenGibberish
+  Guid:
+    Data1: 1474950576
+    Data2: 1186527435
+    Data3: 1321112980
+    Data4: 939974675
+  Banks:
+  - {fileID: 1011369922214249550}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -235760179821588476}
+  - {fileID: 6750318386463868914}
+  - {fileID: 4197800700082662143}
+  MinDistance: 2.2
+  MaxDistance: 20
+  Length: 2000
