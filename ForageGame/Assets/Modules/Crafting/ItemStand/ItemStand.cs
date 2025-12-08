@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Modules.Utils.Nearby;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,10 +38,10 @@ public class ItemStand : MonoBehaviour
         }
     }
 
-    public Item GetHeldItem()
+    public WorldItem GetHeldItem()
     {
         if( heldItem == null ) { return null; }
-        return heldItem.itemData;
+        return heldItem;
     }
 
     private void SuckNearbyItems()
@@ -72,7 +73,11 @@ public class ItemStand : MonoBehaviour
         heldItem = item;
         heldItem.onPickup.AddListener(RemoveItem);
         heldItem.transform.SetParent(transform);
+
         heldItem.transform.localPosition = new Vector3(0, baseHeight, 0);
+        heldItem.transform.localScale = Vector3.zero;
+        heldItem.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBack);
+
     }
 
     private void Animate()
@@ -87,7 +92,6 @@ public class ItemStand : MonoBehaviour
 
     public void RemoveItem()
     {
-        Destroy(heldItem.gameObject);
         heldItem = null;
     }
 }
