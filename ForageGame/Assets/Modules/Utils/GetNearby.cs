@@ -23,7 +23,7 @@ namespace Modules.Utils.Nearby
                 }
             }
 
-            Debug.Log(nearbyObjects.Count);
+            //Debug.Log(nearbyObjects.Count);
             return nearbyObjects;
         }
     }

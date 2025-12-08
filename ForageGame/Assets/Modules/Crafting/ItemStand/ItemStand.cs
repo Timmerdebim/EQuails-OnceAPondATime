@@ -10,15 +10,19 @@ public class ItemStand : MonoBehaviour
     [SerializeField] float heightAnimationAmplitude;
     [SerializeField] float rotationAnimationAmplitude;
     [SerializeField] float baseHeight;
+    private float instanceRandomOffset;
 
     [SerializeField] float suckRadius = 1f;
     private NearbyList<WorldItem> nearbyItems;
     private const float pickupDistance = 0.1f; // Minimum distance to pop the item into the stand
     [SerializeField]private float suckForce = 1f;
 
+
+
     private void Awake()
     {
         nearbyItems = new NearbyList<WorldItem>(0.1f, transform, suckRadius, LayerMask.GetMask("Pickup"));
+        instanceRandomOffset = Random.Range(0f, 2*Mathf.PI);
     }
 
     private void Update()
@@ -31,6 +35,12 @@ public class ItemStand : MonoBehaviour
         {
             Animate();
         }
+    }
+
+    public Item GetHeldItem()
+    {
+        if( heldItem == null ) { return null; }
+        return heldItem.itemData;
     }
 
     private void SuckNearbyItems()
@@ -67,7 +77,7 @@ public class ItemStand : MonoBehaviour
 
     private void Animate()
     {
-        float time = Time.time;
+        float time = Time.time + instanceRandomOffset;
         float rotationAngle = rotationAnimationAmplitude * Mathf.Sin(1.1f * time * animationSpeed);
         float heightOffset = heightAnimationAmplitude * transform.lossyScale.y * Mathf.Sin(time * animationSpeed);
 
@@ -75,8 +85,9 @@ public class ItemStand : MonoBehaviour
         heldItem.transform.localRotation = Quaternion.Euler(0, 0, rotationAngle);
     }
 
-    private void RemoveItem()
+    public void RemoveItem()
     {
+        Destroy(heldItem.gameObject);
         heldItem = null;
     }
 }

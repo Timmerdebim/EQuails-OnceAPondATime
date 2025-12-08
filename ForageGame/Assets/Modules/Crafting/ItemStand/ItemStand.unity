@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 467911671}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.46000004, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -422,20 +422,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doAnimation: 1
-  rotationAnimationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  heightAnimationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  animationSpeed: 0.5
+  heightAnimationAmplitude: 0.2
+  rotationAnimationAmplitude: 20
   baseHeight: 2
-  suckRadius: 1000
+  suckRadius: 2
+  suckForce: 0.02
 --- !u!4 &880544986
 Transform:
   m_ObjectHideFlags: 0
@@ -445,7 +437,7 @@ Transform:
   m_GameObject: {fileID: 880544984}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.286093, y: 0.53999996, z: -4.1226864}
+  m_LocalPosition: {x: 6.286093, y: 1, z: -4.1226864}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
