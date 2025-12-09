@@ -54,12 +54,15 @@ public class Crafter : MonoBehaviour
         {
             foreach (ItemStand slot in craftingSlots)
             {
-                if (slot.GetHeldItem().itemData == requiredItem)
+                if (slot.GetHeldItem() != null && slot.GetHeldItem().itemData == requiredItem)
                 {
                     WorldItem item = slot.GetHeldItem();
                     slot.RemoveItem();
-                    tweens.Insert(0, item.transform.DOMove(transform.position, 0.5f).SetEase(Ease.OutCubic));
-                    tweens.Insert(1, item.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InCubic).OnComplete(() =>
+                    item.enabled = false; // Disable WorldItem component so that it can't be picked up or pulled on during animations
+
+                    tweens.Insert(0, item.transform.DOMove(transform.position - 0.3f * (transform.position - item.transform.position).normalized, 0.5f).SetEase(Ease.InCubic));
+                    // Add a short delay here before starting the scale (but don't wait for move to finish ?
+                    tweens.Insert(0, item.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InExpo).OnComplete(() =>
                     {
                         Destroy(item.gameObject);
                     }));

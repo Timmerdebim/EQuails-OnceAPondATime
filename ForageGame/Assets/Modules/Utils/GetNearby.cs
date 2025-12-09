@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Modules.Utils.Nearby
 {
-    public static class NearbyUtil<T>
+    public static class NearbyUtil<T> where T : Behaviour
     {
         public static List<T> GetNearbyObjects(Vector3 position, float radius, LayerMask layerMask)
         {
@@ -16,7 +16,7 @@ namespace Modules.Utils.Nearby
             RaycastHit[] hits = Physics.SphereCastAll(position, radius, Vector3.up, Mathf.Infinity, layerMask, QueryTriggerInteraction.Collide);
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.TryGetComponent<T>(out T obj))
+                if (hit.collider.TryGetComponent<T>(out T obj) && obj.enabled)
                 {
                     if (nearbyObjects.Contains(obj)) continue;
                     nearbyObjects.Add(obj);
@@ -28,7 +28,7 @@ namespace Modules.Utils.Nearby
         }
     }
 
-    public class NearbyList<T> : IEnumerable<T> 
+    public class NearbyList<T> : IEnumerable<T> where T : Behaviour
     {
         private List<T> nearbyObjects = new List<T>();
         public List<T> NearbyObjects

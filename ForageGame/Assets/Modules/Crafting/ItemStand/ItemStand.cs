@@ -18,7 +18,7 @@ public class ItemStand : MonoBehaviour
     private const float pickupDistance = 0.1f; // Minimum distance to pop the item into the stand
     [SerializeField]private float suckForce = 1f;
 
-
+    Tween animationInProgress;
 
     private void Awake()
     {
@@ -76,7 +76,7 @@ public class ItemStand : MonoBehaviour
 
         heldItem.transform.localPosition = new Vector3(0, baseHeight, 0);
         heldItem.transform.localScale = Vector3.zero;
-        heldItem.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBack);
+        animationInProgress = heldItem.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBack);
 
     }
 
@@ -93,5 +93,6 @@ public class ItemStand : MonoBehaviour
     public void RemoveItem()
     {
         heldItem = null;
+        animationInProgress?.Complete();
     }
 }
