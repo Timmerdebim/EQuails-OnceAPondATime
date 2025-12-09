@@ -12,7 +12,8 @@ public class Dialogue : MonoBehaviour
     // When we get an input, first cancel typewrite animation, or if it is already finished, go to next text
 
 
-    [SerializeField]string[] messages = {
+    [SerializeField]
+    string[] messages = {
         "Hello, adventurer!",
         "Welcome to our village.",
         "Feel free to explore and talk to the locals.",
@@ -30,6 +31,15 @@ public class Dialogue : MonoBehaviour
 
     CancellationTokenSource textCtxSource = new CancellationTokenSource();
 
+    public bool _messageRead { get; private set; } = false;
+
+    public void SetDialogue(string[] text)
+    {
+        EndDialogue(); // done for saftey
+        _messageRead = false;
+        messages = text;
+    }
+
     private void EndDialogue()
     {
         dialogueBox.CloseDialogue();
@@ -38,7 +48,7 @@ public class Dialogue : MonoBehaviour
 
     private Task Speak(string message)
     {
-        if(index <= 0)
+        if (index <= 0)
         {
             dialogueBox.OpenDialogue();
         }
@@ -51,10 +61,10 @@ public class Dialogue : MonoBehaviour
     {
         print("Next Message");
 
-        if(textWriting != null && !textWriting.IsCompleted)
+        if (textWriting != null && !textWriting.IsCompleted)
         {
             textCtxSource.Cancel();
-            if(textWriting != null && !textWriting.IsCompleted)
+            if (textWriting != null && !textWriting.IsCompleted)
             {
                 await textWriting;
             }
@@ -64,6 +74,7 @@ public class Dialogue : MonoBehaviour
 
         if (index > messages.Length - 1)
         {
+            _messageRead = true;
             EndDialogue();
             return;
         }
@@ -75,10 +86,10 @@ public class Dialogue : MonoBehaviour
 
     public void WalkAway()
     {
-        if(index <= 0)
+        if (index <= 0)
         {
             //This means we are not in conversation
-            if(normalLeaveMessage != null)
+            if (normalLeaveMessage != null)
             {
                 textWriting = ShortMessage(normalLeaveMessage);
             }
@@ -86,7 +97,7 @@ public class Dialogue : MonoBehaviour
         else
         {
             //This means we are in conversation, so it's rude to leave
-            if(rudeLeaveMessage != null)
+            if (rudeLeaveMessage != null)
             {
                 textWriting = ShortMessage(rudeLeaveMessage);
             }

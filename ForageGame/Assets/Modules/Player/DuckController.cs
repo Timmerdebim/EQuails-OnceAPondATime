@@ -13,7 +13,7 @@ public class DuckController : MonoBehaviour
     [Header("Walk")]
     public float walkMoveSpeed = 5f;
     [Header("Dash")]
-    public float dashMoveSpeed = 60f;
+    public float dashMoveSpeed = 60f; // TOOD: dash while flutter/hop (only 1 time before reset on ground)
     public float dashEnergy = 10f;
     [Header("Hop")]
     public float hopMoveSpeed = 3f;
@@ -21,7 +21,7 @@ public class DuckController : MonoBehaviour
     public float hopEnergy = 10f;
     [Header("Flutter")]
     public float flutterMoveSpeed = 3f;
-    public float flutterHeight = 6f;
+    public float flutterHeight = 6f; // TODO: make fullter look at last ground height position
     public float flutterNaturalFrequency = 3f; // i aint explaining this - pick up a textbook on dampening systems or smth
     public float flutterEnergy = 10f; // this is energy per second
     [Header("Attack")]

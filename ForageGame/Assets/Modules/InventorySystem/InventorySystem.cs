@@ -106,13 +106,23 @@ public class InventorySystem : MonoBehaviour
         else Debug.Log("Item cannot be consumed");
     }
 
+    public bool GiveItem(Item item)
+    {
+        for (int i = 0; i < hotbarSize; i++)
+        {
+            if (item == hotbarItems[i])
+            {
+                RemoveItem(i);
+                return true;
+            }
+        }
+        return false;
+    }
     public void RemoveItem(int index)
     {
         hotbarItems[index] = null;
         hotbarSlots[index].ClearSlot();
     }
-
-
 
     public void SelectSlot(int index)
     {
