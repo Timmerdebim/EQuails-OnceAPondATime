@@ -20,10 +20,17 @@ namespace Assets.Modules.Dialogue
         Task animateOut;
         Task animateIn;
 
+        //FMOD stuff
+        public FMODUnity.EventReference GibberishSpeechEvent;
+        FMOD.Studio.EventInstance GibberishSpeech; //instance of the previous
+
         private void Start()
         {
             canvas.gameObject.SetActive(false);
             canvas.transform.localScale = Vector3.zero;
+            //Create the FMOD event
+            GibberishSpeech = FMODUnity.RuntimeManager.CreateInstance(GibberishSpeechEvent);
+            GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
         }
 
         public async void OpenDialogue()
@@ -111,10 +118,14 @@ namespace Assets.Modules.Dialogue
             animationCtxSource = new CancellationTokenSource();
         }
 
+        //what actually draws characters on screen
         public async Task SetText(string text, CancellationToken ctx)
         {
             await CancelAnimations();
             Task typewriting = dialogueText.TypewriteText(text, ctx);
+
+            //start gibberish speech
+            GibberishSpeech.start();
 
             if (animateIn?.IsCompleted == false)
             {
