@@ -1,5 +1,76 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8934457859141621715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/RainTheme/Next Theme
+  m_EditorClassIdentifier: 
+  Name: Next Theme
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 791302249
+    data2: 3367246056
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Piano
+  - Orchestra
+  Exists: 1
+--- !u!114 &-8362066005591868449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Swamp.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/Swamp.bank
+  Name: Swamp
+  StudioPath: bank:/Swamp
+  lastModified: 638998725587972102
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-7301487881755517099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/DuckAmbience
+  m_EditorClassIdentifier: 
+  Path: snapshot:/DuckAmbience
+  Guid:
+    Data1: -1715740613
+    Data2: 1210138865
+    Data3: 1309243550
+    Data4: -347668224
+  Banks:
+  - {fileID: 608923151628609100}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &-7239617052386125915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17,6 +88,86 @@ MonoBehaviour:
   StudioPath: bank:/FlowerField
   lastModified: 639007015261725395
   FileSizes: []
+  Exists: 1
+--- !u!114 &-7096032171117770309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RainTheme
+  m_EditorClassIdentifier: 
+  Path: event:/RainTheme
+  Guid:
+    Data1: 915055842
+    Data2: 1272728366
+    Data3: 1222959788
+    Data4: 830151803
+  Banks:
+  - {fileID: -8362066005591868449}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -8934457859141621715}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 100800
+--- !u!114 &-6951122141825428502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BrackenGibberish 2
+  m_EditorClassIdentifier: 
+  Path: event:/BrackenGibberish 2
+  Guid:
+    Data1: 1021086085
+    Data2: 1252893694
+    Data3: 107013041
+    Data4: -380138914
+  Banks:
+  - {fileID: -23765282310559709}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -1200645681755224706}
+  MinDistance: 2.2
+  MaxDistance: 20
+  Length: 2750
+--- !u!114 &-6524742317709505894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenGibberish/Syllable Count
+  m_EditorClassIdentifier: 
+  Name: Syllable Count
+  StudioPath: 
+  Min: 1
+  Max: 10
+  Default: 1
+  ID:
+    data1: 3978991329
+    data2: 2372632911
+  Type: 1
+  IsGlobal: 0
+  Labels: []
   Exists: 1
 --- !u!114 &-5967379127343127821
 MonoBehaviour:
@@ -93,6 +244,96 @@ MonoBehaviour:
   MinDistance: 2.2
   MaxDistance: 20
   Length: 0
+--- !u!114 &-4906456295619855916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenWords/Word Bracken
+  m_EditorClassIdentifier: 
+  Name: Word Bracken
+  StudioPath: 
+  Min: 0
+  Max: 7
+  Default: 0
+  ID:
+    data1: 274850559
+    data2: 3350807691
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Hey
+  - Yes
+  - No
+  - Please
+  - Thanks
+  - No way
+  - Damn
+  - Yay
+  Exists: 1
+--- !u!114 &-4894427385112865898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BrackenWords
+  m_EditorClassIdentifier: 
+  Path: event:/BrackenWords
+  Guid:
+    Data1: -473889798
+    Data2: 1310666558
+    Data3: 1772529799
+    Data4: -898168805
+  Banks:
+  - {fileID: -23765282310559709}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -4906456295619855916}
+  MinDistance: 2.2
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3341830582238034349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BrackenGibberish
+  m_EditorClassIdentifier: 
+  Path: event:/BrackenGibberish
+  Guid:
+    Data1: 1474950576
+    Data2: 1186527435
+    Data3: 1321112980
+    Data4: 939974675
+  Banks:
+  - {fileID: -23765282310559709}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 7292861107632515675}
+  - {fileID: -6524742317709505894}
+  - {fileID: 4547591794369940224}
+  MinDistance: 2.2
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &-3083245267300596428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +362,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 100800
+--- !u!114 &-2824797595103705272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/GibberishSpeech/Syllable Count
+  m_EditorClassIdentifier: 
+  Name: Syllable Count
+  StudioPath: 
+  Min: 1
+  Max: 10
+  Default: 1
+  ID:
+    data1: 3978991329
+    data2: 2372632911
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-1488578459968136536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +439,83 @@ MonoBehaviour:
   MinDistance: 9
   MaxDistance: 35
   Length: 0
+--- !u!114 &-1200645681755224706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenGibberish 2/Syllable Count
+  m_EditorClassIdentifier: 
+  Name: Syllable Count
+  StudioPath: 
+  Min: 1
+  Max: 10
+  Default: 1
+  ID:
+    data1: 3978991329
+    data2: 2372632911
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-1096492511145494728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LyriaKalimba
+  m_EditorClassIdentifier: 
+  Path: event:/LyriaKalimba
+  Guid:
+    Data1: -1817708164
+    Data2: 1095766681
+    Data3: 1695026055
+    Data4: -548317238
+  Banks:
+  - {fileID: 4255864008336342988}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 9
+  MaxDistance: 35
+  Length: 0
+--- !u!114 &-478078472335552161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/GibberishSpeech/Character
+  m_EditorClassIdentifier: 
+  Name: Character
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 3308580184
+    data2: 793388400
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Bracken
+  - Mosswick
+  Exists: 1
 --- !u!114 &-235760179821588476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +540,24 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-23765282310559709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Characters.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/Characters.bank
+  Name: Characters
+  StudioPath: bank:/Characters
+  lastModified: 639009998328086686
+  FileSizes: []
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,37 +571,47 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -5967379127343127821}
-  - {fileID: 3929215567152425302}
-  - {fileID: 2319339570952460669}
-  - {fileID: -7239617052386125915}
-  - {fileID: 1011369922214249550}
+  - {fileID: 1712371525636391425}
+  - {fileID: -23765282310559709}
+  - {fileID: 4255864008336342988}
+  - {fileID: 608923151628609100}
+  - {fileID: -8362066005591868449}
   EditorEvents:
-  - {fileID: -5822413383391630073}
-  - {fileID: 4908017385451315613}
-  - {fileID: -3083245267300596428}
-  - {fileID: -1325460635993339505}
-  - {fileID: 7521773337722035053}
-  - {fileID: 3825239823158037001}
-  - {fileID: -4956859251680384342}
+  - {fileID: -6951122141825428502}
+  - {fileID: -3341830582238034349}
+  - {fileID: 8877951368469355605}
+  - {fileID: -4894427385112865898}
+  - {fileID: -1096492511145494728}
+  - {fileID: -7301487881755517099}
+  - {fileID: 4438714229476086701}
+  - {fileID: -7096032171117770309}
+  - {fileID: 9088293088297224787}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 3929215567152425302}
+  - {fileID: 608923151628609100}
   StringsBanks:
-  - {fileID: -5967379127343127821}
+  - {fileID: 1712371525636391425}
   cacheVersion: 131856
-  cacheTime: 639008347900488327
+  cacheTime: 639009998328250616
   SerializableEventsDict:
-  - key: snapshot:/DuckAmbience
+  - key: event:/BrackenGibberish 2
     index: 0
-  - key: event:/RainAmbiance
-    index: 1
-  - key: event:/RainTheme
-    index: 2
-  - key: event:/LyriaKalimba
-    index: 3
   - key: event:/BrackenGibberish
+    index: 1
+  - key: event:/MosswickGibberish
+    index: 2
+  - key: event:/BrackenWords
+    index: 3
+  - key: event:/LyriaKalimba
     index: 4
+  - key: snapshot:/DuckAmbience
+    index: 5
+  - key: event:/RainAmbiance
+    index: 6
+  - key: event:/RainTheme
+    index: 7
+  - key: event:/GibberishSpeech
+    index: 8
 --- !u!114 &328749943882108943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +636,24 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &608923151628609100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 639009998328237197
+  FileSizes: []
+  Exists: 1
 --- !u!114 &1011369922214249550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +672,26 @@ MonoBehaviour:
   lastModified: 639008347900357738
   FileSizes: []
   Exists: 1
+--- !u!114 &1712371525636391425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 639009998328250616
+  FileSizes:
+  - Name: 
+    Value: 1686
+  Exists: 1
 --- !u!114 &2319339570952460669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +709,30 @@ MonoBehaviour:
   StudioPath: bank:/Swamp
   lastModified: 638998725587972102
   FileSizes: []
+  Exists: 1
+--- !u!114 &2349758810819043515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MosswickGibberish/Syllable Count
+  m_EditorClassIdentifier: 
+  Name: Syllable Count
+  StudioPath: 
+  Min: 1
+  Max: 10
+  Default: 1
+  ID:
+    data1: 3978991329
+    data2: 2372632911
+  Type: 1
+  IsGlobal: 0
+  Labels: []
   Exists: 1
 --- !u!114 &2811660592273888443
 MonoBehaviour:
@@ -404,6 +836,75 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &4255864008336342988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/FlowerField.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/FMOD/Desktop/FlowerField.bank
+  Name: FlowerField
+  StudioPath: bank:/FlowerField
+  lastModified: 639007015261725395
+  FileSizes: []
+  Exists: 1
+--- !u!114 &4438714229476086701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RainAmbiance
+  m_EditorClassIdentifier: 
+  Path: event:/RainAmbiance
+  Guid:
+    Data1: -325478709
+    Data2: 1321753636
+    Data3: -50108011
+    Data4: -1812603455
+  Banks:
+  - {fileID: -8362066005591868449}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 18000
+--- !u!114 &4547591794369940224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenGibberish/Pitch
+  m_EditorClassIdentifier: 
+  Name: Pitch
+  StudioPath: 
+  Min: -5
+  Max: 5
+  Default: 0
+  ID:
+    data1: 1222555329
+    data2: 4003267989
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &4908017385451315613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,6 +956,30 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &7292861107632515675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrackenGibberish/Syllable Delay
+  m_EditorClassIdentifier: 
+  Name: Syllable Delay
+  StudioPath: 
+  Min: 0
+  Max: 0.5
+  Default: 0
+  ID:
+    data1: 2784431254
+    data2: 2104672315
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &7521773337722035053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,3 +1010,60 @@ MonoBehaviour:
   MinDistance: 2.2
   MaxDistance: 20
   Length: 2000
+--- !u!114 &8877951368469355605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MosswickGibberish
+  m_EditorClassIdentifier: 
+  Path: event:/MosswickGibberish
+  Guid:
+    Data1: 1559279056
+    Data2: 1311256089
+    Data3: 1126554515
+    Data4: 119260644
+  Banks:
+  - {fileID: -23765282310559709}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 2349758810819043515}
+  MinDistance: 2.2
+  MaxDistance: 20
+  Length: 3148
+--- !u!114 &9088293088297224787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GibberishSpeech
+  m_EditorClassIdentifier: 
+  Path: event:/GibberishSpeech
+  Guid:
+    Data1: -22492690
+    Data2: 1262413764
+    Data3: 921604781
+    Data4: 1779319337
+  Banks:
+  - {fileID: -23765282310559709}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -478078472335552161}
+  - {fileID: -2824797595103705272}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
