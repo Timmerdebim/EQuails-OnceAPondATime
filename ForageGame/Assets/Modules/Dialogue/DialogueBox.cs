@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Assets.Modules.Dialogue
@@ -20,10 +21,20 @@ namespace Assets.Modules.Dialogue
         Task animateOut;
         Task animateIn;
 
+        //FMOD stuff
+        public FMODUnity.EventReference GibberishSpeechEvent;
+        FMOD.Studio.EventInstance GibberishSpeech; //instance of the previous
+        FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; //parameters of previous
+
+        public enum Character {Bracken, Mosswick}; //TODO: should be part of a dialogue SO ~Lars
+
         private void Start()
         {
             canvas.gameObject.SetActive(false);
             canvas.transform.localScale = Vector3.zero;
+            //Create the FMOD event
+            GibberishSpeech = FMODUnity.RuntimeManager.CreateInstance(GibberishSpeechEvent);
+            GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
         }
 
         public async void OpenDialogue()
@@ -105,16 +116,27 @@ namespace Assets.Modules.Dialogue
 
             animationCtxSource?.Cancel();
 
+            //stop any ongoing speech
+            GibberishSpeech.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
             if (animateIn?.IsCompleted == false) { await animateIn; }
             if (animateOut?.IsCompleted == false) { await animateOut; }
 
             animationCtxSource = new CancellationTokenSource();
         }
 
-        public async Task SetText(string text, CancellationToken ctx)
+        //what actually draws characters on screen
+        public async Task SetText(string text, Character character, CancellationToken ctx)
         {
             await CancelAnimations();
             Task typewriting = dialogueText.TypewriteText(text, ctx);
+
+            //start gibberish speech, by name is inefficient but who cares.
+            int syllables = math.clamp(text.Length / 5, 1, 10); //THIS IS A PLACEHOLDER, THIS SHOULD BE PART OF THE DIALOGUE SO ~Lars
+            Debug.Log($"Speaking, {syllables} Syllables!");
+            GibberishSpeech.setParameterByName("Syllable Count", syllables);
+            GibberishSpeech.setParameterByName("Character", (int) character);
+            GibberishSpeech.start();
 
             if (animateIn?.IsCompleted == false)
             {
