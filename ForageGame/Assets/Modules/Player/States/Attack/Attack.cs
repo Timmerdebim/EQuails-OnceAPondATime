@@ -14,7 +14,7 @@ public class Attack : StateMachineBehaviour
         duck.hitboxCollider.transform.localEulerAngles = new Vector3(0, Mathf.Atan2(duck._viewDirection.y, duck._viewDirection.x) * 180f / Mathf.PI, 0);
         duck.hitboxCollider.enabled = true;
         duck.SetDuckVelocity(duck._viewDirection, duck.attackMoveSpeed);
-        duck.rb.useGravity = false;
+        duck.DisableGravity();
 
         duck.duckEnergy.UseEnergy(duck.attackEnergy);
     }
@@ -25,8 +25,6 @@ public class Attack : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.hitboxCollider.enabled = false;
-        duck.SetDuckVelocity(duck._viewDirection, 0);
-        duck.rb.useGravity = true;
+        duck.ExitStateReset();
     }
 }

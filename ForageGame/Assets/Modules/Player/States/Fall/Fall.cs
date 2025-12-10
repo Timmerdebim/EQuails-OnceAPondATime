@@ -17,6 +17,6 @@ public class Fall : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.SetDuckVelocity(duck._viewDirection, 0);
+        duck.ExitStateReset();
     }
 }

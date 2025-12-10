@@ -35,6 +35,8 @@ public class DuckController : MonoBehaviour
     public TrailRenderer trailRenderer;
     public ParticleSystem hitParticleRenderer;
 
+    public float lastGroundHeight { get; private set; } = 0;
+
     public enum DashType
     {
         none,
@@ -72,6 +74,8 @@ public class DuckController : MonoBehaviour
         }
     }
 
+    // ------------ PHYSICS ------------
+
     public Vector2 _inputDirection { get; private set; }
     public Vector2 _viewDirection { get; private set; }
     public Vector3 duckVelocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update
@@ -81,6 +85,14 @@ public class DuckController : MonoBehaviour
     {
         duckVelocity = new Vector3(direction.x, 0, direction.y) * magnitude;
         duckVelocity.y = rb.linearVelocity.y;
+    }
+
+    public void DisableGravity()
+    {
+        rb.useGravity = false;
+        Vector3 velocity = rb.linearVelocity;
+        velocity.y = 0;
+        rb.linearVelocity = velocity;
     }
 
     void FixedUpdate()
@@ -109,13 +121,17 @@ public class DuckController : MonoBehaviour
     public void OnDash(InputAction.CallbackContext context)
     {
         if (context.action.WasPressedThisFrame() && duckEnergy.energy > dashEnergy)
-            animator.SetTrigger("dash");
+            animator.SetBool("dash", true);
+        if (context.action.WasReleasedThisFrame())
+            animator.SetBool("dash", false);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.action.WasPressedThisFrame() && duckEnergy.energy > attackEnergy)
-            animator.SetTrigger("attack");
+            animator.SetBool("attack", true);
+        if (context.action.WasReleasedThisFrame())
+            animator.SetBool("attack", false);
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -134,18 +150,35 @@ public class DuckController : MonoBehaviour
     public void OnHop(InputAction.CallbackContext context)
     {
         if (context.action.WasPressedThisFrame() && duckEnergy.energy > hopEnergy)
-            animator.SetTrigger("hop");
+            animator.SetBool("hop", true);
+        if (context.action.WasReleasedThisFrame())
+            animator.SetBool("hop", false);
     }
 
     // ------------ GROUND CHECK ------------
 
-    void OnCollisionStay(Collision collision)
+    void OnCollisionEnter(Collision collisionInfo)
     {
         animator.SetBool("isGrounded", true);
+        animator.SetBool("airDashed", false);
+
     }
 
     void OnCollisionExit(Collision collision)
     {
         animator.SetBool("isGrounded", false);
+        lastGroundHeight = transform.position.z;
+    }
+
+    // ------------ ANIMATOR CLUNK ------------
+
+    public void ExitStateReset()
+    {
+        if (interactInput) playerInteract?.StopInteract();
+        duckForce = new Vector3(0, 0, 0);
+        SetDuckVelocity(_viewDirection, 0);
+        rb.useGravity = true;
+        hitboxCollider.enabled = false;
+        trailRenderer.emitting = false;
     }
 }

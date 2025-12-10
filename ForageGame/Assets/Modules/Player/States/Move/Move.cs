@@ -22,7 +22,6 @@ public class Move : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (duck.interactInput) duck.playerInteract?.StopInteract();
-        duck.SetDuckVelocity(duck._viewDirection, 0);
+        duck.ExitStateReset();
     }
 }
