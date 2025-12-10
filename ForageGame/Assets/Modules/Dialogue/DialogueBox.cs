@@ -23,6 +23,7 @@ namespace Assets.Modules.Dialogue
         //FMOD stuff
         public FMODUnity.EventReference GibberishSpeechEvent;
         FMOD.Studio.EventInstance GibberishSpeech; //instance of the previous
+        FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; //parameters of previous
 
         private void Start()
         {
@@ -112,6 +113,9 @@ namespace Assets.Modules.Dialogue
 
             animationCtxSource?.Cancel();
 
+            //stop any ongoing speech
+            GibberishSpeech.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
             if (animateIn?.IsCompleted == false) { await animateIn; }
             if (animateOut?.IsCompleted == false) { await animateOut; }
 
@@ -125,6 +129,7 @@ namespace Assets.Modules.Dialogue
             Task typewriting = dialogueText.TypewriteText(text, ctx);
 
             //start gibberish speech
+            GibberishSpeech.setParameterByName("Syllable Count", 6);
             GibberishSpeech.start();
 
             if (animateIn?.IsCompleted == false)
