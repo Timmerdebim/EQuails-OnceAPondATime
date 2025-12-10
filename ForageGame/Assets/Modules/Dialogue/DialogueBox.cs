@@ -25,6 +25,8 @@ namespace Assets.Modules.Dialogue
         FMOD.Studio.EventInstance GibberishSpeech; //instance of the previous
         FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; //parameters of previous
 
+        public enum Character {Bracken, Mosswick}; //TODO: should be part of a dialogue SO
+
         private void Start()
         {
             canvas.gameObject.SetActive(false);
@@ -123,13 +125,14 @@ namespace Assets.Modules.Dialogue
         }
 
         //what actually draws characters on screen
-        public async Task SetText(string text, CancellationToken ctx)
+        public async Task SetText(string text, Character character, CancellationToken ctx)
         {
             await CancelAnimations();
             Task typewriting = dialogueText.TypewriteText(text, ctx);
 
             //start gibberish speech
             GibberishSpeech.setParameterByName("Syllable Count", 6);
+            GibberishSpeech.setParameterByName("Character", (int) character);
             GibberishSpeech.start();
 
             if (animateIn?.IsCompleted == false)
