@@ -33,6 +33,8 @@ public class Dialogue : MonoBehaviour
 
     public bool _messageRead { get; private set; } = false;
 
+    [SerializeField] DialogueBox.Character character;
+
     public void SetDialogue(string[] text)
     {
         EndDialogue(); // done for saftey
@@ -53,7 +55,7 @@ public class Dialogue : MonoBehaviour
             dialogueBox.OpenDialogue();
         }
 
-        return dialogueBox.SetText(message, textCtxSource.Token);
+        return dialogueBox.SetText(message, character, textCtxSource.Token);
     }
 
     [ContextMenu("Next Message")]
