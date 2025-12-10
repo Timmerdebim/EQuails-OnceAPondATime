@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Assets.Modules.Dialogue
@@ -25,7 +26,7 @@ namespace Assets.Modules.Dialogue
         FMOD.Studio.EventInstance GibberishSpeech; //instance of the previous
         FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; //parameters of previous
 
-        public enum Character {Bracken, Mosswick}; //TODO: should be part of a dialogue SO
+        public enum Character {Bracken, Mosswick}; //TODO: should be part of a dialogue SO ~Lars
 
         private void Start()
         {
@@ -130,8 +131,10 @@ namespace Assets.Modules.Dialogue
             await CancelAnimations();
             Task typewriting = dialogueText.TypewriteText(text, ctx);
 
-            //start gibberish speech
-            GibberishSpeech.setParameterByName("Syllable Count", 6);
+            //start gibberish speech, by name is inefficient but who cares.
+            int syllables = math.clamp(text.Length / 5, 1, 10); //THIS IS A PLACEHOLDER, THIS SHOULD BE PART OF THE DIALOGUE SO ~Lars
+            Debug.Log($"Speaking, {syllables} Syllables!");
+            GibberishSpeech.setParameterByName("Syllable Count", syllables);
             GibberishSpeech.setParameterByName("Character", (int) character);
             GibberishSpeech.start();
 
