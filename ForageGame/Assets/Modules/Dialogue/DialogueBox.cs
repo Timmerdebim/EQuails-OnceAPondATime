@@ -26,7 +26,7 @@ namespace Assets.Modules.Dialogue
         FMOD.Studio.EventInstance GibberishSpeech; //instance of the previous
         FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; //parameters of previous
 
-        public enum Character {Bracken, Mosswick, Grimble}; //TODO: should be part of a dialogue SO ~Lars
+        public enum Character {Bracken, Mosswick, Grimble, Lyria}; //TODO: should be part of a dialogue SO ~Lars
 
         private void Start()
         {
