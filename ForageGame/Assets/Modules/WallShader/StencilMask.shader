@@ -3,7 +3,9 @@ Shader "UnityLibrary/URP/System/StencilMask_Dithered_Production"
     Properties
     {
         _EdgePower ("Edge Gradient Power", Float) = 2.0
-        _DitherScale ("Dither Scale", Float) = 1.0
+        // NOTE: In this shader, DitherScale acts as 'Fade Amount' (0 = Invisible, 1 = Visible)
+        // We keep the name '_DitherScale' to maintain compatibility with your C# script.
+        _DitherScale ("Fade Amount", Range(0, 1)) = 1.0
     }
     SubShader
     {
@@ -11,7 +13,7 @@ Shader "UnityLibrary/URP/System/StencilMask_Dithered_Production"
 
         Pass
         {
-            // Do not write any color to the screen (Invisible)
+            // Invisible pass - strictly writes to Stencil Buffer
             ColorMask 0
             
             ZWrite Off
@@ -48,13 +50,13 @@ Shader "UnityLibrary/URP/System/StencilMask_Dithered_Production"
                 float _DitherScale;
             CBUFFER_END
 
-            // Standard 4x4 Bayer Dither Matrix
-            static const float4x4 ditherMatrix = {
-                0.0625, 0.5625, 0.1875, 0.6875,
-                0.8125, 0.3125, 0.9375, 0.4375,
-                0.2500, 0.7500, 0.1250, 0.6250,
-                1.0000, 0.5000, 0.8750, 0.3750
-            };
+            // High-quality Interleaved Gradient Noise (Cinematic Grain)
+            // Replaces the blocky Bayer matrix with smooth, pseudo-random noise.
+            float InterleavedGradientNoise(float2 pixelPos)
+            {
+                const float3 magic = float3(0.06711056, 0.00583715, 52.9829189);
+                return frac(magic.z * frac(dot(pixelPos, magic.xy)));
+            }
 
             Varyings vert(Attributes IN)
             {
@@ -71,21 +73,23 @@ Shader "UnityLibrary/URP/System/StencilMask_Dithered_Production"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                // 1. Calculate Fresnel (0 at edges, 1 at center)
-                float NdotV = abs(dot(IN.normalWS, IN.viewDirWS));
-                float gradient = pow(NdotV, _EdgePower);
+                // 1. Calculate Fresnel Gradient (0 at edges, 1 at center)
+                // This creates the "Cone" shape fading at the sides
+                float NdotV = saturate(abs(dot(IN.normalWS, IN.viewDirWS)));
+                float shapeGradient = pow(NdotV, _EdgePower);
 
-                // 2. Dither Logic
-                float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
-                float2 pixelPos = screenUV * _ScreenParams.xy * _DitherScale;
-                
-                uint x = (uint)pixelPos.x % 4;
-                uint y = (uint)pixelPos.y % 4;
-                float threshold = ditherMatrix[x][y];
+                // 2. Generate Noise based on Screen Position
+                // We multiply by ScreenParams to ensure noise is pixel-perfect (1:1 with screen pixels)
+                float2 pixelPos = (IN.screenPos.xy / IN.screenPos.w) * _ScreenParams.xy;
+                float noise = InterleavedGradientNoise(pixelPos);
 
-                // 3. Discard pixel if gradient is weak
-                // This prevents the Stencil from being written in these spots
-                clip(gradient - threshold);
+                // 3. Combine Gradient with the Master Fade (_DitherScale)
+                // This effectively determines the probability of a pixel existing.
+                float currentOpacity = shapeGradient * _DitherScale;
+
+                // 4. Discard pixel if the opacity is lower than the noise threshold
+                // This creates the dithered transparency effect.
+                clip(currentOpacity - noise);
 
                 return half4(0,0,0,0);
             }
