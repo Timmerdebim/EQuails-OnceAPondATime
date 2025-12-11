@@ -540,16 +540,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6969074758559189571}
-  - component: {fileID: 3764756630582428451}
   - component: {fileID: 5104973567076573450}
   - component: {fileID: 4626156010684821521}
   - component: {fileID: 2171054152415347456}
   - component: {fileID: 2058637764954417358}
   - component: {fileID: 5604959787070766136}
   - component: {fileID: 8228613997060581317}
+  - component: {fileID: 1845503554202209461}
   m_Layer: 10
   m_Name: Goose
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -572,27 +572,6 @@ Transform:
   - {fileID: 6626267958699285357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3764756630582428451
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2937784350703509487}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &5104973567076573450
 Animator:
   serializedVersion: 7
@@ -630,6 +609,7 @@ MonoBehaviour:
   animator: {fileID: 5104973567076573450}
   navMeshAgent: {fileID: 2171054152415347456}
   spriteRenderer: {fileID: 2058637764954417358}
+  player: {fileID: 0}
   roamSpeed: 3
   roamRadius: 5
   freeRoam: 0
@@ -638,10 +618,9 @@ MonoBehaviour:
   attackRadius: 2
   attackWindUpDuration: 0.7
   attackLungeDuration: 0.3
-  attackHitbox: {fileID: 6251871081663997326}
+  hitBox: {fileID: 797899602691002660}
   chaseSpeed: 5
   searchSpeed: 3
-  player: {fileID: 0}
   lastSeenPlayerPos: {x: 0, y: 0, z: 0}
   maxHealth: 100
   currentHealth: 0
@@ -5581,6 +5560,27 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &1845503554202209461
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2937784350703509487}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.825
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5816659087524503936
 GameObject:
   m_ObjectHideFlags: 0
@@ -5889,8 +5889,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6388618318361457292}
   - component: {fileID: 6251871081663997326}
-  - component: {fileID: 7196066625144878621}
   - component: {fileID: 6014242071743797281}
+  - component: {fileID: 7391819830215155294}
+  - component: {fileID: 3032451094886140903}
+  - component: {fileID: 797899602691002660}
   m_Layer: 0
   m_Name: GooseAttackHitBox
   m_TagString: Untagged
@@ -5930,23 +5932,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7196066625144878621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7319928707486548890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 24
 --- !u!120 &6014242071743797281
 LineRenderer:
   serializedVersion: 2
@@ -6057,6 +6046,77 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!33 &7391819830215155294
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7319928707486548890}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &3032451094886140903
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7319928707486548890}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -2505642851634945670, guid: e7cf089221cb94b34b46a2866503aff6, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &797899602691002660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7319928707486548890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monoHit: 1
+  attackDamage: 24
+  attacksPerSecond: 0
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &7572231977901642266
 GameObject:
   m_ObjectHideFlags: 0

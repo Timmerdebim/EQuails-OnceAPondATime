@@ -6,7 +6,7 @@ public class EnemyAttack : StateMachineBehaviour
     [Tooltip("The layers that the goose will collide with during its lunge (e.g., Walls, Obstacles).")]
     public LayerMask collisionLayerMask;
     [Tooltip("The radius of the goose for collision detection. Should be about half the goose's width.")]
-    public float collisionRadius = 0.5f;
+    private float collisionRadius = 0.5f;
     // ------------------------------------
 
     // Private state variables
@@ -26,14 +26,14 @@ public class EnemyAttack : StateMachineBehaviour
         timer = 0f;
         currentPhase = AttackPhase.WindUp;
         enemy.navMeshAgent.enabled = false; // Disable NavMeshAgent
-        // Look in (and lock in) correct direction
+
+        // Look at player
         targetDir = enemy.player.transform.position - enemy.transform.position;
-        if (targetDir.x < 0) enemy.spriteRenderer.flipX = true;
-        else enemy.spriteRenderer.flipX = false;
+        enemy.spriteRenderer.flipX = targetDir.x < 0;
+        // Set attack hitbox
         targetDir.y = 0f;
         targetDir = targetDir.normalized;
-        enemy.attackHitbox.transform.position = targetDir;
-        enemy.attackHitbox.transform.eulerAngles = targetDir;
+        enemy.hitBox.PivotTarget(targetDir);
     }
 
     // OnStateUpdate is called on each Update frame
@@ -44,25 +44,37 @@ public class EnemyAttack : StateMachineBehaviour
         switch (currentPhase)
         {
             case AttackPhase.WindUp:
-                ProcessWindUp();
+                if (timer > enemy.attackWindUpDuration) EndWindUp();
                 break;
             case AttackPhase.Lunge:
-                ProcessLunge();
+                if (timer > enemy.attackLungeDuration) EndLundge();
+                else ProcessLunge();
                 break;
             case AttackPhase.Cooldown:
                 break; // Do nothing, wait for animator transition.
         }
     }
 
-    private void ProcessWindUp()
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (timer > enemy.attackWindUpDuration)
-        {
-            timer = 0f;
-            currentPhase = AttackPhase.Lunge;
-            // Start Lunge
-            enemy.attackHitbox.enabled = true;
-        }
+        enemy.ExitStateReset();
+    }
+
+    // ------------ FUNCTIONS ------------
+
+    private void EndWindUp()
+    {
+        timer = 0f;
+        currentPhase = AttackPhase.Lunge;
+        enemy.hitBox.Reset();
+        enemy.hitBox.gameObject.SetActive(true);
+    }
+
+    private void EndLundge()
+    {
+        timer = 0f;
+        currentPhase = AttackPhase.Cooldown;
+        enemy.hitBox.gameObject.SetActive(false);
     }
 
     private void ProcessLunge()
@@ -79,26 +91,9 @@ public class EnemyAttack : StateMachineBehaviour
             collisionLayerMask
         );
 
-        // Move based on the result of the cast.
         if (willCollide) // If we hit something, only move up to the point of contact.
-            enemy.transform.position += targetDir * hitInfo.distance;
+            EndLundge();  //enemy.transform.position += targetDir * hitInfo.distance;
         else // If the path is clear, move the full distance.
             enemy.transform.position += targetDir * distanceToMove;
-
-        // Check if the lunge duration has ended
-        if (timer > enemy.attackLungeDuration)
-        {
-            timer = 0f;
-            currentPhase = AttackPhase.Cooldown;
-            enemy.attackHitbox.enabled = false;
-            enemy.navMeshAgent.enabled = true; // ReEnable NavMeshAgent
-        }
-    }
-
-    // OnStateExit is called when a transition ends
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        enemy.attackHitbox.enabled = false;
-        enemy.navMeshAgent.enabled = true; // ReEnable NavMeshAgent
     }
 }

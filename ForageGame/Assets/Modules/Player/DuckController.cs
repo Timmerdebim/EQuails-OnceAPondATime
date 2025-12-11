@@ -46,7 +46,7 @@ public class DuckController : MonoBehaviour
 
     public DashType dashType = DashType.throughDash;
 
-    public BoxCollider hitboxCollider;
+    public Hitbox hitbox;
 
     public bool interactInput = false;
 
@@ -61,17 +61,7 @@ public class DuckController : MonoBehaviour
         if (duckEnergy == null)
             Debug.LogError("DuckEnergy component not found on this character. Please add one.", this);
 
-        if (hitboxCollider == null)
-            hitboxCollider = GetComponentInChildren<BoxCollider>();
-
-        hitboxCollider.enabled = false;
-        trailRenderer.emitting = false;
-
-        if (hitParticleRenderer != null)
-        {
-            hitParticleRenderer.Stop();
-            hitParticleRenderer.Clear(); // Use Clear() instead of setting time to 0
-        }
+        ExitStateReset();
     }
 
     // ------------ PHYSICS ------------
@@ -174,11 +164,17 @@ public class DuckController : MonoBehaviour
 
     public void ExitStateReset()
     {
+        if (hitParticleRenderer != null)
+        {
+            hitParticleRenderer.Stop();
+            hitParticleRenderer.Clear(); // Use Clear() instead of setting time to 0
+        }
+
         if (interactInput) playerInteract?.StopInteract();
         duckForce = new Vector3(0, 0, 0);
         SetDuckVelocity(_viewDirection, 0);
         rb.useGravity = true;
-        hitboxCollider.enabled = false;
+        hitbox.gameObject.SetActive(false);
         trailRenderer.emitting = false;
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IHitHandler
 {
     [Header("Components")]
     public Animator animator;
@@ -19,21 +19,21 @@ public class EnemyController : MonoBehaviour
     public float attackRadius = 5f;
     public float attackWindUpDuration = 0.7f;
     public float attackLungeDuration = 0.3f;
-    public BoxCollider attackHitbox;
+    public Hitbox hitBox;
     [Header("Chase")]
     public float chaseSpeed = 5f;
     [Header("Search")]
     public float searchSpeed = 5f;
 
-    // Tracking
     [Header("Misc")]
     public Vector3 lastSeenPlayerPos;
-
 
     void Awake()
     {
         currentHealth = maxHealth;
         hitParticles.Stop();
+
+        ExitStateReset();
     }
 
     // A centralized utility function to set the NavMeshAgent's destination.
@@ -70,15 +70,26 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    // ------------ STATES FUNCTIONS ------------
+
+    public void ExitStateReset()
+    {
+        hitBox.gameObject.SetActive(false);
+        navMeshAgent.enabled = true;
+        StopNavMovement();
+    }
+
+
+
     // ------------ HEALTH ------------
 
     [Header("Health")]
-    public int maxHealth = 100;
-    public int currentHealth;
+    public float maxHealth = 100f;
+    public float currentHealth;
 
     public ParticleSystem hitParticles;
 
-    public void Hit(int damage)
+    public void Hit(float damage)
     {
         currentHealth -= damage;
         Debug.Log(gameObject.name + " took " + damage + " damage. Current health: " + currentHealth);

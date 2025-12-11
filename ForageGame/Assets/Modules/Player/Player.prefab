@@ -4644,7 +4644,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 183
+  m_VersionIndex: 210
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5018,7 +5018,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110671333932723981}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10598,6 +10598,7 @@ GameObject:
   - component: {fileID: 6895033383818321247}
   - component: {fileID: 48352623912231205}
   - component: {fileID: 7566348827879131693}
+  - component: {fileID: 7155726674302705076}
   m_Layer: 9
   m_Name: Duck
   m_TagString: Player
@@ -10681,7 +10682,7 @@ MonoBehaviour:
   trailRenderer: {fileID: 2249766242556336178}
   hitParticleRenderer: {fileID: 2486612863259856435}
   dashType: 2
-  hitboxCollider: {fileID: 5992530469086333362}
+  hitbox: {fileID: 5624980208929834917}
   interactInput: 0
   playerInteract: {fileID: 7186449525679409802}
   duckVelocity: {x: 0, y: 0, z: 0}
@@ -10700,7 +10701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactablesLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4352
   interactionRadius: 3
 --- !u!95 &6270842771944399772
 Animator:
@@ -10855,6 +10856,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
+--- !u!114 &7155726674302705076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6404009981061238201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20a5036f898e45c4b81708e332714903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6622983895397546372
 GameObject:
   m_ObjectHideFlags: 0
@@ -11109,13 +11122,15 @@ GameObject:
   - component: {fileID: 5992530469086333362}
   - component: {fileID: 5624980208929834917}
   - component: {fileID: 4973793936928612497}
+  - component: {fileID: 6642199089497408370}
+  - component: {fileID: 6507130643042187799}
   m_Layer: 9
   m_Name: AttackHitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4470224426917979696
 Transform:
   m_ObjectHideFlags: 0
@@ -11125,7 +11140,7 @@ Transform:
   m_GameObject: {fileID: 6904740610159004805}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.85}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11148,7 +11163,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -11164,7 +11179,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 24
+  monoHit: 1
+  attackDamage: 20
+  attacksPerSecond: 0
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!120 &4973793936928612497
 LineRenderer:
   serializedVersion: 2
@@ -11275,3 +11295,56 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!33 &6642199089497408370
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904740610159004805}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6507130643042187799
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904740610159004805}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -2505642851634945670, guid: e7cf089221cb94b34b46a2866503aff6, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
