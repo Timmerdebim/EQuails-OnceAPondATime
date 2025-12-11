@@ -216,6 +216,34 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &-5408055264848807171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/LyriaGibberish
+  m_EditorClassIdentifier: 
+  Path: event:/LyriaGibberish
+  Guid:
+    Data1: 1564515454
+    Data2: 1155751340
+    Data3: -1472227954
+    Data4: 652951232
+  Banks:
+  - {fileID: -23765282310559709}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 6882140227690666987}
+  MinDistance: 2.2
+  MaxDistance: 20
+  Length: 3148
 --- !u!114 &-4956859251680384342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +533,7 @@ MonoBehaviour:
   Name: Character
   StudioPath: 
   Min: 0
-  Max: 2
+  Max: 3
   Default: 0
   ID:
     data1: 3308580184
@@ -516,6 +544,7 @@ MonoBehaviour:
   - Bracken
   - Mosswick
   - Grimble
+  - Lyria
   Exists: 1
 --- !u!114 &-235760179821588476
 MonoBehaviour:
@@ -556,7 +585,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Characters.bank
   Name: Characters
   StudioPath: bank:/Characters
-  lastModified: 639010640937487603
+  lastModified: 639010850595330250
   FileSizes: []
   Exists: 1
 --- !u!114 &11400000
@@ -588,13 +617,14 @@ MonoBehaviour:
   - {fileID: -7096032171117770309}
   - {fileID: 9088293088297224787}
   - {fileID: 6460974192218138553}
+  - {fileID: -5408055264848807171}
   EditorParameters: []
   MasterBanks:
   - {fileID: 608923151628609100}
   StringsBanks:
   - {fileID: 1712371525636391425}
   cacheVersion: 131856
-  cacheTime: 639010640937671584
+  cacheTime: 639010850595483356
   SerializableEventsDict:
   - key: event:/BrackenGibberish 2
     index: 0
@@ -616,6 +646,8 @@ MonoBehaviour:
     index: 8
   - key: event:/GrimbleGibberish
     index: 9
+  - key: event:/LyriaGibberish
+    index: 10
 --- !u!114 &328749943882108943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,7 +687,7 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639010640937651853
+  lastModified: 639010850595474367
   FileSizes: []
   Exists: 1
 --- !u!114 &1011369922214249550
@@ -691,10 +723,10 @@ MonoBehaviour:
   Path: Assets/StreamingAssets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639010640937671584
+  lastModified: 639010850595483356
   FileSizes:
   - Name: 
-    Value: 1744
+    Value: 1796
   Exists: 1
 --- !u!114 &2319339570952460669
 MonoBehaviour:
@@ -981,6 +1013,30 @@ MonoBehaviour:
   Min: 0
   Max: 10
   Default: 0
+  ID:
+    data1: 3978991329
+    data2: 2372632911
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &6882140227690666987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/LyriaGibberish/Syllable Count
+  m_EditorClassIdentifier: 
+  Name: Syllable Count
+  StudioPath: 
+  Min: 1
+  Max: 10
+  Default: 1
   ID:
     data1: 3978991329
     data2: 2372632911
