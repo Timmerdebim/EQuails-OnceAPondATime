@@ -92,7 +92,7 @@ public class NPC : MonoBehaviour, IInteractable
     public void Interact(UnityAction StopInteractionCallback)
     {
         // if done, set new dialogue block
-        if (dialogue._messageRead)
+        if (dialogue.MessageRead)
         {
             TakeQuestItem(); // try and take a requested item
             SelectNextBlock(); // set the next dialog block

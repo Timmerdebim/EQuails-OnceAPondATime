@@ -23,16 +23,16 @@ namespace Assets.Modules.Dialogue
 
         //FMOD stuff
         public FMODUnity.EventReference GibberishSpeechEvent;
-        FMOD.Studio.EventInstance GibberishSpeech; //instance of the previous
-        FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; //parameters of previous
+        FMOD.Studio.EventInstance GibberishSpeech; 
+        FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; 
 
-        public enum Character {Bracken, Mosswick, Grimble, Lyria}; //TODO: should be part of a dialogue SO ~Lars
+        public enum Character { Bracken, Mosswick, Grimble, Lyria }; 
 
         private void Start()
         {
             canvas.gameObject.SetActive(false);
             canvas.transform.localScale = Vector3.zero;
-            //Create the FMOD event
+            
             GibberishSpeech = FMODUnity.RuntimeManager.CreateInstance(GibberishSpeechEvent);
             GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
         }
@@ -53,19 +53,16 @@ namespace Assets.Modules.Dialogue
         {
             canvas.gameObject.SetActive(true);
             canvas.transform.localScale = Vector3.zero;
-            
+
             float elapsedTime = 0f;
             while (elapsedTime < openCloseDuration)
             {
-                if (ctx.IsCancellationRequested)
-                {
-                    break;
-                }
+                if (ctx.IsCancellationRequested) break;
 
                 float scale = openCloseAnimation.Evaluate(elapsedTime / openCloseDuration);
                 canvas.transform.localScale = new Vector3(scale, scale, scale);
                 elapsedTime += Time.deltaTime;
-                await System.Threading.Tasks.Task.Yield();
+                await Task.Yield();
             }
 
             canvas.transform.localScale = Vector3.one;
@@ -76,47 +73,37 @@ namespace Assets.Modules.Dialogue
             float elapsedTime = 0f;
             while (elapsedTime < openCloseDuration)
             {
-                if(ctx.IsCancellationRequested)
-                {
-                    break;
-                }
+                if (ctx.IsCancellationRequested) break;
 
                 float scale = openCloseAnimation.Evaluate(1 - (elapsedTime / openCloseDuration));
                 canvas.transform.localScale = new Vector3(scale, scale, scale);
                 elapsedTime += Time.deltaTime;
-                await System.Threading.Tasks.Task.Yield();
+                await Task.Yield();
             }
             canvas.transform.localScale = Vector3.zero;
             canvas.gameObject.SetActive(false);
         }
 
-        private async void AnimateNewMessage(CancellationToken ctx)
+        private async Task AnimateNewMessage(CancellationToken ctx)
         {
             float elapsedTime = 0f;
-            while (elapsedTime < newMessageAnimation[newMessageAnimation.length-1].time)
+            float duration = newMessageAnimation[newMessageAnimation.length - 1].time;
+            
+            while (elapsedTime < duration)
             {
-                if (ctx.IsCancellationRequested)
-                {
-                    break;
-                }
+                if (ctx.IsCancellationRequested) break;
 
                 float scale = newMessageAnimation.Evaluate(elapsedTime);
                 canvas.transform.localScale = scale * Vector3.one;
                 elapsedTime += Time.deltaTime;
-                await System.Threading.Tasks.Task.Yield();
+                await Task.Yield();
             }
             canvas.transform.localScale = Vector3.one;
         }
 
         private async Task CancelAnimations()
         {
-            //textCtxSource?.Cancel();
-            //textCtxSource?.Token.WaitHandle.WaitOne();
-            //textCtxSource = new CancellationTokenSource();
-
             animationCtxSource?.Cancel();
-
-            //stop any ongoing speech
             GibberishSpeech.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
             if (animateIn?.IsCompleted == false) { await animateIn; }
@@ -125,7 +112,27 @@ namespace Assets.Modules.Dialogue
             animationCtxSource = new CancellationTokenSource();
         }
 
-        //what actually draws characters on screen
+        public async Task SetText(string[] texts, Character character, CancellationToken ctx)
+        {
+            for (int i = 0; i < texts.Length; i++)
+            {
+                if (ctx.IsCancellationRequested) return;
+                await SetText(texts[i], character, ctx);
+
+                if (i < texts.Length - 1)
+                {
+                    try
+                    {
+                        await Task.Delay(1000, ctx);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
         public async Task SetText(string text, Character character, CancellationToken ctx)
         {
             await CancelAnimations();

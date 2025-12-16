@@ -1,123 +1,152 @@
-using Assets.Modules.Dialogue;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using TMPro;
-using Unity.VisualScripting;
+using Assets.Modules.Dialogue;
+using Modules.Dialogue.DialogueDB;
 using UnityEngine;
 
-public class Dialogue : MonoBehaviour
-{
+public class Dialogue : MonoBehaviour {
+    [Header("References")]
+    [SerializeField] private DialogueBox dialogueBox;
+    public DialogueController dialogueController;
+    [SerializeField] private DialogueBox.Character character;
 
-    // Idea to fix dialogue: integrate Dialogue with DialogueBox. For speeding up, make a StartSpeedup and StopSpeedup function, start on click button, stop on release. 
-    // When we get an input, first cancel typewrite animation, or if it is already finished, go to next text
+    [Header("Settings")]
+    [SerializeField] private float shortMessageDuration = 2000f;
 
+    // State Tracking
+    private bool isDialogueActive = false;
+    private bool isTyping = false;
+    private CancellationTokenSource textCtxSource;
+    private Task currentTypingTask;
 
-    [SerializeField]
-    string[] messages = {
-        "Hello, adventurer!",
-        "Welcome to our village.",
-        "Feel free to explore and talk to the locals.",
-        "Good luck on your journey!"
-    };
+    // Public getter
+    public bool MessageRead { get; private set; } = false;
 
-    [SerializeField] string normalLeaveMessage = null;
-    [SerializeField] string rudeLeaveMessage = null;
-
-    int index = 0;
-
-    [SerializeField] DialogueBox dialogueBox;
-
-    Task textWriting;
-
-    CancellationTokenSource textCtxSource = new CancellationTokenSource();
-
-    public bool _messageRead { get; private set; } = false;
-
-    [SerializeField] DialogueBox.Character character;
-
-    public void SetDialogue(string[] text)
-    {
-        EndDialogue(); // done for saftey
-        _messageRead = false;
-        messages = text;
+    private void Start() {
+        textCtxSource = new CancellationTokenSource();
     }
 
-    private void EndDialogue()
-    {
-        dialogueBox.CloseDialogue();
-        index = 0;
+    private void OnDestroy() {
+        CancelCurrentToken();
     }
 
-    private Task Speak(string message)
-    {
-        if (index <= 0)
-        {
-            dialogueBox.OpenDialogue();
-        }
-
-        return dialogueBox.SetText(message, character, textCtxSource.Token);
+    public void SetDialogue(string[] text) {
+        EndDialogue();
+        MessageRead = false;
     }
 
     [ContextMenu("Next Message")]
-    public async void Next()
-    {
-        print("Next Message");
-
-        if (textWriting != null && !textWriting.IsCompleted)
-        {
-            textCtxSource.Cancel();
-            if (textWriting != null && !textWriting.IsCompleted)
-            {
-                await textWriting;
-            }
-            textCtxSource = new CancellationTokenSource();
+    public async void Next() {
+        if (isTyping) {
+            CancelCurrentToken(); 
             return;
         }
 
-        if (index > messages.Length - 1)
-        {
-            _messageRead = true;
+
+        if (isDialogueActive && MessageRead) {
             EndDialogue();
             return;
         }
 
-        textWriting = Speak(messages[index]);
+        ResetToken();
 
-        index++;
+        DialogueLine line = dialogueController.GetNextDialogue(character.ToString());
+        
+        if (line == null) {
+            EndDialogue();
+            return;
+        }
+        
+        if (line.StageID == "repeat") {
+            MessageRead = true;
+        }
+
+        // 5. Open Dialogue Box if it's currently closed
+        if (!isDialogueActive) {
+            dialogueBox.OpenDialogue();
+            isDialogueActive = true;
+        }
+
+        try {
+            isTyping = true;
+            
+            string[] messageLines = line.Text.Split('\n');
+            currentTypingTask = dialogueBox.SetText(messageLines, character, textCtxSource.Token);
+            
+            await currentTypingTask;
+        }
+        catch (OperationCanceledException) {
+            // Task cancelled
+        }
+        finally {
+            isTyping = false;
+        }
     }
 
-    public void WalkAway()
-    {
-        if (index <= 0)
-        {
-            //This means we are not in conversation
-            if (normalLeaveMessage != null)
-            {
-                textWriting = ShortMessage(normalLeaveMessage);
-            }
+    public void WalkAway() {
+        if (dialogueController == null) return;
+
+        ResetToken();
+
+        string textToDisplay = null;
+
+        if (isDialogueActive) {
+            // Rude: Left while box was open
+            textToDisplay = dialogueController.GetLeaveRudeDialogue(character.ToString())?.Text;
+        } 
+        else {
+            // Polite: Left after closing the box
+            textToDisplay = dialogueController.GetLeavePoliteDialogue(character.ToString())?.Text;
         }
-        else
-        {
-            //This means we are in conversation, so it's rude to leave
-            if (rudeLeaveMessage != null)
-            {
-                textWriting = ShortMessage(rudeLeaveMessage);
-            }
+
+        if (!string.IsNullOrEmpty(textToDisplay)) {
+            _ = ShowShortMessage(textToDisplay);
+        }
+        else {
+            CancelCurrentToken();
+            EndDialogue();
         }
     }
 
-    private async Task ShortMessage(string message)
-    {
-        // Called when the player rudely walks away from the conversation
+    private async Task ShowShortMessage(string message) {
+        try {
+            if (!isDialogueActive) {
+                dialogueBox.OpenDialogue();
+                isDialogueActive = true;
+            }
 
-        await Speak(message);
+            isTyping = true;
+            await dialogueBox.SetText(message, character, textCtxSource.Token);
+            isTyping = false;
 
-        float timeWaited = 0;
-        while (!textCtxSource.IsCancellationRequested && timeWaited < 3000)
-        {
-            await Task.Delay(10);
-            timeWaited += 10;
+            await Task.Delay((int)shortMessageDuration, textCtxSource.Token);
         }
-        EndDialogue();
+        catch (OperationCanceledException) { }
+        finally {
+            EndDialogue();
+        }
+    }
+
+    private void EndDialogue() {
+        dialogueBox.CloseDialogue();
+        isDialogueActive = false;
+        isTyping = false;
+
+        CancelCurrentToken();
+    }
+
+    // --- Helpers ---
+
+    private void CancelCurrentToken() {
+        if (textCtxSource != null && !textCtxSource.IsCancellationRequested) {
+            textCtxSource.Cancel();
+            textCtxSource.Dispose();
+        }
+    }
+
+    private void ResetToken() {
+        CancelCurrentToken();
+        textCtxSource = new CancellationTokenSource();
     }
 }

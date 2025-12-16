@@ -26,7 +26,7 @@ namespace Assets.Modules.Dialogue.Typewriter_effect
                 textbox.text = text + append;
 
                 float delay = Input.anyKey ? typeDelay / clickSpeedMultiplication : typeDelay;
-                await System.Threading.Tasks.Task.Delay((int)(delay * 1000));
+                await Task.Delay((int)(delay * 1000));
             }
         }
     }
