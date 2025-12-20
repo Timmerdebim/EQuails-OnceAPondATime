@@ -34,7 +34,7 @@ namespace Assets.Modules.Dialogue
             canvas.transform.localScale = Vector3.zero;
             
             GibberishSpeech = FMODUnity.RuntimeManager.CreateInstance(GibberishSpeechEvent);
-            GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
+            GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject.transform.parent.gameObject)); //oof nasty hack to get the position right hehe
         }
 
         public async void OpenDialogue()
