@@ -43,8 +43,8 @@ namespace Assets.Modules.Dialogue
         public async void OpenDialogue()
         {
             await CancelAnimations();
-            animateIn = AnimateIn(animationCtxSource.Token);
             DuckAllForDialogue.start(); //Duck any playing ambience or theme - focus is on the dialogue
+            animateIn = AnimateIn(animationCtxSource.Token);
         }
 
         public async void CloseDialogue()
