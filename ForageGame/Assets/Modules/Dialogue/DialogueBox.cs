@@ -23,7 +23,9 @@ namespace Assets.Modules.Dialogue
 
         //FMOD stuff
         public FMODUnity.EventReference GibberishSpeechEvent;
+        public FMODUnity.EventReference DuckAllForDialogueSnapshot;
         FMOD.Studio.EventInstance GibberishSpeech; 
+        FMOD.Studio.EventInstance DuckAllForDialogue; 
         FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; 
 
         public enum Character { Bracken, Mosswick, Grimble, Lyria }; 
@@ -35,18 +37,21 @@ namespace Assets.Modules.Dialogue
             
             GibberishSpeech = FMODUnity.RuntimeManager.CreateInstance(GibberishSpeechEvent);
             GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject.transform.parent.gameObject)); //oof nasty hack to get the position right hehe
+            DuckAllForDialogue = FMODUnity.RuntimeManager.CreateInstance(DuckAllForDialogueSnapshot);
         }
 
         public async void OpenDialogue()
         {
             await CancelAnimations();
             animateIn = AnimateIn(animationCtxSource.Token);
+            DuckAllForDialogue.start(); //Duck any playing ambience or theme - focus is on the dialogue
         }
 
         public async void CloseDialogue()
         {
             await CancelAnimations();
             animateOut = AnimateOut(animationCtxSource.Token);
+            DuckAllForDialogue.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
         }
 
         private async Task AnimateIn(CancellationToken ctx)
