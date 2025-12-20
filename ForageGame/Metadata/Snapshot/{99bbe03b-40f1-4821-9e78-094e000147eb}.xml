@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Snapshot" id="{99bbe03b-40f1-4821-9e78-094e000147eb}">
 		<property name="name">
-			<value>DuckAmbience</value>
+			<value>DuckGeneralAmbience</value>
 		</property>
 		<relationship name="mixer">
 			<destination>{a56b7027-7c70-4f2c-aac0-c6e8b9338fd1}</destination>
@@ -21,9 +21,11 @@
 		</relationship>
 		<relationship name="snapshotProperties">
 			<destination>{c3957631-32d2-4235-b6ff-1335f82c0ae2}</destination>
+			<destination>{4f72a5ce-b970-43f9-8d39-84aef6b2cd14}</destination>
 		</relationship>
 		<relationship name="snapshotTracks">
 			<destination>{f0f23930-9508-4506-beec-6cfb42da6a01}</destination>
+			<destination>{a20e9b97-e889-4e6f-8e8c-636c9bd17700}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{ec68ee71-cc3e-4a96-b08c-96e3597c6c84}">
@@ -39,15 +41,31 @@
 			<value>volume</value>
 		</property>
 		<property name="value">
-			<value>-10</value>
+			<value>0</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{1ec99efa-c75c-46d4-a479-fd300a903d65}</destination>
 		</relationship>
 	</object>
+	<object class="SnapshotProperty" id="{4f72a5ce-b970-43f9-8d39-84aef6b2cd14}">
+		<property name="propertyName">
+			<value>volume</value>
+		</property>
+		<property name="value">
+			<value>-10</value>
+		</property>
+		<relationship name="automatableObject">
+			<destination>{4d2cfeb5-af3a-48a2-8f47-0d0b3dd320bf}</destination>
+		</relationship>
+	</object>
 	<object class="SnapshotTrack" id="{f0f23930-9508-4506-beec-6cfb42da6a01}">
 		<relationship name="mixerStrip">
 			<destination>{1ec99efa-c75c-46d4-a479-fd300a903d65}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotTrack" id="{a20e9b97-e889-4e6f-8e8c-636c9bd17700}">
+		<relationship name="mixerStrip">
+			<destination>{4d2cfeb5-af3a-48a2-8f47-0d0b3dd320bf}</destination>
 		</relationship>
 	</object>
 	<object class="ADSRModulator" id="{bb3ee53d-97b2-445a-9a1e-9ebaaf68fcb4}">
