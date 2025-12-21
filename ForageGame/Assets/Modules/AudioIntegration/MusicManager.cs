@@ -2,6 +2,18 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
+[System.Serializable]
+public class ThemeEntry
+{
+    public FMODUnity.EventReference eventPath;  // FMOD event path
+    public float meanDelay = 10f;
+    public float variance = 10f;
+    public float cooldown = 60f;
+
+    [HideInInspector] public float lastPlayedTime = -Mathf.Infinity; //for theme cooldown
+    [HideInInspector] public Coroutine waitRoutine = null;
+}
+
 /// <summary>
 /// Handles the random trigger-ing of general music themes, also with events in mind
 /// </summary>
@@ -11,22 +23,8 @@ public class MusicManager : MonoBehaviour
     public static MusicManager Instance { get; private set; }
 
     //list of themes that can be played rn, depending on what trigger regions we are in
-    public List<FMODUnity.EventReference> eligibleThemes;
+    public List<ThemeEntry> eligibleThemes;
     [SerializeField] private FMOD.Studio.EventInstance currentTheme; 
-
-    private enum ManagerState
-    {
-        Idle,
-        ProcessStarted, //Random process started
-        Playing,
-        Interrupted //Events can suspend the general themes
-    }
-    [SerializeField] private ManagerState state = ManagerState.Idle;
-
-    [SerializeField] private float meanWaitTime;
-    [SerializeField] private float randomVariance;
-
-    private IEnumerator RandomProcess;
 
     private void Awake() 
     { 
@@ -39,50 +37,75 @@ public class MusicManager : MonoBehaviour
         { 
             Instance = this; 
         } 
-
-        RandomProcess = RandomEventLoop();
     }
 
-    public void AddTheme(FMODUnity.EventReference theme)
+    public void AddTheme(ThemeEntry theme)
     {
         eligibleThemes.Add(theme);
-        if(state == ManagerState.Idle)
-        {
-            state = ManagerState.ProcessStarted;
-            StartCoroutine(RandomProcess);
-             print("RandomProcess Started!");
-        }
+        theme.waitRoutine = StartCoroutine(ThemeWaitRoutine(theme));
+        print("ThemeWaitRoutine Started for theme" + theme.eventPath);
     }
 
-    public void RemoveTheme(FMODUnity.EventReference theme)
+    public void RemoveTheme(ThemeEntry theme)
     {
+        print("hehehe not implemented");
         eligibleThemes.Remove(theme);
-        if(state == ManagerState.ProcessStarted && eligibleThemes.Count <= 0)
+        // if(state == ManagerState.ProcessStarted && eligibleThemes.Count <= 0)
+        // {
+        //     StopCoroutine(RandomProcess);
+        //     state = ManagerState.Idle;
+        //     print("RandomProcess Stopped!");
+        // }
+    }
+
+    private void StopAllScheduling()
+    {
+        foreach (var theme in eligibleThemes)
+            StopScheduling(theme);
+    }
+
+    private void StopScheduling(ThemeEntry theme)
+    {
+        if (theme.waitRoutine != null)
         {
-            StopCoroutine(RandomProcess);
-            state = ManagerState.Idle;
-            print("RandomProcess Stopped!");
+            print("Stopping scheduling for theme: " + theme.eventPath);
+            StopCoroutine(theme.waitRoutine);
+            theme.waitRoutine = null;
         }
     }
 
-    IEnumerator RandomEventLoop()
+    IEnumerator ThemeWaitRoutine(ThemeEntry theme)
     {
         while (true)
         {
-            float waitTime = Mathf.Max(0.1f, Random.Range(meanWaitTime - randomVariance, meanWaitTime + randomVariance));
+            //do not play a theme on cooldown
+            float elapsedCooldown = Time.time - theme.lastPlayedTime;
+            if (elapsedCooldown < theme.cooldown)
+            {
+                yield return new WaitForSeconds(theme.cooldown - elapsedCooldown);
+                continue;
+            }
+
+            float waitTime = Mathf.Max(0.1f, UnityEngine.Random.Range(theme.meanDelay - theme.variance, theme.meanDelay + theme.variance));
             yield return new WaitForSeconds(waitTime);
 
-            TriggerRandomEvent();
+            // if (currentTheme.isValid() == false) //are we not currently doing anything
+            // {
+            PlayTheme(theme);
+            yield break; //end coroutine
+            //}
         }
     }
 
-    private void TriggerRandomEvent()
+    private void PlayTheme(ThemeEntry theme)
     {
-        print("event FIRED");
-        state = ManagerState.Playing;
+        //we acquired the lock, stop all other scheduling
+        StopAllScheduling();
+        print("Play " + theme.eventPath);
+        currentTheme = FMODUnity.RuntimeManager.CreateInstance(theme.eventPath);
+        currentTheme.start();
+        theme.lastPlayedTime = Time.time;
+        print("Yeah nothing is gonna happen after this lol");
 
-        print("restarting random process...");
-        StartCoroutine(RandomProcess);
-        state = ManagerState.ProcessStarted;
     }
 }

@@ -5,7 +5,7 @@ public class GeneralThemeRegion : MonoBehaviour
 {
     private BoxCollider col;
 
-    [SerializeField] private FMODUnity.EventReference theme;
+    [SerializeField] private ThemeEntry theme;
 
     private void Awake()
     {
@@ -19,7 +19,6 @@ public class GeneralThemeRegion : MonoBehaviour
             MusicManager.Instance.AddTheme(theme);
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
