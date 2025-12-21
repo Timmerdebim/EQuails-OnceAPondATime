@@ -120,14 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c133901a44e5243bb189d7aea23b08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messages:
-  - Hello, adventurer!
-  - Welcome to our village.
-  - Feel free to explore and talk to the locals.
-  - Good luck on your journey!
-  normalLeaveMessage: 
-  rudeLeaveMessage: 
   dialogueBox: {fileID: 6186868808465558064}
+  dialogueController: {fileID: 0}
+  character: 0
+  shortMessageDuration: 2000
 --- !u!1 &6303733914706493346
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +374,14 @@ MonoBehaviour:
       Data2: 1262413764
       Data3: 921604781
       Data4: 1779319337
-    Path: event:/GibberishSpeech
+    Path: event:/Dialogue/GibberishSpeech
+  DuckAllForDialogueSnapshot:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &6793935790809782684
 GameObject:
   m_ObjectHideFlags: 0
