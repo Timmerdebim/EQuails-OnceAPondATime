@@ -89,7 +89,7 @@ public class Dialogue : MonoBehaviour {
 
         ResetToken();
 
-        string textToDisplay = null;
+        string textToDisplay = null; //very useful assignment of null value to uninitialized local variable, this one is new to me ~Lars
 
         if (isDialogueActive) {
             // Rude: Left while box was open

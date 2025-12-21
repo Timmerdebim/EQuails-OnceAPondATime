@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="Snapshot" id="{48ce838e-1097-4ee5-890c-77faf435f82c}">
+		<property name="name">
+			<value>CutGeneralThemeForKalimba</value>
+		</property>
+		<relationship name="mixer">
+			<destination>{a56b7027-7c70-4f2c-aac0-c6e8b9338fd1}</destination>
+		</relationship>
+		<relationship name="automatableProperties">
+			<destination>{30950c37-a587-4477-95f8-c3686a648efe}</destination>
+		</relationship>
+		<relationship name="markerTracks">
+			<destination>{f0bbe0a7-08a9-4dc8-b003-4ae85fd88a1a}</destination>
+		</relationship>
+		<relationship name="timeline">
+			<destination>{8e35de52-33de-4319-ae4d-311aaf65b427}</destination>
+		</relationship>
+		<relationship name="snapshotMasterTrack">
+			<destination>{c70db62b-50c6-44e5-be9e-fb0f4ff64808}</destination>
+		</relationship>
+		<relationship name="snapshotProperties">
+			<destination>{548db550-3f64-463e-81c8-0c96804c7273}</destination>
+		</relationship>
+		<relationship name="snapshotTracks">
+			<destination>{9f6570c7-4285-47a4-bcdf-bcadd913b67d}</destination>
+		</relationship>
+	</object>
+	<object class="EventAutomatableProperties" id="{30950c37-a587-4477-95f8-c3686a648efe}">
+		<relationship name="automators">
+			<destination>{7eb994b0-a201-4f37-a17f-39f9175ca173}</destination>
+		</relationship>
+	</object>
+	<object class="MarkerTrack" id="{f0bbe0a7-08a9-4dc8-b003-4ae85fd88a1a}" />
+	<object class="Timeline" id="{8e35de52-33de-4319-ae4d-311aaf65b427}" />
+	<object class="SnapshotMasterTrack" id="{c70db62b-50c6-44e5-be9e-fb0f4ff64808}">
+		<relationship name="automationTracks">
+			<destination>{9c0de7b8-9ae6-43ef-ade4-af5b562191f1}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotProperty" id="{548db550-3f64-463e-81c8-0c96804c7273}">
+		<property name="propertyName">
+			<value>volume</value>
+		</property>
+		<property name="value">
+			<value>-80</value>
+		</property>
+		<relationship name="automatableObject">
+			<destination>{bd2b9a6a-3436-4903-a306-f7ee96f3f0ac}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotTrack" id="{9f6570c7-4285-47a4-bcdf-bcadd913b67d}">
+		<relationship name="mixerStrip">
+			<destination>{bd2b9a6a-3436-4903-a306-f7ee96f3f0ac}</destination>
+		</relationship>
+	</object>
+	<object class="Automator" id="{7eb994b0-a201-4f37-a17f-39f9175ca173}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>snapshotIntensity</value>
+		</property>
+		<relationship name="automationCurves">
+			<destination>{77634ba1-d6dc-445b-bdf8-d7126045e50d}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationTrack" id="{9c0de7b8-9ae6-43ef-ade4-af5b562191f1}">
+		<relationship name="automator">
+			<destination>{7eb994b0-a201-4f37-a17f-39f9175ca173}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationCurve" id="{77634ba1-d6dc-445b-bdf8-d7126045e50d}">
+		<relationship name="parameter">
+			<destination>{aa259430-8e80-488b-af9f-f649709d2174}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{ad2b180f-ea99-41d4-8a92-9535892a68f2}</destination>
+			<destination>{9946ffe8-80ee-4fe3-badf-ea1aecab9bd9}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationPoint" id="{ad2b180f-ea99-41d4-8a92-9535892a68f2}">
+		<property name="position">
+			<value>19.844632768361581</value>
+		</property>
+		<property name="value">
+			<value>100</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{9946ffe8-80ee-4fe3-badf-ea1aecab9bd9}">
+		<property name="position">
+			<value>45.974576271186443</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
