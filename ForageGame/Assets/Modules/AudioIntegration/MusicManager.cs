@@ -11,9 +11,9 @@ public class MusicManager : MonoBehaviour
     public static MusicManager Instance { get; private set; }
 
     //list of themes that can be played rn, depending on what trigger regions we are in
-    public Dictionary<GeneralThemeRegion, float> zoneSchedule = new Dictionary<GeneralThemeRegion, float>();
+    private Dictionary<MusicTrigger, float> zoneSchedule = new Dictionary<MusicTrigger, float>();
     [SerializeField] private FMOD.Studio.EventInstance currentTheme; 
-    [SerializeField] private GeneralThemeRegion currentZone;
+    [SerializeField] private MusicTrigger currentZone;
 
     public enum MusicManagerState
     {
@@ -39,6 +39,7 @@ public class MusicManager : MonoBehaviour
 
     public void Update()
     {
+        //I used to use fancy IEnumerator coroutines and stuff but it introduces so much unstability so we just rockin the state machine now ~Lars
         switch(state)
         {
             case MusicManagerState.Scheduling:
@@ -59,6 +60,7 @@ public class MusicManager : MonoBehaviour
                 if(!IsPlaying())
                 {
                     print("Theme done! Restarting scheduling...");
+                    currentTheme.release();
                     state = MusicManagerState.Scheduling;
                     RestartScheduling();
                 }
@@ -68,29 +70,41 @@ public class MusicManager : MonoBehaviour
         }
     }
 
-    public void AddTheme(GeneralThemeRegion zone)
+    public void ZoneActivated(MusicTrigger zone)
     {
         zoneSchedule.Add(zone, zone.GetScheduledTime());
-        print("Theme added to active list: " + zone + ", schedules for time: " + zoneSchedule[zone]);
+        print("Theme added to active list: " + zone);
     }
 
-    public void RemoveTheme(GeneralThemeRegion zone)
+    public void ZoneDeactivated(MusicTrigger zone)
     {
         zoneSchedule.Remove(zone);
+        //If currently playing this theme
         if(state == MusicManagerState.Playing && currentZone == zone)
         {
             print("Player exited zone for current theme, fading out and restarting scheduling...");
             state = MusicManagerState.Scheduling;
-            //StopCoroutine(WaitForThemeEnd());
             currentTheme.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             RestartScheduling();
         }
     }
 
-    private void RestartScheduling()
+    public void SuspendScheduling()
     {
+        //if a theme is playing, fade it out
+        if (state == MusicManagerState.Playing)
+        {
+            currentTheme.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+        state = MusicManagerState.Suspended;
+        print("MusicManager suspended");
+    }
+
+    public void RestartScheduling()
+    {
+        //Get a new schedule time for each active trigger zone
         //yeah uhh I'm not allowed to modify the collection I'm iterating over, so I gotta deep copy it
-        var keys = new List<GeneralThemeRegion>(zoneSchedule.Keys);
+        var keys = new List<MusicTrigger>(zoneSchedule.Keys);
 
         foreach (var zone in keys)
         {
@@ -100,7 +114,7 @@ public class MusicManager : MonoBehaviour
     }
 
     // Is public, so we can override anything if need be, i.e. make instant playback for a given room or anything ~Lars
-    public bool PlayTheme(GeneralThemeRegion zone)
+    public bool PlayTheme(MusicTrigger zone)
     {
         if (state != MusicManagerState.Scheduling || !zoneSchedule.ContainsKey(zone))
         {
@@ -111,12 +125,11 @@ public class MusicManager : MonoBehaviour
         state = MusicManagerState.Playing;
         print("Play " + zone.theme);
         
-        //SANITY CHECK IF NOT SUSPENDED OR PLAYING SOMETHING RIGHT NOW
         currentZone = zone;
         currentTheme = FMODUnity.RuntimeManager.CreateInstance(zone.theme);
         currentTheme.start();
 
-        //StartCoroutine(WaitForThemeEnd());
+        zone.lastPlayedTime = Time.time; //for cooldown
         return true;
     }
 
@@ -126,16 +139,5 @@ public class MusicManager : MonoBehaviour
 	    FMOD.Studio.PLAYBACK_STATE eventState;   
 	    currentTheme.getPlaybackState(out eventState);
 	    return eventState != FMOD.Studio.PLAYBACK_STATE.STOPPED;
-    }
-
-    private IEnumerator WaitForThemeEnd()
-    {
-        while (IsPlaying())
-        {
-            yield return null;
-        }
-        print("Theme done! Restarting scheduling...");
-        state = MusicManagerState.Scheduling;
-        RestartScheduling();
     }
 }
