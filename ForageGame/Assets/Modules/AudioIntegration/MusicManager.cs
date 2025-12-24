@@ -2,18 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-[System.Serializable]
-public class ThemeEntry
-{
-    public FMODUnity.EventReference eventPath;  // FMOD event path
-    public float meanDelay = 10f;
-    public float variance = 10f;
-    public float cooldown = 60f;
-
-    [HideInInspector] public float lastPlayedTime = -Mathf.Infinity; //for theme cooldown
-    [HideInInspector] public Coroutine waitRoutine = null;
-}
-
 /// <summary>
 /// Handles the random trigger-ing of general music themes, also with events in mind
 /// </summary>
@@ -23,8 +11,18 @@ public class MusicManager : MonoBehaviour
     public static MusicManager Instance { get; private set; }
 
     //list of themes that can be played rn, depending on what trigger regions we are in
-    public List<ThemeEntry> eligibleThemes;
+    public List<GeneralThemeRegion> activeZones;
     [SerializeField] private FMOD.Studio.EventInstance currentTheme; 
+    [SerializeField] private GeneralThemeRegion currentZone;
+
+    public enum MusicManagerState
+    {
+        Scheduling,
+        Playing,
+        Suspended
+    }
+
+    [SerializeField] private MusicManagerState state = MusicManagerState.Scheduling;
 
     private void Awake() 
     { 
@@ -39,73 +37,76 @@ public class MusicManager : MonoBehaviour
         } 
     }
 
-    public void AddTheme(ThemeEntry theme)
+    public void AddTheme(GeneralThemeRegion zone)
     {
-        eligibleThemes.Add(theme);
-        theme.waitRoutine = StartCoroutine(ThemeWaitRoutine(theme));
-        print("ThemeWaitRoutine Started for theme" + theme.eventPath);
+        activeZones.Add(zone);
+        print("Theme added to active list: " + zone);
+        if(state == MusicManagerState.Scheduling) zone.StartScheduling();
     }
 
-    public void RemoveTheme(ThemeEntry theme)
+    public void RemoveTheme(GeneralThemeRegion zone)
     {
-        print("hehehe not implemented");
-        eligibleThemes.Remove(theme);
-        // if(state == ManagerState.ProcessStarted && eligibleThemes.Count <= 0)
-        // {
-        //     StopCoroutine(RandomProcess);
-        //     state = ManagerState.Idle;
-        //     print("RandomProcess Stopped!");
-        // }
+        activeZones.Remove(zone);
+        if(state == MusicManagerState.Playing && currentZone == zone)
+        {
+            print("Player exited zone for current theme, fading out and restarting scheduling...");
+            StopCoroutine(WaitForThemeEnd());
+            currentTheme.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            state = MusicManagerState.Scheduling;
+            RestartScheduling();
+        }
     }
 
     private void StopAllScheduling()
     {
-        foreach (var theme in eligibleThemes)
-            StopScheduling(theme);
+        foreach (var zone in activeZones)
+            zone.StopScheduling();
     }
 
-    private void StopScheduling(ThemeEntry theme)
+    private void RestartScheduling()
     {
-        if (theme.waitRoutine != null)
+        foreach (var zone in activeZones)
+            zone.StartScheduling();
+    }
+
+    // Is public, so we can override anything if need be, i.e. make instant playback for a given room or anything ~Lars
+    public bool PlayTheme(GeneralThemeRegion zone)
+    {
+        if (state != MusicManagerState.Scheduling || !activeZones.Contains(zone))
         {
-            print("Stopping scheduling for theme: " + theme.eventPath);
-            StopCoroutine(theme.waitRoutine);
-            theme.waitRoutine = null;
+            print("Theme play attempt ignored for zone: " + zone);
+            return false; //something went wrong, or race condition!
         }
-    }
-
-    IEnumerator ThemeWaitRoutine(ThemeEntry theme)
-    {
-        while (true)
-        {
-            //do not play a theme on cooldown
-            float elapsedCooldown = Time.time - theme.lastPlayedTime;
-            if (elapsedCooldown < theme.cooldown)
-            {
-                yield return new WaitForSeconds(theme.cooldown - elapsedCooldown);
-                continue;
-            }
-
-            float waitTime = Mathf.Max(0.1f, UnityEngine.Random.Range(theme.meanDelay - theme.variance, theme.meanDelay + theme.variance));
-            yield return new WaitForSeconds(waitTime);
-
-            // if (currentTheme.isValid() == false) //are we not currently doing anything
-            // {
-            PlayTheme(theme);
-            yield break; //end coroutine
-            //}
-        }
-    }
-
-    private void PlayTheme(ThemeEntry theme)
-    {
         //we acquired the lock, stop all other scheduling
         StopAllScheduling();
-        print("Play " + theme.eventPath);
-        currentTheme = FMODUnity.RuntimeManager.CreateInstance(theme.eventPath);
+        print("Play " + zone.theme);
+        
+        //SANITY CHECK IF NOT SUSPENDED OR PLAYING SOMETHING RIGHT NOW
+        currentZone = zone;
+        currentTheme = FMODUnity.RuntimeManager.CreateInstance(zone.theme);
         currentTheme.start();
-        theme.lastPlayedTime = Time.time;
-        print("Yeah nothing is gonna happen after this lol");
 
+        state = MusicManagerState.Playing;
+        StartCoroutine(WaitForThemeEnd());
+        return true;
+    }
+
+    //FMOD is restarted and requires this tomfoolery
+    bool IsPlaying() 
+    {
+	    FMOD.Studio.PLAYBACK_STATE eventState;   
+	    currentTheme.getPlaybackState(out eventState);
+	    return eventState != FMOD.Studio.PLAYBACK_STATE.STOPPED;
+    }
+
+    private IEnumerator WaitForThemeEnd()
+    {
+        while (IsPlaying())
+        {
+            yield return null;
+        }
+        print("Theme done! Restarting scheduling...");
+        state = MusicManagerState.Scheduling;
+        RestartScheduling();
     }
 }
