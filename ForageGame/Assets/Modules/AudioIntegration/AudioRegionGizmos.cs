@@ -22,14 +22,12 @@ public class AudioRegionGizmos : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             isPlayerInside = true;
-            //print("we be inside");
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
             isPlayerInside = false;
-            //print("we be outside");
     }
 
     private void OnDrawGizmos()
