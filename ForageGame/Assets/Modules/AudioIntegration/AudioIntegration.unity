@@ -153,6 +153,7 @@ Transform:
   - {fileID: 1289681688}
   - {fileID: 1581430548}
   - {fileID: 1158322154}
+  - {fileID: 386330128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &346986325
@@ -276,6 +277,57 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &386330127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 386330128}
+  - component: {fileID: 386330129}
+  m_Layer: 0
+  m_Name: AmbienceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &386330128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386330127}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 328638496}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &386330129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386330127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c574875979924f7d846380ec2e9f3fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ambienceEvent:
+    Guid:
+      Data1: 915055842
+      Data2: 1272728366
+      Data3: 1222959788
+      Data4: 830151803
+    Path: event:/Music/EventThemes/RainTheme
 --- !u!1 &410518836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1564,19 +1616,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9445228
+      value: 0.9396927
       objectReference: {fileID: 0}
     - target: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32844594
+      value: 0.3420201
       objectReference: {fileID: 0}
     - target: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1584,7 +1636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 38.349
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1621,6 +1673,14 @@ PrefabInstance:
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
+      propertyPath: aParamName
+      value: Bruh
+      objectReference: {fileID: 0}
+    - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
+      propertyPath: bParamName
+      value: Hurb
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParam.Name
@@ -1699,6 +1759,10 @@ PrefabInstance:
     - target: {fileID: 3824049270010932641, guid: d260891e575be4a4f9aa24d7a0c01bce, type: 3}
       propertyPath: m_Name
       value: 2DAmbienceRegion
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824049270010932641, guid: d260891e575be4a4f9aa24d7a0c01bce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -9,8 +9,9 @@ using UnityEditor;
 public class ParameterBlendZone : MonoBehaviour
 {
     [Header("FMOD Target Paramters")]
-    [SerializeField] private FMODUnity.ParamRef aParam;
-    [SerializeField] private FMODUnity.ParamRef bParam;
+    [SerializeField] private string aParamName;
+    [SerializeField] private string bParamName;
+
 
     [Header("Blend Curves")]
     public AnimationCurve aCurve = AnimationCurve.Linear(0, 1, 1, 0);
@@ -44,14 +45,10 @@ public class ParameterBlendZone : MonoBehaviour
             // Evaluate curves, TODO: do stuff lol
             float valueA = aCurve.Evaluate(progress01);
             float valueB = bCurve.Evaluate(progress01);
-            ApplyBlend(valueA, valueB);
-        }
-    }
 
-    //This is debug
-    void ApplyBlend(float A, float B)
-    {
-        Debug.Log($"Blend A:{A:F2}, B:{B:F2}");
+            AmbienceManager.Instance.SetParameter(aParamName, valueA);
+            AmbienceManager.Instance.SetParameter(bParamName, valueB);
+        }
     }
 
     //some nice gizmos cooked up by Mr. GPT ~Lars
@@ -74,8 +71,8 @@ public class ParameterBlendZone : MonoBehaviour
             Vector3 endWorld = transform.TransformPoint(endLocal);
 
             // Draw labels
-            Handles.Label(startWorld, "A: " + aParam.Name);
-            Handles.Label(endWorld, "B: " + bParam.Name);
+            Handles.Label(startWorld, "A: " + aParamName);
+            Handles.Label(endWorld, "B: " + bParamName);
         #endif
     }
 }
