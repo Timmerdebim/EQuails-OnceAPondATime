@@ -8,9 +8,6 @@ public class Lantern : MonoBehaviour
 {
     [SerializeField] Light light;
 
-    private float initialIntensity;
-    private float initialRange;
-
     [SerializeField] private Color mutedColor = Color.red;
     [SerializeField] private Color BrightColor = Color.yellow;
 
@@ -23,10 +20,7 @@ public class Lantern : MonoBehaviour
 
     private void Start()
     {
-        initialIntensity = light.intensity;
-        initialRange = light.range;
 
-        //Animations();
     }
 
     private void Update()
