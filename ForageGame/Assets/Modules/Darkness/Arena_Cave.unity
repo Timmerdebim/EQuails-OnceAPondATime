@@ -2267,8 +2267,8 @@ Transform:
   m_GameObject: {fileID: 1466284752}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.305, y: -0.30900002, z: -0.256}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.192, y: -0.379, z: -0.256}
+  m_LocalScale: {x: 0.60225, y: 0.60225, z: 0.60225}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1886722637}
@@ -2290,10 +2290,9 @@ MonoBehaviour:
   light: {fileID: 1886722639}
   mutedColor: {r: 1, g: 0.32126835, b: 0, a: 1}
   BrightColor: {r: 1, g: 0.6374706, b: 0.015686274, a: 1}
-  flickerAvgPeriod: 0.5
-  flickerAmplitude: 0.2
-  intensityFlickerVariance: 0.3
-  lanternStrength: 0.5
+  minIntensity: 3
+  maxIntensity: 15
+  lanternStrength: 1
 --- !u!43 &1482200986
 Mesh:
   m_ObjectHideFlags: 0
@@ -2564,7 +2563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4150941238873634180, guid: d80b2b17c9a6d27478b8adedd1adc7e8, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4441272987568704392, guid: d80b2b17c9a6d27478b8adedd1adc7e8, type: 3}
       propertyPath: m_Enabled
@@ -3029,8 +3028,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 1, g: 0.520307, b: 0, a: 1}
-  m_Intensity: 5
+  m_Color: {r: 1, g: 0.6374706, b: 0.015686274, a: 1}
+  m_Intensity: 4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3039,7 +3038,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.4
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
