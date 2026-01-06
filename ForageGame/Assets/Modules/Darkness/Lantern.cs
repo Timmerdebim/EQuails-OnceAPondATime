@@ -16,16 +16,19 @@ public class Lantern : MonoBehaviour
 
     [SerializeField] [Range(0f, 1f)] private float lanternStrength = 0.5f;
 
-    FBM1D fbm = new FBM1D(Mathf.Sin, 4, 1.97f, 0.43f);
+    [SerializeField] [Range(0f, 10f)] private float flickerSpeed = 1f;
+
+    FBM1D fbm;
+    [SerializeField] FBM1D.FBMSettings FBMSettings = new FBM1D.FBMSettings(4, 1.97f, 0.43f);
 
     private void Start()
     {
-
+        fbm = new FBM1D((float x) => Mathf.PerlinNoise1D(x), FBMSettings);
     }
 
     private void Update()
     {
-        lanternStrength = fbm.Eval01(Time.time);
+        lanternStrength = fbm.Eval01(Time.time * flickerSpeed);
         SetLanternVisuals();
     }
 
