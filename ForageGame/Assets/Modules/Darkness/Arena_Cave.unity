@@ -2291,13 +2291,14 @@ MonoBehaviour:
   mutedColor: {r: 1, g: 0.32126835, b: 0, a: 1}
   BrightColor: {r: 1, g: 0.60783815, b: 0.1273585, a: 1}
   minIntensity: 5
-  maxIntensity: 10
-  lanternStrength: 0.5492159
-  flickerSpeed: 2
-  FBMSettings:
-    lacunarity: 1.97
-    persistence: 0.43
-    octaves: 4
+  maxIntensity: 8
+  lanternStrength: 0.55604786
+  flickerSpeed: 1.79
+  fbm:
+    funcType: 1
+    octaves: 5
+    lacunarity: 3.47
+    persistence: 0.29
 --- !u!43 &1482200986
 Mesh:
   m_ObjectHideFlags: 0
@@ -2568,7 +2569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4150941238873634180, guid: d80b2b17c9a6d27478b8adedd1adc7e8, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4441272987568704392, guid: d80b2b17c9a6d27478b8adedd1adc7e8, type: 3}
       propertyPath: m_Enabled

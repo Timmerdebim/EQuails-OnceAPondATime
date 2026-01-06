@@ -4,8 +4,31 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 
-public class FBM1D
+[System.Serializable]
+public class FBM1D : ISerializationCallbackReceiver
 {
+    public NoiseFunctionType funcType;
+    public int octaves;
+    public float lacunarity;
+    public float persistence;
+
+    #region CustomFunction
+    // Used for custom functions where the range is not known ahead of time
+    float min = float.MaxValue;
+    float max = float.MinValue;
+    private Func<float, float> customFunc = (float x) => 0f;
+
+    private void ApproximateRange((float, float) Domain, float step)
+    {
+        for (float x = Domain.Item1; x < Domain.Item2; x += step)
+        {
+            float val = Eval(x);
+            min = Mathf.Min(min, val);
+            max = Mathf.Max(max, val);
+        }
+    }
+#endregion CustomFunction
+
     private struct NoiseFunction
     {
         public (float, float) range;
@@ -21,12 +44,11 @@ public class FBM1D
         Custom
     }
 
-    private Func<float, float> customFunc;
 
     private Dictionary<NoiseFunctionType, NoiseFunction> NoiseFunctions = new Dictionary<NoiseFunctionType, NoiseFunction>()
     {
         {NoiseFunctionType.Sin, new NoiseFunction(){range = (-1f, 1f), function = Mathf.Sin } },
-        {NoiseFunctionType.PerlinNoise1D, new NoiseFunction(){range = (-1f, 1f), function = Mathf.PerlinNoise1D } },
+        {NoiseFunctionType.PerlinNoise1D, new NoiseFunction(){range = (0f, 1f), function = Mathf.PerlinNoise1D } },
         {NoiseFunctionType.Sawtooth, new NoiseFunction(){range = (0f, 1f), function = (float x) => x - Mathf.Floor(x) } },
         {NoiseFunctionType.Square, new NoiseFunction(){range = (0f, 1f), function = (float x) => (x - Mathf.Floor(x)) < 0.5f ? 0f : 1f} },
         {NoiseFunctionType.Custom, new NoiseFunction(){} }
@@ -36,55 +58,34 @@ public class FBM1D
     {
         get
         {
-            return NoiseFunctions[settings.funcType].function;
+            return NoiseFunctions[funcType].function;
         }
     }
 
-    FBMSettings settings;
-    private int octaves { get { return settings.octaves; } }
-    private float lacunarity { get { return settings.lacunarity; } }
-    private float persistence { get { return settings.persistence; } }
-
-
-    // Used if the exact range is not known
-    float min = float.MaxValue;
-    float max = float.MinValue;
-
-    public FBM1D(FBMSettings settings)
+    public FBM1D(NoiseFunctionType funcType = NoiseFunctionType.Sin, int octaves = 4, float lacunarity = 2f, float persistence = 0.5f)
     {
-        this.settings = new FBMSettings(settings.funcType, octaves, lacunarity, persistence);
+        this.funcType = funcType;
+        this.octaves = octaves;
+        this.lacunarity = lacunarity;
+        this.persistence = persistence;
 
-        min = NoiseFunctions[settings.funcType].range.Item1 * (1 - Mathf.Pow(persistence, octaves)) / (1 - persistence);
-        max = NoiseFunctions[settings.funcType].range.Item2 * (1 - Mathf.Pow(persistence, octaves)) / (1 - persistence);
+        RecalculateRange();
     }
 
-    public FBM1D(NoiseFunctionType funcType = NoiseFunctionType.Sin, int octaves = 4, float lacunarity = 2f, float persistence = 0.5f) : this(new FBMSettings(funcType, octaves, lacunarity, persistence)) { }
-
-    public FBM1D(FBMSettings settings, Func<float, float> customFunc)
+    public void SetCustomFunction(Func<float, float> customFunc)
     {
-        settings.funcType = NoiseFunctionType.Custom;
-        this.settings = settings;
-
-        this.NoiseFunctions[NoiseFunctionType.Custom] = new NoiseFunction() { function = customFunc };
-
-        ApproximateRange((-100f, 100f), 0.1f);
+        this.customFunc = customFunc;
+        NoiseFunctions[NoiseFunctionType.Custom] = new NoiseFunction() { function = customFunc };
+        RecalculateRange();
     }
 
-
-    [System.Serializable]
-    public class FBMSettings
+    private void RecalculateRange()
     {
-        public NoiseFunctionType funcType;
-        public float lacunarity;
-        public float persistence;
-        public int octaves;
-
-        public FBMSettings(NoiseFunctionType func = NoiseFunctionType.Sin, int octaves = 4, float lacunarity = 2f, float persistence = 0.5f)
+        if (funcType == NoiseFunctionType.Custom) { ApproximateRange((-100f, 100f), 0.1f); }
+        else
         {
-            this.funcType = func;
-            this.lacunarity = lacunarity;
-            this.persistence = persistence;
-            this.octaves = octaves;
+            min = NoiseFunctions[funcType].range.Item1 * (1 - Mathf.Pow(persistence, octaves)) / (1 - persistence);
+            max = NoiseFunctions[funcType].range.Item2 * (1 - Mathf.Pow(persistence, octaves)) / (1 - persistence);
         }
     }
 
@@ -93,7 +94,7 @@ public class FBM1D
     /// </summary>
     /// <param name="x">Function argument.</param>
     /// <returns>The 1D fBM function value at x.</returns>
-    public float Eval(float x)
+    public float Eval(float x) 
     {
         float sum = 0f;
 
@@ -112,7 +113,7 @@ public class FBM1D
     /// <returns>1D fBM function on domain [0, 1]</returns>
     public float Eval01(float x)
     {
-        return (x - min) / (max - min);
+        return (Eval(x) - min) / (max - min);
     }
 
     /// <summary>
@@ -125,14 +126,20 @@ public class FBM1D
         return Eval01(x) * 2f - 1f;
     }
 
-    private void ApproximateRange((float,float) Domain, float step)
+
+
+    #region Serialization
+
+    public void OnAfterDeserialize()
     {
-        for (float x = Domain.Item1; x < Domain.Item2; x += step)
-        {
-            float val = Eval(x);
-            min = Mathf.Min(min, val);
-            max = Mathf.Max(max, val);
-        }
+        RecalculateRange();
     }
+
+    public void OnBeforeSerialize()
+    {
+        // Nothing to do here
+    }
+
+    #endregion Serialization
 
 }

@@ -634,7 +634,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2133064622}
-  - component: {fileID: 2133064621}
+  - component: {fileID: 2133064623}
   m_Layer: 0
   m_Name: FBM Visualiser
   m_TagString: Untagged
@@ -642,28 +642,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2133064621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133064620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26cae8a8b33086942ae9bedc478909f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 1550523486}
-  backgroundPlane: {fileID: 856444375}
-  points: 1000
-  settings:
-    lacunarity: 1.84
-    persistence: 0.45
-    octaves: 4
-  minX: 0
-  maxX: 100
-  scrollSpeed: 4.63
 --- !u!4 &2133064622
 Transform:
   m_ObjectHideFlags: 0
@@ -681,6 +659,31 @@ Transform:
   - {fileID: 1550523487}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2133064623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133064620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26cae8a8b33086942ae9bedc478909f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 1550523486}
+  backgroundPlane: {fileID: 856444375}
+  points: 10000
+  fbmFunction:
+    funcType: 0
+    octaves: 4
+    lacunarity: 2
+    persistence: 0.5
+    min: -1.875
+    max: 1.875
+  minX: 0
+  maxX: 100
+  scrollSpeed: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

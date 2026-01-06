@@ -18,13 +18,7 @@ public class Lantern : MonoBehaviour
 
     [SerializeField] [Range(0f, 10f)] private float flickerSpeed = 1f;
 
-    FBM1D fbm;
-    [SerializeField] FBM1D.FBMSettings FBMSettings = new FBM1D.FBMSettings(FBM1D.NoiseFunctionType.Sin, 4, 1.97f, 0.43f);
-
-    private void Start()
-    {
-        fbm = new FBM1D(FBMSettings);
-    }
+    [SerializeField] FBM1D fbm = new FBM1D(FBM1D.NoiseFunctionType.Sin, 4, 1.97f, 0.43f);
 
     private void Update()
     {

@@ -5,8 +5,7 @@ public class FBMVisualiser : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private MeshRenderer backgroundPlane;
     [SerializeField] private int points = 100;
-    [SerializeField] private FBM1D.FBMSettings settings = new();
-    private FBM1D fbmFunction;
+    [SerializeField] FBM1D fbmFunction = new FBM1D();
 
     [SerializeField] private float minX = 0f;
     [SerializeField] private float maxX = 100f;
@@ -15,7 +14,6 @@ public class FBMVisualiser : MonoBehaviour
 
     private void Start()
     {
-        fbmFunction = new FBM1D(settings);
         lineRenderer.useWorldSpace = true;
     }
 
