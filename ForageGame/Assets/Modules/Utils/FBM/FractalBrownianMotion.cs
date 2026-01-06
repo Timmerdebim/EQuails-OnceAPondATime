@@ -1,58 +1,87 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 
 public class FBM1D
 {
-    Func<float, float> func;
+    private struct NoiseFunction
+    {
+        public (float, float) range;
+        public Func<float, float> function;
+    }
+
+    public enum NoiseFunctionType
+    {
+        Sin,
+        PerlinNoise1D,
+        Sawtooth,
+        Square,
+        Custom
+    }
+
+    private Func<float, float> customFunc;
+
+    private Dictionary<NoiseFunctionType, NoiseFunction> NoiseFunctions = new Dictionary<NoiseFunctionType, NoiseFunction>()
+    {
+        {NoiseFunctionType.Sin, new NoiseFunction(){range = (-1f, 1f), function = Mathf.Sin } },
+        {NoiseFunctionType.PerlinNoise1D, new NoiseFunction(){range = (-1f, 1f), function = Mathf.PerlinNoise1D } },
+        {NoiseFunctionType.Sawtooth, new NoiseFunction(){range = (0f, 1f), function = (float x) => x - Mathf.Floor(x) } },
+        {NoiseFunctionType.Square, new NoiseFunction(){range = (0f, 1f), function = (float x) => (x - Mathf.Floor(x)) < 0.5f ? 0f : 1f} },
+        {NoiseFunctionType.Custom, new NoiseFunction(){} }
+    };
+
+    Func<float, float> func
+    {
+        get
+        {
+            return NoiseFunctions[settings.funcType].function;
+        }
+    }
+
     FBMSettings settings;
     private int octaves { get { return settings.octaves; } }
     private float lacunarity { get { return settings.lacunarity; } }
     private float persistence { get { return settings.persistence; } }
 
-    float _norm = 0f;
 
-    float norm
+    // Used if the exact range is not known
+    float min = float.MaxValue;
+    float max = float.MinValue;
+
+    public FBM1D(FBMSettings settings)
     {
-        get
-        {
-            if (_norm == 0f)
-            {
-                _norm = FBM1Dnorm(func, octaves, persistence);
-            }
-            return _norm;
-        }
+        this.settings = new FBMSettings(settings.funcType, octaves, lacunarity, persistence);
+
+        min = NoiseFunctions[settings.funcType].range.Item1 * (1 - Mathf.Pow(persistence, octaves)) / (1 - persistence);
+        max = NoiseFunctions[settings.funcType].range.Item2 * (1 - Mathf.Pow(persistence, octaves)) / (1 - persistence);
     }
 
-    /// <summary>
-    /// Constructs a 1D fBM function.
-    /// </summary>
-    /// <param name="func">Base function, e.g. Sin or Perlin Noise.</param>
-    /// <param name="octaves">Number of fBM layers.</param>
-    /// <param name="lacunarity">The lacunarity of the fBM is the gain of the frequency. Should normally be >1.</param>
-    /// <param name="persistence">The persistence of the fBM is the gain of the amplitude. Should normally be <1.</param>
-    public FBM1D(Func<float, float> func, int octaves = 4, float lacunarity = 2f, float persistence = 0.5f)
-    {
-        this.func = func;
-        this.settings = new FBMSettings(octaves, lacunarity, persistence);
-    }
+    public FBM1D(NoiseFunctionType funcType = NoiseFunctionType.Sin, int octaves = 4, float lacunarity = 2f, float persistence = 0.5f) : this(new FBMSettings(funcType, octaves, lacunarity, persistence)) { }
 
-    public FBM1D(Func<float, float> func, FBMSettings settings)
+    public FBM1D(FBMSettings settings, Func<float, float> customFunc)
     {
-        this.func = func;
+        settings.funcType = NoiseFunctionType.Custom;
         this.settings = settings;
+
+        this.NoiseFunctions[NoiseFunctionType.Custom] = new NoiseFunction() { function = customFunc };
+
+        ApproximateRange((-100f, 100f), 0.1f);
     }
+
 
     [System.Serializable]
     public class FBMSettings
     {
+        public NoiseFunctionType funcType;
         public float lacunarity;
         public float persistence;
         public int octaves;
 
-        public FBMSettings(int octaves = 4, float lacunarity = 2f, float persistence = 0.5f)
+        public FBMSettings(NoiseFunctionType func = NoiseFunctionType.Sin, int octaves = 4, float lacunarity = 2f, float persistence = 0.5f)
         {
+            this.funcType = func;
             this.lacunarity = lacunarity;
             this.persistence = persistence;
             this.octaves = octaves;
@@ -83,7 +112,7 @@ public class FBM1D
     /// <returns>1D fBM function on domain [0, 1]</returns>
     public float Eval01(float x)
     {
-        return (Eval(x) / norm + 1f) / 2f;
+        return (x - min) / (max - min);
     }
 
     /// <summary>
@@ -93,38 +122,17 @@ public class FBM1D
     /// <returns>1D fBM function on domain [-1, 1]</returns>
     public float EvalMin11(float x)
     {
-        return Eval(x) / norm;
+        return Eval01(x) * 2f - 1f;
     }
 
-    /// <summary>
-    /// Returns the norm of the 1D fBM function for normalisation purposes, using random sampling for the extrema of the function over domain [0,10].
-    /// </summary>
-    /// <param name="octaves"></param>
-    /// <param name="persistence"></param>
-    /// <returns></returns>
-    private static float FBM1Dnorm(Func<float, float> func, int octaves, float persistence)
+    private void ApproximateRange((float,float) Domain, float step)
     {
-
-        float min = float.PositiveInfinity;
-        float max = float.NegativeInfinity;
-
-        for (float x = 0f; x < 10f; x += 0.01f)
+        for (float x = Domain.Item1; x < Domain.Item2; x += step)
         {
-            float y = func(x);
-
-            if (y < min) min = y;
-            if (y > max) max = y;
+            float val = Eval(x);
+            min = Mathf.Min(min, val);
+            max = Mathf.Max(max, val);
         }
-
-        float maxVal = Mathf.Max(Mathf.Abs(min), Mathf.Abs(max));
-
-        float norm = 0f;
-        for (int i = 0; i < octaves; i++)
-        {
-            norm += maxVal * Mathf.Pow(persistence, i);
-        }
-
-        return norm;
     }
 
 }

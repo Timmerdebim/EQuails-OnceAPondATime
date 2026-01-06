@@ -2289,10 +2289,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   light: {fileID: 1886722639}
   mutedColor: {r: 1, g: 0.32126835, b: 0, a: 1}
-  BrightColor: {r: 1, g: 0.6374706, b: 0.015686274, a: 1}
-  minIntensity: 3
-  maxIntensity: 15
-  lanternStrength: 1
+  BrightColor: {r: 1, g: 0.60783815, b: 0.1273585, a: 1}
+  minIntensity: 5
+  maxIntensity: 10
+  lanternStrength: 0.5492159
+  flickerSpeed: 2
+  FBMSettings:
+    lacunarity: 1.97
+    persistence: 0.43
+    octaves: 4
 --- !u!43 &1482200986
 Mesh:
   m_ObjectHideFlags: 0
@@ -3028,8 +3033,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 1, g: 0.6374706, b: 0.015686274, a: 1}
-  m_Intensity: 4
+  m_Color: {r: 1, g: 0.47865704, b: 0.06994731, a: 1}
+  m_Intensity: 7.7460794
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

@@ -15,7 +15,7 @@ public class FBMVisualiser : MonoBehaviour
 
     private void Start()
     {
-        fbmFunction = new FBM1D(Mathf.Sin, settings);
+        fbmFunction = new FBM1D(settings);
         lineRenderer.useWorldSpace = true;
     }
 
