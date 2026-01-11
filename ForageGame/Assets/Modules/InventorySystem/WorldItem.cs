@@ -8,12 +8,13 @@ public class WorldItem : MonoBehaviour, IInteractable
 
     public UnityEvent onPickup;
 
-    public void Interact(UnityAction StopInteractionCallback)
+    virtual public void Interact(UnityAction StopInteractionCallback)
     {
         bool wasPickedUp = InventorySystem.Instance.PickupItem(itemData);
 
         if (wasPickedUp)
         {
+            // TODO: show discovery
             onPickup?.Invoke();
             Destroy(gameObject);
         }

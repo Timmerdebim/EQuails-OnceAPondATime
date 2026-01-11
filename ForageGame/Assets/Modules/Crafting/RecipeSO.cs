@@ -6,4 +6,6 @@ public class RecipeSO : ScriptableObject
 {
     public List<Item> requiredItems;
     public Item resultItem;
+    public bool canRepeatRecipe;
+    public bool delayedRecipieRemoval;
 }
