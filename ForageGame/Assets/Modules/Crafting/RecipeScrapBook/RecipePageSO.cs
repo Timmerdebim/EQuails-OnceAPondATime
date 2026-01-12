@@ -1,0 +1,10 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "RecipePageSO", menuName = "Scriptable Objects/RecipePage")]
+public class RecipePageSO : ScriptableObject
+{
+    public string Name;
+    public Sprite pageSprite;
+    [Tooltip("Position in the scrapbook this page will be shown")]
+    public int pageIndex;
+}
