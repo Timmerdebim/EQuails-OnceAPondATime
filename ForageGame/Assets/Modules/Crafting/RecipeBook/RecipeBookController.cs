@@ -10,11 +10,12 @@ public class RecipeBookController : MonoBehaviour
 
     void Awake()
     {
-        //listen in to the event
+        RecipePageItem.onRecipePagePickup += OnRecipePageCollected;
     }
 
     private void OnRecipePageCollected(RecipePageSO page)
     {
+        print($"New recipe collected: {page.Name}");
         collectedPages.Add(page);
     }
 
