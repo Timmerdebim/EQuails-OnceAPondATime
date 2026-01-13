@@ -34,6 +34,7 @@ public class RecipeBookController : MonoBehaviour
     void Update()
     {
         //TODO: this input here is placeholder for now just to get it to work ~Lars
+        //Also TODO: lock player controls while menu open
         if(Input.GetKeyDown(KeyCode.Tab))
         {
             opened = !opened;
