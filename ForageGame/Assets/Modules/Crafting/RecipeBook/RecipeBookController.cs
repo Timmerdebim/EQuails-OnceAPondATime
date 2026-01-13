@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class RecipeBookController : MonoBehaviour
 {
-    [SerializeField] private RectTransform pagePrefab;
+    [SerializeField] private GameObject pagePrefab;
     [SerializeField] private List<RecipePageSO> collectedPages;
-    private List<RectTransform> pageObjects = new List<RectTransform>();
-    private int currentPageIndex;
+    private List<GameObject> pageObjects = new List<GameObject>();
+    [SerializeField] private int currentPageIndex = 0;
 
     [SerializeField] private bool opened;
 
@@ -30,6 +30,7 @@ public class RecipeBookController : MonoBehaviour
     }
 
 
+    //All of this is messy and preliminary, I want to get the system working, the specifics of how things are displayed are tbd
     void Update()
     {
         //TODO: this input here is placeholder for now just to get it to work ~Lars
@@ -47,23 +48,48 @@ public class RecipeBookController : MonoBehaviour
                 DestroyStack();
             }
         }
+
+        if(opened)
+        {
+            if(Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                PreviousPage();
+            }
+            if(Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                NextPage();
+            }
+        }
     }
 
     private void BuildStack()
     {
         for (int i = 0; i < collectedPages.Count; i++)
         {
-            var page = collectedPages[i];
-            RectTransform obj = Instantiate(pagePrefab, transform);
-            obj.GetComponent<UnityEngine.UI.Image>().sprite = page.pageSprite;
-            obj.anchoredPosition = new Vector2(obj.anchoredPosition.x - xStackOffset*i, obj.anchoredPosition.y);
+            GameObject obj = Instantiate(pagePrefab, transform, false);
+
+            //set the image sprite (its in the children because of shitty ui reasons)
+            var image = obj.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>();
+            image.sprite = collectedPages[i].pageSprite;
+
+            //position page UI (stacking offset)
+            RectTransform imgRect = obj.transform.GetChild(0).GetComponent<RectTransform>();
+            imgRect.anchoredPosition = new Vector2(xStackOffset * i, 0);
+
             pageObjects.Add(obj);
         }
 
+        //Now set the draw order, because this is *of course* managed by hierarchy order
+        //yes we must reverse it
+        for (int i = 0; i < pageObjects.Count; i++)
+        {
+            pageObjects[i].transform.SetSiblingIndex(pageObjects.Count - 1 - i);
+        }
     }
 
     private void DestroyStack()
     {
+        currentPageIndex = 0;
         foreach (var page in pageObjects)
         {
             Destroy(page.gameObject);
@@ -72,13 +98,18 @@ public class RecipeBookController : MonoBehaviour
     }
 
 
-    //TODO: implement
     public void NextPage()
     {
-        
+        if(currentPageIndex+1 >= pageObjects.Count) return;
+        print($"flipping page {currentPageIndex} left");
+        pageObjects[currentPageIndex].GetComponent<RecipePageUI>().PlayFlipLeftAnim(); //yes this sucks, I know shhhh
+        currentPageIndex++;
     }
     public void PreviousPage()
     {
-        
+        if(currentPageIndex < 1) return;
+        currentPageIndex--;
+        print($"flipping page {currentPageIndex} right");
+        pageObjects[currentPageIndex].GetComponent<RecipePageUI>().PlayFlipRightAnim(); //yes this sucks, I know shhhh
     }
 }
