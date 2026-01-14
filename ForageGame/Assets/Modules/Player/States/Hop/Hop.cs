@@ -5,21 +5,22 @@ using UnityEngine;
 public class Hop : StateMachineBehaviour
 {
     protected DuckController duck;
-    protected float timeSinceHopInput;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float hopImpulse;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         GameObject obj = animator.gameObject;
         duck = obj.GetComponent<DuckController>();
 
-        duck.rb.AddForce(new Vector3(0, duck.hopImpulse, 0), ForceMode.Impulse);
+        duck.V_impulse = hopImpulse;
 
         duck.duckEnergy.UseEnergy(duck.hopEnergy);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.SetDuckVelocity(duck._inputDirection, duck.hopMoveSpeed);
+        duck.velocity = duck._inputDirection * moveSpeed;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

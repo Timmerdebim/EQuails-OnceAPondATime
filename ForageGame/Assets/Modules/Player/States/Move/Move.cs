@@ -3,6 +3,7 @@ using UnityEngine;
 public class Move : StateMachineBehaviour
 {
     protected DuckController duck;
+    [SerializeField] private float moveSpeed;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -17,7 +18,7 @@ public class Move : StateMachineBehaviour
         else
             duck.playerInteract?.StopInteract();
 
-        duck.SetDuckVelocity(duck._inputDirection, duck.walkMoveSpeed);
+        duck.velocity = duck._inputDirection * moveSpeed;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

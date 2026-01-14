@@ -3,6 +3,7 @@ using UnityEngine;
 public class Fall : StateMachineBehaviour
 {
     protected DuckController duck;
+    [SerializeField] private float moveSpeed;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -12,7 +13,7 @@ public class Fall : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.SetDuckVelocity(duck._inputDirection, duck.fallMoveSpeed);
+        duck.velocity = duck._inputDirection * moveSpeed;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

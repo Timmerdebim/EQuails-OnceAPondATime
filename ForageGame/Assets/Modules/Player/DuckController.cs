@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,50 +9,25 @@ public class DuckController : MonoBehaviour
     [Header("Components")]
     public Animator animator;
     public DuckEnergy duckEnergy;
-    public Rigidbody rb;
-
-    [Header("Walk")]
-    public float walkMoveSpeed = 5f;
-    [Header("Dash")]
-    public float dashMoveSpeed = 60f; // TOOD: dash while flutter/hop (only 1 time before reset on ground)
-    public float dashEnergy = 10f;
-    [Header("Hop")]
-    public float hopMoveSpeed = 3f;
-    public float hopImpulse = 10f;
-    public float hopEnergy = 10f;
-    [Header("Flutter")]
-    public float flutterMoveSpeed = 3f;
-    public float flutterHeight = 6f; // TODO: make fullter look at last ground height position
-    public float flutterNaturalFrequency = 3f; // i aint explaining this - pick up a textbook on dampening systems or smth
-    public float flutterEnergy = 10f; // this is energy per second
-    [Header("Attack")]
-    public float attackMoveSpeed = 40f;
-    public float attackEnergy = 10f;
-    [Header("Fall")]
-    public float fallMoveSpeed = 3f;
-
-    [Header("Misc")]
+    public CharacterController characterController;
+    public Hitbox hitbox;
     public LayerMask interactionLayer;
     public TrailRenderer trailRenderer;
     public ParticleSystem hitParticleRenderer;
-
-    public float lastGroundHeight { get; private set; } = 0;
-
-    public enum DashType
-    {
-        none,
-        dash,
-        throughDash
-    }
-
-    public DashType dashType = DashType.throughDash;
-
-    public Hitbox hitbox;
-
-    public bool interactInput = false;
-
-    //Interaction
     public PlayerInteract playerInteract;
+
+    [Header("Abilities")]
+    public bool canHop;
+    public bool canFlutter;
+    public bool canAttack;
+    [Header("Energy Requirements")]
+    public float dashEnergy = 10f;
+    public float hopEnergy = 10f;
+    public float flutterEnergy = 10f; // this is energy per second
+    public float attackEnergy = 10f;
+
+    [Header("Misc")]
+    public bool interactInput = false;
 
     private void Awake()
     {
@@ -60,36 +36,57 @@ public class DuckController : MonoBehaviour
         if (duckEnergy == null) TryGetComponent(out duckEnergy);
         if (duckEnergy == null)
             Debug.LogError("DuckEnergy component not found on this character. Please add one.", this);
+        if (characterController == null) TryGetComponent(out characterController);
 
         ExitStateReset();
     }
 
     // ------------ PHYSICS ------------
 
-    public Vector2 _inputDirection { get; private set; }
-    public Vector2 _viewDirection { get; private set; }
-    public Vector3 duckVelocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update
-    public Vector3 duckForce;
+    public Vector3 _inputDirection { get; private set; }
+    public Vector3 _viewDirection { get; private set; }
+    public float lastGroundHeight { get; private set; } = 0;
+    public Vector3 velocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update
+    public float V_impulse;
+    public float V_acceleration;
+    public bool useGravity;
+    public float gravity;
 
-    public void SetDuckVelocity(Vector2 direction, float magnitude)
+
+    public float a;
+    public float dv = 0;
+    public Vector3 v;
+    public Vector3 dx;
+
+    void Update()
     {
-        duckVelocity = new Vector3(direction.x, 0, direction.y) * magnitude;
-        duckVelocity.y = rb.linearVelocity.y;
+        a = V_acceleration;
+        if (useGravity) a += gravity;
+        if (!characterController.isGrounded)
+            dv = dv + a * Time.deltaTime + V_impulse;
+        else
+            dv = -0.1f + a * Time.deltaTime + V_impulse;
+        v = velocity + Vector3.up * dv;
+        dx = v * Time.deltaTime;
+        characterController.Move(dx);
+
+        V_impulse = 0;
+        animator.SetBool("isGrounded", characterController.isGrounded);
+        if (characterController.isGrounded) lastGroundHeight = transform.position.y;
+        CheckEnergy(); // For knowing if we have sufficient energy
+    }
+    private void CheckEnergy()
+    {
+        animator.SetBool("dashEnergy", (dashEnergy < duckEnergy.energy));
+        animator.SetBool("hopEnergy", (hopEnergy < duckEnergy.energy));
+        animator.SetBool("flutterEnergy", (flutterEnergy < duckEnergy.energy));
+        animator.SetBool("attackEnergy", (attackEnergy < duckEnergy.energy));
     }
 
-    public void DisableGravity()
+    public void SetAbility(string ability, bool canAbility)
     {
-        rb.useGravity = false;
-        Vector3 velocity = rb.linearVelocity;
-        velocity.y = 0;
-        rb.linearVelocity = velocity;
-    }
-
-    void FixedUpdate()
-    {
-        duckVelocity.y = rb.linearVelocity.y;
-        rb.linearVelocity = duckVelocity;
-        rb.AddForce(duckForce, ForceMode.Force);
+        // Abilities: "Hop" "Flutter"
+        animator.SetBool("can" + ability, canAbility);
     }
 
     // ------------ INPUTS ------------
@@ -97,7 +94,8 @@ public class DuckController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 moveInput = context.ReadValue<Vector2>();
-        _inputDirection = moveInput.normalized;
+        moveInput = moveInput.normalized;
+        _inputDirection = new Vector3(moveInput.x, 0f, moveInput.y);
 
         if (moveInput.magnitude > 0.1f)
         {
@@ -110,7 +108,7 @@ public class DuckController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.action.WasPressedThisFrame() && duckEnergy.energy > dashEnergy)
+        if (context.action.WasPressedThisFrame())
             animator.SetBool("dash", true);
         if (context.action.WasReleasedThisFrame())
             animator.SetBool("dash", false);
@@ -118,7 +116,7 @@ public class DuckController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.action.WasPressedThisFrame() && duckEnergy.energy > attackEnergy)
+        if (context.action.WasPressedThisFrame() && canAttack)
             animator.SetBool("attack", true);
         if (context.action.WasReleasedThisFrame())
             animator.SetBool("attack", false);
@@ -129,35 +127,18 @@ public class DuckController : MonoBehaviour
         interactInput = context.action.IsPressed();
     }
 
-    public void OnFlutter(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.action.WasPressedThisFrame() && duckEnergy.energy > flutterEnergy)
-            animator.SetBool("flutter", true);
+        if (context.action.WasPressedThisFrame())
+        {
+            if (canFlutter) animator.SetBool("flutter", true);
+            else if (canHop) animator.SetBool("hop", true);
+        }
         if (context.action.WasReleasedThisFrame())
-            animator.SetBool("flutter", false);
-    }
-
-    public void OnHop(InputAction.CallbackContext context)
-    {
-        if (context.action.WasPressedThisFrame() && duckEnergy.energy > hopEnergy)
-            animator.SetBool("hop", true);
-        if (context.action.WasReleasedThisFrame())
+        {
             animator.SetBool("hop", false);
-    }
-
-    // ------------ GROUND CHECK ------------
-
-    void OnCollisionEnter(Collision collisionInfo)
-    {
-        animator.SetBool("isGrounded", true);
-        animator.SetBool("airDashed", false);
-
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        animator.SetBool("isGrounded", false);
-        lastGroundHeight = transform.position.z;
+            animator.SetBool("flutter", false);
+        }
     }
 
     // ------------ ANIMATOR CLUNK ------------
@@ -171,9 +152,10 @@ public class DuckController : MonoBehaviour
         }
 
         if (interactInput) playerInteract?.StopInteract();
-        duckForce = new Vector3(0, 0, 0);
-        SetDuckVelocity(_viewDirection, 0);
-        rb.useGravity = true;
+        velocity = Vector3.zero;
+        V_acceleration = 0;
+        V_impulse = 0;
+        useGravity = true;
         hitbox.gameObject.SetActive(false);
         trailRenderer.emitting = false;
     }

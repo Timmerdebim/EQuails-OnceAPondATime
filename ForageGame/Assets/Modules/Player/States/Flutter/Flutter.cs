@@ -5,21 +5,24 @@ public class Flutter : StateMachineBehaviour
 {
     protected DuckController duck;
     private float targetHight;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float flutterHeight;
+    [SerializeField] private float flutterNaturalFrequency;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         GameObject obj = animator.gameObject;
         duck = obj.GetComponent<DuckController>();
 
-        targetHight = duck.flutterHeight + duck.lastGroundHeight;
-        duck.DisableGravity();
+        targetHight = flutterHeight + duck.lastGroundHeight;
+        duck.useGravity = false;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         duck.duckEnergy.UseEnergy(duck.flutterEnergy * Time.deltaTime);
-        duck.SetDuckVelocity(duck._inputDirection, duck.flutterMoveSpeed);
-        duck.duckForce = new Vector3(0, duck.flutterNaturalFrequency * duck.flutterNaturalFrequency * (targetHight - duck.transform.position.y) - 2 * duck.flutterNaturalFrequency * duck.rb.linearVelocity.y, 0);
+        duck.velocity = duck._inputDirection * moveSpeed;
+        duck.V_acceleration = (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - duck.transform.position.y) - 2 * flutterNaturalFrequency * duck.characterController.velocity.y);
 
         // Check if still can fly
         if (duck.duckEnergy.energy < 0.001f)

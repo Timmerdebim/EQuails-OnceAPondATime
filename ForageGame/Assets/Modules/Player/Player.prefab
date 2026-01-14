@@ -29,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154003868482119989}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.86159205, y: 0.02128481, z: -0.03625294, w: 0.5058575}
-  m_LocalPosition: {x: -0.10701311, y: 2.7109041, z: -1.2693923}
-  m_LocalScale: {x: 2, y: 1.4588327, z: 2}
+  m_LocalRotation: {x: 0.5080672, y: 0.49013996, z: -0.4699928, w: 0.5298465}
+  m_LocalPosition: {x: 6.7596536, y: 4.430904, z: -3.256059}
+  m_LocalScale: {x: 1, y: 3.5542214, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3158818904611881489}
@@ -4644,7 +4644,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 210
+  m_VersionIndex: 252
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4683,7 +4683,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154003868482119989}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4742,7 +4742,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 8558664677149639414}
-  radius: 2
+  radius: 1
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 2176
+  rayCount: 100
+  fadeTime: 0.5
+  visibleDitherScale: 1
+  visibleEdgePower: 1
+  hiddenDitherScale: 0
+  hiddenEdgePower: 0
 --- !u!1 &190465832276949147
 GameObject:
   m_ObjectHideFlags: 0
@@ -5155,7 +5164,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2546511615014967163}
         m_TargetAssemblyTypeName: DuckController, Assembly-CSharp
-        m_MethodName: OnFlutter
+        m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5279,22 +5288,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bc63d7b8-9caa-4ddd-8394-145d4dcb9f26
     m_ActionName: 'Player/Consume Item[/Keyboard/c]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2546511615014967163}
-        m_TargetAssemblyTypeName: DuckController, Assembly-CSharp
-        m_MethodName: OnHop
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 263a7c60-7ff0-40f1-940f-a3b67e6142ae
-    m_ActionName: Player/Hop
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -10589,16 +10582,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8558664677149639414}
-  - component: {fileID: 4441272987568704392}
   - component: {fileID: 2546511615014967163}
   - component: {fileID: 7186449525679409802}
   - component: {fileID: 6270842771944399772}
   - component: {fileID: 6514395743473253288}
-  - component: {fileID: 8370103710724302787}
-  - component: {fileID: 6895033383818321247}
   - component: {fileID: 48352623912231205}
   - component: {fileID: 7566348827879131693}
   - component: {fileID: 7155726674302705076}
+  - component: {fileID: 6778674773641482398}
   m_Layer: 9
   m_Name: Duck
   m_TagString: Player
@@ -10615,7 +10606,7 @@ Transform:
   m_GameObject: {fileID: 6404009981061238201}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 10.3, y: 4.58, z: -2.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10625,29 +10616,6 @@ Transform:
   - {fileID: 5012591290050584225}
   m_Father: {fileID: 3158818904611881489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &4441272987568704392
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6404009981061238201}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2546511615014967163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10662,31 +10630,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6270842771944399772}
   duckEnergy: {fileID: 6514395743473253288}
-  rb: {fileID: 6895033383818321247}
-  walkMoveSpeed: 5
-  dashMoveSpeed: 20
-  dashEnergy: 10
-  hopMoveSpeed: 2
-  hopImpulse: 10
-  hopEnergy: 10
-  flutterMoveSpeed: 2
-  flutterHeight: 5
-  flutterNaturalFrequency: 3
-  flutterEnergy: 10
-  attackMoveSpeed: 10
-  attackEnergy: 10
-  fallMoveSpeed: 2
+  characterController: {fileID: 6778674773641482398}
+  hitbox: {fileID: 5624980208929834917}
   interactionLayer:
     serializedVersion: 2
     m_Bits: 4294967295
   trailRenderer: {fileID: 2249766242556336178}
   hitParticleRenderer: {fileID: 2486612863259856435}
-  dashType: 2
-  hitbox: {fileID: 5624980208929834917}
-  interactInput: 0
   playerInteract: {fileID: 7186449525679409802}
-  duckVelocity: {x: 0, y: 0, z: 0}
-  duckForce: {x: 0, y: 0, z: 0}
+  canHop: 1
+  canFlutter: 0
+  canAttack: 1
+  dashEnergy: 10
+  hopEnergy: 10
+  flutterEnergy: 10
+  attackEnergy: 10
+  interactInput: 0
+  velocity: {x: 0, y: 0, z: 0}
+  V_impulse: 0
+  V_acceleration: 0
+  useGravity: 0
+  gravity: -9.81
+  a: 0
+  dv: 0
+  v: {x: 0, y: 0, z: 0}
+  dx: {x: 0, y: 0, z: 0}
 --- !u!114 &7186449525679409802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10744,49 +10712,6 @@ MonoBehaviour:
   damageFill: {fileID: 5793821649674369143}
   hitParticles: {fileID: 2486612863259856435}
   iFramesDuration: 0.5
---- !u!114 &8370103710724302787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6404009981061238201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 989160d0ff7f8be41a006c22379c8549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactablesLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  interactionRadius: 3
---- !u!54 &6895033383818321247
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6404009981061238201}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!212 &48352623912231205
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10868,6 +10793,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a5036f898e45c4b81708e332714903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!143 &6778674773641482398
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6404009981061238201}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.5
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6622983895397546372
 GameObject:
   m_ObjectHideFlags: 0
