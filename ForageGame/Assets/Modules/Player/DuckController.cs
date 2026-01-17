@@ -43,20 +43,20 @@ public class DuckController : MonoBehaviour
 
     // ------------ PHYSICS ------------
 
-    public Vector3 _inputDirection { get; private set; }
-    public Vector3 _viewDirection { get; private set; }
-    public float lastGroundHeight { get; private set; } = 0;
-    public Vector3 velocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update
-    public float V_impulse;
-    public float V_acceleration;
-    public bool useGravity;
+    [HideInInspector] public Vector3 _inputDirection { get; private set; }
+    [HideInInspector] public Vector3 _viewDirection { get; private set; }
+    [HideInInspector] public float lastGroundHeight { get; private set; } = 0;
+    [HideInInspector] public Vector3 velocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update
+    [HideInInspector] public float V_impulse;
+    [HideInInspector] public float V_acceleration;
+    [HideInInspector] public bool useGravity;
     public float gravity;
 
 
-    public float a;
-    public float dv = 0;
-    public Vector3 v;
-    public Vector3 dx;
+    private float a;
+    private float dv = 0;
+    private Vector3 v;
+    private Vector3 dx;
 
     void Update()
     {

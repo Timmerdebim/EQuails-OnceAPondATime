@@ -1,0 +1,263 @@
+{
+    "frog": [
+        {
+            "requiredFlags": [],
+            "setFlags": [
+                "F_Met",
+                "F_fluteAsk"
+            ],
+            "message": [
+                "Ah… a visitor. Haven’t had one since the storm drowned half my hut.",
+                "Forgive the silence. My flute broke; the one I played beneath the Great Tree.",
+                "When the tree began to fade, I felt its pain in every song.",
+                "I couldn’t bear hearing it anymore… so I hid here.",
+                "If only I had a new flute… perhaps music could steady my heart again."
+            ],
+            "repeat": "If only I had a new flute… perhaps music could steady my heart again.",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "F_fluteAsk"
+            ],
+            "setFlags": [
+                "F_fluteGot"
+            ],
+            "message": [
+                "These reeds… they’re perfect. And this mouthpiece… Grimble’s carving?",
+                "Even while hurting, he still makes beautiful things.",
+                "Let me… try this.",
+                "...Yes. The marsh remembers its song.",
+                "Thank you, friend. But the melody of home still feels too heavy."
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "F_fluteAsk"
+            ],
+            "setFlags": [
+                "F_fluteGot"
+            ],
+            "message": [
+                "My friend… my music falters again.",
+                "The tree needs a song of unity, but I can’t feel its voice anymore.",
+                "If you could bring me the sounds of the fields, the forests, and the caves…",
+                "Maybe they will remind me what harmony feels like."
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "F_fluteAsk"
+            ],
+            "setFlags": [
+                "F_fluteGot"
+            ],
+            "message": [
+                "Wind from Lyria… spores from Bracken… echoes from Grimble…",
+                "All their voices… woven together again.",
+                "Yes… I hear it. The melody of us.",
+                "I’ll return. This song belongs beneath the Great Tree."
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        }
+    ],
+    "rat": [
+        {
+            "setFlags": [
+                "R_met"
+            ],
+            "message": [
+                "Huh. You really did come back.",
+                "This storm messed everything up. Even the cave felt like it was shaking from the inside.",
+                "The others didn’t listen when I said the Great Tree was getting sick first.",
+                "Thanks for digging me out… but don’t think that means I’m going back."
+            ]
+        },
+        {
+            "requiredFlags": [
+                "R_met"
+            ],
+            "setFlags": [
+                "R_foodAsk"
+            ],
+            "message": [
+                ""
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "R_foodGave"
+            ],
+            "message": [
+                ""
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "R_waterGave"
+            ],
+            "message": [
+                ""
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "R_foodGave",
+                "R_waterGave"
+            ],
+            "message": [
+                "R_foodWaterGave"
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "R_foodGave",
+                "R_waterGave"
+            ],
+            "setFlags": [
+                "R_foodWaterGave"
+            ],
+            "message": [
+                "You really got me food and water just cause I asked?",
+                "…You’re annoyingly thoughtful.",
+                "Fine. Maybe I needed the help. Just a little."
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "R_foodWaterGave"
+            ],
+            "setFlags": [
+                "R_compositionAsk"
+            ],
+            "message": [
+                "Y'know, I was a great composer back in the day.Back in the day.",
+                "And I wanted to revisit a piece I wrote for my friends",
+                "I wrote it deep in the caves but I lost my lantern so it's too dark for me to see",
+                "I would go get it myself but if you're intent on helping me..."
+            ],
+            "repeat": "You'll probably need a lantern to find my",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "R_compositionFound"
+            ],
+            "setFlags": [
+                "R_compositionGave"
+            ],
+            "message": [
+                "You found my composition?! Ok quickly transcribe it!",
+                "... yes! Thank you!",
+                "Y'know, since the cave-in… I’ve had too much time to think.",
+                "Maybe I wasn’t just angry; I was scared they didn’t need me.",
+                "I mean - wait why  "
+            ],
+            "repeat": "Now scram, ",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "B_return",
+                "S_return",
+                "F_return"
+            ],
+            "message": [
+                "They… they remembered my music. Even after everything.",
+                "I’ve been so afraid of being forgotten.",
+                "Alright… I’m going back.",
+                "But if anyone cries, I’m leaving again."
+            ],
+            "leaveRude": "Oi! I'm having a character development moment over here!",
+            "setFlags": [
+                "R_return"
+            ]
+        },
+        ,
+        {
+            "requiredFlags": [
+                "R_return"
+            ],
+            "setFlags": [
+                "EndGame"
+            ],
+            "message": [
+                "",
+                "Just come talk to me when you are ready"
+            ],
+            "leavePolite": "",
+            "leaveRude": ""
+        }
+    ],
+    "ratWall": [
+        {
+            "message": [
+                "Hey! Whoever’s out there; quit scratching around!",
+                "I’m fine, alright? A little cave-in doesn’t bother me.",
+                "This is exactly why I left… everyone always thinks I can’t handle things."
+            ],
+            "leaveRude": "Go on, then! I don’t need help!",
+            "setFlags": [
+                "R_metThroughWall"
+            ],
+            "repeat": "... now... back to figuring out how to break this wall down...",
+            "leavePolite": "... maybe an explosive would help..."
+        },
+        {
+            "requiredFlags": [
+                "R_bombGave"
+            ],
+            "setFlags": [
+                "R_bombPlanted"
+            ],
+            "message": [
+                "…You came back with something to free me? Really?",
+                "I... uh... was just about to break free on my own.",
+                "But you can give it a go I suppose; just stand back!"
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        },
+        {
+            "requiredFlags": [
+                "R_bombPlanted"
+            ],
+            "setFlags": [
+                "R_wallDestroyed"
+            ],
+            "message": [
+                "BOOM!"
+            ],
+            "repeat": "",
+            "leavePolite": "",
+            "leaveRude": ""
+        }
+    ]
+}
