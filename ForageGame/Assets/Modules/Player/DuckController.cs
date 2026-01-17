@@ -65,7 +65,7 @@ public class DuckController : MonoBehaviour
         if (!characterController.isGrounded)
             dv = dv + a * Time.deltaTime + V_impulse;
         else
-            dv = -0.1f + a * Time.deltaTime + V_impulse;
+            dv = -0.5f + a * Time.deltaTime + V_impulse;
         v = velocity + Vector3.up * dv;
         dx = v * Time.deltaTime;
         characterController.Move(dx);
