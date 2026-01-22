@@ -68,7 +68,14 @@ public class DuckController : MonoBehaviour
         characterController.Move(dx);
 
         V_impulse = 0;
-        animator.SetBool("isGrounded", characterController.isGrounded);
+        if (Physics.SphereCast(transform.position,0.5f,-transform.up,out RaycastHit hit,0.6f))
+        {
+            animator.SetBool("isGrounded", true);
+        }
+        else
+        {
+            animator.SetBool("isGrounded", false);
+        }
         if (characterController.isGrounded) lastGroundHeight = transform.position.y;
         CheckEnergy(); // For knowing if we have sufficient energy
     }
