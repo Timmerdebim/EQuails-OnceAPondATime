@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RecipePageSO", menuName = "Scriptable Objects/RecipePage")]
+[CreateAssetMenu(fileName = "RecipePage", menuName = "Crafting/RecipePage")]
 public class RecipePageSO : ScriptableObject
 {
     public string Name;
