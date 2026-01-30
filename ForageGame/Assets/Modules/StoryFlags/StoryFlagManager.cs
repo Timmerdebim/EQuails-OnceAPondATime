@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEngine.Events;
+using System;
 
 public class StoryFlagManager : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class StoryFlagManager : MonoBehaviour
 
     // Active flags: SO → active
     private HashSet<StoryFlag> activeFlags;
+
+    public static event Action<StoryFlag> onFlagAdded;
+    public static event Action<StoryFlag> onFlagRemoved;
 
     private void Awake()
     {
@@ -68,6 +72,7 @@ public class StoryFlagManager : MonoBehaviour
         if (activeFlags.Add(flag))
         {
             Debug.Log($"StoryFlag activated: {flag.id}");
+            onFlagAdded?.Invoke(flag);
         }
     }
 
@@ -78,6 +83,7 @@ public class StoryFlagManager : MonoBehaviour
         if (activeFlags.Remove(flag))
         {
             Debug.Log($"StoryFlag deactivated: {flag.id}");
+            onFlagRemoved?.Invoke(flag);
         }
     }
 
