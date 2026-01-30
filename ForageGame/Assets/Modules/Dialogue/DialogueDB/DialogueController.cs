@@ -115,7 +115,8 @@ namespace Modules.Dialogue.DialogueDB
         /// </summary>
         private bool IsBlockValidByFlags(DialogueBlock block)
         {
-            return block.RequiredFlags.All(f => _activeFlags.Contains(f));
+            //return block.RequiredFlags.All(f => _activeFlags.Contains(f));
+            return StoryFlagManager.Instance.FlagListActive(block.RequiredFlags);
         }
 
         private void StartBlock(CharacterState state, DialogueBlock block)

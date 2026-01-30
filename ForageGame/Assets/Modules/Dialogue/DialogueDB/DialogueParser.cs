@@ -46,7 +46,18 @@ namespace Modules.Dialogue.DialogueDB
                         string val = ParseValue(line);
                         if (!val.Equals("<none>", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(val))
                         {
-                            currentBlock.RequiredFlags = val.Split(',').Select(s => s.Trim()).OrderBy(s=>s).ToList();
+                            //currentBlock.RequiredFlags = val.Split(',').Select(s => s.Trim()).OrderBy(s=>s).ToList();
+                            foreach (var raw in val.Split(',').Select(s => s.Trim()))
+                            {
+                                if (StoryFlagManager.Instance.TryGetStoryFlag(raw, out var flag))
+                                {
+                                    currentBlock.RequiredFlags.Add(flag);
+                                }
+                                else
+                                {
+                                    Debug.LogError($"Unknown story flag '{raw}' in dialogue.txt");
+                                }
+                            }
                         }
                         
                         currentCharacter.Blocks.Add(currentBlock);

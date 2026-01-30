@@ -23,7 +23,7 @@ namespace Modules.Dialogue.DialogueDB
     public class DialogueBlock
     {
         public string BlockID => RequiredFlags.Count == 0 ? "default" : string.Join("+", RequiredFlags);
-        public List<string> RequiredFlags = new List<string>();
+        public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
         public List<DialogueLine> Lines = new List<DialogueLine>();
 
         // --- Helpers for specific line types ---
