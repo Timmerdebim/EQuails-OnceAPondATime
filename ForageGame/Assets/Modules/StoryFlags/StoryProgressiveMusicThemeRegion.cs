@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
+public class StoryProgressiveMusicThemeRegion : MusicTrigger
 {
 
     //rememba the FMOD event path, last played time and box collider are inherited ~Lars
