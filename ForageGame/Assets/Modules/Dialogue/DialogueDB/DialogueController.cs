@@ -13,7 +13,8 @@ namespace Modules.Dialogue.DialogueDB
         private DialogueRuntimeState _state; 
         private HashSet<string> _activeFlags = new HashSet<string>();
 
-        private void Awake()
+        //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
+        private void Start()
         {
             List<string> rawText = _sourceFiles.Select(f => f.text).ToList();
             _database = DialogueParser.Parse(rawText);
