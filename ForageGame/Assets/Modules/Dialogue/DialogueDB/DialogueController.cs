@@ -11,7 +11,6 @@ namespace Modules.Dialogue.DialogueDB
         
         private DialogueDatabase _database;
         private DialogueRuntimeState _state; 
-        private HashSet<string> _activeFlags = new HashSet<string>();
 
         //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
         private void Start()
@@ -20,10 +19,6 @@ namespace Modules.Dialogue.DialogueDB
             _database = DialogueParser.Parse(rawText);
             _state = new DialogueRuntimeState();
         }
-
-        // --- FLAG MANAGEMENT ---
-        public void SetFlag(string flag) => _activeFlags.Add(flag);
-        public void RemoveFlag(string flag) => _activeFlags.Remove(flag);
 
         // --- DIALOGUE FLOW ---
 
@@ -116,7 +111,6 @@ namespace Modules.Dialogue.DialogueDB
         /// </summary>
         private bool IsBlockValidByFlags(DialogueBlock block)
         {
-            //return block.RequiredFlags.All(f => _activeFlags.Contains(f));
             return StoryFlagManager.Instance.FlagListActive(block.RequiredFlags);
         }
 
