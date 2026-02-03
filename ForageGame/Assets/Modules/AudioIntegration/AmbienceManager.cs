@@ -42,9 +42,6 @@ public class AmbienceManager : MonoBehaviour
             e.instance = FMODUnity.RuntimeManager.CreateInstance(r.eventReference);
             e.instance.getDescription(out FMOD.Studio.EventDescription desc);
 
-            e.instance.start(); //TODO: this is debug
-            e.active = true; //IDEM DITO
-
             desc.getParameterDescriptionCount(out int paramcount);
             for (int i = 0; i < paramcount; i++)
             {
@@ -70,6 +67,44 @@ public class AmbienceManager : MonoBehaviour
             }
         }
         Debug.LogError("Recieved parameter name: " + name + " does not exist in an active ambience event");
+    }
+
+    public void StartEvent(Region r)
+    {
+        if (events.TryGetValue(r, out var e))
+        {
+            if(e.active) 
+            {
+                Debug.LogError($"Event {e} already playing");
+                return;
+            }
+            e.instance.start(); //e is a class, so this is fine
+            e.active = true; 
+            Debug.Log($"Event {e} started");
+        }
+        else
+        {
+            Debug.LogError($"Region not found: {r}");
+        }
+    }
+
+    public void StopEvent(Region r)
+    {
+        if (events.TryGetValue(r, out var e))
+        {
+            if(!e.active) 
+            {
+                Debug.LogError($"Event {e} already stopped");
+                return;
+            }
+            e.instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); 
+            e.active = false; 
+            Debug.Log($"Event {e} stopped");
+        }
+        else
+        {
+            Debug.LogError($"Region not found: {r}");
+        }
     }
 }
 
