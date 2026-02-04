@@ -14,7 +14,7 @@ public class Door_Lever : MonoBehaviour, IHitHandler
         }
 
         leverTriggered = true;
-        // Flip the lever and play particles and play "dink" sound effect
+        // Flip the lever and play particles and play "lever flick" sound effect
         transform.Rotate(new Vector3(0, 180, 0));
         hitParticles.Play();
         doorGate.OpenDoor();
