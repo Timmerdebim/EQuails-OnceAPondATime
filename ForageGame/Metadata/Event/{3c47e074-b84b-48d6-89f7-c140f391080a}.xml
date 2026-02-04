@@ -61,7 +61,7 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{0fd65bec-ff52-45b1-935f-73d3d010aa07}">
 		<property name="minimumDistance">
-			<value>4.80000019</value>
+			<value>8</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{f3fc5048-ef0a-49de-af84-9d50afefdf98}" />
@@ -87,8 +87,12 @@
 		</relationship>
 	</object>
 	<object class="MultiSound" id="{bb9098b5-1a6c-439b-8b49-3f0b81d769ba}">
+		<property name="playbackMode">
+			<value>1</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{1f622595-64d3-45da-9c21-5b6d3421dc96}</destination>
+			<destination>{39d7d1ff-6cac-4685-876d-7859bdb51438}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{9131db2f-5542-437d-b4da-e5f92cdf7645}">
@@ -111,11 +115,44 @@
 		<property name="looping">
 			<value>true</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{14a9467b-fe75-4503-b9b3-aeba9378da73}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{555946b0-e03a-4c67-95d5-17c202e576ea}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{39d7d1ff-6cac-4685-876d-7859bdb51438}">
+		<property name="volume">
+			<value>-11</value>
+		</property>
+		<property name="looping">
+			<value>true</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{86eb187d-f0bb-4bd8-9514-fa283422a5d5}</destination>
+		</relationship>
+		<relationship name="audioFile">
+			<destination>{923655f0-d3eb-4890-bddb-d45f3ec40e64}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{4e9511d8-13da-4bc2-9434-51c4f328874c}" />
 	<object class="MixerBusFader" id="{e2217b64-e3b8-47ac-86e4-bd45237010c1}" />
 	<object class="SpatialiserEffect" id="{63b83b1a-d001-4bf2-8078-b6920b70ffa7}" />
+	<object class="RandomizerModulator" id="{14a9467b-fe75-4503-b9b3-aeba9378da73}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>startOffset</value>
+		</property>
+		<property name="amount">
+			<value>100</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{86eb187d-f0bb-4bd8-9514-fa283422a5d5}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>startOffset</value>
+		</property>
+		<property name="amount">
+			<value>52</value>
+		</property>
+	</object>
 </objects>

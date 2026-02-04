@@ -250,6 +250,104 @@ Transform:
   - {fileID: 1509078828}
   m_Father: {fileID: 758401022}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &78448544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 78448545}
+  - component: {fileID: 78448546}
+  m_Layer: 0
+  m_Name: PoisonPool (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &78448545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78448544}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -99, y: 4, z: -149}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 184361273}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &78448546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78448544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
+--- !u!1 &184361272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 184361273}
+  m_Layer: 0
+  m_Name: FidgetSpinnerPoisonPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &184361273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184361272}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1961758639}
+  - {fileID: 78448545}
+  - {fileID: 1620509186}
+  - {fileID: 906326998}
+  m_Father: {fileID: 1902715941}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &185156500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -854,7 +952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].value
@@ -862,7 +960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].value
@@ -870,7 +968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: -0.39999998
+      value: -0.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
@@ -878,11 +976,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
-      value: -1.6
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: 1.6
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
@@ -890,11 +988,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
-      value: 0.39999998
+      value: 0.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: -0.39999998
+      value: -0.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -910,11 +1008,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].outSlope
-      value: -1.6
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: 1.6
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -930,7 +1028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].outSlope
-      value: 0.39999998
+      value: 0.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outWeight
@@ -1067,6 +1165,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &290089858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 290089859}
+  - component: {fileID: 290089860}
+  m_Layer: 0
+  m_Name: PoisonPool (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &290089859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290089858}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -145.8, y: 4, z: -186.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2039640434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &290089860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290089858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
 --- !u!1 &351428848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,7 +1413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].value
@@ -1264,7 +1425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].value
@@ -1272,11 +1433,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: -0.19999999
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: -0.19999999
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -1284,11 +1445,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -1296,7 +1457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: -0.19999999
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -1304,7 +1465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: -0.19999999
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -1316,7 +1477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -1324,7 +1485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -1592,7 +1753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].value
@@ -1604,7 +1765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].value
@@ -1612,11 +1773,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: -0.19999999
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: -0.19999999
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -1624,11 +1785,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -1636,7 +1797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: -0.19999999
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -1644,7 +1805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: -0.19999999
+      value: -0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -1656,7 +1817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -1664,7 +1825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -2002,7 +2163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].value
@@ -2010,7 +2171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].value
@@ -2022,19 +2183,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: -0.20000014
+      value: -0.17065918
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
-      value: -0.19999991
+      value: -0.14131798
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -2050,7 +2211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: -0.20000014
+      value: -0.17065918
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -2058,11 +2219,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].outSlope
-      value: -0.19999991
+      value: -0.14131798
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -2070,7 +2231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -2680,6 +2841,69 @@ Transform:
   - {fileID: 2007160323}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &906326997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 906326998}
+  - component: {fileID: 906326999}
+  m_Layer: 0
+  m_Name: PoisonPool (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &906326998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906326997}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -73.4, y: 4, z: -171.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 184361273}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &906326999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906326997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
 --- !u!1 &908478857
 GameObject:
   m_ObjectHideFlags: 0
@@ -2923,6 +3147,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 686252638}
+  - {fileID: 1902715941}
   m_Father: {fileID: 1861442170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1123197954
@@ -3175,7 +3400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].value
@@ -3183,7 +3408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].value
@@ -3191,7 +3416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: -0.39999998
+      value: -0.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
@@ -3199,11 +3424,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
-      value: -1.6
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: 1.6
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
@@ -3211,11 +3436,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
-      value: 0.39999998
+      value: 0.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: -0.39999998
+      value: -0.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -3231,11 +3456,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].outSlope
-      value: -1.6
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: 1.6
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -3251,7 +3476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].outSlope
-      value: 0.39999998
+      value: 0.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outWeight
@@ -3831,6 +4056,69 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
   m_PrefabInstance: {fileID: 470660914}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1384127280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1384127281}
+  - component: {fileID: 1384127282}
+  m_Layer: 0
+  m_Name: PoisonPool (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1384127281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384127280}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -131.8, y: 4, z: -200.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2039640434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1384127282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384127280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
 --- !u!1 &1422411178
 GameObject:
   m_ObjectHideFlags: 0
@@ -4016,7 +4304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].value
@@ -4028,7 +4316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].value
@@ -4040,11 +4328,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -4052,11 +4340,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -4064,7 +4352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -4072,7 +4360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -4084,7 +4372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -4092,7 +4380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -4258,6 +4546,132 @@ Transform:
   m_Children: []
   m_Father: {fileID: 196989754}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1541237833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1541237834}
+  - component: {fileID: 1541237835}
+  m_Layer: 0
+  m_Name: PoisonPool (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1541237834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541237833}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -121.7, y: 4, z: -185.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2039640434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1541237835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541237833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
+--- !u!1 &1620509185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1620509186}
+  - component: {fileID: 1620509187}
+  m_Layer: 0
+  m_Name: PoisonPool (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1620509186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620509185}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -107.1, y: 4, z: -183.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 184361273}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1620509187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620509185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
 --- !u!4 &1650670583 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 152607109577783082, guid: 43174b1df26b148e080002f83fdf47ce, type: 3}
@@ -4506,7 +4920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].value
@@ -4518,7 +4932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].value
@@ -4530,11 +4944,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -4542,11 +4956,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -4554,7 +4968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -4562,7 +4976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -4574,7 +4988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -4582,7 +4996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -4686,6 +5100,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
   m_PrefabInstance: {fileID: 352839381}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1902715940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1902715941}
+  m_Layer: 0
+  m_Name: PointEmitters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1902715941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902715940}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 184361273}
+  - {fileID: 2039640434}
+  m_Father: {fileID: 1120477303}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1926439037
 GameObject:
   m_ObjectHideFlags: 0
@@ -4788,6 +5235,132 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926439037}
   m_CullTransparentMesh: 1
+--- !u!1 &1951853552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1951853553}
+  - component: {fileID: 1951853554}
+  m_Layer: 0
+  m_Name: PoisonPool (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1951853553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951853552}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -145.1, y: 4, z: -214.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2039640434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1951853554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951853552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
+--- !u!1 &1961758638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961758639}
+  - component: {fileID: 1961758640}
+  m_Layer: 0
+  m_Name: PoisonPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1961758639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961758638}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -93, y: 4, z: -167.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 184361273}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1961758640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961758638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
 --- !u!1001 &1971398922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5285,6 +5858,69 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 152607109577783082, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
   m_PrefabInstance: {fileID: 209876817}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2023115121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2023115122}
+  - component: {fileID: 2023115123}
+  m_Layer: 0
+  m_Name: PoisonPool (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2023115122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023115121}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -128.9, y: 4, z: -220.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2039640434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2023115123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023115121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
 --- !u!1001 &2035836059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5435,7 +6071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].value
@@ -5443,7 +6079,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].value
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].value
@@ -5455,11 +6091,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -5467,11 +6103,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].inSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inSlope
@@ -5479,7 +6115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -5487,7 +6123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: -0.8
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: aParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -5499,7 +6135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[0].outSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].inWeight
@@ -5507,7 +6143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[1].outSlope
-      value: 0.19999999
+      value: 0.14999998
       objectReference: {fileID: 0}
     - target: {fileID: 2665747219618236807, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
       propertyPath: bParams.Array.data[0].curve.m_Curve.Array.data[2].inWeight
@@ -5566,6 +6202,43 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8032d2c78cab45879b97b8e3e2831a3, type: 3}
+--- !u!1 &2039640433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2039640434}
+  m_Layer: 0
+  m_Name: StarRoom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2039640434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039640433}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1384127281}
+  - {fileID: 290089859}
+  - {fileID: 1541237834}
+  - {fileID: 2056432341}
+  - {fileID: 1951853553}
+  - {fileID: 2023115122}
+  m_Father: {fileID: 1902715941}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2052145079
 GameObject:
   m_ObjectHideFlags: 0
@@ -5638,6 +6311,69 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!1 &2056432340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2056432341}
+  - component: {fileID: 2056432342}
+  m_Layer: 0
+  m_Name: PoisonPool (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2056432341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056432340}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -115, y: 4, z: -199.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2039640434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2056432342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056432340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1011343476
+      Data2: 1222031435
+      Data3: 1086453641
+      Data4: 168333811
+    Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/PoisonPool
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
 --- !u!1001 &2092403122
 PrefabInstance:
   m_ObjectHideFlags: 0
