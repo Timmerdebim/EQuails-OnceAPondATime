@@ -11,8 +11,8 @@ public class EnemyAttack : StateMachineBehaviour
 
     // Private state variables
     private EnemyController enemy;
+    private CharacterController characterController;
     private float timer;
-    private RaycastHit hitInfo; // Stores info about what the spherecast hits
 
     private enum AttackPhase { WindUp, Lunge, Cooldown }
     private AttackPhase currentPhase;
@@ -22,6 +22,7 @@ public class EnemyAttack : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemy = animator.GetComponent<EnemyController>();
+        characterController = enemy.GetComponent<CharacterController>();
 
         timer = 0f;
         currentPhase = AttackPhase.WindUp;
@@ -79,21 +80,6 @@ public class EnemyAttack : StateMachineBehaviour
 
     private void ProcessLunge()
     {
-        float distanceToMove = enemy.attackSpeed * Time.deltaTime;
-
-        // Perform a SphereCast to see if we'll hit anything on the designated layers.
-        bool willCollide = Physics.SphereCast(
-            enemy.transform.position,
-            collisionRadius,
-            targetDir,
-            out hitInfo,
-            distanceToMove,
-            collisionLayerMask
-        );
-
-        if (willCollide) // If we hit something, only move up to the point of contact.
-            EndLundge();  //enemy.transform.position += targetDir * hitInfo.distance;
-        else // If the path is clear, move the full distance.
-            enemy.transform.position += targetDir * distanceToMove;
+        characterController.Move(targetDir * enemy.attackSpeed * Time.deltaTime);
     }
 }
