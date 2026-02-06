@@ -133,6 +133,20 @@ namespace Modules.Dialogue.DialogueDB
 
             var line = block.StandardLines[state.CurrentLineIndex];
             state.CurrentLineIndex++;
+            if (state.CurrentLineIndex >= block.StandardLines.Count)
+            {
+                state.CompletedBlocks.Add(block.BlockID);
+                state.CurrentBlockID = null;
+
+                // Apply the Set-Flags
+                foreach (string flagID in block.SetFlags)
+                {
+                    // NOTE: Replace 'SetFlag' with whatever method your StoryFlagManager uses 
+                    // to add/activate a flag (e.g., AddFlag, ActivateFlag, SetBool, etc.)
+                    StoryFlagManager.Instance.AddFlag(new StoryFlag(flagID));
+                    
+                }
+            }
 
             // If we just finished the last line, mark complete immediately
             if (state.CurrentLineIndex >= block.StandardLines.Count)

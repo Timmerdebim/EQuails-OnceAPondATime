@@ -24,6 +24,7 @@ namespace Modules.Dialogue.DialogueDB
     {
         public string BlockID => RequiredFlags.Count == 0 ? "default" : string.Join("+", RequiredFlags);
         public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
+        public List<string> SetFlags = new List<string>();
         public List<DialogueLine> Lines = new List<DialogueLine>();
 
         // --- Helpers for specific line types ---
