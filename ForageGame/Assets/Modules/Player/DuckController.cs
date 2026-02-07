@@ -106,9 +106,15 @@ public class DuckController : MonoBehaviour
         {
             animator.SetBool("isMoving", true);
             _viewDirection = _inputDirection;
-            //front/back facing sprites
-            animator.SetFloat("FacingDirection", Mathf.Clamp01(moveInput.y));
-            sprite.flipX = moveInput.x > 0f;
+            //front/back facing sprites ~Lars
+            if(!Mathf.Approximately(moveInput.y, 0f)) //this looks dumb, but otherwise it flips when just moving L/R
+            {
+                animator.SetFloat("FacingDirection", Mathf.Clamp01(moveInput.y));
+            }
+            if(!Mathf.Approximately(_inputDirection.x, 0f)) //this looks dumb, but otherwise it flips when just moving down
+            {
+                sprite.flipX = _inputDirection.x > 0f;
+            }
         }
         else
             animator.SetBool("isMoving", false);
