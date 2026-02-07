@@ -15,6 +15,7 @@ public class DuckController : MonoBehaviour
     public TrailRenderer trailRenderer;
     public ParticleSystem hitParticleRenderer;
     public PlayerInteract playerInteract;
+    public SpriteRenderer sprite;
 
     [Header("Abilities")]
     public bool canHop;
@@ -105,6 +106,9 @@ public class DuckController : MonoBehaviour
         {
             animator.SetBool("isMoving", true);
             _viewDirection = _inputDirection;
+            //front/back facing sprites
+            animator.SetFloat("FacingDirection", Mathf.Clamp01(moveInput.y));
+            sprite.flipX = moveInput.x > 0f;
         }
         else
             animator.SetBool("isMoving", false);
