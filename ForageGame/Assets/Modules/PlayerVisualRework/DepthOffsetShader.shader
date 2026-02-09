@@ -1,5 +1,4 @@
 Shader "Unlit/DepthOffsetShader"
-//Shader "Custom/SpriteDepthOffset"
 {
     Properties
     {
@@ -93,7 +92,7 @@ Shader "Unlit/DepthOffsetShader"
                 
                 // Modify depth to allow clipping through floor
                 // Subtracting makes the sprite appear "behind" where it visually is
-                depth = IN.positionCS.z - _DepthOffset;
+                depth = IN.positionCS.z + _DepthOffset;
                 
                 // Clamp depth to valid range
                 #if UNITY_REVERSED_Z
