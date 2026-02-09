@@ -6,6 +6,7 @@ public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private LayerMask interactablesLayer;
     [SerializeField] private float interactionRadius = 3f;
+    [SerializeField] protected DuckController duck;
 
     private IInteractable focusedInteractable;
     private Transform focusedInteractableTransform;
@@ -80,7 +81,7 @@ public class PlayerInteract : MonoBehaviour
         }
 
         if (mostRelevantInteractable.interactable == null || mostRelevantInteractable.interactable == focusedInteractable) { return; }
-        Focus(mostRelevantInteractable.interactable);
+        Focus(mostRelevantInteractable.interactable, mostRelevantInteractable.transform);
     }
 
     /// <summary>
@@ -91,6 +92,7 @@ public class PlayerInteract : MonoBehaviour
         if (focusedInteractable == null || interacting) { return; }
 
         interacting = true;
+        duck.FaceTarget(focusedInteractableTransform); //make duck face the target ~Lars
         focusedInteractable.Interact(StopInteract);
     }
 
@@ -109,10 +111,11 @@ public class PlayerInteract : MonoBehaviour
     /// Focuses on the given interactable, defocusing any previously focused interactable.
     /// </summary>
     /// <param name="interactable"></param>
-    private void Focus(IInteractable interactable)
+    private void Focus(IInteractable interactable, Transform interactableTransform)
     {
         Defocus();
         focusedInteractable = interactable;
+        focusedInteractableTransform = interactableTransform;
         focusedInteractable.Focus();
     }
 

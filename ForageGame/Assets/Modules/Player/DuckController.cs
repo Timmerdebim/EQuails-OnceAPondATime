@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -172,5 +173,12 @@ public class DuckController : MonoBehaviour
         useGravity = true;
         hitbox.gameObject.SetActive(false);
         trailRenderer.emitting = false;
+    }
+
+    //Helper function, can also be used for cutscenes or something
+    public void FaceTarget(Transform target)
+    {
+        animator.SetFloat("FacingDirection", Mathf.Clamp01(target.position.z - transform.position.z));
+        sprite.flipX = target.position.x > transform.position.x;
     }
 }
