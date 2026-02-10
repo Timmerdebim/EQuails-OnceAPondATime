@@ -1,7 +1,7 @@
 Character: Bracken
 ---
 Flags: <none>
-Set-Flags: spoken-to
+Set-Flags: bracken_spoken_to
 Stage: 0
 Whoa! A duck? In my forest? Did the storm toss you down here too?
 
@@ -17,8 +17,20 @@ The others panicked. They scattered. They stopped trying.
 Stage: 4
 But I won’t give up; not until I test every mixture possible!
 
+Stage: 5
+Next up: The fabled Greenthumb potion!
+
+Stage: 6
+I've got the recipe right here! A star lily pod, a honey mushroom, and a touch of echo dust.
+
+Stage: 7
+I wanna go go go!!! But the pot will boil over without me here watching it.
+
+Stage: 8
+Hey ducky, will you go grab them for me?
+
 Stage: repeat
-I'm close to a solution... I just know it.
+Remember: a star lily pod, a fried honey mushroom, and some echo dust.
 
 Stage: leave_rude
 Gotta run!
@@ -27,25 +39,59 @@ Stage: leave_polite
 Check back later, okay?
 
 ---
-Flags: spores_collected
-Set-Flags: spores_used
-Stage: 0
-You got the glowing spores! Perfect; let’s add them.
+Flags: bracken_fruit
 
 Stage: 1
-Careful… careful… aaand, ah. Nothing. Again.
+The star lily pod! It's perfectly ripe!
 
 Stage: 2
-Why won’t anything work? I swore I could fix the tree myself.
+I can't wait to smell it's sweet scent while it's brewing.
 
 Stage: 3
-Still, you helped me more than anyone has lately.
-
-Stage: 4
-Take this spore-light charm; the caves ahead get real dark.
+Hurry hurry! We just need the rest of the ingredients.
 
 Stage: repeat
-It has to work... maybe different ratios?
+A fried honey mushroom, and echo dust will bring out the fruit's juiced.
+
+---
+Flags: bracken_mushroom
+Stage: 1
+Wow, a snack for me?
+
+Stage: 2
+No, wait... The Greenthumb potion comes first.
+
+Stage: repeat
+Quick, get the star lily and the echo dust! I'm getting hungry...
+
+---
+Flags: bracken_dust
+Stage: 1
+Gosh, be careful with that! Last time, it took FOREVER to get it out of my fur.
+
+Stage: repeat
+All I'm missing is the star lily and the honey mushroom.
+
+---
+Flags: bracken_dust, bracken_mushroom, bracken_fruit
+Set-Flags: bracken_potion_one_done
+Stage: 1
+You've got it all! A natural alchemist!
+
+Stage: 2
+No time to waste! Let's get started.
+
+Stage: 3
+One, and a two, and a squelch, and a squish!
+
+Stage: 4
+...
+
+Stage: 5
+No, no, no! It has to work... maybe different ratios?
+
+Stage: repeat
+I... can't give up. I can fix it all.
 
 Stage: leave_rude
 Busy, busy!
@@ -54,24 +100,40 @@ Stage: leave_polite
 Thanks for the help, duck.
 
 ---
-Flags: quest2
+Flags: bracken_potion_one_done, bracken_heard_mosswick_lyria
+
 Stage: 0
-Hey! I’ve got one last idea; just one!
+What's that sound, in the distance?
 
 Stage: 1
-If we combine sap from the hidden groves with lightning-struck caps… it might heal something.
+I can hardly hear it over the bubble of my cauldron.
 
 Stage: 2
-I need your help collecting them. I can’t reach half these places alone.
+It couldn't be...
 
 Stage: 3
-Please… let’s try once more.
+Hey ducky! I’ve got one last idea; just one!
+
+Stage: 4
+I've heard about a mixture... a sort of... fertilizer, perfect for huge trees like ours.
+
+Stage: 5
+I've been working on a recipe, and I think I've finally got it down.
+
+Stage: 6
+I call it... Blooming Soil! And I've got the list of ingredients right here.
+
+Stage: 7
+If you can bring me a sample of this soil, I really think it'll work this time!
+
+Stage: 8
+We can do it, ducky!
 
 Stage: repeat
 Just one more experiment. Please.
 
 ---
-Flags: quest2_complete
+Flags: bracken_potion_one_done, bracken_heard_mosswick_lyria, bracken_blooming_soil_given
 Stage: 0
 Look! The mixture, it's working on that little mushroom tree!
 
