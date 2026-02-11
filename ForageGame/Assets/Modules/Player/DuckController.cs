@@ -70,15 +70,16 @@ public class DuckController : MonoBehaviour
         characterController.Move(dx);
 
         V_impulse = 0;
-        if (Physics.SphereCast(transform.position,0.5f,-transform.up,out RaycastHit hit,0.6f))
+        if (Physics.SphereCast(transform.position, 0.5f, -transform.up, out RaycastHit hit, 0.6f))
         {
             animator.SetBool("isGrounded", true);
+            animator.SetBool("airDashed", false);
+            lastGroundHeight = transform.position.y;
         }
         else
         {
             animator.SetBool("isGrounded", false);
         }
-        if (characterController.isGrounded) lastGroundHeight = transform.position.y;
         CheckEnergy(); // For knowing if we have sufficient energy
     }
     private void CheckEnergy()
@@ -108,11 +109,11 @@ public class DuckController : MonoBehaviour
             animator.SetBool("isMoving", true);
             _viewDirection = _inputDirection;
             //front/back facing sprites ~Lars
-            if(!Mathf.Approximately(moveInput.y, 0f)) //this looks dumb, but otherwise it flips when just moving L/R
+            if (!Mathf.Approximately(moveInput.y, 0f)) //this looks dumb, but otherwise it flips when just moving L/R
             {
                 animator.SetFloat("FacingDirection", Mathf.Clamp01(moveInput.y));
             }
-            if(!Mathf.Approximately(_inputDirection.x, 0f)) //this looks dumb, but otherwise it flips when just moving down
+            if (!Mathf.Approximately(_inputDirection.x, 0f)) //this looks dumb, but otherwise it flips when just moving down
             {
                 sprite.flipX = _inputDirection.x > 0f;
             }
@@ -173,6 +174,11 @@ public class DuckController : MonoBehaviour
         useGravity = true;
         hitbox.gameObject.SetActive(false);
         trailRenderer.emitting = false;
+
+        animator.SetBool("dash", false);
+        animator.SetBool("attack", false);
+        animator.SetBool("hop", false);
+        animator.SetBool("flutter", false);
     }
 
     //Helper function, can also be used for cutscenes or something
