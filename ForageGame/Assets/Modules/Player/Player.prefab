@@ -29,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154003868482119989}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.04514389, y: 0.95384914, z: -0.23115264, w: 0.18628584}
-  m_LocalPosition: {x: 0.7596588, y: 9.710904, z: -6.469391}
-  m_LocalScale: {x: 1, y: 3.137125, z: 1}
+  m_LocalRotation: {x: 0.0831483, y: 0.8843064, z: -0.42574865, w: 0.17270419}
+  m_LocalPosition: {x: 0.7596588, y: 6.4242377, z: -6.469391}
+  m_LocalScale: {x: 1, y: 1.8371905, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3158818904611881489}
@@ -4644,7 +4644,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 258
+  m_VersionIndex: 276
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -10608,7 +10608,7 @@ Transform:
   m_GameObject: {fileID: 6404009981061238201}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 12.5, z: -7.8}
+  m_LocalPosition: {x: 1.3, y: 7.57, z: -7.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10642,6 +10642,9 @@ MonoBehaviour:
   hitParticleRenderer: {fileID: 2486612863259856435}
   playerInteract: {fileID: 7186449525679409802}
   sprite: {fileID: 7022284224156483518}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
   canHop: 1
   canFlutter: 0
   canAttack: 1
@@ -10654,7 +10657,13 @@ MonoBehaviour:
   V_impulse: 0
   V_acceleration: 0
   useGravity: 0
+  useVericalMomentum: 0
   gravity: -9.81
+  a: 0
+  dv: 0
+  v: {x: 0, y: 0, z: 0}
+  dx: {x: 0, y: 0, z: 0}
+  priorPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7186449525679409802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10814,8 +10823,8 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1.5
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_SlopeLimit: 0.1
+  m_StepOffset: 1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
