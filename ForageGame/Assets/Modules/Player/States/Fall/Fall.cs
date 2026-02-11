@@ -9,6 +9,8 @@ public class Fall : StateMachineBehaviour
     {
         GameObject obj = animator.gameObject;
         duck = obj.GetComponent<DuckController>();
+
+        duck.useVericalMomentum = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

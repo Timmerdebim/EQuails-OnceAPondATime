@@ -16,6 +16,7 @@ public class Flutter : StateMachineBehaviour
 
         targetHight = flutterHeight + duck.lastGroundHeight;
         duck.useGravity = false;
+        duck.useVericalMomentum = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

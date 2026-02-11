@@ -17,6 +17,7 @@ public class DuckController : MonoBehaviour
     public ParticleSystem hitParticleRenderer;
     public PlayerInteract playerInteract;
     public SpriteRenderer sprite;
+    public LayerMask playerLayer;
 
     [Header("Abilities")]
     public bool canHop;
@@ -33,6 +34,7 @@ public class DuckController : MonoBehaviour
 
     private void Awake()
     {
+        priorPosition = transform.position;
         // Get components on this GameObject
         if (playerInteract == null) TryGetComponent(out playerInteract);
         if (duckEnergy == null) TryGetComponent(out duckEnergy);
@@ -52,25 +54,34 @@ public class DuckController : MonoBehaviour
     [HideInInspector] public float V_impulse;
     [HideInInspector] public float V_acceleration;
     [HideInInspector] public bool useGravity;
+    [HideInInspector] public bool useVericalMomentum;
     public float gravity;
 
+    public float a = 0;
+    public float dv = 0;
+    public Vector3 v = Vector3.zero;
+    public Vector3 dx = Vector3.zero;
 
-    private float a;
-    private float dv = 0;
-    private Vector3 v;
-    private Vector3 dx;
+    public Vector3 priorPosition;
 
     void Update()
     {
         a = V_acceleration;
         if (useGravity) a += gravity;
-        dv = characterController.velocity.y + a * Time.deltaTime + V_impulse;
+        dv = a * Time.deltaTime + V_impulse;
+        if (useVericalMomentum) dv += v.y;
         v = velocity + Vector3.up * dv;
         dx = v * Time.deltaTime;
         characterController.Move(dx);
 
+        // Calculate actual dx and v
+        dx = transform.position - priorPosition;
+        v = dx / Time.deltaTime;
+        priorPosition = transform.position;
+
         V_impulse = 0;
-        if (Physics.SphereCast(transform.position, 0.5f, -transform.up, out RaycastHit hit, 0.6f))
+        if (Physics.SphereCast(transform.position, 0.5f, -transform.up, out RaycastHit hit, 0.6f)
+            && hit.collider.gameObject.layer != playerLayer)
         {
             animator.SetBool("isGrounded", true);
             animator.SetBool("airDashed", false);
@@ -174,11 +185,12 @@ public class DuckController : MonoBehaviour
         useGravity = true;
         hitbox.gameObject.SetActive(false);
         trailRenderer.emitting = false;
+        useVericalMomentum = false;
 
         animator.SetBool("dash", false);
         animator.SetBool("attack", false);
         animator.SetBool("hop", false);
-        animator.SetBool("flutter", false);
+        // animator.SetBool("flutter", false);
     }
 
     //Helper function, can also be used for cutscenes or something
