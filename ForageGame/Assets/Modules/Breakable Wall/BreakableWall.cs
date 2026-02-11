@@ -4,6 +4,7 @@ using UnityEngine;
 public class BreakableWall : MonoBehaviour, IHitHandler
 {
     [SerializeField] private ParticleSystem hitParticles;
+    [SerializeField] private GameObject wallMeshes;
     private bool wallActive = true;
 
     public void Hit(float damage)
@@ -21,9 +22,8 @@ public class BreakableWall : MonoBehaviour, IHitHandler
 
     private void DestroyWall()
     {
-        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
         Collider collider = GetComponent<Collider>();
-        meshRenderer.enabled = false;
+        wallMeshes.SetActive(false);
         collider.enabled = false;
     }
 }
