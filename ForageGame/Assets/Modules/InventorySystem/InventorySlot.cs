@@ -10,7 +10,6 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private Color selectedColor;
     [SerializeField] private Color notSelectedColor;
 
-
     private int slotIndex;
     private InventorySystem inventory;
     private Item currentItem;

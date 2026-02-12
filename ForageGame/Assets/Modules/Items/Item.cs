@@ -11,8 +11,5 @@ public class Item : ScriptableObject
     public string itemName;
     public string description;
     public Sprite icon;
-    public bool isConsumable;
-    public bool returnBottle;
-    public float consumableEnergy;
     public GameObject worldPrefab; // The prefab to spawn when dropped
 }

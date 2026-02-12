@@ -59,8 +59,8 @@ public class InventorySystem : MonoBehaviour
         {
             if (hotbarItems[i] == null)
             {
-                hotbarItems[i] = item;
-                hotbarSlots[i].SetItem(item);
+                // TODO: first time pickup screen
+                SetItem(i, item);
                 return true;
             }
         }
@@ -92,18 +92,15 @@ public class InventorySystem : MonoBehaviour
     {
         if (selectedSlot < 0 || selectedSlot >= hotbarSize) return;
         if (hotbarItems[selectedSlot] == null) return;
+        if (hotbarItems[selectedSlot] is not ConsumableItem item) return;
 
-        Item itemToConsume = hotbarItems[selectedSlot];
-
-        // Spawn the item in the world
-        if (itemToConsume.isConsumable)
-        {
-            // Get player position
-            duckEnergy.AddEnergy(itemToConsume.consumableEnergy);
-            // Remove from hotbar
-            RemoveItem(selectedSlot);
-        }
-        else Debug.Log("Item cannot be consumed");
+        // Get player position
+        duckEnergy.AddEnergy(item.consumableEnergy);
+        // Remove from hotbar
+        RemoveItem(selectedSlot);
+        // Replace with new item
+        if (item.returnItem == null) return;
+        SetItem(selectedSlot, item.returnItem);
     }
 
     public bool GiveItem(Item item)
@@ -118,10 +115,17 @@ public class InventorySystem : MonoBehaviour
         }
         return false;
     }
+
     public void RemoveItem(int index)
     {
         hotbarItems[index] = null;
         hotbarSlots[index].ClearSlot();
+    }
+
+    public void SetItem(int index, Item item)
+    {
+        hotbarItems[index] = item;
+        hotbarSlots[index].SetItem(item);
     }
 
     public void SelectSlot(int index)
