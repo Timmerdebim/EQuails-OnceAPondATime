@@ -7,6 +7,9 @@ public class AmbienceManager : MonoBehaviour
     //This is to be a singleton, so we need to re-use this thing when we change regions!
     public static AmbienceManager Instance { get; private set; }
 
+    public GameObject playerListener;
+
+
     [System.Serializable]
     public class AmbienceEvent
     {
@@ -49,6 +52,7 @@ public class AmbienceManager : MonoBehaviour
                 e.parameters.Add(param.name, param.id);
                 print("Dict entry added: " + param.name + " with Id: " + param.id + "for region: " + r);
             }
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(e.instance, playerListener); //Dear FMOD, sincerely: fuck you ~Lars
             events.Add(r, e);
         }
     }
