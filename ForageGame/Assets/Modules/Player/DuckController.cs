@@ -57,12 +57,11 @@ public class DuckController : MonoBehaviour
     [HideInInspector] public bool useVericalMomentum;
     public float gravity;
 
-    public float a = 0;
-    public float dv = 0;
-    public Vector3 v = Vector3.zero;
-    public Vector3 dx = Vector3.zero;
-
-    public Vector3 priorPosition;
+    private float a = 0;
+    private float dv = 0;
+    private Vector3 v = Vector3.zero;
+    private Vector3 dx = Vector3.zero;
+    private Vector3 priorPosition;
 
     void Update()
     {

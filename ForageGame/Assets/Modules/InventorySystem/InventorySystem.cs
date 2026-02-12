@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -59,8 +60,13 @@ public class InventorySystem : MonoBehaviour
         {
             if (hotbarItems[i] == null)
             {
-                // TODO: first time pickup screen
                 SetItem(i, item);
+                // TODO: first time pickup screen
+                StartCoroutine(ItemPickupPopup.Instance.ShowPopup(
+                item.icon,
+                item.itemName,
+                item.description
+            ));
                 return true;
             }
         }
@@ -95,7 +101,7 @@ public class InventorySystem : MonoBehaviour
         if (hotbarItems[selectedSlot] is not ConsumableItem item) return;
 
         // Get player position
-        duckEnergy.AddEnergy(item.consumableEnergy);
+        duckEnergy.TakeDamage(-item.consumableEnergy); // a little botched but ok...
         // Remove from hotbar
         RemoveItem(selectedSlot);
         // Replace with new item
