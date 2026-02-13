@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public class ChasingItem : MonoBehaviour
+{
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Transform playerPos;
+    [SerializeField] private float playerEffectRadius = 1;
+    [SerializeField] private float playerForceStrength = 1;
+    [SerializeField] private float coreForceStrength = 10;
+    private Vector3 corePos;
+    private float playerForceOffset;
+
+    void Awake()
+    {
+        corePos = transform.position;
+        playerForceOffset = playerForceStrength * playerEffectRadius;
+    }
+
+    void FixedUpdate()
+    {
+        Vector3 playerForce = (transform.position - playerPos.position).normalized;
+        playerForce.y = 0;
+        playerForce *= (-playerForceStrength * Vector3.Distance(transform.position, playerPos.position) + playerForceOffset);
+        Vector3 coreForce = (corePos - transform.position).normalized;
+        coreForce.y = 0;
+        coreForce *= coreForceStrength * Vector3.Distance(transform.position, corePos);
+        rb.AddForce(playerForce, ForceMode.Acceleration);
+        rb.AddForce(coreForce, ForceMode.Acceleration);
+    }
+}
