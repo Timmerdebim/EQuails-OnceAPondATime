@@ -4,9 +4,9 @@ public class ChasingItem : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform playerPos;
-    [SerializeField] private float playerEffectRadius = 1;
-    [SerializeField] private float playerForceStrength = 1;
-    [SerializeField] private float coreForceStrength = 10;
+    [SerializeField] private float playerEffectRadius = 4;
+    [SerializeField] private float playerForceStrength = 10;
+    [SerializeField] private float coreForceStrength = 5;
     private Vector3 corePos;
     private float playerForceOffset;
 
