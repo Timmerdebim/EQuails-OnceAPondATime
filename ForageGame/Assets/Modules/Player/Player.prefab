@@ -29,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154003868482119989}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.90306765, y: 0.01798509, z: -0.0379981, w: 0.42743593}
-  m_LocalPosition: {x: -0.10701311, y: 2.0442374, z: -1.2693923}
-  m_LocalScale: {x: 1, y: 1.6471916, z: 1}
+  m_LocalRotation: {x: 0.7129609, y: 0.21231906, z: -0.24318486, w: 0.62246966}
+  m_LocalPosition: {x: -14.796666, y: 4.2966666, z: -19.166666}
+  m_LocalScale: {x: 1, y: 24.43707, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3158818904611881489}
@@ -10166,6 +10166,7 @@ GameObject:
   - component: {fileID: 48352623912231205}
   - component: {fileID: 7566348827879131693}
   - component: {fileID: 7155726674302705076}
+  - component: {fileID: 3341641021448603245}
   - component: {fileID: 6778674773641482398}
   m_Layer: 9
   m_Name: Duck
@@ -10373,6 +10374,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a5036f898e45c4b81708e332714903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3341641021448603245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6404009981061238201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c299e5fc7f142b382d65d15e3e7445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepEvent:
+    Guid:
+      Data1: 31665757
+      Data2: 1166434235
+      Data3: -1494406237
+      Data4: 685468472
+    Path: event:/Sfx/Player/Footsteps
+  quackEvent:
+    Guid:
+      Data1: 238797265
+      Data2: 1318177479
+      Data3: 279488645
+      Data4: -1716382716
+    Path: event:/Sfx/Player/Quack
+  waterEnterEvent:
+    Guid:
+      Data1: 1625484101
+      Data2: 1085206830
+      Data3: -241888125
+      Data4: 1553282213
+    Path: event:/Sfx/Player/Water/Water Enter
+  waterLeaveEvent:
+    Guid:
+      Data1: -98886136
+      Data2: 1285978890
+      Data3: -348693628
+      Data4: -1273547394
+    Path: event:/Sfx/Player/Water/Water Leave
+  waterSplashEvent:
+    Guid:
+      Data1: 388515570
+      Data2: 1296530029
+      Data3: -42992976
+      Data4: -702916733
+    Path: event:/Sfx/Player/Water/Water Splash
+  swimEvent:
+    Guid:
+      Data1: -1175092734
+      Data2: 1283981946
+      Data3: -1780569161
+      Data4: 1373550982
+    Path: event:/Sfx/Player/Water/Swim
 --- !u!143 &6778674773641482398
 CharacterController:
   m_ObjectHideFlags: 0
