@@ -70,6 +70,7 @@ public class InputManager : MonoBehaviour
     {
         if (context.action.WasPressedThisFrame())
         {
+            Debug.Log(context.action.actionMap);
             MenuManager.Instance.PauseGame();
         }
     }

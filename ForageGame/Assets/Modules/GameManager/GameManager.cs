@@ -3,15 +3,17 @@ using System.IO;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
+[RequireComponent(typeof(SceneLoader))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private SaveData currentSaveData;
     private int currentSaveSlot = -1;
-    [SerializeField] private string gameSceneName;
+    public SceneLoader sceneLoader { get; private set; }
 
-    private void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -20,6 +22,11 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        sceneLoader = GetComponent<SceneLoader>();
     }
 
     public void NewGame(int slotIndex = -1)
@@ -72,30 +79,6 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-    // void OnEnable()
-    // {
-    //     SceneManager.sceneLoaded += OnSceneLoaded;
-    // }
-
-    // void OnDisable()
-    // {
-    //     SceneManager.sceneLoaded -= OnSceneLoaded;
-    // }
-
-    // void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    // {
-    //     switch (scene.name)
-    //     {
-    //         case gameSceneName:
-    //             InitMenu();
-    //             break;
-
-    //         case menuSceneName:
-    //             LoadSaveData();
-    //             break;
-    //     }
-    // }
-
     // ------------ Game Start ------------
 
     [Header("Cutscenes")]
@@ -108,54 +91,60 @@ public class GameManager : MonoBehaviour
     private Sequence cutsceneSeq;
     private AsyncOperation loadingOp;
 
+    private bool isIntroCutsceneDone;
+    private bool isIntroLoadingDone;
+
     private void GameStart(bool isNewGame = false)
     {
-        // cutsceneSeq?.Kill();
-        // cutsceneSeq = DOTween.Sequence();
+        isIntroCutsceneDone = false;
+        isIntroLoadingDone = false;
 
-        // // Fade to black
-        // cutsceneSeq.Append(blackOverlay.DOFade(1, 1))
+        cutsceneSeq?.Kill();
+        cutsceneSeq = DOTween.Sequence();
 
-        // // Start loading scene (but don't activate yet)
-        // .AppendCallback(() =>
-        // {
-        //     loadingOp = SceneManager.LoadSceneAsync(gameSceneName);
-        //     loadingOp.allowSceneActivation = false;
-        //     loadingOp.completed += _ => DoThing();
-        // })
+        // Fade to black
+        cutsceneSeq.Append(blackOverlay.DOFade(1, 1))
 
-        // // Wait until scene is loaded (progress >= 0.9)
-        // .Append(
-        //     DOTween.To(
-        //         () => loadingOp.progress,
-        //         x => { }, // no setter needed
-        //         0.9f,
-        //         10f // acts like a "max wait time" but finishes early
-        //     ).SetEase(Ease.Linear)
-        // );
+        // Start loading scene (but don't activate yet)
+        .AppendCallback(() =>
+        {
+            sceneLoader.ToGameScene(() =>
+            {
+                isIntroLoadingDone = true;
+                GameStartContinue();
+            });
+        });
 
-        // // Activate scene once ready
-        // seq.AppendCallback(() =>
-        // {
-        //     loadingOp.allowSceneActivation = true;
-        // });
+        if (isNewGame)
+        {
+            cutsceneSeq.AppendInterval(1)
+            .Append(introImage1.DOFade(1, 0.5f).SetEase(Ease.InOutCubic))
+            .AppendInterval(2)
+            .Append(introImage1.DOFade(0, 0.5f).SetEase(Ease.InOutCubic))
+            .Append(introImage2.DOFade(1, 0.5f).SetEase(Ease.InOutCubic))
+            .AppendInterval(2)
+            .Append(introImage2.DOFade(0, 0.5f).SetEase(Ease.InOutCubic))
+            .Append(introImage3.DOFade(1, 0.5f).SetEase(Ease.InOutCubic))
+            .AppendInterval(2)
+            .Append(introImage2.DOFade(0, 0.5f).SetEase(Ease.InOutCubic));
+        }
 
-        // // Wait one frame so scene fully switches
-        // seq.AppendInterval(0.1f);
-
-        // // Run your logic AFTER load
-        // seq.AppendCallback(() =>
-        // {
-        //     DoThing();
-        // });
-
-        // // Fade back in
-        // seq.Append(fadeImage.DOFade(0f, fadeDuration));
+        cutsceneSeq.AppendCallback(() =>
+        {
+            isIntroCutsceneDone = true;
+            GameStartContinue();
+        });
     }
 
-    private void OnGameStart()
+    private void GameStartContinue()
     {
+        if (!(isIntroCutsceneDone && isIntroLoadingDone))
+            return;
 
+        cutsceneSeq?.Kill();
+        cutsceneSeq = DOTween.Sequence();
+
+        cutsceneSeq.Append(blackOverlay.DOFade(0, 1));
     }
 
     private void InitializeGame()

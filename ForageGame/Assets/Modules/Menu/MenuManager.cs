@@ -108,12 +108,10 @@ public class MenuManager : MonoBehaviour
         GameManager.Instance.SaveGame();
 
         ToMenu(null, false);
-
-        SceneManager.UnloadSceneAsync("PauseMenu");
         Time.timeScale = 1f;
         isPaused = false;
 
-        SceneManager.LoadScene("MainMenu");
+        GameManager.Instance.sceneLoader.ToMainMenu();
     }
 
 

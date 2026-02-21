@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[ExecuteAlways]
+//[ExecuteAlways]
 public class ViewConeController : MonoBehaviour
 {
     private Transform target;
