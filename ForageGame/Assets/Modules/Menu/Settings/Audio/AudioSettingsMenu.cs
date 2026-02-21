@@ -1,16 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class AudioSettingsMenu : Menu
 {
     [Header("UI References")]
     [SerializeField] private Slider masterVolumeSlider;
-    [SerializeField] private Text masterVolumeText;
+    [SerializeField] private TMP_Text masterVolumeText;
     [SerializeField] private Slider musicVolumeSlider;
-    [SerializeField] private Text musicVolumeText;
+    [SerializeField] private TMP_Text musicVolumeText;
     [SerializeField] private Slider sfxVolumeSlider;
-    [SerializeField] private Text sfxVolumeText;
+    [SerializeField] private TMP_Text sfxVolumeText;
 
     public override void EnteringMenu()
     {

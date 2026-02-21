@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenu : Menu
 {
+    [Header("UI References")]
+    [SerializeField] private TMP_Text continueText;
+
     [Header("Connected Menus")]
     [SerializeField] private Menu fileSelectMenu;
     [SerializeField] private Menu settingsMenu;
@@ -14,11 +18,22 @@ public class MainMenu : Menu
         MenuManager.Instance.ToMenu(this, false);
     }
 
+    public override void EnteringMenu()
+    {
+        base.EnteringMenu();
+        RefreshVisuals();
+    }
+
     public override void Escape()
     {
     }
 
     // ------------ Buttons ------------
+
+    public void OnContinueClicked()
+    {
+        GameManager.Instance.LoadGame();
+    }
 
     public void OnFileSelectClicked()
     {
@@ -50,4 +65,14 @@ public class MainMenu : Menu
     }
 
     // ------------ Functions ------------
+
+    private void RefreshVisuals()
+    {
+        int slotIndex = PlayerPrefs.GetInt("lastSlotIndexUsed", -1);
+
+        if (slotIndex < 0 || !SaveSystem.SaveFileExists(slotIndex))
+            continueText.text = "New Game";
+        else
+            continueText.text = "Continue";
+    }
 }

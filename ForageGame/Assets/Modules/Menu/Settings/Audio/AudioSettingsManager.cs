@@ -13,7 +13,7 @@ public class AudioSettings
 public class AudioSettingsManager : MonoBehaviour
 {
     public static AudioSettingsManager Instance { get; private set; }
-    [SerializeField] private string settingsPath = "Assets/Settings/audio.json";
+    [SerializeField] private string settingsPath = "Assets/Settings";
     [SerializeField] private AudioMixer audioMixer;
     public AudioSettings _settings { get; private set; }
 
@@ -62,9 +62,11 @@ public class AudioSettingsManager : MonoBehaviour
 
     public void LoadSettings()
     {
-        if (File.Exists(settingsPath))
+        string audioPath = Path.Combine(settingsPath, "audio.json");
+
+        if (File.Exists(audioPath))
         {
-            string json = File.ReadAllText(settingsPath);
+            string json = File.ReadAllText(audioPath);
             _settings = JsonUtility.FromJson<AudioSettings>(json);
         }
         else
@@ -78,6 +80,6 @@ public class AudioSettingsManager : MonoBehaviour
 
         string settingsJson = JsonUtility.ToJson(_settings, true);
 
-        File.WriteAllText(settingsPath, settingsJson);
+        File.WriteAllText(Path.Combine(settingsPath, "audio.json"), settingsJson);
     }
 }

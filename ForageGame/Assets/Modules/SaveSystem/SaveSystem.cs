@@ -1,65 +1,85 @@
 using System.IO;
 using UnityEngine;
 
+[System.Serializable]
+public class SaveData
+{
+    public int playtimeSeconds;
+    public Vector3 playerPosition;
+    // Inventory
+    // Story Flags (Abilities) (Recipies)
+}
+
 public static class SaveSystem
 {
-    static string path = Application.persistentDataPath + "/slot";
+    // static string path = Application.persistentDataPath + "/SaveData";
+    static string path = "Assets/SaveData";
 
-    public static bool SaveFileExists(int slot)
+    public static bool SaveFileExists(int slotIndex)
     {
-        return File.Exists(path + slot + ".json");
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+
+        return File.Exists(path + slotIndex + ".json");
     }
 
-    public static void NewSaveFile(int slot)
+    public static SaveData GetSaveFile(int slotIndex)
     {
-        if (SaveFileExists(slot))
+        if (!SaveFileExists(slotIndex))
+            CreateSaveFile(slotIndex);
+
+        string filePath = path + slotIndex + ".json";
+        string json = File.ReadAllText(filePath);
+        return JsonUtility.FromJson<SaveData>(json);
+    }
+
+    public static void SetSaveFile(int slotIndex, SaveData saveData)
+    {
+        if (!SaveFileExists(slotIndex))
+            CreateSaveFile(slotIndex);
+
+        string filePath = path + slotIndex + ".json";
+        string json = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(filePath, json);
+        // TODO: STORY FLAGS
+
+        Debug.Log($"SAVE: Wrote to save file {slotIndex}.");
+    }
+
+    public static void CreateSaveFile(int slotIndex)
+    {
+        if (SaveFileExists(slotIndex))
         {
             Debug.Log("SAVE: ERROR: Cannot make new save file, old save file exists.");
             return;
         }
 
-        // TODO
+        SaveData saveData = new SaveData
+        {
+            playtimeSeconds = 0,
+            playerPosition = Vector3.zero
+            // Inventory
+            // Story Flags (Abilities) (Recipies)
+        };
 
-        Debug.Log("SAVE: Save file " + slot + " made.");
+        string filePath = path + slotIndex + ".json";
+        string json = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(filePath, json);
+
+        Debug.Log($"SAVE: Created save file {slotIndex}.");
     }
 
-    public static void LoadSaveFile(int slot)
+    public static void DeleteSaveFile(int slotIndex)
     {
-        if (!SaveFileExists(slot))
+        if (!SaveFileExists(slotIndex))
         {
-            Debug.Log("SAVE: ERROR: Cannot load save file, save file does not exist.");
+            Debug.Log($"SAVE: ERROR: Save file {slotIndex} does not exist.");
             return;
         }
 
-        // TODO
+        string filePath = path + slotIndex + ".json";
+        File.Delete(filePath);
 
-        Debug.Log("SAVE: Save file " + slot + " loaded.");
-    }
-
-    public static void SaveSaveFile(int slot)
-    {
-        if (!SaveFileExists(slot))
-        {
-            Debug.Log("SAVE: ERROR: Cannot save save file, save file does not exist.");
-            return;
-        }
-
-        // TODO
-
-        Debug.Log("SAVE: Save file " + slot + " saved.");
-    }
-
-    public static void DeleteSaveFile(int slot)
-    {
-        if (!SaveFileExists(slot))
-        {
-            Debug.Log("SAVE: ERROR: Cannot delete save file, save file does not exist.");
-            return;
-        }
-
-        string file = path + slot + ".json";
-        File.Delete(file);
-
-        Debug.Log("SAVE: Save file " + slot + " deleted.");
+        Debug.Log($"SAVE: Deleted save file {slotIndex}.");
     }
 }

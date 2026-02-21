@@ -13,7 +13,7 @@ public class GraphicsSettings
 public class GraphicsSettingsManager : MonoBehaviour
 {
     public static GraphicsSettingsManager Instance { get; private set; }
-    [SerializeField] private string settingsPath = "Assets/Settings/graphics.json";
+    [SerializeField] private string settingsPath = "Assets/Settings";
     public Resolution[] _resolutions { get; private set; }
     public GraphicsSettings _settings { get; private set; }
 
@@ -73,9 +73,11 @@ public class GraphicsSettingsManager : MonoBehaviour
 
     public void LoadSettings()
     {
-        if (File.Exists(settingsPath))
+        string graphicsPath = Path.Combine(settingsPath, "graphics.json");
+
+        if (File.Exists(graphicsPath))
         {
-            string json = File.ReadAllText(settingsPath);
+            string json = File.ReadAllText(graphicsPath);
             _settings = JsonUtility.FromJson<GraphicsSettings>(json);
         }
         else
@@ -89,6 +91,6 @@ public class GraphicsSettingsManager : MonoBehaviour
 
         string settingsJson = JsonUtility.ToJson(_settings, true);
 
-        File.WriteAllText(settingsPath, settingsJson);
+        File.WriteAllText(Path.Combine(settingsPath, "graphics.json"), settingsJson);
     }
 }
