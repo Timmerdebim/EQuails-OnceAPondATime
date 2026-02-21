@@ -8,21 +8,34 @@ public class KeybindSettingsMenu : Menu
 {
     [Header("UI References")]
     [SerializeField] private Button resetButton;
+    [SerializeField] private KeybindElement[] keybindElements;
 
-    void Start()
+    public override void EnteringMenu()
     {
-        this.gameObject.SetActive(false);
+        base.EnteringMenu();
+        RefreshVisuals();
+    }
+
+    public override void ExitingMenu()
+    {
+        base.ExitingMenu();
+        KeybindSettingsManager.Instance.SaveSettings();
     }
 
     // ------------ Buttons ------------
 
     public void OnResetButtonClicked()
     {
-        //foreach (var actionMap in inputActionAsset.actionMaps)
-        //    actionMap.RemoveAllBindingOverrides();
-        //
-        //RefreshMenu();
+        foreach (KeybindElement keybindElement in keybindElements)
+            keybindElement.ResetToDefault();
+        RefreshVisuals();
     }
 
     // ------------ Functions ------------
+
+    private void RefreshVisuals()
+    {
+        foreach (KeybindElement keybindElement in keybindElements)
+            keybindElement.UpdateBindingDisplay();
+    }
 }

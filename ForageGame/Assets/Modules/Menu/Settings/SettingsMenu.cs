@@ -1,15 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class Settings
-{
-    public int resolutionIndex = 0;
-    public int qualityLevel = 2;
-    public bool vsyncEnabled = true;
-    public int targetFramerate = 60;
-}
-
 public class SettingsMenu : Menu
 {
     [Header("Buttons")]
@@ -35,6 +26,15 @@ public class SettingsMenu : Menu
         keybindsButton.interactable = true;
 
         ToSubMenu(graphicsSettingsMenu);
+    }
+
+    public override void ExitingMenu()
+    {
+        base.ExitingMenu();
+
+        GraphicsSettingsManager.Instance.SaveSettings();
+        AudioSettingsManager.Instance.SaveSettings();
+        KeybindSettingsManager.Instance.SaveSettings();
     }
 
     public override void Escape()

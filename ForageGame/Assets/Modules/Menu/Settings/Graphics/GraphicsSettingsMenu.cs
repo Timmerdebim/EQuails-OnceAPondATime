@@ -27,6 +27,12 @@ public class GraphicsSettingsMenu : Menu
         RefreshVisuals();
     }
 
+    public override void ExitingMenu()
+    {
+        base.ExitingMenu();
+        GraphicsSettingsManager.Instance.SaveSettings();
+    }
+
     // ------------ Buttons ------------
 
     public void OnResolutionChanged()

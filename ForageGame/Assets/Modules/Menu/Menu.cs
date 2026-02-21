@@ -14,15 +14,6 @@ public abstract class Menu : MonoBehaviour
     [SerializeField] public float fadeInDuration = 0.5f;
     [SerializeField] public float fadeOutDuration = 0.5f;
 
-    /// <summary>
-    /// Start (this)
-    /// 
-    /// OnEnteringMenu (instance)
-    /// OnEnteredMenu (instance)
-    /// OnExitingMenu (instance)
-    /// OnExitedMenuEnd (instance)
-    /// </summary>
-
     public virtual void Escape()
     {
         throw new NotImplementedException();
@@ -30,9 +21,10 @@ public abstract class Menu : MonoBehaviour
 
     public virtual void EnteringMenu()
     {
-        Debug.Log("Entering menu " + this);
+        // Debug.Log("Entering menu " + this);
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
+        canvasGroup.alpha = 0;
     }
 
     public virtual void EnteredMenu()
@@ -41,19 +33,20 @@ public abstract class Menu : MonoBehaviour
         canvasGroup.interactable = true;
         canvasGroup.alpha = 1;
         EventSystem.current.SetSelectedGameObject(firstSelected);
-        Debug.Log("Entered menu " + this);
+        // Debug.Log("Entered menu " + this);
     }
 
     public virtual void ExitingMenu()
     {
-        Debug.Log("Exiting menu " + this);
+        // Debug.Log("Exiting menu " + this);
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
+        canvasGroup.alpha = 1;
     }
 
     public virtual void ExitedMenu()
     {
         canvasGroup.alpha = 0;
-        Debug.Log("Exited menu " + this);
+        // Debug.Log("Exited menu " + this);
     }
 }

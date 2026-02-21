@@ -18,6 +18,12 @@ public class AudioSettingsMenu : Menu
         RefreshVisuals();
     }
 
+    public override void ExitingMenu()
+    {
+        base.ExitingMenu();
+        AudioSettingsManager.Instance.SaveSettings();
+    }
+
     // ------------ Buttons ------------
 
     public void OnMasterVolumeChanged()
