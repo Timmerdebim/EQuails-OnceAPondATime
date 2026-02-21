@@ -8,6 +8,11 @@ public class PauseMenu : Menu
     [Header("Connected Menus")]
     [SerializeField] private Menu settingsMenu;
 
+    void Start()
+    {
+        MenuManager.Instance.ToMenu(this, false);
+    }
+
     public override void Escape()
     {
         MenuManager.Instance.ResumeGame();
@@ -22,14 +27,13 @@ public class PauseMenu : Menu
 
     public void OnMainMenuClicked()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        MenuManager.Instance.ToMainMenu();
+    }
+
+    public void OnQuitClicked()
+    {
+        GameManager.Instance.QuitGame();
     }
 
     // ------------ Functions ------------
-
-    public void PauseGame()
-    {
-        MenuManager.Instance.PauseGame();
-    }
 }

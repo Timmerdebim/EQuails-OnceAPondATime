@@ -62,6 +62,16 @@ public class GameManager : MonoBehaviour
         SaveSystem.SetSaveFile(currentSaveSlot, currentSaveData);
     }
 
+    public void QuitGame()
+    {
+        SaveGame();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+    }
+
     // void OnEnable()
     // {
     //     SceneManager.sceneLoaded += OnSceneLoaded;
@@ -141,8 +151,6 @@ public class GameManager : MonoBehaviour
 
         // // Fade back in
         // seq.Append(fadeImage.DOFade(0f, fadeDuration));
-
-
     }
 
     private void OnGameStart()

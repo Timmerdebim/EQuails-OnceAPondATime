@@ -7,7 +7,6 @@ public class EnemyController : MonoBehaviour, IHitHandler
     public Animator animator;
     public NavMeshAgent navMeshAgent;
     public SpriteRenderer spriteRenderer;
-    public DuckController player;
 
     [Header("Roam")]
     public float roamSpeed = 5f;

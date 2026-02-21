@@ -29,7 +29,7 @@ public class EnemyAttack : StateMachineBehaviour
         enemy.navMeshAgent.enabled = false; // Disable NavMeshAgent
 
         // Look at player
-        targetDir = enemy.player.transform.position - enemy.transform.position;
+        targetDir = Player.Instance.transform.position - enemy.transform.position;
         enemy.spriteRenderer.flipX = targetDir.x < 0;
         // Set attack hitbox
         targetDir.y = 0f;

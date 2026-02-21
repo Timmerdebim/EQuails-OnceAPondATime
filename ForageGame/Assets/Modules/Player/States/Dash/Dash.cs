@@ -2,27 +2,25 @@ using UnityEngine;
 
 public class Dash : StateMachineBehaviour
 {
-    protected DuckController duck;
     [SerializeField] private float moveSpeed;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         GameObject obj = animator.gameObject;
-        duck = obj.GetComponent<DuckController>();
 
-        duck.trailRenderer.emitting = true;
+        Player.Instance.trailRenderer.emitting = true;
 
         if (!animator.GetBool("isGrounded"))
             animator.SetBool("airDashed", true);
 
 
-        duck.trailRenderer.startColor = Color.black;
-        duck.trailRenderer.endColor = Color.black;
+        Player.Instance.trailRenderer.startColor = Color.black;
+        Player.Instance.trailRenderer.endColor = Color.black;
 
-        duck.useGravity = false;
-        duck.velocity = duck._viewDirection * moveSpeed;
+        Player.Instance.useGravity = false;
+        Player.Instance.velocity = Player.Instance._viewDirection * moveSpeed;
 
-        duck.duckEnergy.UseEnergy(duck.dashEnergy);
+        Player.Instance.energy.UseEnergy(Player.Instance.dashEnergy);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -31,6 +29,6 @@ public class Dash : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.ExitStateReset();
+        Player.Instance.ExitStateReset();
     }
 }

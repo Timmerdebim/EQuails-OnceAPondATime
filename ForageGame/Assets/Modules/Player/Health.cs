@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DuckEnergy : MonoBehaviour, IHitHandler
+public class Energy : MonoBehaviour, IHitHandler
 {
     [Header("Energy Settings")]
     [SerializeField] private float maxEnergy = 100f;

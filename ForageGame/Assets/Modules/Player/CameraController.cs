@@ -5,24 +5,23 @@ using UnityEngine;
 
 namespace KinematicCharacterController.Examples
 {
-    public class DuckCameraController : MonoBehaviour
+    public class CameraController : MonoBehaviour
     {
         public float followZDistance;
         public float followYDistance;
         public float followSharpness;
         public float velocityWeight;
         public float lookingDirectionOffset;
-        public DuckController player;
 
         void LateUpdate()
         {
-            if (!player) return;
+            if (!Player.Instance) return;
 
-            Vector3 targetPos = player.transform.position;
+            Vector3 targetPos = Player.Instance.transform.position;
             targetPos.y += followYDistance;
             targetPos.z -= followZDistance;
-            targetPos += player.characterController.velocity * velocityWeight;
-            targetPos += player._viewDirection * lookingDirectionOffset;
+            targetPos += Player.Instance.characterController.velocity * velocityWeight;
+            targetPos += Player.Instance._viewDirection * lookingDirectionOffset;
 
             transform.position = Vector3.Lerp(transform.position, targetPos, followSharpness * Time.deltaTime);
         }

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Flutter : StateMachineBehaviour
 {
-    protected DuckController duck;
     private float targetHight;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float flutterHeight;
@@ -12,26 +11,25 @@ public class Flutter : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         GameObject obj = animator.gameObject;
-        duck = obj.GetComponent<DuckController>();
 
-        targetHight = flutterHeight + duck.lastGroundHeight;
-        duck.useGravity = false;
-        duck.useVericalMomentum = true;
+        targetHight = flutterHeight + Player.Instance.lastGroundHeight;
+        Player.Instance.useGravity = false;
+        Player.Instance.useVericalMomentum = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.duckEnergy.UseEnergy(duck.flutterEnergy * Time.deltaTime);
-        duck.velocity = duck._inputDirection * moveSpeed;
-        duck.V_acceleration = (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - duck.transform.position.y) - 2 * flutterNaturalFrequency * duck.characterController.velocity.y);
+        Player.Instance.energy.UseEnergy(Player.Instance.flutterEnergy * Time.deltaTime);
+        Player.Instance.velocity = Player.Instance._inputDirection * moveSpeed;
+        Player.Instance.V_acceleration = (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - Player.Instance.transform.position.y) - 2 * flutterNaturalFrequency * Player.Instance.characterController.velocity.y);
 
         // Check if still can fly
-        if (duck.duckEnergy.energy < 0.001f)
+        if (Player.Instance.energy.energy < 0.001f)
             animator.SetBool("flutter", false);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.ExitStateReset();
+        Player.Instance.ExitStateReset();
     }
 }

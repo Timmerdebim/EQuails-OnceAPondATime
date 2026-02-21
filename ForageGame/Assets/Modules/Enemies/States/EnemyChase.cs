@@ -13,7 +13,7 @@ public class EnemyChase : StateMachineBehaviour
 
         updatePathTimer = 0f;
 
-        enemy.SetNavDestination(enemy.player.transform.position, enemy.chaseSpeed);
+        enemy.SetNavDestination(Player.Instance.transform.position, enemy.chaseSpeed);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -30,7 +30,7 @@ public class EnemyChase : StateMachineBehaviour
         else enemy.spriteRenderer.flipX = false;
 
         // Try attacking
-        if (Vector3.Distance(enemy.transform.position, enemy.player.transform.position) < enemy.attackRadius)
+        if (Vector3.Distance(enemy.transform.position, Player.Instance.transform.position) < enemy.attackRadius)
             animator.SetTrigger("attack");
     }
 

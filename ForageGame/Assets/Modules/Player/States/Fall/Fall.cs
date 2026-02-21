@@ -2,24 +2,22 @@ using UnityEngine;
 
 public class Fall : StateMachineBehaviour
 {
-    protected DuckController duck;
     [SerializeField] private float moveSpeed;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         GameObject obj = animator.gameObject;
-        duck = obj.GetComponent<DuckController>();
 
-        duck.useVericalMomentum = true;
+        Player.Instance.useVericalMomentum = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.velocity = duck._inputDirection * moveSpeed;
+        Player.Instance.velocity = Player.Instance._inputDirection * moveSpeed;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.ExitStateReset();
+        Player.Instance.ExitStateReset();
     }
 }

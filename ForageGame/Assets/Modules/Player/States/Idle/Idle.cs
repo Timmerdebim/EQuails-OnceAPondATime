@@ -2,24 +2,21 @@ using UnityEngine;
 
 public class Idle : StateMachineBehaviour
 {
-    protected DuckController duck;
-
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         GameObject obj = animator.gameObject;
-        duck = obj.GetComponent<DuckController>();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (duck.interactInput)
-            duck.playerInteract?.Interact();
+        if (Player.Instance.interactInput)
+            Player.Instance.playerInteract?.Interact();
         else
-            duck.playerInteract?.StopInteract();
+            Player.Instance.playerInteract?.StopInteract();
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.ExitStateReset();
+        Player.Instance.ExitStateReset();
     }
 }

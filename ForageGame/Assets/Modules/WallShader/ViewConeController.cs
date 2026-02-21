@@ -3,7 +3,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class ViewConeController : MonoBehaviour
 {
-    public Transform target;
+    private Transform target;
     public float radius = 0.5f;
 
     [Header("Raycast Settings")]
@@ -25,7 +25,7 @@ public class ViewConeController : MonoBehaviour
 
     private MeshRenderer _coneMesh;
     private MaterialPropertyBlock _propBlock;
-    
+
     private static readonly int PlayerPosID = Shader.PropertyToID("_GlobalPlayerPos");
     private static readonly int DitherScaleID = Shader.PropertyToID("_DitherScale");
     private static readonly int EdgePowerID = Shader.PropertyToID("_EdgeGradientPower");
@@ -41,12 +41,17 @@ public class ViewConeController : MonoBehaviour
         _propBlock = new MaterialPropertyBlock();
     }
 
+    void Start()
+    {
+        target = Player.Instance.transform;
+    }
+
     void LateUpdate()
     {
         if (target == null || Camera.main == null) return;
 
         HandleTransform();
-        
+
         // 1. Run Logic
         CheckVisibility(rayCount);
 
@@ -73,7 +78,7 @@ public class ViewConeController : MonoBehaviour
         transform.position = (camPos + 2 * playerPos) / 3f;
         transform.LookAt(playerPos);
         transform.Rotate(90, 0, 0);
-        
+
         float dist = Vector3.Distance(camPos, playerPos);
         transform.localScale = new Vector3(radius, dist / 3f, radius);
 
@@ -102,7 +107,7 @@ public class ViewConeController : MonoBehaviour
         Vector3 targetPos = target.position;
         Vector3 directionToCam = (camPos - targetPos).normalized;
         Quaternion lookRot = Quaternion.LookRotation(directionToCam);
-        
+
         int reachedCount = 0;
 
         for (int i = 0; i < n; i++)

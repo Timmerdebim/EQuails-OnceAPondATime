@@ -6,7 +6,6 @@ public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private LayerMask interactablesLayer;
     [SerializeField] private float interactionRadius = 3f;
-    [SerializeField] protected DuckController duck;
 
     private IInteractable focusedInteractable;
     private Transform focusedInteractableTransform;
@@ -92,7 +91,7 @@ public class PlayerInteract : MonoBehaviour
         if (focusedInteractable == null || interacting) { return; }
 
         interacting = true;
-        duck.FaceTarget(focusedInteractableTransform); //make duck face the target ~Lars
+        Player.Instance.FaceTarget(focusedInteractableTransform); //make duck face the target ~Lars
         focusedInteractable.Interact(StopInteract);
     }
 

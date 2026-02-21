@@ -2,9 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DuckUI : MonoBehaviour
+public class HealthUI : MonoBehaviour
 {
-    private ProgressBar energybar { get; set;}
+    private ProgressBar energybar { get; set; }
     private int _clickCount;
 
     //Add logic that interacts with the UI controls in the `OnEnable` methods
@@ -20,7 +20,8 @@ public class DuckUI : MonoBehaviour
         // _inputFields.RegisterCallback<ChangeEvent<string>>(InputMessage);
     }
 
-    public void SetEnergy(float energy) {
+    public void SetEnergy(float energy)
+    {
         energybar.value = energy;
     }
 

@@ -12,10 +12,6 @@ public class InventorySystem : MonoBehaviour
     [Header("Item Database")]
     public Item[] itemDatabase;
 
-    [Header("Other")]
-    public Transform player;
-    public DuckEnergy duckEnergy;
-
     private Item[] hotbarItems;
     private InventorySlot[] hotbarSlots;
     private int selectedSlot = 0;
@@ -27,7 +23,6 @@ public class InventorySystem : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
         InitializeHotbar();
@@ -86,7 +81,7 @@ public class InventorySystem : MonoBehaviour
         if (itemToDrop.worldPrefab != null)
         {
             // Get player position
-            Vector3 dropPosition = player.position; // TODO: move down to ground
+            Vector3 dropPosition = Player.Instance.transform.position; // TODO: move down to ground
             Instantiate(itemToDrop.worldPrefab, dropPosition, Quaternion.identity);
         }
 
@@ -101,7 +96,7 @@ public class InventorySystem : MonoBehaviour
         if (hotbarItems[selectedSlot] is not ConsumableItem item) return;
 
         // Get player position
-        duckEnergy.TakeDamage(-item.consumableEnergy); // a little botched but ok...
+        Player.Instance.energy.TakeDamage(-item.consumableEnergy); // a little botched but ok...
         // Remove from hotbar
         RemoveItem(selectedSlot);
         // Replace with new item
