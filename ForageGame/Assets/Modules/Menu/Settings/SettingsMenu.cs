@@ -39,10 +39,12 @@ public class SettingsMenu : Menu
 
     public override void Escape()
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode == MenuMode.Pause)
             MenuManager.Instance.ToMenu(pauseMenu, true);
-        else
+        else if (MenuManager.Instance.mode == MenuMode.Main)
             MenuManager.Instance.ToMenu(mainMenu, true);
+        else
+            Debug.Log($"MENU: ERROR: Tried to escape the main menu when menu mode was none.");
     }
 
     // ------------ Buttons ------------

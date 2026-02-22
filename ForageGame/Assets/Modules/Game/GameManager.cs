@@ -8,7 +8,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private SaveData currentSaveData;
+    public SaveData currentSaveData;
     private int currentSaveSlot = -1;
     public SceneLoader sceneLoader { get; private set; }
     [SerializeField] SceneGroup initialSceneGroup;
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         sceneLoader = GetComponent<SceneLoader>();
+        currentSaveData = new SaveData();
     }
 
     void Start()
@@ -67,6 +68,10 @@ public class GameManager : MonoBehaviour
     {
         if (currentSaveData == null || currentSaveSlot < 0)
             return;
+
+        currentSaveData.playerData = Player.Instance?.GetData();
+
+
         SaveSystem.SetSaveFile(currentSaveSlot, currentSaveData);
     }
 
@@ -101,11 +106,11 @@ public class GameManager : MonoBehaviour
 
         cutsceneSeq?.Kill();
         cutsceneSeq = DOTween.Sequence();
+        cutsceneSeq.SetEase(Ease.InOutCubic);
 
         // Fade to black
         cutsceneSeq.Append(blackOverlay.DOFade(1, 1))
 
-        // Start loading scene (but don't activate yet)
         .AppendCallback(() =>
         {
             sceneLoader.FullLoadSceneGroup(SceneGroup.World, () =>
@@ -118,15 +123,16 @@ public class GameManager : MonoBehaviour
         if (isNewGame)
         {
             cutsceneSeq.AppendInterval(1)
-            .Append(introImage1.DOFade(1, 0.5f).SetEase(Ease.InOutCubic))
+            .Append(introImage1.DOFade(1, 0.5f))
             .AppendInterval(2)
-            .Append(introImage1.DOFade(0, 0.5f).SetEase(Ease.InOutCubic))
-            .Append(introImage2.DOFade(1, 0.5f).SetEase(Ease.InOutCubic))
+            .Append(introImage1.DOFade(0, 0.5f))
+            .Append(introImage2.DOFade(1, 0.5f))
             .AppendInterval(2)
-            .Append(introImage2.DOFade(0, 0.5f).SetEase(Ease.InOutCubic))
-            .Append(introImage3.DOFade(1, 0.5f).SetEase(Ease.InOutCubic))
+            .Append(introImage2.DOFade(0, 0.5f))
+            .Append(introImage3.DOFade(1, 0.5f))
             .AppendInterval(2)
-            .Append(introImage2.DOFade(0, 0.5f).SetEase(Ease.InOutCubic));
+            .Append(introImage3.DOFade(0, 0.5f))
+            .AppendInterval(1);
         }
 
         cutsceneSeq.AppendCallback(() =>
@@ -143,6 +149,7 @@ public class GameManager : MonoBehaviour
 
         cutsceneSeq?.Kill();
         cutsceneSeq = DOTween.Sequence();
+        cutsceneSeq.SetEase(Ease.InOutCubic);
 
         cutsceneSeq.Append(blackOverlay.DOFade(0, 1));
     }

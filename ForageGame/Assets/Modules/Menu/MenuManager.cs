@@ -8,11 +8,7 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance { get; private set; }
     private Menu currentMenu;
-    [SerializeField] private InputActionAsset inputActions;
-    private InputActionMap playerInputActionMap;
-    private InputActionMap uiInputActionMap;
-    public bool isPaused { get; private set; } = false;
-
+    public MenuMode mode { get; private set; } = MenuMode.None;
     private Sequence seq;
 
     private void Awake()
@@ -23,8 +19,6 @@ public class MenuManager : MonoBehaviour
             return;
         }
         Instance = this;
-        playerInputActionMap = inputActions.FindActionMap("Player");
-        uiInputActionMap = inputActions.FindActionMap("UI");
     }
 
     public void ToMenu(Menu toMenu, bool doFade)
@@ -46,13 +40,10 @@ public class MenuManager : MonoBehaviour
 
         if (toMenu != null)
         {
-            EnableMenuMode(true);
             toMenu.gameObject.SetActive(true);
             toMenu.EnteringMenu();
             toMenu.EnteredMenu();
         }
-        else
-            EnableMenuMode(false);
     }
 
     private void MenuTransition(Menu fromMenu, Menu toMenu)
@@ -77,39 +68,28 @@ public class MenuManager : MonoBehaviour
         {
             seq.AppendCallback(() =>
             {
-                EnableMenuMode(true);
                 toMenu.gameObject.SetActive(true);
                 toMenu.EnteringMenu();
             });
             seq.Append(toMenu.canvasGroup.DOFade(1, toMenu.fadeInDuration));
             seq.AppendCallback(() => { toMenu.EnteredMenu(); });
         }
-        else
-            seq.AppendCallback(() => { EnableMenuMode(false); });
     }
 
     public void PauseGame()
     {
-        isPaused = true;
-        Debug.Log("Paused :)");
-        GameManager.Instance.sceneLoader.LoadScenesByGroup(SceneGroup.Pause);
-
+        GameManager.Instance.sceneLoader.LoadScenesByGroup(SceneGroup.Pause, () => { SetMenuMode(MenuMode.Pause); });
     }
 
     public void ResumeGame()
     {
         ToMenu(null, false);
-
-        GameManager.Instance.sceneLoader.UnloadScenesByGroup(SceneGroup.Pause, () =>
-        {
-            isPaused = false;
-            Debug.Log("Unpaused :)");
-        });
+        GameManager.Instance.sceneLoader.UnloadScenesByGroup(SceneGroup.Pause, () => { SetMenuMode(MenuMode.None); });
     }
 
     public void Escape()
     {
-        if (currentMenu == null && !isPaused) // TODO: add isGamePlaying from game manager? or a scene check?
+        if (currentMenu == null && mode == MenuMode.Pause) // TODO: add isGamePlaying from game manager? or a scene check?
             PauseGame();
         if (currentMenu != null) // should always be the case but oh well...
             currentMenu.Escape();
@@ -120,27 +100,32 @@ public class MenuManager : MonoBehaviour
         GameManager.Instance.SaveGame();
 
         ToMenu(null, false);
-        isPaused = false;
-
-        GameManager.Instance.sceneLoader.FullLoadSceneGroup(SceneGroup.MainMenu);
+        GameManager.Instance.sceneLoader.FullLoadSceneGroup(SceneGroup.MainMenu, () => SetMenuMode(MenuMode.Main));
     }
 
-    public void EnableMenuMode(bool isEnabled)
+    public void SetMenuMode(MenuMode setMode)
     {
-        if (isEnabled)
+        mode = setMode;
+
+        switch (mode)
         {
-            // Time.timeScale = 0f;
-            // Cursor.lockState = CursorLockMode.None;
-            // Cursor.visible = true;
-        }
-        else
-        {
-            // Time.timeScale = 1f;
-            // Cursor.lockState = CursorLockMode.Locked;
-            // Cursor.visible = false;
+            case MenuMode.Main:
+                // Time.timeScale = 0f;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                break;
+            case MenuMode.Pause:
+                // Time.timeScale = 0f;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                break;
+            case MenuMode.None:
+                Time.timeScale = 1f;
+                // Cursor.lockState = CursorLockMode.Locked;
+                // Cursor.visible = false;
+                break;
         }
     }
-
 
     private void OnDestroy()
     {
@@ -148,3 +133,5 @@ public class MenuManager : MonoBehaviour
         DOTween.KillAll();
     }
 }
+
+public enum MenuMode { Main, Pause, None }

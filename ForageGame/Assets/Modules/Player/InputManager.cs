@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
 {
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode != MenuMode.None)
             return;
 
         Vector2 moveInput = context.ReadValue<Vector2>();
@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode != MenuMode.None)
             return;
 
         if (context.action.WasPressedThisFrame())
@@ -47,10 +47,10 @@ public class InputManager : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode != MenuMode.None)
             return;
 
-        if (context.action.WasPressedThisFrame() && Player.Instance.canAttack)
+        if (context.action.WasPressedThisFrame() && Player.Instance.playerData.canAttack)
             Player.Instance.animator.SetBool("attack", true);
         if (context.action.WasReleasedThisFrame())
             Player.Instance.animator.SetBool("attack", false);
@@ -58,7 +58,7 @@ public class InputManager : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode != MenuMode.None)
             return;
 
         Player.Instance.interactInput = context.action.IsPressed();
@@ -66,13 +66,13 @@ public class InputManager : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode != MenuMode.None)
             return;
 
         if (context.action.WasPressedThisFrame())
         {
-            if (Player.Instance.canFlutter) Player.Instance.animator.SetBool("flutter", true);
-            else if (Player.Instance.canHop) Player.Instance.animator.SetBool("hop", true);
+            if (Player.Instance.playerData.canFlutter) Player.Instance.animator.SetBool("flutter", true);
+            else if (Player.Instance.playerData.canHop) Player.Instance.animator.SetBool("hop", true);
         }
         if (context.action.WasReleasedThisFrame())
         {
@@ -85,11 +85,12 @@ public class InputManager : MonoBehaviour
 
     public void Escape(InputAction.CallbackContext context)
     {
-        Debug.Log(0);
         if (context.action.WasPressedThisFrame())
         {
-            Debug.Log(1);
-            MenuManager.Instance.Escape();
+            if (MenuManager.Instance.mode != MenuMode.None)
+                MenuManager.Instance.Escape();
+            else
+                MenuManager.Instance.PauseGame();
         }
     }
 
@@ -97,7 +98,7 @@ public class InputManager : MonoBehaviour
 
     public void DropItem(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode != MenuMode.None)
             return;
 
         if (context.action.WasPressedThisFrame())
@@ -106,7 +107,7 @@ public class InputManager : MonoBehaviour
 
     public void ConsumeItem(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode != MenuMode.None)
             return;
 
         if (context.action.WasPressedThisFrame())
@@ -115,7 +116,7 @@ public class InputManager : MonoBehaviour
 
     public void SelectSlot(int index)
     {
-        if (MenuManager.Instance.isPaused)
+        if (MenuManager.Instance.mode != MenuMode.None)
             return;
 
         Inventory.Instance?.SelectSlot(index);

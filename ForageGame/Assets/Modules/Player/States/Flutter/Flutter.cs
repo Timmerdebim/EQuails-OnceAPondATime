@@ -1,4 +1,3 @@
-using KinematicCharacterController;
 using UnityEngine;
 
 public class Flutter : StateMachineBehaviour

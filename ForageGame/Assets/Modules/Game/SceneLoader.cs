@@ -31,17 +31,20 @@ public class SceneLoader : MonoBehaviour
 
         foreach (SceneData scene in scenes)
         {
-            while (scene.IsUnloading())
+            while (scene.state == SceneState.Unloading)
                 yield return null;
-            if (scene.IsUnloaded())
-                scene.Load();
+            if (scene.state == SceneState.Unloaded)
+                scene.Load(false);
         }
 
-        while (!scenes.All(scene => scene.IsLoaded()))
+        while (!scenes.All(scene => scene.state == SceneState.AwaitingActivation))
             yield return null;
 
         foreach (SceneData scene in scenes)
+        {
+            scene.Activate();
             scene.ResetOperation();
+        }
 
         isBusy = false;
         Debug.Log($"SCENE: Scenes loaded.");
@@ -67,17 +70,14 @@ public class SceneLoader : MonoBehaviour
 
         foreach (SceneData scene in scenes)
         {
-            // THIS LOOP IS THE PROBLEM... not?
             Debug.Log(scene.name);
-            while (scene.IsLoading())
+            while (scene.state == SceneState.Loading)
                 yield return null;
-
-
-            if (scene.IsLoaded())
+            if (scene.state == SceneState.Loaded)
                 scene.Unload();
         }
 
-        while (!scenes.All(scene => scene.IsUnloaded()))
+        while (!scenes.All(scene => scene.state == SceneState.Unloaded))
             yield return null;
 
         foreach (SceneData scene in scenes)

@@ -1,5 +1,4 @@
 using System;
-using KinematicCharacterController;
 using UnityEngine;
 
 public class Hop : StateMachineBehaviour

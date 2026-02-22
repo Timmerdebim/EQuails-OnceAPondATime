@@ -5,6 +5,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[System.Serializable]
+public class PlayerData
+{
+    public Vector3 spawnPosition = new Vector3(0, 10, 0);
+    public bool canHop = false; // replace with story flags?
+    public bool canFlutter = false; // replace with story flags?
+    public bool canAttack = false; // replace with story flags?
+}
+
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Energy))]
 [RequireComponent(typeof(CharacterController))]
@@ -27,9 +36,7 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask interactionLayer;
 
     [Header("Abilities")]
-    [SerializeField] public bool canHop;
-    [SerializeField] public bool canFlutter;
-    [SerializeField] public bool canAttack;
+    [SerializeField] public PlayerData playerData;
     [Header("Energy Requirements")]
     [SerializeField] public float dashEnergy = 10f;
     [SerializeField] public float hopEnergy = 10f;
@@ -58,6 +65,17 @@ public class Player : MonoBehaviour
         playerInteract = GetComponent<PlayerInteract>();
 
         ExitStateReset();
+    }
+
+    public void SetData(PlayerData data)
+    {
+        playerData = data;
+    }
+
+    public PlayerData GetData()
+    {
+        playerData.spawnPosition = transform.position;
+        return playerData;
     }
 
     // ------------ Setting Functions ------------

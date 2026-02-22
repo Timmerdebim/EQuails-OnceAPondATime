@@ -4,8 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
-    public int playtimeSeconds;
-    public Vector3 playerPosition;
+    public int playtimeSeconds = 0;
+    public PlayerData playerData = new PlayerData();
     // Inventory
     // Story Flags (Abilities) (Recipies)
 }
@@ -20,7 +20,7 @@ public static class SaveSystem
         if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
 
-        return File.Exists(path + slotIndex + ".json");
+        return File.Exists(path + "/SaveSlot" + slotIndex + ".json");
     }
 
     public static SaveData GetSaveFile(int slotIndex)
@@ -54,13 +54,7 @@ public static class SaveSystem
             return;
         }
 
-        SaveData saveData = new SaveData
-        {
-            playtimeSeconds = 0,
-            playerPosition = Vector3.zero
-            // Inventory
-            // Story Flags (Abilities) (Recipies)
-        };
+        SaveData saveData = new SaveData();
 
         string filePath = path + slotIndex + ".json";
         string json = JsonUtility.ToJson(saveData, true);

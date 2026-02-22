@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &19688663
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.32103932
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.1327124
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.8081768
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9659258
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2588191
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345173510877435949, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931903700012109527, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
+      propertyPath: m_Name
+      value: Camera
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35bd975f198dea742a388a0b57230ff4, type: 3}
 --- !u!1 &159087696
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +227,7 @@ GameObject:
   - component: {fileID: 269907740}
   - component: {fileID: 269907741}
   m_Layer: 0
-  m_Name: AmbienceManager
+  m_Name: Ambience Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -452,9 +509,73 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[4].name
+      value: World
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[5].name
+      value: Swamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[6].name
+      value: Mushroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[7].name
+      value: Flower
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[8].name
+      value: Cave
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[4].groups.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[5].groups.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[6].groups.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[7].groups.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: allScenes.Array.data[8].groups.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: 'allScenes.Array.data[4].groups.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: 'allScenes.Array.data[5].groups.Array.data[0]'
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: 'allScenes.Array.data[6].groups.Array.data[0]'
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: 'allScenes.Array.data[7].groups.Array.data[0]'
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179436451256141769, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: 'allScenes.Array.data[8].groups.Array.data[0]'
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2970004708536037078, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
       propertyPath: initialSceneGroup
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4192456543505176384, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
       propertyPath: m_Name
@@ -482,7 +603,7 @@ GameObject:
   - component: {fileID: 1707436306}
   - component: {fileID: 1707436305}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: Event System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -661,7 +782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8161115201820609782, guid: f7b4b574733534da880912a393bbfc67, type: 3}
       propertyPath: m_Name
-      value: MusicManager
+      value: Music Manager
       objectReference: {fileID: 0}
     - target: {fileID: 8161115201820609782, guid: f7b4b574733534da880912a393bbfc67, type: 3}
       propertyPath: m_IsActive
@@ -872,3 +993,4 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 159087697}
+  - {fileID: 19688663}
