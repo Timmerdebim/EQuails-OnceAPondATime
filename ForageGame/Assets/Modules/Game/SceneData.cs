@@ -26,6 +26,11 @@ public class SceneData
         operation = SceneManager.UnloadSceneAsync(name);
     }
 
+    public void ResetOperation()
+    {
+        operation = null;
+    }
+
     public bool IsLoading()
     {
         return operation != null && loadingDirection;

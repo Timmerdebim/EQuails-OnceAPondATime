@@ -40,6 +40,9 @@ public class SceneLoader : MonoBehaviour
         while (!scenes.All(scene => scene.IsLoaded()))
             yield return null;
 
+        foreach (SceneData scene in scenes)
+            scene.ResetOperation();
+
         isBusy = false;
         Debug.Log($"SCENE: Scenes loaded.");
         callback?.Invoke();
@@ -75,6 +78,9 @@ public class SceneLoader : MonoBehaviour
 
         while (!scenes.All(scene => scene.IsUnloaded()))
             yield return null;
+
+        foreach (SceneData scene in scenes)
+            scene.ResetOperation();
 
         isBusy = false;
         Debug.Log($"SCENE: Scenes unloaded.");
