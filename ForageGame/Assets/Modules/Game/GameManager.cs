@@ -2,7 +2,6 @@ using UnityEngine;
 using System.IO;
 using DG.Tweening;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 
 [RequireComponent(typeof(SceneLoader))]
@@ -66,7 +65,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        if (currentSaveSlot < 0 || currentSaveData == null)
+        if (currentSaveData == null || currentSaveSlot < 0)
             return;
         SaveSystem.SetSaveFile(currentSaveSlot, currentSaveData);
     }

@@ -65,12 +65,13 @@ public class SceneLoader : MonoBehaviour
     {
         Debug.Log($"SCENE: Unloading scenes.");
 
-        Debug.Log(5);
-
         foreach (SceneData scene in scenes)
         {
+            // THIS LOOP IS THE PROBLEM... not?
+            Debug.Log(scene.name);
             while (scene.IsLoading())
                 yield return null;
+
 
             if (scene.IsLoaded())
                 scene.Unload();

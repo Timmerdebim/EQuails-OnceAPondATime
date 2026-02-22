@@ -12,17 +12,17 @@ public class SceneData
     public SceneGroup[] groups;
     [HideInInspector] public Scene scene => SceneManager.GetSceneByName(name);
     [HideInInspector] public AsyncOperation operation;
-    private bool loadingDirection = false; // true = loading, false = unloading
+    private bool lastFunctionWasLoad = false; // true = loading, false = unloading
 
     public void Load()
     {
-        loadingDirection = true;
+        lastFunctionWasLoad = true;
         operation = SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
     }
 
     public void Unload()
     {
-        loadingDirection = false;
+        lastFunctionWasLoad = false;
         operation = SceneManager.UnloadSceneAsync(name);
     }
 
@@ -33,7 +33,13 @@ public class SceneData
 
     public bool IsLoading()
     {
-        return operation != null && loadingDirection;
+        if (operation == null)
+            return false;
+        if (operation.isDone)
+            return false;
+        if (!lastFunctionWasLoad)
+            return false;
+        return true;
     }
 
     public bool IsLoaded()
@@ -49,7 +55,13 @@ public class SceneData
 
     public bool IsUnloading()
     {
-        return operation != null && !loadingDirection;
+        if (operation == null)
+            return false;
+        if (operation.isDone)
+            return false;
+        if (lastFunctionWasLoad)
+            return false;
+        return true;
     }
 
     public bool IsUnloaded()

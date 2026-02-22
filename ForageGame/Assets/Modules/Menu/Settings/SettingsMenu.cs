@@ -39,7 +39,7 @@ public class SettingsMenu : Menu
 
     public override void Escape()
     {
-        if (mainMenu == null)
+        if (MenuManager.Instance.isPaused)
             MenuManager.Instance.ToMenu(pauseMenu, true);
         else
             MenuManager.Instance.ToMenu(mainMenu, true);

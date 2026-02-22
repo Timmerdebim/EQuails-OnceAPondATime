@@ -91,17 +91,20 @@ public class MenuManager : MonoBehaviour
     public void PauseGame()
     {
         isPaused = true;
+        Debug.Log("Paused :)");
         GameManager.Instance.sceneLoader.LoadScenesByGroup(SceneGroup.Pause);
-        Debug.Log(isPaused);
+
     }
 
     public void ResumeGame()
     {
         ToMenu(null, false);
 
-        GameManager.Instance.sceneLoader.UnloadScenesByGroup(SceneGroup.Pause);
-        isPaused = false;
-        Debug.Log(isPaused);
+        GameManager.Instance.sceneLoader.UnloadScenesByGroup(SceneGroup.Pause, () =>
+        {
+            isPaused = false;
+            Debug.Log("Unpaused :)");
+        });
     }
 
     public void Escape()
@@ -117,7 +120,6 @@ public class MenuManager : MonoBehaviour
         GameManager.Instance.SaveGame();
 
         ToMenu(null, false);
-        Time.timeScale = 1f;
         isPaused = false;
 
         GameManager.Instance.sceneLoader.FullLoadSceneGroup(SceneGroup.MainMenu);
@@ -128,14 +130,14 @@ public class MenuManager : MonoBehaviour
         if (isEnabled)
         {
             // Time.timeScale = 0f;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            // Cursor.lockState = CursorLockMode.None;
+            // Cursor.visible = true;
         }
         else
         {
             // Time.timeScale = 1f;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = false;
         }
     }
 
