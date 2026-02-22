@@ -509,6 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34032e9513083fc489ba10516b8e9b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialSceneGroup: 0
   blackOverlay: {fileID: 3508336516324610579}
   introImage1: {fileID: 6970004794378335016}
   introImage2: {fileID: 6032819089910802086}
@@ -526,59 +527,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c0274b3c63d9c4ab78dde7ddbd7003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 0
-  mainMenuScene:
-    name: MainMenu
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  gameScene:
-    name: Game
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  debugScene:
-    name: Debug
-    isAdditive: 1
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  pauseMenuScene:
-    name: Pause
-    isAdditive: 1
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  islandScene:
-    name: 
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  forestScene:
-    name: 
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  swampScene:
-    name: 
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  flowerScene:
-    name: 
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  caveScene:
-    name: 
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  emptyScene:
-    name: 
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-  boarderScene:
-    name: 
-    isAdditive: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
+  allScenes:
+  - name: Debug
+    groups: 02000000
+  - name: Gameplay
+    groups: 0100000002000000
+  - name: MainMenu
+    groups: 00000000
+  - name: PauseMenu
+    groups: 03000000

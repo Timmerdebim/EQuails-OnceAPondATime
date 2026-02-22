@@ -1,160 +1,140 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SceneLoader : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private bool debugMode = false;
+    [SerializeField] SceneData[] allScenes;
+    private bool isBusy;
 
-    [Header("Scenes")]
-    [SerializeField] private SceneInfo[] mainMenuScenes;
-    [SerializeField] private SceneInfo[] debugScenes;
-    [SerializeField] private SceneInfo[] gameScenes;
-    [SerializeField] private SceneInfo mainMenuScene;
-    [SerializeField] private SceneInfo gameScene;
-    [SerializeField] private SceneInfo debugScene;
-    [SerializeField] private SceneInfo pauseMenuScene;
-    [SerializeField] private SceneInfo islandScene;
-    [SerializeField] private SceneInfo forestScene;
-    [SerializeField] private SceneInfo swampScene;
-    [SerializeField] private SceneInfo flowerScene;
-    [SerializeField] private SceneInfo caveScene;
-    [SerializeField] private SceneInfo emptyScene;
-    [SerializeField] private SceneInfo boarderScene;
+    // ------------ Load Scenes ------------
 
-    private bool isSingleSceneLoading = false;
-    private int additiveLoadersActive = 0;
-
-    public void ToMainMenu(Action callback = null)
+    public void LoadScenes(List<SceneData> scenes, Action callback = null)
     {
-        LoadScene(mainMenuScene, callback);
-    }
-
-    public void ToGameScene(Action callback = null)
-    {
-        LoadScene(gameScene, callback);
-        if (debugMode)
-            LoadScene(debugScene);
-        LoadScene(emptyScene, callback);
-    }
-
-    // TODO: 
-    // private void UpdateLoadedScenes()
-    // {
-    //     Vector3 playerPos = Player.Instance.transform.position;
-
-    //     if (Vector3.Distance(playerPos, islandScene.position) < islandScene.radius)
-    //     {
-    //         if (islandScene.scene.isLoaded) return;
-    //         else SceneManager.LoadSceneAsync(islandScene.scene.buildIndex, LoadSceneMode.Additive);
-    //     }
-    //     else
-    //     {
-    //         if (!islandScene.scene.isLoaded) return;
-    //         else SceneManager.UnloadSceneAsync(islandScene.scene.buildIndex);
-    //     }
-    // }
-
-    // ------------ Load Scene ------------
-
-    public void LoadScene(SceneInfo sceneInfo, Action callback = null)
-    {
-        if (sceneInfo.IsSceneLoaded())
+        if (isBusy)
+            queue.Enqueue(new SceneQueueItem(scenes, callback, true)); // Add to the queue
+        else
         {
-            Debug.LogWarning($"SCENE: ERROR: Scene '{sceneInfo.name}' is already loaded!");
-            callback?.Invoke();
-            return;
+            isBusy = true;
+            StartCoroutine(LoadScenesAsync(scenes, callback));
+        }
+    }
+
+    private IEnumerator LoadScenesAsync(List<SceneData> scenes, Action callback = null)
+    {
+        foreach (SceneData scene in scenes)
+        {
+            while (scene.IsUnloading())
+                yield return null;
+            if (scene.IsUnloaded())
+                scene.Load();
         }
 
-        if (sceneInfo.IsSceneLoading())
+        while (!scenes.All(scene => scene.IsLoaded()))
+            yield return null;
+
+        isBusy = false;
+        callback?.Invoke();
+    }
+
+    // ------------ Unload Scenes ------------
+
+    public void UnloadScenes(List<SceneData> scenes, Action callback = null)
+    {
+        if (isBusy)
+            queue.Enqueue(new SceneQueueItem(scenes, callback, false)); // Add to the queue
+        else
         {
-            Debug.LogWarning($"SCENE: ERROR: Scene '{sceneInfo.name}' is already being loaded!");
-            // Add to existing callback chain
-            if (callback == null)
-                sceneInfo.loadingCallback = callback;
+            isBusy = true;
+            StartCoroutine(UnloadScenesAsync(scenes, callback));
+        }
+    }
+
+    private IEnumerator UnloadScenesAsync(List<SceneData> scenes, Action callback = null)
+    {
+        foreach (SceneData scene in scenes)
+        {
+            while (scene.IsLoading())
+                yield return null;
+            if (scene.IsLoaded())
+                scene.Unload();
+        }
+
+        while (!scenes.All(scene => scene.IsUnloaded()))
+            yield return null;
+
+        isBusy = false;
+        callback?.Invoke();
+    }
+
+    // ------------ Queue ------------
+
+    private Queue<SceneQueueItem> queue = new Queue<SceneQueueItem>();
+    public struct SceneQueueItem
+    {
+        public SceneQueueItem(List<SceneData> scenes, Action callback, bool toLoad)
+        {
+            Scenes = scenes;
+            Callback = callback;
+            ToLoad = toLoad;
+        }
+        public List<SceneData> Scenes { get; }
+        public Action Callback { get; }
+        public bool ToLoad { get; }
+    }
+
+    public void UpdateQueue()
+    {
+        if (queue.Count > 0)
+        {
+            SceneQueueItem queueItem = queue.Dequeue();
+            if (queueItem.ToLoad)
+                LoadScenes(queueItem.Scenes, queueItem.Callback);
             else
-                sceneInfo.loadingCallback += callback;
-            return;
+                UnloadScenes(queueItem.Scenes, queueItem.Callback);
         }
-
-        sceneInfo.loadingCallback = callback;
-
-        StartCoroutine(LoadSceneAsync(sceneInfo));
     }
 
-    private IEnumerator LoadSceneAsync(SceneInfo sceneInfo)
+    // ------------ Scene Groups ------------
+    public void FullLoadSceneGroup(SceneGroup sceneGroup, Action callback = null)
     {
-        Debug.Log($"SCENE: Loading scene '{sceneInfo.name}'.");
-
-        additiveLoadersActive += 1;
-        // Wait for single loader to complete
-        while (isSingleSceneLoading == true)
-            yield return null;
-
-        sceneInfo.loadingOperation = SceneManager.LoadSceneAsync(sceneInfo.name, LoadSceneMode.Additive);
-
-        while (!sceneInfo.loadingOperation.isDone)
-            yield return null;
-
-        sceneInfo.loadingCallback?.Invoke();
-
-        sceneInfo.loadingOperation = null;
-        sceneInfo.loadingCallback = null;
-        additiveLoadersActive -= 1;
-
-        Debug.Log($"SCENE: Loaded scene '{sceneInfo.name}'.");
+        UnloadScenes(GetScenesByNotGroup(sceneGroup), () => { LoadScenesByGroup(sceneGroup, callback); });
     }
 
-    // ------------ Unload Additive ------------
-
-    public void UnloadScene(SceneInfo sceneInfo, Action callback = null)
+    public void LoadScenesByGroup(SceneGroup sceneGroup, Action callback = null)
     {
-        if (sceneInfo.IsSceneLoaded())
+        LoadScenes(GetScenesByGroup(sceneGroup), callback);
+    }
+
+    public void UnloadScenesByGroup(SceneGroup sceneGroup, Action callback = null)
+    {
+        UnloadScenes(GetScenesByGroup(sceneGroup), callback);
+    }
+
+    public List<SceneData> GetScenesByGroup(SceneGroup sceneGroup)
+    {
+        List<SceneData> scenes = new List<SceneData>();
+        foreach (SceneData scene in allScenes)
         {
-            Debug.LogWarning($"SCENE: ERROR: Scene '{sceneInfo.name}' is already loaded!");
-            callback?.Invoke();
-            return;
+            if (scene.groups.Contains(sceneGroup))
+                scenes.Add(scene);
         }
-
-        if (sceneInfo.IsSceneLoading())
-        {
-            Debug.LogWarning($"SCENE: ERROR: Scene '{sceneInfo.name}' is already being loaded!");
-            // Add to existing callback chain
-            if (callback == null)
-                sceneInfo.loadingCallback = callback;
-            else
-                sceneInfo.loadingCallback += callback;
-            return;
-        }
-
-        sceneInfo.loadingCallback = callback;
-        StartCoroutine(UnloadSceneAsync(sceneInfo));
+        return scenes;
     }
 
-    private IEnumerator UnloadSceneAsync(SceneInfo sceneInfo)
+    public List<SceneData> GetScenesByNotGroup(SceneGroup sceneGroup)
     {
-        additiveLoadersActive += 1;
-
-        // Wait for single loader to complete
-        while (isSingleSceneLoading == true)
-            yield return null;
-
-        sceneInfo.loadingOperation = SceneManager.UnloadSceneAsync(sceneInfo.name);
-
-        while (!sceneInfo.loadingOperation.isDone)
-            yield return null;
-
-        sceneInfo.loadingCallback?.Invoke();
-
-        sceneInfo.loadingOperation = null;
-        sceneInfo.loadingCallback = null;
-        additiveLoadersActive -= 1;
-
-        Debug.Log($"Scene '{sceneInfo.name}' unloaded successfully!");
+        List<SceneData> scenes = new List<SceneData>();
+        foreach (SceneData scene in allScenes)
+        {
+            if (!scene.groups.Contains(sceneGroup))
+                scenes.Add(scene);
+        }
+        return scenes;
     }
 }

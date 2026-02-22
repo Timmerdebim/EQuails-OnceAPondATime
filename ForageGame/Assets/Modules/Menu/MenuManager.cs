@@ -29,10 +29,33 @@ public class MenuManager : MonoBehaviour
 
     public void ToMenu(Menu toMenu, bool doFade)
     {
-        MenuTransition(currentMenu, toMenu, doFade);
+        if (doFade) MenuTransition(currentMenu, toMenu);
+        else DirectMenuTransition(currentMenu, toMenu);
     }
 
-    public void MenuTransition(Menu fromMenu, Menu toMenu, bool doFade)
+    public void DirectMenuTransition(Menu fromMenu, Menu toMenu)
+    {
+        if (fromMenu != null)
+        {
+            fromMenu.ExitingMenu();
+            fromMenu.ExitedMenu();
+            fromMenu.gameObject.SetActive(false);
+        }
+
+        currentMenu = toMenu;
+
+        if (toMenu != null)
+        {
+            EnableMenuMode(true);
+            toMenu.gameObject.SetActive(true);
+            toMenu.EnteringMenu();
+            toMenu.EnteredMenu();
+        }
+        else
+            EnableMenuMode(false);
+    }
+
+    public void MenuTransition(Menu fromMenu, Menu toMenu)
     {
         seq?.Kill();
         seq = DOTween.Sequence();
@@ -40,7 +63,7 @@ public class MenuManager : MonoBehaviour
         if (fromMenu != null)
         {
             seq.AppendCallback(() => { fromMenu.ExitingMenu(); });
-            if (doFade) seq.Append(fromMenu.canvasGroup.DOFade(0, fromMenu.fadeOutDuration));
+            seq.Append(fromMenu.canvasGroup.DOFade(0, fromMenu.fadeOutDuration));
             seq.AppendCallback(() =>
             {
                 fromMenu.ExitedMenu();
@@ -54,37 +77,20 @@ public class MenuManager : MonoBehaviour
         {
             seq.AppendCallback(() =>
             {
+                EnableMenuMode(true);
                 toMenu.gameObject.SetActive(true);
                 toMenu.EnteringMenu();
             });
-            if (doFade) seq.Append(toMenu.canvasGroup.DOFade(1, toMenu.fadeInDuration));
-            seq.AppendCallback(() =>
-            {
-                toMenu.EnteredMenu();
-
-                // Time.timeScale = 0f;
-                playerInputActionMap.Disable();
-                uiInputActionMap.Enable();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            });
+            seq.Append(toMenu.canvasGroup.DOFade(1, toMenu.fadeInDuration));
+            seq.AppendCallback(() => { toMenu.EnteredMenu(); });
         }
         else
-        {
-            seq.AppendCallback(() =>
-            {
-                // Time.timeScale = 1f;
-                playerInputActionMap.Enable();
-                uiInputActionMap.Disable();
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            });
-        }
+            seq.AppendCallback(() => { EnableMenuMode(false); });
     }
 
     public void PauseGame()
     {
-        SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+        GameManager.Instance.sceneLoader.LoadScenesByGroup(SceneGroup.Pause);
         isPaused = true;
     }
 
@@ -92,7 +98,7 @@ public class MenuManager : MonoBehaviour
     {
         ToMenu(null, false);
 
-        SceneManager.UnloadSceneAsync("PauseMenu");
+        GameManager.Instance.sceneLoader.UnloadScenesByGroup(SceneGroup.Pause);
         isPaused = false;
     }
 
@@ -111,7 +117,27 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
-        GameManager.Instance.sceneLoader.ToMainMenu();
+        GameManager.Instance.sceneLoader.FullLoadSceneGroup(SceneGroup.MainMenu);
+    }
+
+    public void EnableMenuMode(bool isEnabled)
+    {
+        if (isEnabled)
+        {
+            // Time.timeScale = 0f;
+            playerInputActionMap.Disable();
+            uiInputActionMap.Enable();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            // Time.timeScale = 1f;
+            playerInputActionMap.Enable();
+            uiInputActionMap.Disable();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
 

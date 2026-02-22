@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private SaveData currentSaveData;
     private int currentSaveSlot = -1;
     public SceneLoader sceneLoader { get; private set; }
+    [SerializeField] SceneGroup initialSceneGroup;
 
     void Awake()
     {
@@ -22,11 +23,13 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        sceneLoader = GetComponent<SceneLoader>();
     }
 
     void Start()
     {
-        sceneLoader = GetComponent<SceneLoader>();
+        sceneLoader.FullLoadSceneGroup(initialSceneGroup);
     }
 
     public void NewGame(int slotIndex = -1)
@@ -89,7 +92,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image outroImage1;
 
     private Sequence cutsceneSeq;
-    private AsyncOperation loadingOp;
 
     private bool isIntroCutsceneDone;
     private bool isIntroLoadingDone;
@@ -108,7 +110,7 @@ public class GameManager : MonoBehaviour
         // Start loading scene (but don't activate yet)
         .AppendCallback(() =>
         {
-            sceneLoader.ToGameScene(() =>
+            sceneLoader.FullLoadSceneGroup(SceneGroup.World, () =>
             {
                 isIntroLoadingDone = true;
                 GameStartContinue();
@@ -145,10 +147,5 @@ public class GameManager : MonoBehaviour
         cutsceneSeq = DOTween.Sequence();
 
         cutsceneSeq.Append(blackOverlay.DOFade(0, 1));
-    }
-
-    private void InitializeGame()
-    {
-        // TODO: Load game scene with saved data
     }
 }
