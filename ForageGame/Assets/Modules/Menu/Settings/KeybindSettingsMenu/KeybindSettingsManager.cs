@@ -7,7 +7,7 @@ namespace Project.Menus.Keybind
     public class KeybindSettingsManager : MonoBehaviour
     {
         public static KeybindSettingsManager Instance { get; private set; }
-        [SerializeField] private string settingsPath = "Assets/Settings";
+        [SerializeField] private string settingsPath = "Assets/SaveData";
         [SerializeField] private InputActionAsset actions;
 
         private void Awake()
@@ -18,16 +18,11 @@ namespace Project.Menus.Keybind
                 return;
             }
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
             LoadSettings();
         }
 
         public void LoadSettings()
         {
-            //string rebinds = PlayerPrefs.GetString("rebinds");
-            //if (!string.IsNullOrEmpty(rebinds))
-            //    actions.LoadBindingOverridesFromJson(rebinds);
-
             string keybindPath = Path.Combine(settingsPath, "keybind.json");
 
             if (File.Exists(keybindPath))
@@ -40,9 +35,6 @@ namespace Project.Menus.Keybind
 
         public void SaveSettings()
         {
-            //string rebinds = actions.SaveBindingOverridesAsJson();
-            //PlayerPrefs.SetString("rebinds", rebinds);
-
             if (!Directory.Exists(settingsPath))
                 Directory.CreateDirectory(settingsPath);
 

@@ -82,18 +82,13 @@ namespace Project.Menus
 
         public void ToSubMenu(Menu toMenu)
         {
-            if (currentSubMenu != null)
-            {
-                currentSubMenu.ExitingMenu();
-                currentSubMenu.ExitedMenu();
-                currentSubMenu.gameObject.SetActive(false);
-            }
+            currentSubMenu?.ExitingMenu();
+            currentSubMenu?.ExitedMenu();
 
             currentSubMenu = toMenu;
 
-            toMenu.gameObject.SetActive(true);
-            toMenu.EnteringMenu();
-            toMenu.EnteredMenu();
+            toMenu?.EnteringMenu();
+            toMenu?.EnteredMenu();
         }
     }
 }

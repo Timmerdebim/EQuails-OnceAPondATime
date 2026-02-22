@@ -40,26 +40,26 @@ namespace Project.Menus.Graphics
         public void OnResolutionChanged()
         {
             int index = resolutionDropdown.value;
-            GraphicsSettingsManager.Instance.SetResolution(index);
+            GraphicsSettingsManager.Instance.Resolution = index;
         }
 
         public void OnQualityChanged()
         {
             int index = qualityDropdown.value;
-            GraphicsSettingsManager.Instance.SetQuality(index);
+            GraphicsSettingsManager.Instance.Quality = index;
         }
 
         public void OnVsyncChanged()
         {
             bool isEnabled = vsyncToggle.isOn;
-            GraphicsSettingsManager.Instance.SetVsync(isEnabled);
+            GraphicsSettingsManager.Instance.Vsync = isEnabled;
         }
 
         public void OnFramerateChanged()
         {
             int value = Mathf.RoundToInt(framerateSlider.value);
-            framerateText.text = value.ToString();
-            GraphicsSettingsManager.Instance.SetFramerate(value);
+            GraphicsSettingsManager.Instance.Framerate = value;
+            RefreshVisuals();
         }
 
         // ------------ Functions ------------

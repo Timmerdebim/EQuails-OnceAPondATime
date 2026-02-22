@@ -21,6 +21,7 @@ namespace Project.Menus
         public virtual void EnteringMenu()
         {
             Debug.Log("Entering menu " + this);
+            gameObject.SetActive(true);
             canvasGroup.blocksRaycasts = false;
             canvasGroup.interactable = false;
             canvasGroup.alpha = 0;
@@ -46,6 +47,7 @@ namespace Project.Menus
         public virtual void ExitedMenu()
         {
             canvasGroup.alpha = 0;
+            gameObject.SetActive(false);
             Debug.Log("Exited menu " + this);
         }
     }

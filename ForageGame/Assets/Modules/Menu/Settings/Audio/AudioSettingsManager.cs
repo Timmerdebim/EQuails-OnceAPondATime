@@ -7,7 +7,7 @@ namespace Project.Menus.Audio
     public class AudioSettingsManager : MonoBehaviour
     {
         public static AudioSettingsManager Instance { get; private set; }
-        [SerializeField] private string settingsPath = "Assets/Settings";
+        [SerializeField] private string settingsPath = "Assets/SaveData";
         [SerializeField] private AudioMixer audioMixer;
         public AudioSettings _settings { get; private set; }
 
@@ -19,37 +19,42 @@ namespace Project.Menus.Audio
                 return;
             }
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
 
             LoadSettings();
-            ApplyAllSettings();
         }
 
-        // ------------ Setting Functions ------------
+        // ------------ Settings ------------
 
-        public void SetMasterVolume(float value)
+        public float MasterVolume
         {
-            _settings.masterVolume = value;
-            audioMixer.SetFloat("Master", value);
+            get => _settings.masterVolume;
+            set
+            {
+                _settings.masterVolume = value;
+                audioMixer.SetFloat("Master", value);
+            }
         }
 
-        public void SetMusicVolume(float value)
+        public float MusicVolume
         {
-            _settings.musicVolume = value;
-            audioMixer.SetFloat("Music", value);
+            get => _settings.musicVolume;
+            set
+            {
+                _settings.musicVolume = value;
+                audioMixer.SetFloat("Music", value);
+                SaveSettings();
+            }
         }
 
-        public void SetSfxVolume(float value)
+        public float SfxVolume
         {
-            _settings.sfxVolume = value;
-            audioMixer.SetFloat("SFX", value);
-        }
-
-        public void ApplyAllSettings()
-        {
-            SetMasterVolume(_settings.masterVolume);
-            SetMusicVolume(_settings.musicVolume);
-            SetSfxVolume(_settings.sfxVolume);
+            get => _settings.sfxVolume;
+            set
+            {
+                _settings.sfxVolume = value;
+                audioMixer.SetFloat("SFX", value);
+                SaveSettings();
+            }
         }
 
         // ------------ Save & Load ------------

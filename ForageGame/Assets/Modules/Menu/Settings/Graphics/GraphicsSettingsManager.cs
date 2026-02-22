@@ -6,7 +6,7 @@ namespace Project.Menus.Graphics
     public class GraphicsSettingsManager : MonoBehaviour
     {
         public static GraphicsSettingsManager Instance { get; private set; }
-        [SerializeField] private string settingsPath = "Assets/Settings";
+        [SerializeField] private string settingsPath = "Assets/SaveData";
         public Resolution[] _resolutions { get; private set; }
         public GraphicsSettings _settings { get; private set; }
 
@@ -18,48 +18,59 @@ namespace Project.Menus.Graphics
                 return;
             }
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
 
             _resolutions = Screen.resolutions;
 
             LoadSettings();
-            ApplyAllSettings();
         }
 
-        // ------------ Setting Functions ------------
-        public void SetResolution(int index)
+        // ------------ Settings ------------
+
+        public int Resolution
         {
-            if (-1 < index && index < _resolutions.Length)
+            get => _settings.resolutionIndex;
+            set
             {
-                _settings.resolutionIndex = index;
-                Screen.SetResolution(_resolutions[index].width, _resolutions[index].height, Screen.fullScreen);
+                if (-1 < value && value < _resolutions.Length)
+                {
+                    _settings.resolutionIndex = value;
+                    Screen.SetResolution(_resolutions[value].width, _resolutions[value].height, Screen.fullScreen);
+                }
+                SaveSettings();
             }
         }
 
-        public void SetQuality(int index)
+        public int Quality
         {
-            _settings.qualityLevel = index;
-            QualitySettings.SetQualityLevel(index);
+            get => _settings.qualityLevel;
+            set
+            {
+                _settings.qualityLevel = value;
+                QualitySettings.SetQualityLevel(value);
+                SaveSettings();
+            }
         }
 
-        public void SetVsync(bool isEnabled)
+        public bool Vsync
         {
-            _settings.vsyncEnabled = isEnabled;
-            QualitySettings.vSyncCount = isEnabled ? 1 : 0;
+            get => _settings.vsyncEnabled;
+            set
+            {
+                _settings.vsyncEnabled = value;
+                QualitySettings.vSyncCount = value ? 1 : 0;
+                SaveSettings();
+            }
         }
 
-        public void SetFramerate(int value)
+        public int Framerate
         {
-            _settings.targetFramerate = value;
-            Application.targetFrameRate = value;
-        }
-
-        public void ApplyAllSettings()
-        {
-            SetResolution(_settings.resolutionIndex);
-            SetQuality(_settings.qualityLevel);
-            SetVsync(_settings.vsyncEnabled);
-            SetFramerate(_settings.targetFramerate);
+            get => _settings.targetFramerate;
+            set
+            {
+                _settings.targetFramerate = value;
+                Application.targetFrameRate = value;
+                SaveSettings();
+            }
         }
 
         // ------------ Save & Load ------------

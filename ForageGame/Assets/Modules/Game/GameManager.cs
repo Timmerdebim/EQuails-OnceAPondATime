@@ -123,12 +123,12 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case GameState.MainMenu:
-                // Time.timeScale = 0f;
+                Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 break;
             case GameState.PauseMenu:
-                // Time.timeScale = 0f;
+                Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 break;

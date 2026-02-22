@@ -32,22 +32,22 @@ namespace Project.Menus.Audio
         public void OnMasterVolumeChanged()
         {
             float value = masterVolumeSlider.value;
-            masterVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
-            AudioSettingsManager.Instance?.SetMasterVolume(value);
+            AudioSettingsManager.Instance.MasterVolume = value;
+            RefreshVisuals();
         }
 
         public void OnMusicVolumeChanged()
         {
             float value = musicVolumeSlider.value;
-            musicVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
-            AudioSettingsManager.Instance?.SetMusicVolume(value);
+            AudioSettingsManager.Instance.MusicVolume = value;
+            RefreshVisuals();
         }
 
         public void OnSfxVolumeChanged()
         {
             float value = sfxVolumeSlider.value;
-            sfxVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
-            AudioSettingsManager.Instance?.SetSfxVolume(value);
+            AudioSettingsManager.Instance.SfxVolume = value;
+            RefreshVisuals();
         }
 
         // ------------ Functions ------------

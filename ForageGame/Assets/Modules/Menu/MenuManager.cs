@@ -1,8 +1,5 @@
 using UnityEngine;
-using System.Collections;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
 namespace Project.Menus
 {
@@ -30,48 +27,34 @@ namespace Project.Menus
 
         private void DirectMenuTransition(Menu fromMenu, Menu toMenu)
         {
-            if (fromMenu != null)
-            {
-                fromMenu.ExitingMenu();
-                fromMenu.ExitedMenu();
-                fromMenu.gameObject.SetActive(false);
-            }
+            fromMenu?.ExitingMenu();
+            fromMenu?.ExitedMenu();
 
             currentMenu = toMenu;
 
-            if (toMenu != null)
-            {
-                toMenu.gameObject.SetActive(true);
-                toMenu.EnteringMenu();
-                toMenu.EnteredMenu();
-            }
+            toMenu?.EnteringMenu();
+            toMenu?.EnteredMenu();
         }
 
         private void MenuTransition(Menu fromMenu, Menu toMenu)
         {
             seq?.Kill();
             seq = DOTween.Sequence();
+            seq.SetEase(Ease.InOutCubic);
+            seq.SetUpdate(true);
 
             if (fromMenu != null)
             {
                 seq.AppendCallback(() => { fromMenu.ExitingMenu(); });
                 seq.Append(fromMenu.canvasGroup.DOFade(0, fromMenu.fadeOutDuration));
-                seq.AppendCallback(() =>
-                {
-                    fromMenu.ExitedMenu();
-                    fromMenu.gameObject.SetActive(false);
-                });
+                seq.AppendCallback(() => { fromMenu.ExitedMenu(); });
             }
 
             seq.AppendCallback(() => { currentMenu = toMenu; });
 
             if (toMenu != null)
             {
-                seq.AppendCallback(() =>
-                {
-                    toMenu.gameObject.SetActive(true);
-                    toMenu.EnteringMenu();
-                });
+                seq.AppendCallback(() => { toMenu.EnteringMenu(); });
                 seq.Append(toMenu.canvasGroup.DOFade(1, toMenu.fadeInDuration));
                 seq.AppendCallback(() => { toMenu.EnteredMenu(); });
             }
