@@ -3,6 +3,9 @@ using System.IO;
 using DG.Tweening;
 using UnityEngine.UI;
 using System;
+using Project.Menus;
+
+public enum GameState { MainMenu, PauseMenu, Gameplay, Cutscene }
 
 [RequireComponent(typeof(SceneLoader))]
 public class GameManager : MonoBehaviour
@@ -11,6 +14,7 @@ public class GameManager : MonoBehaviour
     public SaveData currentSaveData;
     private int currentSaveSlot = -1;
     public SceneLoader sceneLoader { get; private set; }
+    public GameState state { get; private set; }
     [SerializeField] SceneGroup initialSceneGroup;
 
     void Awake()
@@ -28,6 +32,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (initialSceneGroup == SceneGroup.MainMenu)
+            SetGameState(GameState.MainMenu);
+        else if (initialSceneGroup == SceneGroup.Pause)
+            SetGameState(GameState.PauseMenu);
+        else
+            SetGameState(GameState.Gameplay);
+
         sceneLoader.FullLoadSceneGroup(initialSceneGroup);
     }
 
@@ -75,7 +86,9 @@ public class GameManager : MonoBehaviour
         SaveSystem.SetSaveFile(currentSaveSlot, currentSaveData);
     }
 
-    public void QuitGame()
+    // ------------ Transitions ------------
+
+    public void QuitToDesktop()
     {
         SaveGame();
 #if UNITY_EDITOR
@@ -83,6 +96,50 @@ public class GameManager : MonoBehaviour
 #else
             Application.Quit();
 #endif
+    }
+
+    public void QuitToMainMenu()
+    {
+        SaveGame();
+        MenuManager.Instance.ToMenu(null, false);
+        GameManager.Instance.sceneLoader.FullLoadSceneGroup(SceneGroup.MainMenu, () => SetGameState(GameState.MainMenu));
+    }
+
+    public void PauseGame()
+    {
+        sceneLoader.LoadScenesByGroup(SceneGroup.Pause, () => { SetGameState(GameState.PauseMenu); });
+    }
+
+    public void ResumeGame()
+    {
+        MenuManager.Instance.ToMenu(null, false);
+        sceneLoader.UnloadScenesByGroup(SceneGroup.Pause, () => { SetGameState(GameState.Gameplay); });
+    }
+
+    private void SetGameState(GameState gameState)
+    {
+        state = gameState;
+
+        switch (state)
+        {
+            case GameState.MainMenu:
+                // Time.timeScale = 0f;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                break;
+            case GameState.PauseMenu:
+                // Time.timeScale = 0f;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                break;
+            case GameState.Gameplay:
+                Time.timeScale = 1f;
+                // Cursor.lockState = CursorLockMode.Locked;
+                // Cursor.visible = false;
+                break;
+            case GameState.Cutscene:
+                break;
+        }
     }
 
     // ------------ Game Start ------------
@@ -147,6 +204,8 @@ public class GameManager : MonoBehaviour
         if (!(isIntroCutsceneDone && isIntroLoadingDone))
             return;
 
+        SetGameState(GameState.Gameplay);
+
         cutsceneSeq?.Kill();
         cutsceneSeq = DOTween.Sequence();
         cutsceneSeq.SetEase(Ease.InOutCubic);
@@ -154,3 +213,4 @@ public class GameManager : MonoBehaviour
         cutsceneSeq.Append(blackOverlay.DOFade(0, 1));
     }
 }
+

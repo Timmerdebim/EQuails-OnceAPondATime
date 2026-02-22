@@ -4,60 +4,63 @@ using System.Collections;
 using System.IO;
 using TMPro;
 
-public class SaveSlotUI : MonoBehaviour
+namespace Project.Menus.FileSelect
 {
-    [Header("UI References")]
-    [SerializeField] private Button slotButton;
-    [SerializeField] private TMP_Text slotText;
-    [SerializeField] private TMP_Text playtimeText;
-    [SerializeField] private Button deleteButton;
-
-    [Header("Settings")]
-    [SerializeField] private int slotIndex;
-
-
-    public void Refresh()
+    public class SaveSlotUI : MonoBehaviour
     {
-        if (SaveSystem.SaveFileExists(slotIndex))
+        [Header("UI References")]
+        [SerializeField] private Button slotButton;
+        [SerializeField] private TMP_Text slotText;
+        [SerializeField] private TMP_Text playtimeText;
+        [SerializeField] private Button deleteButton;
+
+        [Header("Settings")]
+        [SerializeField] private int slotIndex;
+
+
+        public void Refresh()
         {
-            SaveData data = SaveSystem.GetSaveFile(slotIndex);
-            slotText.text = "continue"; // TODO: add duck progress image?
-            playtimeText.text = FormatPlaytime(data.playtimeSeconds);
-            deleteButton.gameObject.SetActive(true);
+            if (SaveSystem.SaveFileExists(slotIndex))
+            {
+                SaveData data = SaveSystem.GetSaveFile(slotIndex);
+                slotText.text = "continue"; // TODO: add duck progress image?
+                playtimeText.text = FormatPlaytime(data.playtimeSeconds);
+                deleteButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                slotText.text = "New Game";
+                playtimeText.text = "";
+                deleteButton.gameObject.SetActive(false);
+            }
         }
-        else
+
+        // ------------ Buttons ------------
+
+        public void OnSlotSelected()
         {
-            slotText.text = "New Game";
-            playtimeText.text = "";
-            deleteButton.gameObject.SetActive(false);
+            if (SaveSystem.SaveFileExists(slotIndex))
+                GameManager.Instance.LoadGame(slotIndex);   // Load game with this save file
+            else
+                GameManager.Instance.NewGame(slotIndex);    // Create new game in this slot
         }
-    }
 
-    // ------------ Buttons ------------
-
-    public void OnSlotSelected()
-    {
-        if (SaveSystem.SaveFileExists(slotIndex))
-            GameManager.Instance.LoadGame(slotIndex);   // Load game with this save file
-        else
-            GameManager.Instance.NewGame(slotIndex);    // Create new game in this slot
-    }
-
-    public void OnDeleteSlot()
-    {
-        if (SaveSystem.SaveFileExists(slotIndex))
+        public void OnDeleteSlot()
         {
-            SaveSystem.DeleteSaveFile(slotIndex);
-            Refresh();
+            if (SaveSystem.SaveFileExists(slotIndex))
+            {
+                SaveSystem.DeleteSaveFile(slotIndex);
+                Refresh();
+            }
         }
-    }
 
-    // ------------ Functions ------------
+        // ------------ Functions ------------
 
-    private string FormatPlaytime(float seconds)
-    {
-        int hours = (int)(seconds / 3600);
-        int minutes = (int)((seconds % 3600) / 60);
-        return $"{hours}h {minutes}m";
+        private string FormatPlaytime(float seconds)
+        {
+            int hours = (int)(seconds / 3600);
+            int minutes = (int)((seconds % 3600) / 60);
+            return $"{hours}h {minutes}m";
+        }
     }
 }

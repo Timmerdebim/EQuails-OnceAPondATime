@@ -6,93 +6,96 @@ using TMPro;
 using Unity.Mathematics;
 using System;
 
-public class GraphicsSettingsMenu : Menu
+namespace Project.Menus.Graphics
 {
-    [Header("UI References")]
-    [SerializeField] private TMP_Dropdown resolutionDropdown;
-    [SerializeField] private TMP_Dropdown qualityDropdown;
-    [SerializeField] private Toggle vsyncToggle;
-    [SerializeField] private Slider framerateSlider;
-    [SerializeField] private TMP_Text framerateText;
-
-    void Start()
+    public class GraphicsSettingsMenu : Menu
     {
-        SetupResolutions();
-        SetupQualityLevels();
-    }
+        [Header("UI References")]
+        [SerializeField] private TMP_Dropdown resolutionDropdown;
+        [SerializeField] private TMP_Dropdown qualityDropdown;
+        [SerializeField] private Toggle vsyncToggle;
+        [SerializeField] private Slider framerateSlider;
+        [SerializeField] private TMP_Text framerateText;
 
-    public override void EnteringMenu()
-    {
-        base.EnteringMenu();
-        RefreshVisuals();
-    }
-
-    public override void ExitingMenu()
-    {
-        base.ExitingMenu();
-        GraphicsSettingsManager.Instance.SaveSettings();
-    }
-
-    // ------------ Buttons ------------
-
-    public void OnResolutionChanged()
-    {
-        int index = resolutionDropdown.value;
-        GraphicsSettingsManager.Instance.SetResolution(index);
-    }
-
-    public void OnQualityChanged()
-    {
-        int index = qualityDropdown.value;
-        GraphicsSettingsManager.Instance.SetQuality(index);
-    }
-
-    public void OnVsyncChanged()
-    {
-        bool isEnabled = vsyncToggle.isOn;
-        GraphicsSettingsManager.Instance.SetVsync(isEnabled);
-    }
-
-    public void OnFramerateChanged()
-    {
-        int value = Mathf.RoundToInt(framerateSlider.value);
-        framerateText.text = value.ToString();
-        GraphicsSettingsManager.Instance.SetFramerate(value);
-    }
-
-    // ------------ Functions ------------
-
-    private void SetupResolutions()
-    {
-        resolutionDropdown.ClearOptions();
-
-        List<string> resolutionOptions = new List<string>();
-
-        for (int i = 0; i < GraphicsSettingsManager.Instance._resolutions.Length; i++)
+        void Start()
         {
-            string resolutionOption = $"{GraphicsSettingsManager.Instance._resolutions[i].width} x {GraphicsSettingsManager.Instance._resolutions[i].height}";
-            resolutionOptions.Add(resolutionOption);
+            SetupResolutions();
+            SetupQualityLevels();
         }
-        resolutionDropdown.AddOptions(resolutionOptions);
-    }
 
-    private void SetupQualityLevels()
-    {
-        qualityDropdown.ClearOptions();
-        qualityDropdown.AddOptions(new List<string>(QualitySettings.names));
-    }
+        public override void EnteringMenu()
+        {
+            base.EnteringMenu();
+            RefreshVisuals();
+        }
 
-    private void RefreshVisuals()
-    {
-        GraphicsSettings settings = GraphicsSettingsManager.Instance._settings;
+        public override void ExitingMenu()
+        {
+            base.ExitingMenu();
+            GraphicsSettingsManager.Instance.SaveSettings();
+        }
 
-        resolutionDropdown.value = settings.resolutionIndex;
+        // ------------ Buttons ------------
 
-        qualityDropdown.value = settings.qualityLevel;
+        public void OnResolutionChanged()
+        {
+            int index = resolutionDropdown.value;
+            GraphicsSettingsManager.Instance.SetResolution(index);
+        }
 
-        vsyncToggle.isOn = settings.vsyncEnabled;
+        public void OnQualityChanged()
+        {
+            int index = qualityDropdown.value;
+            GraphicsSettingsManager.Instance.SetQuality(index);
+        }
 
-        framerateSlider.value = settings.targetFramerate;
-        framerateText.text = settings.targetFramerate.ToString();
+        public void OnVsyncChanged()
+        {
+            bool isEnabled = vsyncToggle.isOn;
+            GraphicsSettingsManager.Instance.SetVsync(isEnabled);
+        }
+
+        public void OnFramerateChanged()
+        {
+            int value = Mathf.RoundToInt(framerateSlider.value);
+            framerateText.text = value.ToString();
+            GraphicsSettingsManager.Instance.SetFramerate(value);
+        }
+
+        // ------------ Functions ------------
+
+        private void SetupResolutions()
+        {
+            resolutionDropdown.ClearOptions();
+
+            List<string> resolutionOptions = new List<string>();
+
+            for (int i = 0; i < GraphicsSettingsManager.Instance._resolutions.Length; i++)
+            {
+                string resolutionOption = $"{GraphicsSettingsManager.Instance._resolutions[i].width} x {GraphicsSettingsManager.Instance._resolutions[i].height}";
+                resolutionOptions.Add(resolutionOption);
+            }
+            resolutionDropdown.AddOptions(resolutionOptions);
+        }
+
+        private void SetupQualityLevels()
+        {
+            qualityDropdown.ClearOptions();
+            qualityDropdown.AddOptions(new List<string>(QualitySettings.names));
+        }
+
+        private void RefreshVisuals()
+        {
+            GraphicsSettings settings = GraphicsSettingsManager.Instance._settings;
+
+            resolutionDropdown.value = settings.resolutionIndex;
+
+            qualityDropdown.value = settings.qualityLevel;
+
+            vsyncToggle.isOn = settings.vsyncEnabled;
+
+            framerateSlider.value = settings.targetFramerate;
+            framerateText.text = settings.targetFramerate.ToString();
+        }
     }
 }

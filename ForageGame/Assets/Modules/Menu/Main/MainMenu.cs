@@ -2,77 +2,80 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MainMenu : Menu
+namespace Project.Menus
 {
-    [Header("UI References")]
-    [SerializeField] private TMP_Text continueText;
-
-    [Header("Connected Menus")]
-    [SerializeField] private Menu fileSelectMenu;
-    [SerializeField] private Menu settingsMenu;
-    [SerializeField] private Menu creditsMenu;
-    [SerializeField] private Menu achievementsMenu;
-
-    void Start()
+    public class MainMenu : Menu
     {
-        MenuManager.Instance.ToMenu(this, false);
-    }
+        [Header("UI References")]
+        [SerializeField] private TMP_Text continueText;
 
-    public override void EnteringMenu()
-    {
-        base.EnteringMenu();
-        RefreshVisuals();
-    }
+        [Header("Connected Menus")]
+        [SerializeField] private Menu fileSelectMenu;
+        [SerializeField] private Menu settingsMenu;
+        [SerializeField] private Menu creditsMenu;
+        [SerializeField] private Menu achievementsMenu;
 
-    public override void Escape()
-    {
-    }
+        void Start()
+        {
+            MenuManager.Instance.ToMenu(this, false);
+        }
 
-    // ------------ Buttons ------------
+        public override void EnteringMenu()
+        {
+            base.EnteringMenu();
+            RefreshVisuals();
+        }
 
-    public void OnContinueClicked()
-    {
-        GameManager.Instance.LoadGame();
-    }
+        public override void Escape()
+        {
+        }
 
-    public void OnFileSelectClicked()
-    {
-        MenuManager.Instance.ToMenu(fileSelectMenu, true);
-    }
+        // ------------ Buttons ------------
 
-    public void OnSettingsClicked()
-    {
-        MenuManager.Instance.ToMenu(settingsMenu, true);
-    }
+        public void OnContinueClicked()
+        {
+            GameManager.Instance.LoadGame();
+        }
 
-    public void OnCreditsClicked()
-    {
-        MenuManager.Instance.ToMenu(creditsMenu, true);
-    }
+        public void OnFileSelectClicked()
+        {
+            MenuManager.Instance.ToMenu(fileSelectMenu, true);
+        }
 
-    public void OnAchievementsClicked()
-    {
-        MenuManager.Instance.ToMenu(achievementsMenu, true);
-    }
+        public void OnSettingsClicked()
+        {
+            MenuManager.Instance.ToMenu(settingsMenu, true);
+        }
 
-    public void OnQuitClicked()
-    {
+        public void OnCreditsClicked()
+        {
+            MenuManager.Instance.ToMenu(creditsMenu, true);
+        }
+
+        public void OnAchievementsClicked()
+        {
+            MenuManager.Instance.ToMenu(achievementsMenu, true);
+        }
+
+        public void OnQuitClicked()
+        {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
             Application.Quit();
 #endif
-    }
+        }
 
-    // ------------ Functions ------------
+        // ------------ Functions ------------
 
-    private void RefreshVisuals()
-    {
-        int slotIndex = PlayerPrefs.GetInt("lastSlotIndexUsed", -1);
+        private void RefreshVisuals()
+        {
+            int slotIndex = PlayerPrefs.GetInt("lastSlotIndexUsed", -1);
 
-        if (slotIndex < 0 || !SaveSystem.SaveFileExists(slotIndex))
-            continueText.text = "New Game";
-        else
-            continueText.text = "Continue";
+            if (slotIndex < 0 || !SaveSystem.SaveFileExists(slotIndex))
+                continueText.text = "New Game";
+            else
+                continueText.text = "Continue";
+        }
     }
 }

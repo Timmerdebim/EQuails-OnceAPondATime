@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Project.Menus;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,7 @@ public class InputManager : MonoBehaviour
 {
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.mode != MenuMode.None)
+        if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         Vector2 moveInput = context.ReadValue<Vector2>();
@@ -36,7 +37,7 @@ public class InputManager : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.mode != MenuMode.None)
+        if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         if (context.action.WasPressedThisFrame())
@@ -47,7 +48,7 @@ public class InputManager : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.mode != MenuMode.None)
+        if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         if (context.action.WasPressedThisFrame() && Player.Instance.playerData.canAttack)
@@ -58,7 +59,7 @@ public class InputManager : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.mode != MenuMode.None)
+        if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         Player.Instance.interactInput = context.action.IsPressed();
@@ -66,7 +67,7 @@ public class InputManager : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.mode != MenuMode.None)
+        if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         if (context.action.WasPressedThisFrame())
@@ -87,10 +88,10 @@ public class InputManager : MonoBehaviour
     {
         if (context.action.WasPressedThisFrame())
         {
-            if (MenuManager.Instance.mode != MenuMode.None)
+            if (GameManager.Instance.state == GameState.Gameplay)
+                GameManager.Instance.PauseGame();
+            else if (GameManager.Instance.state == GameState.MainMenu || GameManager.Instance.state == GameState.PauseMenu)
                 MenuManager.Instance.Escape();
-            else
-                MenuManager.Instance.PauseGame();
         }
     }
 
@@ -98,7 +99,7 @@ public class InputManager : MonoBehaviour
 
     public void DropItem(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.mode != MenuMode.None)
+        if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         if (context.action.WasPressedThisFrame())
@@ -107,7 +108,7 @@ public class InputManager : MonoBehaviour
 
     public void ConsumeItem(InputAction.CallbackContext context)
     {
-        if (MenuManager.Instance.mode != MenuMode.None)
+        if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         if (context.action.WasPressedThisFrame())
@@ -116,7 +117,7 @@ public class InputManager : MonoBehaviour
 
     public void SelectSlot(int index)
     {
-        if (MenuManager.Instance.mode != MenuMode.None)
+        if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         Inventory.Instance?.SelectSlot(index);

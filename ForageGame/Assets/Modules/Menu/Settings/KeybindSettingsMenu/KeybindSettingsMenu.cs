@@ -4,38 +4,41 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-public class KeybindSettingsMenu : Menu
+namespace Project.Menus.Keybind
 {
-    [Header("UI References")]
-    [SerializeField] private Button resetButton;
-    [SerializeField] private KeybindElement[] keybindElements;
-
-    public override void EnteringMenu()
+    public class KeybindSettingsMenu : Menu
     {
-        base.EnteringMenu();
-        RefreshVisuals();
-    }
+        [Header("UI References")]
+        [SerializeField] private Button resetButton;
+        [SerializeField] private KeybindElement[] keybindElements;
 
-    public override void ExitingMenu()
-    {
-        base.ExitingMenu();
-        KeybindSettingsManager.Instance.SaveSettings();
-    }
+        public override void EnteringMenu()
+        {
+            base.EnteringMenu();
+            RefreshVisuals();
+        }
 
-    // ------------ Buttons ------------
+        public override void ExitingMenu()
+        {
+            base.ExitingMenu();
+            KeybindSettingsManager.Instance.SaveSettings();
+        }
 
-    public void OnResetButtonClicked()
-    {
-        foreach (KeybindElement keybindElement in keybindElements)
-            keybindElement.ResetToDefault();
-        RefreshVisuals();
-    }
+        // ------------ Buttons ------------
 
-    // ------------ Functions ------------
+        public void OnResetButtonClicked()
+        {
+            foreach (KeybindElement keybindElement in keybindElements)
+                keybindElement.ResetToDefault();
+            RefreshVisuals();
+        }
 
-    private void RefreshVisuals()
-    {
-        foreach (KeybindElement keybindElement in keybindElements)
-            keybindElement.UpdateBindingDisplay();
+        // ------------ Functions ------------
+
+        private void RefreshVisuals()
+        {
+            foreach (KeybindElement keybindElement in keybindElements)
+                keybindElement.UpdateBindingDisplay();
+        }
     }
 }

@@ -3,61 +3,64 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
-public class AudioSettingsMenu : Menu
+namespace Project.Menus.Audio
 {
-    [Header("UI References")]
-    [SerializeField] private Slider masterVolumeSlider;
-    [SerializeField] private TMP_Text masterVolumeText;
-    [SerializeField] private Slider musicVolumeSlider;
-    [SerializeField] private TMP_Text musicVolumeText;
-    [SerializeField] private Slider sfxVolumeSlider;
-    [SerializeField] private TMP_Text sfxVolumeText;
-
-    public override void EnteringMenu()
+    public class AudioSettingsMenu : Menu
     {
-        base.EnteringMenu();
-        RefreshVisuals();
-    }
+        [Header("UI References")]
+        [SerializeField] private Slider masterVolumeSlider;
+        [SerializeField] private TMP_Text masterVolumeText;
+        [SerializeField] private Slider musicVolumeSlider;
+        [SerializeField] private TMP_Text musicVolumeText;
+        [SerializeField] private Slider sfxVolumeSlider;
+        [SerializeField] private TMP_Text sfxVolumeText;
 
-    public override void ExitingMenu()
-    {
-        base.ExitingMenu();
-        AudioSettingsManager.Instance.SaveSettings();
-    }
+        public override void EnteringMenu()
+        {
+            base.EnteringMenu();
+            RefreshVisuals();
+        }
 
-    // ------------ Buttons ------------
+        public override void ExitingMenu()
+        {
+            base.ExitingMenu();
+            AudioSettingsManager.Instance.SaveSettings();
+        }
 
-    public void OnMasterVolumeChanged()
-    {
-        float value = masterVolumeSlider.value;
-        masterVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
-        AudioSettingsManager.Instance?.SetMasterVolume(value);
-    }
+        // ------------ Buttons ------------
 
-    public void OnMusicVolumeChanged()
-    {
-        float value = musicVolumeSlider.value;
-        musicVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
-        AudioSettingsManager.Instance?.SetMusicVolume(value);
-    }
+        public void OnMasterVolumeChanged()
+        {
+            float value = masterVolumeSlider.value;
+            masterVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
+            AudioSettingsManager.Instance?.SetMasterVolume(value);
+        }
 
-    public void OnSfxVolumeChanged()
-    {
-        float value = sfxVolumeSlider.value;
-        sfxVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
-        AudioSettingsManager.Instance?.SetSfxVolume(value);
-    }
+        public void OnMusicVolumeChanged()
+        {
+            float value = musicVolumeSlider.value;
+            musicVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
+            AudioSettingsManager.Instance?.SetMusicVolume(value);
+        }
 
-    // ------------ Functions ------------
+        public void OnSfxVolumeChanged()
+        {
+            float value = sfxVolumeSlider.value;
+            sfxVolumeText.text = Mathf.RoundToInt(value * 100) + "%";
+            AudioSettingsManager.Instance?.SetSfxVolume(value);
+        }
 
-    private void RefreshVisuals()
-    {
-        AudioSettings settings = AudioSettingsManager.Instance._settings;
-        masterVolumeSlider.value = settings.masterVolume;
-        masterVolumeText.text = Mathf.RoundToInt(settings.masterVolume * 100) + "%";
-        musicVolumeSlider.value = settings.musicVolume;
-        musicVolumeText.text = Mathf.RoundToInt(settings.musicVolume * 100) + "%";
-        sfxVolumeSlider.value = settings.sfxVolume;
-        sfxVolumeText.text = Mathf.RoundToInt(settings.sfxVolume * 100) + "%";
+        // ------------ Functions ------------
+
+        private void RefreshVisuals()
+        {
+            AudioSettings settings = AudioSettingsManager.Instance._settings;
+            masterVolumeSlider.value = settings.masterVolume;
+            masterVolumeText.text = Mathf.RoundToInt(settings.masterVolume * 100) + "%";
+            musicVolumeSlider.value = settings.musicVolume;
+            musicVolumeText.text = Mathf.RoundToInt(settings.musicVolume * 100) + "%";
+            sfxVolumeSlider.value = settings.sfxVolume;
+            sfxVolumeText.text = Mathf.RoundToInt(settings.sfxVolume * 100) + "%";
+        }
     }
 }
