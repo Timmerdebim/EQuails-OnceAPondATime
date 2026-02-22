@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class InventorySystem : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
     [Header("Hotbar Settings")]
     public int hotbarSize = 4;
@@ -16,15 +16,17 @@ public class InventorySystem : MonoBehaviour
     private InventorySlot[] hotbarSlots;
     private int selectedSlot = 0;
 
-    public static InventorySystem Instance { get; private set; }
+    public static Inventory Instance { get; private set; }
 
     void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
+            Destroy(gameObject);
+            return;
         }
-        else Destroy(gameObject);
+        Instance = this;
+
         InitializeHotbar();
     }
 
@@ -41,7 +43,7 @@ public class InventorySystem : MonoBehaviour
         {
             GameObject slotObject = Instantiate(slotPrefab, hotbarParent);
             InventorySlot slot = slotObject.GetComponent<InventorySlot>();
-            slot.Initialize(i, this);
+            slot.Initialize(i);
             hotbarSlots[i] = slot;
         }
 

@@ -10,7 +10,7 @@ public class WorldItem : MonoBehaviour, IInteractable
 
     virtual public void Interact(UnityAction StopInteractionCallback)
     {
-        bool wasPickedUp = InventorySystem.Instance.PickupItem(itemData);
+        bool wasPickedUp = Inventory.Instance.PickupItem(itemData);
 
         if (wasPickedUp)
         {

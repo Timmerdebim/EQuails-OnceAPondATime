@@ -16,16 +16,19 @@ public class SceneData
 
     public void Load()
     {
+        loadingDirection = true;
         operation = SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
     }
 
     public void Unload()
     {
+        loadingDirection = false;
         operation = SceneManager.UnloadSceneAsync(name);
     }
+
     public bool IsLoading()
     {
-        return (operation != null && loadingDirection);
+        return operation != null && loadingDirection;
     }
 
     public bool IsLoaded()
@@ -41,7 +44,7 @@ public class SceneData
 
     public bool IsUnloading()
     {
-        return (operation != null && !loadingDirection);
+        return operation != null && !loadingDirection;
     }
 
     public bool IsUnloaded()

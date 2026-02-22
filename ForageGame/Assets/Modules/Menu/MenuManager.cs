@@ -33,7 +33,7 @@ public class MenuManager : MonoBehaviour
         else DirectMenuTransition(currentMenu, toMenu);
     }
 
-    public void DirectMenuTransition(Menu fromMenu, Menu toMenu)
+    private void DirectMenuTransition(Menu fromMenu, Menu toMenu)
     {
         if (fromMenu != null)
         {
@@ -55,7 +55,7 @@ public class MenuManager : MonoBehaviour
             EnableMenuMode(false);
     }
 
-    public void MenuTransition(Menu fromMenu, Menu toMenu)
+    private void MenuTransition(Menu fromMenu, Menu toMenu)
     {
         seq?.Kill();
         seq = DOTween.Sequence();
@@ -90,8 +90,9 @@ public class MenuManager : MonoBehaviour
 
     public void PauseGame()
     {
-        GameManager.Instance.sceneLoader.LoadScenesByGroup(SceneGroup.Pause);
         isPaused = true;
+        GameManager.Instance.sceneLoader.LoadScenesByGroup(SceneGroup.Pause);
+        Debug.Log(isPaused);
     }
 
     public void ResumeGame()
@@ -100,13 +101,15 @@ public class MenuManager : MonoBehaviour
 
         GameManager.Instance.sceneLoader.UnloadScenesByGroup(SceneGroup.Pause);
         isPaused = false;
+        Debug.Log(isPaused);
     }
 
     public void Escape()
     {
         if (currentMenu == null && !isPaused) // TODO: add isGamePlaying from game manager? or a scene check?
             PauseGame();
-        currentMenu.Escape();
+        if (currentMenu != null) // should always be the case but oh well...
+            currentMenu.Escape();
     }
 
     public void ToMainMenu()
@@ -125,16 +128,12 @@ public class MenuManager : MonoBehaviour
         if (isEnabled)
         {
             // Time.timeScale = 0f;
-            playerInputActionMap.Disable();
-            uiInputActionMap.Enable();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         else
         {
             // Time.timeScale = 1f;
-            playerInputActionMap.Enable();
-            uiInputActionMap.Disable();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }

@@ -9,6 +9,9 @@ public class InputManager : MonoBehaviour
 {
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (MenuManager.Instance.isPaused)
+            return;
+
         Vector2 moveInput = context.ReadValue<Vector2>();
         moveInput = moveInput.normalized;
         Player.Instance.SetInputDirection(new Vector3(moveInput.x, 0f, moveInput.y));
@@ -33,6 +36,9 @@ public class InputManager : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if (MenuManager.Instance.isPaused)
+            return;
+
         if (context.action.WasPressedThisFrame())
             Player.Instance.animator.SetBool("dash", true);
         if (context.action.WasReleasedThisFrame())
@@ -41,6 +47,9 @@ public class InputManager : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (MenuManager.Instance.isPaused)
+            return;
+
         if (context.action.WasPressedThisFrame() && Player.Instance.canAttack)
             Player.Instance.animator.SetBool("attack", true);
         if (context.action.WasReleasedThisFrame())
@@ -49,11 +58,17 @@ public class InputManager : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        if (MenuManager.Instance.isPaused)
+            return;
+
         Player.Instance.interactInput = context.action.IsPressed();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (MenuManager.Instance.isPaused)
+            return;
+
         if (context.action.WasPressedThisFrame())
         {
             if (Player.Instance.canFlutter) Player.Instance.animator.SetBool("flutter", true);
@@ -66,12 +81,43 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void Pause(InputAction.CallbackContext context)
+    // ------------ Pausing ------------
+
+    public void Escape(InputAction.CallbackContext context)
     {
+        Debug.Log(0);
         if (context.action.WasPressedThisFrame())
         {
-            Debug.Log(context.action.actionMap);
-            MenuManager.Instance.PauseGame();
+            Debug.Log(1);
+            MenuManager.Instance.Escape();
         }
+    }
+
+    // ------------ Inventory ------------
+
+    public void DropItem(InputAction.CallbackContext context)
+    {
+        if (MenuManager.Instance.isPaused)
+            return;
+
+        if (context.action.WasPressedThisFrame())
+            Inventory.Instance?.DropItem();
+    }
+
+    public void ConsumeItem(InputAction.CallbackContext context)
+    {
+        if (MenuManager.Instance.isPaused)
+            return;
+
+        if (context.action.WasPressedThisFrame())
+            Inventory.Instance?.ConsumeItem();
+    }
+
+    public void SelectSlot(int index)
+    {
+        if (MenuManager.Instance.isPaused)
+            return;
+
+        Inventory.Instance?.SelectSlot(index);
     }
 }

@@ -11,13 +11,11 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private Color notSelectedColor;
 
     private int slotIndex;
-    private InventorySystem inventory;
     private Item currentItem;
 
-    public void Initialize(int index, InventorySystem invSystem)
+    public void Initialize(int index)
     {
         slotIndex = index;
-        inventory = invSystem;
 
         if (slotNumberText != null)
             slotNumberText.text = (index + 1).ToString();
