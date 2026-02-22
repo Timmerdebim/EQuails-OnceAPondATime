@@ -34,7 +34,7 @@ namespace Project.Menus
 
         public void OnContinueClicked()
         {
-            GameManager.Instance.LoadGame();
+            GameManager.Instance.PlayGame();
         }
 
         public void OnFileSelectClicked()

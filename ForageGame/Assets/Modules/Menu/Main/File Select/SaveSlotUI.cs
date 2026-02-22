@@ -40,9 +40,9 @@ namespace Project.Menus.FileSelect
         public void OnSlotSelected()
         {
             if (SaveSystem.SaveFileExists(slotIndex))
-                GameManager.Instance.LoadGame(slotIndex);   // Load game with this save file
+                GameManager.Instance.PlayGame(slotIndex);   // Load game with this save file
             else
-                GameManager.Instance.NewGame(slotIndex);    // Create new game in this slot
+                GameManager.Instance.PlayNewGame(slotIndex);    // Create new game in this slot
         }
 
         public void OnDeleteSlot()
