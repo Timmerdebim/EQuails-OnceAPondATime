@@ -20,7 +20,7 @@ namespace Project.Menus
 
         public virtual void EnteringMenu()
         {
-            Debug.Log("Entering menu " + this);
+            // Debug.Log("Entering menu " + this);
             gameObject.SetActive(true);
             canvasGroup.blocksRaycasts = false;
             canvasGroup.interactable = false;
@@ -33,12 +33,12 @@ namespace Project.Menus
             canvasGroup.interactable = true;
             canvasGroup.alpha = 1;
             EventSystem.current.SetSelectedGameObject(firstSelected);
-            Debug.Log("Entered menu " + this);
+            // Debug.Log("Entered menu " + this);
         }
 
         public virtual void ExitingMenu()
         {
-            Debug.Log("Exiting menu " + this);
+            // Debug.Log("Exiting menu " + this);
             canvasGroup.blocksRaycasts = false;
             canvasGroup.interactable = false;
             canvasGroup.alpha = 1;
@@ -48,7 +48,7 @@ namespace Project.Menus
         {
             canvasGroup.alpha = 0;
             gameObject.SetActive(false);
-            Debug.Log("Exited menu " + this);
+            // Debug.Log("Exited menu " + this);
         }
     }
 }

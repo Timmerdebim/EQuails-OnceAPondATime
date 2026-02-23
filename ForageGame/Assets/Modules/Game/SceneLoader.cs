@@ -27,7 +27,7 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator LoadScenesAsync(List<SceneData> scenes, Action callback = null)
     {
-        Debug.Log($"SCENE: Loading scenes.");
+        // Debug.Log($"SCENE: Loading scenes.");
 
         foreach (SceneData scene in scenes)
         {
@@ -47,7 +47,7 @@ public class SceneLoader : MonoBehaviour
         }
 
         isBusy = false;
-        Debug.Log($"SCENE: Scenes loaded.");
+        // Debug.Log($"SCENE: Scenes loaded.");
         callback?.Invoke();
     }
 
@@ -66,11 +66,10 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator UnloadScenesAsync(List<SceneData> scenes, Action callback = null)
     {
-        Debug.Log($"SCENE: Unloading scenes.");
+        // Debug.Log($"SCENE: Unloading scenes.");
 
         foreach (SceneData scene in scenes)
         {
-            Debug.Log(scene.name);
             while (scene.state == SceneState.Loading)
                 yield return null;
             if (scene.state == SceneState.Loaded)
@@ -84,7 +83,7 @@ public class SceneLoader : MonoBehaviour
             scene.ResetOperation();
 
         isBusy = false;
-        Debug.Log($"SCENE: Scenes unloaded.");
+        // Debug.Log($"SCENE: Scenes unloaded.");
         callback?.Invoke();
     }
 

@@ -39,24 +39,23 @@ namespace Project.Menus
         private void MenuTransition(Menu fromMenu, Menu toMenu)
         {
             seq?.Kill();
-            seq = DOTween.Sequence();
-            seq.SetEase(Ease.InOutCubic);
-            seq.SetUpdate(true);
+            seq = DOTween.Sequence()
+            .SetUpdate(true);
 
             if (fromMenu != null)
             {
-                seq.AppendCallback(() => { fromMenu.ExitingMenu(); });
-                seq.Append(fromMenu.canvasGroup.DOFade(0, fromMenu.fadeOutDuration));
-                seq.AppendCallback(() => { fromMenu.ExitedMenu(); });
+                seq.AppendCallback(() => { fromMenu.ExitingMenu(); })
+                .Append(fromMenu.canvasGroup.DOFade(0, fromMenu.fadeOutDuration).SetEase(Ease.InOutCubic))
+                .AppendCallback(() => { fromMenu.ExitedMenu(); });
             }
 
             seq.AppendCallback(() => { currentMenu = toMenu; });
 
             if (toMenu != null)
             {
-                seq.AppendCallback(() => { toMenu.EnteringMenu(); });
-                seq.Append(toMenu.canvasGroup.DOFade(1, toMenu.fadeInDuration));
-                seq.AppendCallback(() => { toMenu.EnteredMenu(); });
+                seq.AppendCallback(() => { toMenu.EnteringMenu(); })
+                .Append(toMenu.canvasGroup.DOFade(1, toMenu.fadeInDuration).SetEase(Ease.InOutCubic))
+                .AppendCallback(() => { toMenu.EnteredMenu(); });
             }
         }
 

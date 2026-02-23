@@ -28,7 +28,7 @@ public static class SaveSystem
         if (!SaveFileExists(slotIndex))
             CreateSaveFile(slotIndex);
 
-        string filePath = path + slotIndex + ".json";
+        string filePath = path + "/SaveSlot" + slotIndex + ".json";
         string json = File.ReadAllText(filePath);
         return JsonUtility.FromJson<SaveData>(json);
     }
@@ -38,7 +38,7 @@ public static class SaveSystem
         if (!SaveFileExists(slotIndex))
             CreateSaveFile(slotIndex);
 
-        string filePath = path + slotIndex + ".json";
+        string filePath = path + "/SaveSlot" + slotIndex + ".json";
         string json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(filePath, json);
         // TODO: STORY FLAGS
@@ -56,7 +56,7 @@ public static class SaveSystem
 
         SaveData saveData = new SaveData();
 
-        string filePath = path + slotIndex + ".json";
+        string filePath = path + "/SaveSlot" + slotIndex + ".json";
         string json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(filePath, json);
 
@@ -71,7 +71,7 @@ public static class SaveSystem
             return;
         }
 
-        string filePath = path + slotIndex + ".json";
+        string filePath = path + "/SaveSlot" + slotIndex + ".json";
         File.Delete(filePath);
 
         Debug.Log($"SAVE: Deleted save file {slotIndex}.");

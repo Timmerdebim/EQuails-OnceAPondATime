@@ -65,16 +65,14 @@ public class CutsceneManager : MonoBehaviour
 
         cutsceneSeq?.Kill();
         cutsceneSeq = DOTween.Sequence()
-        .SetEase(Ease.InOutCubic)
         .SetUpdate(true)
 
-        .Append(blackOverlay.DOFade(1, 1))
+        .Append(blackOverlay.DOFade(1, 1).SetEase(Ease.InOutCubic))
         .AppendCallback(() =>
         {
             GameManager.Instance.sceneLoader.FullLoadSceneGroup(sceneGroup, () =>
             {
                 isLoadingDone = true;
-                Debug.Log(0);
                 CompleteCutscene();
             });
         });
@@ -84,9 +82,9 @@ public class CutsceneManager : MonoBehaviour
             cutsceneSeq.AppendInterval(1);
             foreach (Image image in images)
             {
-                cutsceneSeq.Append(image.DOFade(1, 1f))
-                .AppendInterval(10)
-                .Append(image.DOFade(0, 1f));
+                cutsceneSeq.Append(image.DOFade(1, 1f).SetEase(Ease.InOutCubic))
+                .AppendInterval(3)
+                .Append(image.DOFade(0, 1f).SetEase(Ease.InOutCubic));
             }
         }
         cutsceneSeq.AppendInterval(0.5f)

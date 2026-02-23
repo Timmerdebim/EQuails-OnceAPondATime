@@ -54,7 +54,6 @@ public class Player : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         priorPosition = transform.position;
 
