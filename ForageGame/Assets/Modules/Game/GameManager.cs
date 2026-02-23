@@ -11,8 +11,6 @@ public enum GameState { MainMenu, PauseMenu, Gameplay, Cutscene, Transitioning }
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public SaveData currentSaveData { get; private set; }
-    private int currentSaveSlot = -1;
     public SceneLoader sceneLoader { get; private set; }
     public GameState state { get; private set; }
     [SerializeField] SceneGroup initialSceneGroup;
@@ -27,7 +25,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         sceneLoader = GetComponent<SceneLoader>();
-        currentSaveData = new SaveData();
     }
 
     void Start()
@@ -42,23 +39,12 @@ public class GameManager : MonoBehaviour
         sceneLoader.FullLoadSceneGroup(initialSceneGroup);
     }
 
-    public void SaveGame()
-    {
-        if (currentSaveData == null || currentSaveSlot < 0)
-            return;
-
-        currentSaveData.playerData = Player.Instance?.GetData();
-
-
-        SaveSystem.SetSaveFile(currentSaveSlot, currentSaveData);
-    }
-
     // ------------ Transitions ------------
 
     public void QuitToDesktop()
     {
         SetGameState(GameState.Transitioning);
-        SaveGame();
+        SaveManager.Instance.SaveGame();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -69,7 +55,7 @@ public class GameManager : MonoBehaviour
     public void QuitToMainMenu()
     {
         SetGameState(GameState.Transitioning);
-        SaveGame();
+        SaveManager.Instance.SaveGame();
         MenuManager.Instance.ToMenu(null, false);
         CutsceneManager.Instance.QuitToMainMenu(() => SetGameState(GameState.MainMenu));
     }
@@ -77,7 +63,7 @@ public class GameManager : MonoBehaviour
     public void FinishGame()
     {
         SetGameState(GameState.Transitioning);
-        SaveGame();
+        SaveManager.Instance.SaveGame();
         CutsceneManager.Instance.FinishGame(() =>
         {
             SetGameState(GameState.MainMenu);
@@ -106,11 +92,12 @@ public class GameManager : MonoBehaviour
             while (SaveSystem.SaveFileExists(slotIndex) == true)
                 slotIndex += 1; // Get the first free slot
         }
-        currentSaveSlot = slotIndex;
-        PlayerPrefs.SetInt("lastSlotIndexUsed", currentSaveSlot);
-        PlayerPrefs.Save();
-        currentSaveData = SaveSystem.GetSaveFile(currentSaveSlot);
-        CutsceneManager.Instance.PlayNewGame(() => SetGameState(GameState.Gameplay));
+        SaveManager.Instance.CurrentSaveSlot = slotIndex;
+        CutsceneManager.Instance.PlayNewGame(() =>
+        {
+            SaveManager.Instance.LoadGame();
+            SetGameState(GameState.Gameplay);
+        });
     }
 
     public void PlayGame(int slotIndex = -1)
@@ -119,16 +106,16 @@ public class GameManager : MonoBehaviour
             slotIndex = PlayerPrefs.GetInt("lastSlotIndexUsed", -1);
 
         if (slotIndex < 0 || !SaveSystem.SaveFileExists(slotIndex))
-        {
-            // We instead start a new game if unable to load an old game
+        {   // We instead start a new game if unable to load an old game
             PlayNewGame();
             return;
         }
-        currentSaveSlot = slotIndex;
-        PlayerPrefs.SetInt("lastSlotIndexUsed", currentSaveSlot);
-        PlayerPrefs.Save();
-        currentSaveData = SaveSystem.GetSaveFile(currentSaveSlot);
-        CutsceneManager.Instance.PlayGame(() => SetGameState(GameState.Gameplay));
+        SaveManager.Instance.CurrentSaveSlot = slotIndex;
+        CutsceneManager.Instance.PlayGame(() =>
+        {
+            SaveManager.Instance.LoadGame();
+            SetGameState(GameState.Gameplay);
+        });
     }
 
 

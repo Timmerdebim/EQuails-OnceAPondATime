@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 [System.Serializable]
 public class PlayerData
 {
-    public Vector3 spawnPosition = new Vector3(0, 10, 0);
+    public Vector3 spawnPosition = new Vector3(0, 100, 0);
     public bool canHop = false; // replace with story flags?
     public bool canFlutter = false; // replace with story flags?
     public bool canAttack = false; // replace with story flags?
@@ -66,15 +66,24 @@ public class Player : MonoBehaviour
         ExitStateReset();
     }
 
-    public void SetData(PlayerData data)
-    {
-        playerData = data;
-    }
+    // ------------ Save & Load ------------
 
-    public PlayerData GetData()
+    public void SaveData(ref PlayerData data)
     {
         playerData.spawnPosition = transform.position;
-        return playerData;
+        data = playerData;
+    }
+
+    public void LoadData(PlayerData data)
+    {
+        playerData = data;
+
+        transform.position = playerData.spawnPosition;
+        priorPosition = transform.position;
+
+        ExitStateReset();
+
+        Debug.Log(transform.position);
     }
 
     // ------------ Setting Functions ------------
@@ -109,13 +118,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        a = V_acceleration;
-        if (useGravity) a += gravity;
-        dv = a * Time.deltaTime + V_impulse;
-        if (useVericalMomentum) dv += v.y;
-        v = velocity + Vector3.up * dv;
-        dx = v * Time.deltaTime;
-        characterController.Move(dx);
+        a = V_acceleration;                 // 0
+        if (useGravity) a += gravity;       // 1        
+        dv = a * Time.deltaTime + V_impulse; // 0 + 0   
+        if (useVericalMomentum) dv += v.y;  //          
+        v = velocity + Vector3.up * dv;     //          
+        dx = v * Time.deltaTime;            //          
+        characterController.Move(dx);       //          
 
         // Calculate actual dx and v
         dx = transform.position - priorPosition;
