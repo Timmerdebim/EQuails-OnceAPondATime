@@ -16,7 +16,7 @@ public class Move : StateMachineBehaviour
         else
             Player.Instance.playerInteract?.StopInteract();
 
-        Player.Instance.velocity = Player.Instance._inputDirection * moveSpeed;
+        Player.Instance.playerController.velocity = Player.Instance.playerController.InputVector * moveSpeed;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -5322,6 +5322,7 @@ GameObject:
   - component: {fileID: 7479819836795385893}
   - component: {fileID: 4417091150437738957}
   - component: {fileID: 2945288964935703387}
+  - component: {fileID: 5878197811852665640}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -5361,30 +5362,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b03cc9f321e29d64d83038e9e23302f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 5192637091550732600}
   hitbox: {fileID: 3523305361774994790}
   trailRenderer: {fileID: 229097043921619139}
   hitParticleRenderer: {fileID: 7733002807732490052}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 512
   interactionLayer:
     serializedVersion: 2
     m_Bits: 4352
-  canHop: 1
-  canFlutter: 0
-  canAttack: 1
+  sprite: {fileID: 5192637091550732600}
+  playerData:
+    spawnPosition: {x: 0, y: 100, z: 0}
+    canHop: 0
+    canFlutter: 0
+    canAttack: 0
   dashEnergy: 10
   hopEnergy: 10
   flutterEnergy: 10
   attackEnergy: 10
   interactInput: 0
-  velocity: {x: 0, y: 0, z: 0}
-  V_impulse: 0
-  V_acceleration: 0
-  useGravity: 0
-  useVericalMomentum: 0
-  gravity: -9.81
 --- !u!114 &1595567495064576390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5602,6 +5596,28 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.00001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5878197811852665640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760942821233357872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad05c3a852cfa41a019408965553f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  sprite: {fileID: 5192637091550732600}
+  velocity: {x: 0, y: 0, z: 0}
+  V_impulse: 0
+  V_acceleration: 0
+  useGravity: 0
+  useVericalMomentum: 0
+  gravity: -9.81
 --- !u!1 &7692670296871027870
 GameObject:
   m_ObjectHideFlags: 0

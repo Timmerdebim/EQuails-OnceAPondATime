@@ -17,8 +17,8 @@ public class Dash : StateMachineBehaviour
         Player.Instance.trailRenderer.startColor = Color.black;
         Player.Instance.trailRenderer.endColor = Color.black;
 
-        Player.Instance.useGravity = false;
-        Player.Instance.velocity = Player.Instance._viewDirection * moveSpeed;
+        Player.Instance.playerController.useGravity = false;
+        Player.Instance.playerController.velocity = Player.Instance.playerController.ViewDirection * moveSpeed;
 
         Player.Instance.energy.UseEnergy(Player.Instance.dashEnergy);
     }

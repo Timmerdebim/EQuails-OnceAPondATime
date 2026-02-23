@@ -10,10 +10,10 @@ public class Attack : StateMachineBehaviour
         GameObject obj = animator.gameObject;
 
         Player.Instance.hitbox.Reset();
-        Player.Instance.hitbox.PivotTarget(Player.Instance._viewDirection);
+        Player.Instance.hitbox.PivotTarget(Player.Instance.playerController.ViewDirection);
         Player.Instance.hitbox.gameObject.SetActive(true);
-        Player.Instance.velocity = Player.Instance._viewDirection * moveSpeed;
-        Player.Instance.useGravity = false;
+        Player.Instance.playerController.velocity = Player.Instance.playerController.ViewDirection * moveSpeed;
+        Player.Instance.playerController.useGravity = false;
 
         Player.Instance.energy.UseEnergy(Player.Instance.attackEnergy);
     }

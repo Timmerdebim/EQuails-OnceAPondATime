@@ -16,8 +16,8 @@ public class PlayerData
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Energy))]
-[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInteract))]
+[RequireComponent(typeof(PlayerController))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
@@ -25,15 +25,14 @@ public class Player : MonoBehaviour
     [Header("Components")]
     public Animator animator { get; private set; }
     public Energy energy { get; private set; }
-    public CharacterController characterController { get; private set; }
     public PlayerInteract playerInteract { get; private set; }
+    public PlayerController playerController { get; private set; }
 
-    [SerializeField] public SpriteRenderer sprite;
     [SerializeField] public Hitbox hitbox;
     [SerializeField] public TrailRenderer trailRenderer;
     [SerializeField] private ParticleSystem hitParticleRenderer;
-    [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask interactionLayer;
+    [SerializeField] public SpriteRenderer sprite;
 
     [Header("Abilities")]
     [SerializeField] public PlayerData playerData;
@@ -55,13 +54,11 @@ public class Player : MonoBehaviour
         }
         Instance = this;
 
-        priorPosition = transform.position;
-
         // Get components on this GameObject
         animator = GetComponent<Animator>();
         energy = GetComponent<Energy>();
-        characterController = GetComponent<CharacterController>();
         playerInteract = GetComponent<PlayerInteract>();
+        playerController = GetComponent<PlayerController>();
 
         ExitStateReset();
     }
@@ -79,70 +76,14 @@ public class Player : MonoBehaviour
         playerData = data;
 
         transform.position = playerData.spawnPosition;
-        priorPosition = transform.position;
 
         ExitStateReset();
 
         Debug.Log(transform.position);
     }
 
-    // ------------ Setting Functions ------------
-
-    public void SetInputDirection(Vector3 inputDirection)
-    {
-        _inputDirection = inputDirection;
-    }
-
-    public void SetViewDirection(Vector3 viewDirection)
-    {
-        _viewDirection = viewDirection;
-    }
-
-    // ------------ PHYSICS ------------
-
-    [HideInInspector] public Vector3 _inputDirection { get; private set; }
-    [HideInInspector] public Vector3 _viewDirection { get; private set; }
-    [HideInInspector] public float lastGroundHeight { get; private set; } = 0;
-    [HideInInspector] public Vector3 velocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update
-    [HideInInspector] public float V_impulse;
-    [HideInInspector] public float V_acceleration;
-    [HideInInspector] public bool useGravity;
-    [HideInInspector] public bool useVericalMomentum;
-    public float gravity;
-
-    private float a = 0;
-    private float dv = 0;
-    private Vector3 v = Vector3.zero;
-    private Vector3 dx = Vector3.zero;
-    private Vector3 priorPosition;
-
     void Update()
     {
-        a = V_acceleration;                 // 0
-        if (useGravity) a += gravity;       // 1        
-        dv = a * Time.deltaTime + V_impulse; // 0 + 0   
-        if (useVericalMomentum) dv += v.y;  //          
-        v = velocity + Vector3.up * dv;     //          
-        dx = v * Time.deltaTime;            //          
-        characterController.Move(dx);       //          
-
-        // Calculate actual dx and v
-        dx = transform.position - priorPosition;
-        v = dx / Time.deltaTime;
-        priorPosition = transform.position;
-
-        V_impulse = 0;
-        if (Physics.SphereCast(transform.position, 0.5f, -transform.up, out RaycastHit hit, 0.6f)
-            && hit.collider.gameObject.layer != playerLayer)
-        {
-            animator.SetBool("isGrounded", true);
-            animator.SetBool("airDashed", false);
-            lastGroundHeight = transform.position.y;
-        }
-        else
-        {
-            animator.SetBool("isGrounded", false);
-        }
         CheckEnergy(); // For knowing if we have sufficient energy
     }
     private void CheckEnergy()
@@ -153,12 +94,6 @@ public class Player : MonoBehaviour
         animator.SetBool("attackEnergy", (attackEnergy < energy.energy));
     }
 
-    public void SetAbility(string ability, bool canAbility)
-    {
-        // Abilities: "Hop" "Flutter"
-        animator.SetBool("can" + ability, canAbility);
-    }
-
     // ------------ ANIMATOR CLUNK ------------
 
     public void ExitStateReset()
@@ -166,22 +101,19 @@ public class Player : MonoBehaviour
         if (hitParticleRenderer != null)
         {
             hitParticleRenderer.Stop();
-            hitParticleRenderer.Clear(); // Use Clear() instead of setting time to 0
+            hitParticleRenderer.Clear();
         }
 
-        if (interactInput) playerInteract?.StopInteract();
-        velocity = Vector3.zero;
-        V_acceleration = 0;
-        V_impulse = 0;
-        useGravity = true;
         hitbox.gameObject.SetActive(false);
         trailRenderer.emitting = false;
-        useVericalMomentum = false;
 
         animator.SetBool("dash", false);
         animator.SetBool("attack", false);
         animator.SetBool("hop", false);
-        // animator.SetBool("flutter", false);
+
+        if (interactInput) playerInteract?.StopInteract();
+
+        playerController.ResetSettings();
     }
 
     //Helper function, can also be used for cutscenes or something

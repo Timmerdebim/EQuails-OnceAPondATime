@@ -8,12 +8,12 @@ public class Fall : StateMachineBehaviour
     {
         GameObject obj = animator.gameObject;
 
-        Player.Instance.useVericalMomentum = true;
+        Player.Instance.playerController.useVericalMomentum = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.Instance.velocity = Player.Instance._inputDirection * moveSpeed;
+        Player.Instance.playerController.velocity = Player.Instance.playerController.InputVector * moveSpeed;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

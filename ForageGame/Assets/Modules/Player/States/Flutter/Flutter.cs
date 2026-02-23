@@ -11,16 +11,16 @@ public class Flutter : StateMachineBehaviour
     {
         GameObject obj = animator.gameObject;
 
-        targetHight = flutterHeight + Player.Instance.lastGroundHeight;
-        Player.Instance.useGravity = false;
-        Player.Instance.useVericalMomentum = true;
+        targetHight = flutterHeight + Player.Instance.playerController.lastGroundHeight;
+        Player.Instance.playerController.useGravity = false;
+        Player.Instance.playerController.useVericalMomentum = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Player.Instance.energy.UseEnergy(Player.Instance.flutterEnergy * Time.deltaTime);
-        Player.Instance.velocity = Player.Instance._inputDirection * moveSpeed;
-        Player.Instance.V_acceleration = (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - Player.Instance.transform.position.y) - 2 * flutterNaturalFrequency * Player.Instance.characterController.velocity.y);
+        Player.Instance.playerController.velocity = Player.Instance.playerController.InputVector * moveSpeed;
+        Player.Instance.playerController.V_acceleration = (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - Player.Instance.transform.position.y) - 2 * flutterNaturalFrequency * Player.Instance.playerController.velocity.y);
 
         // Check if still can fly
         if (Player.Instance.energy.energy < 0.001f)
