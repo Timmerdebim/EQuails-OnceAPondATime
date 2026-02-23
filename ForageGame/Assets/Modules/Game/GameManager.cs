@@ -88,14 +88,14 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         SetGameState(GameState.Transitioning);
-        sceneLoader.LoadScenesByGroup(SceneGroup.Pause, () => { SetGameState(GameState.PauseMenu); });
+        sceneLoader.LoadScenesByGroup(SceneGroup.Pause, () => SetGameState(GameState.PauseMenu));
     }
 
     public void ResumeGame()
     {
         SetGameState(GameState.Transitioning);
         MenuManager.Instance.ToMenu(null, false);
-        sceneLoader.UnloadScenesByGroup(SceneGroup.Pause, () => { SetGameState(GameState.Gameplay); });
+        sceneLoader.UnloadScenesByGroup(SceneGroup.Pause, () => SetGameState(GameState.Gameplay));
     }
 
     public void PlayNewGame(int slotIndex = -1)
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("lastSlotIndexUsed", currentSaveSlot);
         PlayerPrefs.Save();
         currentSaveData = SaveSystem.GetSaveFile(currentSaveSlot);
-        CutsceneManager.Instance.PlayNewGame();
+        CutsceneManager.Instance.PlayNewGame(() => SetGameState(GameState.Gameplay));
     }
 
     public void PlayGame(int slotIndex = -1)
@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("lastSlotIndexUsed", currentSaveSlot);
         PlayerPrefs.Save();
         currentSaveData = SaveSystem.GetSaveFile(currentSaveSlot);
-        CutsceneManager.Instance.PlayGame();
+        CutsceneManager.Instance.PlayGame(() => SetGameState(GameState.Gameplay));
     }
 
 
@@ -156,8 +156,10 @@ public class GameManager : MonoBehaviour
                 // Cursor.visible = false;
                 break;
             case GameState.Cutscene:
+                Time.timeScale = 0f;
                 break;
             case GameState.Transitioning:
+                Time.timeScale = 0f;
                 break;
         }
     }

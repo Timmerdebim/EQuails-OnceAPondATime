@@ -90,7 +90,6 @@ public class CutsceneManager : MonoBehaviour
         cutsceneSeq.AppendInterval(0.5f)
         .AppendCallback(() =>
         {
-            Debug.Log(1);
             isCutsceneDone = true;
             CompleteCutscene();
         });

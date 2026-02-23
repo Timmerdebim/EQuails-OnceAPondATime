@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
         if (!Player.Instance) return;
 
         Vector3 targetPos = Player.Instance.transform.position;
+
         targetPos.y += followYDistance;
         targetPos.z -= followZDistance;
         targetPos += Player.Instance.characterController.velocity * velocityWeight;
