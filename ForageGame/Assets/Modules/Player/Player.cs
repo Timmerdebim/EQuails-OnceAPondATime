@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     {
         playerData = data;
 
-        transform.position = playerData.spawnPosition;
+        playerController.TeleportTo(playerData.spawnPosition, true);
 
         ExitStateReset();
 

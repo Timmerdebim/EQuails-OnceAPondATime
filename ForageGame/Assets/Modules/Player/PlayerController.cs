@@ -14,9 +14,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public float groundFriction = 5;
 
-
-
-
     void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
@@ -57,6 +54,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Triggers
+
+    public void TeleportTo(Vector3 position, bool maintainMomentum)
+    {
+        Vector3 v = Rigidbody.linearVelocity;
+        Rigidbody.isKinematic = true;
+        Rigidbody.position = position;
+        Rigidbody.isKinematic = false;
+        Rigidbody.linearVelocity = v;
+    }
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -118,14 +124,12 @@ public class PlayerController : MonoBehaviour
     public Vector3 locomotionTargetVelocity = Vector3.zero;
     public float locomotionAcceleration = 0;
 
-
-
     public float LastGroundedHeight { get; private set; } = 0;
 
     void FixedUpdate()
     {
-        Rigidbody.AddForce(externalAcceleration, ForceMode.Acceleration);                              // Apply external forces
-        Rigidbody.useGravity = useGravity;                                                             // Apply gravity
+        Rigidbody.AddForce(externalAcceleration, ForceMode.Acceleration);
+        Rigidbody.useGravity = useGravity;
         ApplyFriction();
         ApplyLocomotion();
 
@@ -141,14 +145,14 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyLocomotion()
     {
-        Rigidbody.AddForce(Vector3.MoveTowards(
-            Vector3.zero, GetLockedVector(
-                useLocomotion,
-                locomotionTargetVelocity - Rigidbody.linearVelocity
-                ),
-            Time.fixedDeltaTime * locomotionAcceleration
-        ),
-        ForceMode.VelocityChange);
+        Rigidbody.AddForce(
+            Vector3.MoveTowards(
+                Vector3.zero,
+                GetLockedVector(
+                    useLocomotion,
+                    locomotionTargetVelocity - Rigidbody.linearVelocity),
+                Time.fixedDeltaTime * locomotionAcceleration),
+            ForceMode.VelocityChange);
     }
 
     private Vector3 GetLockedVector(bool3 useVector, Vector3 vector)
