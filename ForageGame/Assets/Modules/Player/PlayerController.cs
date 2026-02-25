@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,17 +12,19 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private Animator animator;
 
+    [SerializeField] public float groundFriction = 5;
+    [SerializeField] public float airFriction = 5;
+
+
+
 
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-
-        priorPosition = transform.position;
-
     }
 
-    // ------------ Move & View ------------
+    #region Move & View
 
     private Vector3 _inputVector = Vector3.zero;
     public Vector3 InputVector
@@ -52,8 +55,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #endregion
 
-    // ------------ Triggers ------------
+    #region Triggers
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -103,54 +107,147 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ------------ Physics ------------
-    [HideInInspector] public float lastGroundHeight { get; private set; } = 0;
-    [HideInInspector] public Vector3 velocity; // We set the velocity and force like this so that we can apply it correctly once per fixed update
-    [HideInInspector] public float V_impulse;
-    [HideInInspector] public float V_acceleration;
-    [HideInInspector] public bool useGravity;
-    [HideInInspector] public bool useVericalMomentum;
-    public float gravity;
+    #endregion
 
-    private float a = 0;
-    private float dv = 0;
-    private Vector3 v = Vector3.zero;
-    private Vector3 dx = Vector3.zero;
-    private Vector3 priorPosition;
+    #region  Physics 
+
+
+    public bool3 useAcceleration = new(true, true, true);
+    public bool3 useVelocity = new(true, true, true);
+    public Vector3 externalAcceleration = Vector3.zero;
+    public Vector3 externalImpulse = Vector3.zero;
+    public bool useGravity = true;
+    public bool3 useMomentum = new(true, true, true);
+
+    public bool3 useLocomotion = new(false, false, false);
+    public Vector3 locomotionTargetVelocity = Vector3.zero;
+    public float locomotionAcceleration = 0;
+
+    public bool3 useFriction = new(true, false, true);
+    public float friction = 0;
+
+    public float LastGroundedHeight { get; private set; } = 0;
+    public Vector3 Velocity { get; private set; } = Vector3.zero;
+
+    public readonly Vector3 gravity = -9.81f * Vector3.up;
 
     void Update()
     {
-        a = V_acceleration;
-        if (useGravity) a += gravity;
-        dv = a * Time.deltaTime + V_impulse;
-        if (useVericalMomentum) dv += v.y;
-        v = velocity + Vector3.up * dv;
-        dx = v * Time.deltaTime;
-        characterController.Move(dx);
+        UpdatePhysics();
+    }
 
-        // Calculate actual dx and v
-        dx = transform.position - priorPosition;
-        v = dx / Time.deltaTime;
-        priorPosition = transform.position;
+    private void UpdatePhysics()
+    {
+        Vector3 a = Vector3.zero;
+        a += externalAcceleration;                                              // Apply external forces
+        a += useGravity ? gravity : Vector3.zero;                               // Apply gravity
+        a += friction * GetLockedVector(useFriction, -Velocity.normalized);     // Apply friction
+        a = GetLockedVector(useAcceleration, a);
 
-        V_impulse = 0;
+        Vector3 v = Vector3.zero;
+        v += GetLockedVector(useMomentum, Velocity);                            // Apply momentum
+        v += a * Time.deltaTime;                                                // Apply acceleration
+        v += GetLocomotionChangeInVelocity();                                   // Apply locomotion
+        v += externalImpulse;                                                   // Apply external impulse
+        externalImpulse = Vector3.zero;                                         // Reset external impulse
+        v = GetLockedVector(useVelocity, v);
+
+        Vector3 priorPos = transform.position;
+        characterController.Move(v * Time.deltaTime);
+        Velocity = (transform.position - priorPos) / Time.deltaTime;
+
+        UpdateGrounded();
+    }
+
+    private Vector3 GetLocomotionChangeInVelocity()
+    {
+        Vector3 LTargetVelocity = GetLockedVector(useLocomotion, locomotionTargetVelocity);
+        Vector3 LVelocity = GetLockedVector(useLocomotion, Velocity);
+        Vector3 LLocomotionResultVelocity = Vector3.MoveTowards(LVelocity, LTargetVelocity, Time.deltaTime * locomotionAcceleration);
+        return LLocomotionResultVelocity - Velocity;
+    }
+
+    private Vector3 GetLockedVector(bool3 useVector, Vector3 vector)
+    {
+        Vector3 result = Vector3.zero;
+        result.x = useVector.x ? vector.x : 0;
+        result.y = useVector.y ? vector.y : 0;
+        result.z = useVector.z ? vector.z : 0;
+        return result;
+    }
+
+    private void UpdateGrounded()
+    {
         if (Physics.SphereCast(transform.position, 0.5f, -transform.up, out RaycastHit hit, 0.6f)
-            && hit.collider.gameObject.layer != playerLayer)
+    && hit.collider.gameObject.layer != playerLayer)
         {
             animator.SetBool("isGrounded", true);
             animator.SetBool("airDashed", false);
-            lastGroundHeight = transform.position.y;
+            LastGroundedHeight = transform.position.y;
         }
         else
             animator.SetBool("isGrounded", false);
     }
 
-    public void ResetSettings()
+    #endregion
+
+    #region Settings Helper Functions
+
+    public void ApplyDefaultSettings()
     {
-        velocity = Vector3.zero;
-        V_acceleration = 0;
-        V_impulse = 0;
+        // Reset to idle state settings
+        useAcceleration = new(true, true, true);
+        useVelocity = new(true, false, true);
+        externalAcceleration = Vector3.zero;
+        externalImpulse = Vector3.zero;
         useGravity = true;
-        useVericalMomentum = false;
+        useMomentum = new(true, true, true);
+        useLocomotion = new(false, false, false);
+        locomotionTargetVelocity = Vector3.zero;
+        locomotionAcceleration = 0;
+        useFriction = new(true, false, true);
+        friction = 1;
     }
+
+    public void ApplyMoveSettings(bool isGrounded, float a, float f)
+    {
+        useAcceleration = new(true, true, true);
+        externalAcceleration = Vector3.zero;
+        externalImpulse = Vector3.zero;
+        useGravity = true;
+        useLocomotion = new(true, false, true);
+        locomotionTargetVelocity = Vector3.zero;
+        locomotionAcceleration = a;
+        useFriction = new(true, false, true);
+        friction = f;
+
+        if (isGrounded)
+        {
+            useVelocity = new(true, false, true);
+            useMomentum = new(true, false, true);
+        }
+        else // TODO: add swimming (currently only for the air)
+        {
+            useVelocity = new(true, true, true);
+            useMomentum = new(true, true, true);
+        }
+    }
+
+    public void ApplyDashSettings()
+    {
+        // Dash settings (ie. Dash, Attack)
+        useAcceleration = new(true, true, true);
+        useVelocity = new(true, false, true);
+        externalAcceleration = Vector3.zero;
+        externalImpulse = Vector3.zero;
+        useGravity = false;
+        useMomentum = new(true, false, true);
+        useLocomotion = new(false, false, false);
+        locomotionTargetVelocity = Vector3.zero;
+        locomotionAcceleration = 0;
+        useFriction = new(true, false, true);
+        friction = 1;
+    }
+
+    #endregion
 }

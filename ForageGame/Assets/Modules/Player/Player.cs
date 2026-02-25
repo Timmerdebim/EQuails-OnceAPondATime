@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
 
         if (interactInput) playerInteract?.StopInteract();
 
-        playerController.ResetSettings();
+        playerController.ApplyDefaultSettings();
     }
 
     //Helper function, can also be used for cutscenes or something
