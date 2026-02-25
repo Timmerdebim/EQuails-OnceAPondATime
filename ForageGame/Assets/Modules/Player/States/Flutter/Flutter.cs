@@ -14,14 +14,15 @@ public class Flutter : StateMachineBehaviour
 
         targetHight = flutterHeight + Player.Instance.playerController.LastGroundedHeight;
 
-        Player.Instance.playerController.ApplyMoveSettings(false, moveAcceleration, Player.Instance.playerController.airFriction);
+        Player.Instance.playerController.ApplyMoveSettings(moveAcceleration);
+        Player.Instance.playerController.useGravity = false;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.Instance.energy.UseEnergy(Player.Instance.flutterEnergy * Time.deltaTime);
+        Player.Instance.energy.UseEnergy(Player.Instance.flutterEnergy * Time.deltaTime); // TODO: fix this?
         Player.Instance.playerController.locomotionTargetVelocity = moveSpeed * Player.Instance.playerController.InputVector;
-        Player.Instance.playerController.externalAcceleration = Vector3.up * (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - Player.Instance.transform.position.y) - 2 * flutterNaturalFrequency * Player.Instance.playerController.Velocity.y);
+        Player.Instance.playerController.externalAcceleration = Vector3.up * (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - Player.Instance.transform.position.y) - 2 * flutterNaturalFrequency * Player.Instance.playerController.Rigidbody.linearVelocity.y);
 
         // Check if still can fly
         if (Player.Instance.energy.energy < 0.001f)

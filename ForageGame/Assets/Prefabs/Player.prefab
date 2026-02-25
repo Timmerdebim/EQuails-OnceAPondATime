@@ -5321,8 +5321,9 @@ GameObject:
   - component: {fileID: 8491966899435948482}
   - component: {fileID: 7479819836795385893}
   - component: {fileID: 4417091150437738957}
-  - component: {fileID: 2945288964935703387}
   - component: {fileID: 5878197811852665640}
+  - component: {fileID: 7154177637054964034}
+  - component: {fileID: 7759300380127690268}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -5571,31 +5572,6 @@ MonoBehaviour:
       Data3: -1780569161
       Data4: 1373550982
     Path: event:/Sfx/Player/Water/Swim
---- !u!143 &2945288964935703387
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6760942821233357872}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1.5
-  m_Radius: 0.5
-  m_SlopeLimit: 0.1
-  m_StepOffset: 1
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.00001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5878197811852665640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5612,12 +5588,72 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   sprite: {fileID: 5192637091550732600}
-  velocity: {x: 0, y: 0, z: 0}
-  V_impulse: 0
-  V_acceleration: 0
+  groundFriction: 5
+  airFriction: 5
+  externalAcceleration: {x: 0, y: 0, z: 0}
+  externalImpulse: {x: 0, y: 0, z: 0}
   useGravity: 0
-  useVericalMomentum: 0
-  gravity: -9.81
+  useLocomotion:
+    x: 0
+    y: 0
+    z: 0
+  locomotionTargetVelocity: {x: 0, y: 0, z: 0}
+  locomotionAcceleration: 0
+  useFriction:
+    x: 1
+    y: 0
+    z: 1
+  friction: 0
+--- !u!54 &7154177637054964034
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760942821233357872}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &7759300380127690268
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760942821233357872}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Height: 1.6
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.2, z: 0}
 --- !u!1 &7692670296871027870
 GameObject:
   m_ObjectHideFlags: 0

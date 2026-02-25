@@ -19,8 +19,8 @@ public class CameraController : MonoBehaviour
 
         targetPos.y += followYDistance;
         targetPos.z -= followZDistance;
-        targetPos += Player.Instance.playerController.Velocity * velocityWeight;
-        targetPos += Player.Instance.playerController.ViewDirection * lookingDirectionOffset;
+        targetPos += velocityWeight * Player.Instance.playerController.Rigidbody.linearVelocity;
+        targetPos += lookingDirectionOffset * Player.Instance.playerController.ViewDirection;
 
         transform.position = Vector3.Lerp(transform.position, targetPos, followSharpness * Time.deltaTime);
     }

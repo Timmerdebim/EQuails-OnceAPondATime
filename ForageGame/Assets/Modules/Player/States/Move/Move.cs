@@ -7,7 +7,7 @@ public class Move : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.Instance.playerController.ApplyMoveSettings(true, moveAcceleration, Player.Instance.playerController.groundFriction);
+        Player.Instance.playerController.ApplyMoveSettings(moveAcceleration);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

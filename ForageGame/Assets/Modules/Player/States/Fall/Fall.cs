@@ -8,7 +8,7 @@ public class Fall : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.Instance.playerController.ApplyMoveSettings(false, moveAcceleration, Player.Instance.playerController.airFriction);
+        Player.Instance.playerController.ApplyMoveSettings(moveAcceleration);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

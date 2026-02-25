@@ -3,24 +3,23 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] public SpriteRenderer sprite;
-    private CharacterController characterController;
+    public Rigidbody Rigidbody { get; private set; }
     private Animator animator;
 
     [SerializeField] public float groundFriction = 5;
-    [SerializeField] public float airFriction = 5;
 
 
 
 
     void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        Rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
 
@@ -112,59 +111,44 @@ public class PlayerController : MonoBehaviour
     #region  Physics 
 
 
-    public bool3 useAcceleration = new(true, true, true);
-    public bool3 useVelocity = new(true, true, true);
     public Vector3 externalAcceleration = Vector3.zero;
-    public Vector3 externalImpulse = Vector3.zero;
     public bool useGravity = true;
-    public bool3 useMomentum = new(true, true, true);
 
     public bool3 useLocomotion = new(false, false, false);
     public Vector3 locomotionTargetVelocity = Vector3.zero;
     public float locomotionAcceleration = 0;
 
-    public bool3 useFriction = new(true, false, true);
-    public float friction = 0;
+
 
     public float LastGroundedHeight { get; private set; } = 0;
-    public Vector3 Velocity { get; private set; } = Vector3.zero;
 
-    public readonly Vector3 gravity = -9.81f * Vector3.up;
-
-    void Update()
+    void FixedUpdate()
     {
-        UpdatePhysics();
-    }
-
-    private void UpdatePhysics()
-    {
-        Vector3 a = Vector3.zero;
-        a += externalAcceleration;                                              // Apply external forces
-        a += useGravity ? gravity : Vector3.zero;                               // Apply gravity
-        a += friction * GetLockedVector(useFriction, -Velocity.normalized);     // Apply friction
-        a = GetLockedVector(useAcceleration, a);
-
-        Vector3 v = Vector3.zero;
-        v += GetLockedVector(useMomentum, Velocity);                            // Apply momentum
-        v += a * Time.deltaTime;                                                // Apply acceleration
-        v += GetLocomotionChangeInVelocity();                                   // Apply locomotion
-        v += externalImpulse;                                                   // Apply external impulse
-        externalImpulse = Vector3.zero;                                         // Reset external impulse
-        v = GetLockedVector(useVelocity, v);
-
-        Vector3 priorPos = transform.position;
-        characterController.Move(v * Time.deltaTime);
-        Velocity = (transform.position - priorPos) / Time.deltaTime;
+        Rigidbody.AddForce(externalAcceleration, ForceMode.Acceleration);                              // Apply external forces
+        Rigidbody.useGravity = useGravity;                                                             // Apply gravity
+        ApplyFriction();
+        ApplyLocomotion();
 
         UpdateGrounded();
     }
 
-    private Vector3 GetLocomotionChangeInVelocity()
+    private void ApplyFriction()
     {
-        Vector3 LTargetVelocity = GetLockedVector(useLocomotion, locomotionTargetVelocity);
-        Vector3 LVelocity = GetLockedVector(useLocomotion, Velocity);
-        Vector3 LLocomotionResultVelocity = Vector3.MoveTowards(LVelocity, LTargetVelocity, Time.deltaTime * locomotionAcceleration);
-        return LLocomotionResultVelocity - Velocity;
+        if (animator.GetBool("isGrounded"))
+            Rigidbody.AddForce(groundFriction * GetLockedVector(new(true, false, true), -Rigidbody.linearVelocity.normalized));
+    }
+
+
+    private void ApplyLocomotion()
+    {
+        Rigidbody.AddForce(Vector3.MoveTowards(
+            Vector3.zero, GetLockedVector(
+                useLocomotion,
+                locomotionTargetVelocity - Rigidbody.linearVelocity
+                ),
+            Time.fixedDeltaTime * locomotionAcceleration
+        ),
+        ForceMode.VelocityChange);
     }
 
     private Vector3 GetLockedVector(bool3 useVector, Vector3 vector)
@@ -196,57 +180,30 @@ public class PlayerController : MonoBehaviour
     public void ApplyDefaultSettings()
     {
         // Reset to idle state settings
-        useAcceleration = new(true, true, true);
-        useVelocity = new(true, false, true);
         externalAcceleration = Vector3.zero;
-        externalImpulse = Vector3.zero;
         useGravity = true;
-        useMomentum = new(true, true, true);
         useLocomotion = new(false, false, false);
         locomotionTargetVelocity = Vector3.zero;
         locomotionAcceleration = 0;
-        useFriction = new(true, false, true);
-        friction = 1;
     }
 
-    public void ApplyMoveSettings(bool isGrounded, float a, float f)
+    public void ApplyMoveSettings(float a)
     {
-        useAcceleration = new(true, true, true);
         externalAcceleration = Vector3.zero;
-        externalImpulse = Vector3.zero;
         useGravity = true;
         useLocomotion = new(true, false, true);
         locomotionTargetVelocity = Vector3.zero;
         locomotionAcceleration = a;
-        useFriction = new(true, false, true);
-        friction = f;
-
-        if (isGrounded)
-        {
-            useVelocity = new(true, false, true);
-            useMomentum = new(true, false, true);
-        }
-        else // TODO: add swimming (currently only for the air)
-        {
-            useVelocity = new(true, true, true);
-            useMomentum = new(true, true, true);
-        }
     }
 
     public void ApplyDashSettings()
     {
         // Dash settings (ie. Dash, Attack)
-        useAcceleration = new(true, true, true);
-        useVelocity = new(true, false, true);
         externalAcceleration = Vector3.zero;
-        externalImpulse = Vector3.zero;
         useGravity = false;
-        useMomentum = new(true, false, true);
         useLocomotion = new(false, false, false);
         locomotionTargetVelocity = Vector3.zero;
         locomotionAcceleration = 0;
-        useFriction = new(true, false, true);
-        friction = 1;
     }
 
     #endregion

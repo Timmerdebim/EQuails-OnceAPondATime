@@ -16,7 +16,7 @@ public class Dash : StateMachineBehaviour
             animator.SetBool("airDashed", true);
 
         Player.Instance.playerController.ApplyDashSettings();
-        Player.Instance.playerController.externalImpulse = impulse * Player.Instance.playerController.ViewDirection;
+        Player.Instance.playerController.Rigidbody.AddForce(impulse * Player.Instance.playerController.ViewDirection, ForceMode.Impulse);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -11,9 +11,9 @@ public class Hop : StateMachineBehaviour
     {
         Player.Instance.energy.UseEnergy(Player.Instance.hopEnergy);
 
-        Player.Instance.playerController.ApplyMoveSettings(false, moveAcceleration, Player.Instance.playerController.airFriction);
+        Player.Instance.playerController.ApplyMoveSettings(moveAcceleration);
 
-        Player.Instance.playerController.externalImpulse = Vector3.up * Mathf.Sqrt(2 * Math.Abs(Player.Instance.playerController.gravity.y) * hopHeight);
+        Player.Instance.playerController.Rigidbody.AddForce(-Physics.gravity.normalized * Mathf.Sqrt(2 * Physics.gravity.magnitude * hopHeight), ForceMode.Impulse);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
