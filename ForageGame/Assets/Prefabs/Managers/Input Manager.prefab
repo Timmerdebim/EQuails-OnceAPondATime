@@ -119,11 +119,35 @@ MonoBehaviour:
     m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
     m_ActionName: 'Player/Interact[/Keyboard/e,/Gamepad/buttonNorth]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6520952366906988512}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: Previous
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2776c80d-3c14-4091-8c56-d04ced07a2b0
     m_ActionName: 'Player/Previous[/Keyboard/1,/Gamepad/dpad/left]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6520952366906988512}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: Next
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
     m_ActionName: 'Player/Next[/Keyboard/2,/Gamepad/dpad/right]'
   - m_PersistentCalls:
@@ -174,70 +198,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 942a727b-0844-40a1-8ead-609c9ca54ae1
     m_ActionName: 'Player/DropItem[/Keyboard/q]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6520952366906988512}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: SelectSlot
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 176f5ef1-ab33-4069-855b-74a0f62ce096
-    m_ActionName: Player/InventorySlots
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6520952366906988512}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: SelectSlot
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 0badd1ac-d6c1-4c15-9fc5-22b575a900d4
-    m_ActionName: 'Player/Hotbar2[/Keyboard/2]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6520952366906988512}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: SelectSlot
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 0214e43b-da47-41f5-8ccc-19150826f78b
-    m_ActionName: 'Player/Hotbar3[/Keyboard/3]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6520952366906988512}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: SelectSlot
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f44e8aee-227e-48c9-b559-b7311ea91d31
-    m_ActionName: 'Player/Hotbar4[/Keyboard/4]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6520952366906988512}
@@ -322,6 +282,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e6d8eda5-4d26-4261-a551-1f2a986ddf7f
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6520952366906988512}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: ShowRecipes
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6568f10c-c027-4be0-82b1-cdcddc255074
+    m_ActionName: 'Player/Show Recipes[/Keyboard/tab]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

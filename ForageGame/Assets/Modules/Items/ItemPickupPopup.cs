@@ -6,7 +6,6 @@ using System.Collections;
 public class ItemPickupPopup : MonoBehaviour
 {
     [Header("UI References")]
-    public GameObject panel;
     public Image itemIcon;
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemDescription;
@@ -15,7 +14,16 @@ public class ItemPickupPopup : MonoBehaviour
 
     private void Awake()
     {
-        panel.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    public void TriggerNewItemPopup(Item item)
+    {
+        StartCoroutine(Inventory.Instance.itemPickupPopup.ShowPopup(
+        item.GetSprite(),
+        item.GetName(),
+        item.GetDescription()
+        ));
     }
 
     public IEnumerator ShowPopup(Sprite icon, string name, string description)
@@ -23,7 +31,7 @@ public class ItemPickupPopup : MonoBehaviour
         // Pause game
         Time.timeScale = 0f;
 
-        panel.SetActive(true);
+        gameObject.SetActive(true);
 
         itemIcon.sprite = icon;
         itemName.text = name;
@@ -40,7 +48,7 @@ public class ItemPickupPopup : MonoBehaviour
 
         waitingForInput = false;
 
-        panel.SetActive(false);
+        gameObject.SetActive(false);
 
         // Resume game
         Time.timeScale = 1f;

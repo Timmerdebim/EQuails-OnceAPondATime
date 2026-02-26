@@ -80,6 +80,8 @@ public abstract class ItemContainer : MonoBehaviour
 
     public bool IsSlotValid(int index) => index >= 0 && index < Slots.Count;
 
+    #region Slot Selection
+
     public void SelectSlot(int index)
     {
         if (IsSlotValid(index))
@@ -90,4 +92,9 @@ public abstract class ItemContainer : MonoBehaviour
             Slots[currentSlotIndex].SetSelected(true);
         }
     }
+
+    public void SelectNext() => SelectSlot(currentSlotIndex + 1);
+    public void SelectPrevious() => SelectSlot(currentSlotIndex - 1);
+
+    #endregion
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class InventoryData
 {
-    public ItemContainerData hotbarData = new();
-    public ItemContainerData chestData = new();
+    public List<InventorySlotData> hotbarData = new();
+    public List<InventorySlotData> chestData = new();
+    public List<int> recipeBookData = new();
 }

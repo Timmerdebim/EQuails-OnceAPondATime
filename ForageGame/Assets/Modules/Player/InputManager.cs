@@ -40,7 +40,7 @@ public class InputManager : MonoBehaviour
 
     public void Escape(InputAction.CallbackContext context)
     {
-        if (context.action.WasPressedThisFrame())
+        if (context.started)
         {
             if (GameManager.Instance.state == GameState.Gameplay)
                 GameManager.Instance.PauseGame();
@@ -51,12 +51,30 @@ public class InputManager : MonoBehaviour
 
     // ------------ Inventory ------------
 
+    public void Next(InputAction.CallbackContext context)
+    {
+        if (GameManager.Instance.state != GameState.Gameplay)
+            return;
+
+        if (context.started)
+            Inventory.Instance?.Next();
+    }
+
+    public void Previous(InputAction.CallbackContext context)
+    {
+        if (GameManager.Instance.state != GameState.Gameplay)
+            return;
+
+        if (context.started)
+            Inventory.Instance?.Previous();
+    }
+
     public void DropItem(InputAction.CallbackContext context)
     {
         if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
-        if (context.action.WasPressedThisFrame())
+        if (context.started)
             Inventory.Instance?.hotbar.TryDropItem();
     }
 
@@ -65,7 +83,7 @@ public class InputManager : MonoBehaviour
         if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
-        if (context.action.WasPressedThisFrame())
+        if (context.started)
             Inventory.Instance?.hotbar.TryUseItem();
     }
 
@@ -75,5 +93,16 @@ public class InputManager : MonoBehaviour
             return;
 
         Inventory.Instance?.hotbar.SelectSlot(index);
+    }
+
+    // ------------ Recipes ------------
+
+    public void ShowRecipes(InputAction.CallbackContext context)
+    {
+        if (GameManager.Instance.state != GameState.Gameplay)
+            return;
+
+        if (context.started)
+            Inventory.Instance?.recipeBook.TriggerVisualization();
     }
 }

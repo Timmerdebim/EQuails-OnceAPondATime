@@ -22,4 +22,14 @@ public class Item : ScriptableObject
         // Input use function; return true if executed successfully.
         return true;
     }
+
+    public virtual bool TryPickup()
+    {
+        if (!Inventory.Instance.hotbar.TryAddItemAtAny(this))
+            return false;
+
+        // TODO: first time pickup screen
+        Inventory.Instance.itemPickupPopup.TriggerNewItemPopup(this);
+        return true;
+    }
 }

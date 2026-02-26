@@ -30,7 +30,7 @@ public class WorldItem : MonoBehaviour, IInteractable
 
     virtual public void Interact(UnityAction StopInteractionCallback)
     {
-        if (Inventory.Instance.hotbar.TryPickupItem(item))
+        if (item.TryPickup())
         {
             // onPickup?.Invoke();
             Destroy(gameObject);

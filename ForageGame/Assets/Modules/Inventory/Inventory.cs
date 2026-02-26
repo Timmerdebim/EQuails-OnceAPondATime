@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class Inventory : MonoBehaviour
 {
+    [SerializeField] public RecipeBook recipeBook;
     [SerializeField] public Hotbar hotbar;
     [SerializeField] public Chest chest;
     [SerializeField] public ItemPickupPopup itemPickupPopup;
@@ -44,7 +45,22 @@ public class Inventory : MonoBehaviour
 
         worldItem.transform.localScale = Vector3.zero;
         worldItem.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBack);
+    }
 
+    public void Next()
+    {
+        if (recipeBook.IsVisualized)
+            recipeBook.NextPage();
+        else
+            hotbar.SelectNext();
+    }
+
+    public void Previous()
+    {
+        if (recipeBook.IsVisualized)
+            recipeBook.PreviousPage();
+        else
+            hotbar.SelectPrevious();
     }
 
     #region Save & Load
@@ -53,6 +69,7 @@ public class Inventory : MonoBehaviour
     {
         hotbar.SetData(data.hotbarData);
         chest.SetData(data.chestData);
+        recipeBook.SetData(data.recipeBookData);
     }
 
     public void SaveData(ref InventoryData data)
@@ -60,7 +77,8 @@ public class Inventory : MonoBehaviour
         data = new InventoryData
         {
             hotbarData = hotbar.GetData(),
-            chestData = chest.GetData()
+            chestData = chest.GetData(),
+            recipeBookData = recipeBook.GetData()
         };
     }
 
