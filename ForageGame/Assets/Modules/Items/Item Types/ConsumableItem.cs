@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using System;
 
-[CreateAssetMenu(fileName = "New Consumable", menuName = "Crafting/Consumable")]
+[CreateAssetMenu(fileName = "New Consumable", menuName = "Items/Consumable")]
 public class ConsumableItem : Item
 {
     [SerializeField] protected float consumableEnergy;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using System;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Crafting/Item")]
+[CreateAssetMenu(fileName = "New Resource", menuName = "Items/Resource")]
 public class Item : ScriptableObject
 {
     [SerializeField] protected string itemName;
