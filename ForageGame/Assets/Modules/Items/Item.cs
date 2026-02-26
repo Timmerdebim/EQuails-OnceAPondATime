@@ -8,8 +8,18 @@ using System;
 [CreateAssetMenu(fileName = "New Item", menuName = "Crafting/Item")]
 public class Item : ScriptableObject
 {
-    public string itemName;
-    public string description;
-    public Sprite icon;
-    public GameObject worldPrefab; // The prefab to spawn when dropped
+    [SerializeField] protected string itemName;
+    [SerializeField] protected string description;
+    [SerializeField] protected Sprite sprite;
+
+    public int GetId() => Inventory.Instance.GetIdByItem(this);
+    public string GetName() => itemName;
+    public string GetDescription() => description;
+    public Sprite GetSprite() => sprite;
+
+    public virtual bool Use()
+    {
+        // Input use function; return true if executed successfully.
+        return true;
+    }
 }

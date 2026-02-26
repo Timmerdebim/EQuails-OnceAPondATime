@@ -2,7 +2,7 @@
 public class SaveData
 {
     public int playtimeSeconds = 0;
-    public PlayerData playerData = new PlayerData();
-    // Inventory
+    public PlayerData playerData = new();
+    public InventoryData inventoryData = new();
     // Story Flags (Abilities) (Recipies)
 }

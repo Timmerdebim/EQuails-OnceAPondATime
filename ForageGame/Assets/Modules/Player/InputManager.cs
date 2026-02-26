@@ -57,16 +57,16 @@ public class InputManager : MonoBehaviour
             return;
 
         if (context.action.WasPressedThisFrame())
-            Inventory.Instance?.DropItem();
+            Inventory.Instance?.hotbar.TryDropItem();
     }
 
-    public void ConsumeItem(InputAction.CallbackContext context)
+    public void UseItem(InputAction.CallbackContext context)
     {
         if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
         if (context.action.WasPressedThisFrame())
-            Inventory.Instance?.ConsumeItem();
+            Inventory.Instance?.hotbar.TryUseItem();
     }
 
     public void SelectSlot(int index)
@@ -74,6 +74,6 @@ public class InputManager : MonoBehaviour
         if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
-        Inventory.Instance?.SelectSlot(index);
+        Inventory.Instance?.hotbar.SelectSlot(index);
     }
 }

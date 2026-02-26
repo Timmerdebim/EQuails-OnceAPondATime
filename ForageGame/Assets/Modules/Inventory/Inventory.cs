@@ -1,20 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
+using System;
+using DG.Tweening;
 
 public class Inventory : MonoBehaviour
 {
-    [Header("Hotbar Settings")]
-    public int hotbarSize = 4;
-    public Transform hotbarParent;
-    public GameObject slotPrefab;
-
-    [Header("Item Database")]
-    public Item[] itemDatabase;
-
-    private Item[] hotbarItems;
-    private InventorySlot[] hotbarSlots;
-    private int selectedSlot = 0;
+    [SerializeField] public Hotbar hotbar;
+    [SerializeField] public Chest chest;
+    [SerializeField] public ItemPickupPopup itemPickupPopup;
+    [SerializeField] private GameObject worldItemPrefab;
+    [SerializeField] private Item[] itemDatabase;
 
     public static Inventory Instance { get; private set; }
 
@@ -26,126 +23,46 @@ public class Inventory : MonoBehaviour
             return;
         }
         Instance = this;
-
-        InitializeHotbar();
     }
 
-    void InitializeHotbar()
+    public int GetIdByItem(Item item)
     {
-        hotbarItems = new Item[hotbarSize];
-        hotbarSlots = new InventorySlot[hotbarSize];
+        return Array.FindIndex(itemDatabase, row => row == item); // Returns -1 if not in database
+    }
 
-        // Clear existing slots
-        foreach (Transform child in hotbarParent) Destroy(child.gameObject);
+    public Item GetItemById(int id)
+    {
+        if (id < 0 || id >= itemDatabase.Count())
+            return null;
+        return itemDatabase[id];
+    }
 
-        // Create new slots
-        for (int i = 0; i < hotbarSize; i++)
+    public void SpawnItemAt(Item item, Vector3 position)
+    {
+        GameObject worldItem = Instantiate(worldItemPrefab, position, Quaternion.identity);
+        worldItem.GetComponent<WorldItem>().Initialize(item);
+
+        worldItem.transform.localScale = Vector3.zero;
+        worldItem.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBack);
+
+    }
+
+    #region Save & Load
+
+    public void LoadData(InventoryData data)
+    {
+        hotbar.SetData(data.hotbarData);
+        chest.SetData(data.chestData);
+    }
+
+    public void SaveData(ref InventoryData data)
+    {
+        data = new InventoryData
         {
-            GameObject slotObject = Instantiate(slotPrefab, hotbarParent);
-            InventorySlot slot = slotObject.GetComponent<InventorySlot>();
-            slot.Initialize(i);
-            hotbarSlots[i] = slot;
-        }
-
-        SelectSlot(0);
+            hotbarData = hotbar.GetData(),
+            chestData = chest.GetData()
+        };
     }
 
-    public bool PickupItem(Item item)
-    {
-        // Find first empty slot
-        for (int i = 0; i < hotbarSize; i++)
-        {
-            if (hotbarItems[i] == null)
-            {
-                SetItem(i, item);
-                // TODO: first time pickup screen
-                StartCoroutine(ItemPickupPopup.Instance.ShowPopup(
-                item.icon,
-                item.itemName,
-                item.description
-            ));
-                return true;
-            }
-        }
-
-        Debug.Log("Hotbar is full!");
-        return false;
-    }
-
-    public void DropItem()
-    {
-        if (selectedSlot < 0 || selectedSlot >= hotbarSize) return;
-        if (hotbarItems[selectedSlot] == null) return;
-
-        Item itemToDrop = hotbarItems[selectedSlot];
-
-        // Spawn the item in the world
-        if (itemToDrop.worldPrefab != null)
-        {
-            // Get player position
-            Vector3 dropPosition = Player.Instance.transform.position; // TODO: move down to ground
-            Instantiate(itemToDrop.worldPrefab, dropPosition, Quaternion.identity);
-        }
-
-        // Remove from hotbar
-        RemoveItem(selectedSlot);
-    }
-
-    public void ConsumeItem()
-    {
-        if (selectedSlot < 0 || selectedSlot >= hotbarSize) return;
-        if (hotbarItems[selectedSlot] == null) return;
-        if (hotbarItems[selectedSlot] is not ConsumableItem item) return;
-
-        // Get player position
-        Player.Instance.energy.TakeDamage(-item.consumableEnergy); // a little botched but ok...
-        // Remove from hotbar
-        RemoveItem(selectedSlot);
-        // Replace with new item
-        if (item.returnItem == null) return;
-        SetItem(selectedSlot, item.returnItem);
-    }
-
-    public bool GiveItem(Item item)
-    {
-        for (int i = 0; i < hotbarSize; i++)
-        {
-            if (item == hotbarItems[i])
-            {
-                RemoveItem(i);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void RemoveItem(int index)
-    {
-        hotbarItems[index] = null;
-        hotbarSlots[index].ClearSlot();
-    }
-
-    public void SetItem(int index, Item item)
-    {
-        hotbarItems[index] = item;
-        hotbarSlots[index].SetItem(item);
-    }
-
-    public void SelectSlot(int index)
-    {
-        selectedSlot = index;
-
-        for (int i = 0; i < hotbarSize; i++)
-            hotbarSlots[i].SetSelected(i == index);
-    }
-
-    public Item GetItemById(string itemName)
-    {
-        foreach (Item item in itemDatabase)
-        {
-            if (item.itemName == itemName)
-                return item;
-        }
-        return null;
-    }
+    #endregion
 }

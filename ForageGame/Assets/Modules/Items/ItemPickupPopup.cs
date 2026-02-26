@@ -5,8 +5,6 @@ using System.Collections;
 
 public class ItemPickupPopup : MonoBehaviour
 {
-    public static ItemPickupPopup Instance;
-
     [Header("UI References")]
     public GameObject panel;
     public Image itemIcon;
@@ -17,7 +15,6 @@ public class ItemPickupPopup : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         panel.SetActive(false);
     }
 

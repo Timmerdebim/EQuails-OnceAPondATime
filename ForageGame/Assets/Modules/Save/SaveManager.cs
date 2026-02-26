@@ -33,7 +33,7 @@ public class SaveManager : MonoBehaviour
         _currentSaveData = SaveSystem.GetSaveFile(_currentSaveSlot);
 
         Player.Instance?.LoadData(_currentSaveData.playerData);
-        // TODO: storyflags, inventory
+        Inventory.Instance?.LoadData(_currentSaveData.inventoryData);
     }
 
     public void LoadRegion()
@@ -48,10 +48,10 @@ public class SaveManager : MonoBehaviour
         if (_currentSaveData == null || _currentSaveSlot < 0)
             return;
 
-        Player.Instance?.LoadData(_currentSaveData.playerData);
+        Player.Instance?.SaveData(ref _currentSaveData.playerData);
+        Inventory.Instance?.SaveData(ref _currentSaveData.inventoryData);
 
         SaveSystem.SetSaveFile(_currentSaveSlot, _currentSaveData);
-        // TODO: storyflags, inventory
     }
 
     public void SaveRegion()

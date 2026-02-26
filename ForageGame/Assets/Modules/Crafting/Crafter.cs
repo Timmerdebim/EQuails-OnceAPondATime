@@ -22,7 +22,7 @@ public class Crafter : MonoBehaviour
         {
             if (slot.GetHeldItem() != null)
             {
-                items.Add(slot.GetHeldItem().itemData);
+                items.Add(slot.GetHeldItem().item);
             }
             else
             {
@@ -54,7 +54,7 @@ public class Crafter : MonoBehaviour
         {
             foreach (ItemStand slot in craftingSlots)
             {
-                if (slot.GetHeldItem() != null && slot.GetHeldItem().itemData == requiredItem)
+                if (slot.GetHeldItem() != null && slot.GetHeldItem().item == requiredItem)
                 {
                     WorldItem item = slot.GetHeldItem();
                     slot.RemoveItem();
@@ -72,17 +72,12 @@ public class Crafter : MonoBehaviour
 
 
         // Spawn the result item at the crafter's position when tweens complete
-        tweens.OnComplete(() => SpawnItem(recipe.resultItem));
+        tweens.OnComplete(() =>
+        {
+            Inventory.Instance.SpawnItemAt(recipe.resultItem, transform.position + Vector3.up);
+            craftInProgress = false;
+        });
 
-    }
-
-    private void SpawnItem(Item item)
-    {
-        GameObject spawnedItem = Instantiate(item.worldPrefab, transform.position + Vector3.up * 1f, Quaternion.identity);
-        spawnedItem.transform.localScale = Vector3.zero;
-        spawnedItem.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBack);
-
-        craftInProgress = false;
     }
 
     private bool CanCraft(RecipeSO recipe, List<Item> itemsAvailable)

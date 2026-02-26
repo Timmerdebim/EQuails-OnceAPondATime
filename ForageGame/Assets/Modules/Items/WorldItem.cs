@@ -2,20 +2,37 @@ using UnityEngine;
 using Assets.Modules.Interaction;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class WorldItem : MonoBehaviour, IInteractable
 {
-    public Item itemData;
+    public Item item;
+    private SpriteRenderer spriteRenderer;
 
     public UnityEvent onPickup;
 
+    void Awake()
+    {
+        Initialize(item);
+    }
+
+    public void Initialize(Item data)
+    {
+        item = data;
+        if (item != null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = item.GetSprite();
+        }
+    }
+
+
+    #region  I Interactable
+
     virtual public void Interact(UnityAction StopInteractionCallback)
     {
-        bool wasPickedUp = Inventory.Instance.PickupItem(itemData);
-
-        if (wasPickedUp)
+        if (Inventory.Instance.hotbar.TryPickupItem(item))
         {
-            // TODO: show discovery
-            onPickup?.Invoke();
+            // onPickup?.Invoke();
             Destroy(gameObject);
         }
     }
@@ -34,4 +51,6 @@ public class WorldItem : MonoBehaviour, IInteractable
     {
         // Todo: De-Highlight
     }
+
+    #endregion
 }
