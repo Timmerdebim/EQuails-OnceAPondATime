@@ -5,7 +5,6 @@ using UnityEngine;
 public class Crafter : MonoBehaviour
 {
     [SerializeField] ItemStand[] craftingSlots;
-    [SerializeField] RecipeSO[] recipes;
 
     bool craftInProgress = false;
 
@@ -31,17 +30,17 @@ public class Crafter : MonoBehaviour
             }
         }
 
-        foreach (RecipeSO recipe in recipes)
+        foreach (RecipeItem recipeItem in Inventory.Instance.recipeBook.CollectedRecipes)
         {
-            if (CanCraft(recipe, items))
+            if (CanCraft(recipeItem, items))
             {
-                Craft(recipe);
+                Craft(recipeItem);
                 break;
             }
         }
     }
 
-    private void Craft(RecipeSO recipe)
+    private void Craft(RecipeItem recipeItem)
     {
         // Assumes CanCraft has already been called and returned true
 
@@ -50,7 +49,7 @@ public class Crafter : MonoBehaviour
         Sequence tweens = DOTween.Sequence();
 
         // Remove required items from slots
-        foreach (Item requiredItem in recipe.requiredItems)
+        foreach (Item requiredItem in recipeItem.GetCraftingIngredients())
         {
             foreach (ItemStand slot in craftingSlots)
             {
@@ -74,16 +73,16 @@ public class Crafter : MonoBehaviour
         // Spawn the result item at the crafter's position when tweens complete
         tweens.OnComplete(() =>
         {
-            Inventory.Instance.SpawnItemAt(recipe.resultItem, transform.position + Vector3.up);
+            Inventory.Instance.SpawnItemAt(recipeItem.GetCraftingResult(), transform.position + Vector3.up);
             craftInProgress = false;
         });
 
     }
 
-    private bool CanCraft(RecipeSO recipe, List<Item> itemsAvailable)
+    private bool CanCraft(RecipeItem recipeItem, List<Item> itemsAvailable)
     {
         List<Item> itemsCopy = new List<Item>(itemsAvailable);
-        foreach (Item requiredItem in recipe.requiredItems)
+        foreach (Item requiredItem in recipeItem.GetCraftingIngredients())
         {
             bool found = false;
             for (int i = 0; i < itemsCopy.Count; i++)

@@ -9,7 +9,8 @@ using System;
 [RequireComponent(typeof(Animator))]
 public class RecipeBook : MonoBehaviour
 {
-    [SerializeField] private List<RecipeItem> collectedRecipes;
+    public List<RecipeItem> CollectedRecipes { get; set; } = new();
+
 
     private Animator animator;
 
@@ -20,37 +21,37 @@ public class RecipeBook : MonoBehaviour
 
     public bool TryAddRecipe(RecipeItem recipeItem)
     {
-        if (collectedRecipes.Contains(recipeItem))
+        if (CollectedRecipes.Contains(recipeItem))
             return false;
-        collectedRecipes.Add(recipeItem);
+        SetVisualization(false);
+        CollectedRecipes.Add(recipeItem);
         return true;
     }
 
     public bool TryRemoveRecipe(RecipeItem recipeItem)
     {
-        if (collectedRecipes.Contains(recipeItem))
+        if (CollectedRecipes.Contains(recipeItem))
             return false;
-
-        collectedRecipes.Remove(recipeItem);
+        SetVisualization(false);
+        CollectedRecipes.Remove(recipeItem);
         return true;
     }
-
-
 
     #region Triggers
 
     public void TriggerVisualization()
     {
-        Debug.Log(5);
-        IsVisualized = !IsVisualized;
+        SetVisualization(!IsVisualized);
+    }
+
+    public void SetVisualization(bool isEnabled)
+    {
+        if (CollectedRecipes.Count == 0)
+            IsVisualized = false;
+        else IsVisualized = isEnabled;
         animator.SetBool("OpenRecipeBook", IsVisualized);
-        if (IsVisualized)
-            BuildStack();
-        else
-        {
-            //TODO: wait for animation to finish
-            DestroyStack();
-        }
+        DestroyStack();
+        if (IsVisualized) BuildStack();
     }
 
     public void NextPage()
@@ -88,13 +89,13 @@ public class RecipeBook : MonoBehaviour
 
     private void BuildStack()
     {
-        for (int i = 0; i < collectedRecipes.Count; i++)
+        for (int i = 0; i < CollectedRecipes.Count; i++)
         {
             GameObject obj = Instantiate(pagePrefab, transform, false);
 
             //set the image sprite (its in the children because of shitty ui reasons)
             var image = obj.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>();
-            image.sprite = collectedRecipes[i].GetRecipeVisualizationSprite();
+            image.sprite = CollectedRecipes[i].GetRecipeVisualizationSprite();
 
             //position page UI (stacking offset)
             RectTransform imgRect = obj.transform.GetChild(0).GetComponent<RectTransform>();
@@ -128,13 +129,13 @@ public class RecipeBook : MonoBehaviour
 
     public void SetData(List<int> recipeIds)
     {
-        collectedRecipes = new List<RecipeItem>();
+        CollectedRecipes = new List<RecipeItem>();
 
         foreach (int recipeId in recipeIds)
         {
             Item item = Inventory.Instance.GetItemById(recipeId);
             if (item is RecipeItem recipeItem)
-                collectedRecipes.Add(recipeItem);
+                CollectedRecipes.Add(recipeItem);
             else
                 Debug.Log("Inventory: Critical error in retrieving recipes by ID");
         }
@@ -144,7 +145,7 @@ public class RecipeBook : MonoBehaviour
     {
         List<int> recipeIds = new List<int>();
 
-        foreach (var recipeItem in collectedRecipes)
+        foreach (var recipeItem in CollectedRecipes)
             recipeIds.Add(Inventory.Instance.GetIdByItem(recipeItem));
 
         return recipeIds;

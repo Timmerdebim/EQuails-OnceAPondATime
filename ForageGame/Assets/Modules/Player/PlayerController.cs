@@ -142,7 +142,6 @@ public class PlayerController : MonoBehaviour
             Rigidbody.AddForce(groundFriction * GetLockedVector(new(true, false, true), -Rigidbody.linearVelocity.normalized));
     }
 
-
     private void ApplyLocomotion()
     {
         Rigidbody.AddForce(
