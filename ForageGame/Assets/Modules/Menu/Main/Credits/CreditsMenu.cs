@@ -39,8 +39,9 @@ namespace Project.Menus.Credits
             float duration = Vector2.Distance(startPos, endPos) / scrollSpeed;
 
             creditsSeq?.Kill();
-            creditsSeq = DOTween.Sequence();
-            creditsSeq.Append(contentRect.DOAnchorPos(endPos, duration))
+            creditsSeq = DOTween.Sequence()
+            .SetUpdate(true)
+            .Append(contentRect.DOAnchorPos(endPos, duration))
             .AppendInterval(autoReturnDelay)
             .AppendCallback(() => { Escape(); });
         }
