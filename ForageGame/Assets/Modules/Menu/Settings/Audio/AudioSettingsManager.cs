@@ -9,6 +9,18 @@ namespace Project.Menus.Audio
         public static AudioSettingsManager Instance { get; private set; }
         [SerializeField] private string settingsPath = "Assets/SaveData";
         [SerializeField] private AudioMixer audioMixer;
+
+        [SerializeField] private string masterBusPath = "bus:/";
+        private FMOD.Studio.Bus _masterBus;
+
+        [SerializeField] private string musicBusPath;
+        private FMOD.Studio.Bus _musicBus;
+
+        [SerializeField] private string sfxBusPath;
+        private FMOD.Studio.Bus _sfxBus;
+        [SerializeField] private string ambienceBusPath;
+        private FMOD.Studio.Bus _ambienceBus;
+
         public AudioSettings _settings { get; private set; }
 
         private void Awake()
@@ -19,6 +31,11 @@ namespace Project.Menus.Audio
                 return;
             }
             Instance = this;
+
+            _masterBus = FMODUnity.RuntimeManager.GetBus(masterBusPath);
+            _musicBus = FMODUnity.RuntimeManager.GetBus(musicBusPath);
+            _ambienceBus = FMODUnity.RuntimeManager.GetBus(ambienceBusPath);
+            _sfxBus = FMODUnity.RuntimeManager.GetBus(sfxBusPath);
 
             LoadSettings();
         }
@@ -31,7 +48,9 @@ namespace Project.Menus.Audio
             set
             {
                 _settings.masterVolume = value;
-                audioMixer.SetFloat("Master", value);
+                //audioMixer.SetFloat("Master", value);
+                _masterBus.setVolume(value);
+                SaveSettings();
             }
         }
 
@@ -41,7 +60,8 @@ namespace Project.Menus.Audio
             set
             {
                 _settings.musicVolume = value;
-                audioMixer.SetFloat("Music", value);
+                //audioMixer.SetFloat("Music", value);
+                _musicBus.setVolume(value);
                 SaveSettings();
             }
         }
@@ -52,7 +72,21 @@ namespace Project.Menus.Audio
             set
             {
                 _settings.sfxVolume = value;
-                audioMixer.SetFloat("SFX", value);
+                //audioMixer.SetFloat("SFX", value);
+                _sfxBus.setVolume(value);
+                SaveSettings();
+            }
+        }
+
+        //TODO: fill in and fix
+        public float AmbienceVolume
+        {
+            get => _settings.sfxVolume;
+            set
+            {
+                _settings.sfxVolume = value;
+                //audioMixer.SetFloat("SFX", value);
+                _ambienceBus.setVolume(value);
                 SaveSettings();
             }
         }
