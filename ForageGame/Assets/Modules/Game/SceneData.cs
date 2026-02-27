@@ -117,7 +117,7 @@ public class SceneData
 public enum SceneGroup
 {
     MainMenu, World, Debug, Pause,
-    Swamp, Cave, Mushroom, Flower, HomeIsland
+    Swamp, Cave, Mushroom, Flower, Home
 }
 
 public enum SceneState
