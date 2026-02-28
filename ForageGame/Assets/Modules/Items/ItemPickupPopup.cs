@@ -10,8 +10,6 @@ public class ItemPickupPopup : MonoBehaviour
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemDescription;
 
-    private bool waitingForInput = false;
-
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -19,6 +17,12 @@ public class ItemPickupPopup : MonoBehaviour
 
     public void TriggerNewItemPopup(Item item)
     {
+        // Pause game
+        gameObject.SetActive(true);
+        Time.timeScale = 0f;
+        itemIcon.sprite = item.GetSprite();
+        itemName.text = item.GetName();
+        itemDescription.text = item.GetDescription();
         StartCoroutine(Inventory.Instance.itemPickupPopup.ShowPopup(
         item.GetSprite(),
         item.GetName(),
@@ -28,29 +32,15 @@ public class ItemPickupPopup : MonoBehaviour
 
     public IEnumerator ShowPopup(Sprite icon, string name, string description)
     {
-        // Pause game
-        Time.timeScale = 0f;
-
-        gameObject.SetActive(true);
-
-        itemIcon.sprite = icon;
-        itemName.text = name;
-        itemDescription.text = description;
-
         // Optional small delay so player can't instantly skip
         yield return new WaitForSecondsRealtime(0.3f);
-
-        waitingForInput = true;
 
         // Wait for any key
         while (!Input.anyKeyDown)
             yield return null;
 
-        waitingForInput = false;
-
-        gameObject.SetActive(false);
-
         // Resume game
         Time.timeScale = 1f;
+        gameObject.SetActive(false);
     }
 }

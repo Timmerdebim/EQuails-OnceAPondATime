@@ -73,6 +73,14 @@ namespace Project.Menus.Graphics
             }
         }
 
+        private void ApplySettings()
+        {
+            Resolution = Resolution;
+            Quality = Quality;
+            Vsync = Vsync;
+            Framerate = Framerate;
+        }
+
         // ------------ Save & Load ------------
 
         public void LoadSettings()
@@ -86,6 +94,7 @@ namespace Project.Menus.Graphics
             }
             else
                 _settings = new GraphicsSettings();
+            ApplySettings();
         }
 
         public void SaveSettings()

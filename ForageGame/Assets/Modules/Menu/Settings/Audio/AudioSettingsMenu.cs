@@ -14,6 +14,8 @@ namespace Project.Menus.Audio
         [SerializeField] private TMP_Text musicVolumeText;
         [SerializeField] private Slider sfxVolumeSlider;
         [SerializeField] private TMP_Text sfxVolumeText;
+        [SerializeField] private Slider ambienceVolumeSlider;
+        [SerializeField] private TMP_Text ambienceVolumeText;
 
         public override void EnteringMenu()
         {
@@ -50,6 +52,13 @@ namespace Project.Menus.Audio
             RefreshVisuals();
         }
 
+        public void OnAmbienceVolumeChanged()
+        {
+            float value = ambienceVolumeSlider.value;
+            AudioSettingsManager.Instance.AmbienceVolume = value;
+            RefreshVisuals();
+        }
+
         // ------------ Functions ------------
 
         private void RefreshVisuals()
@@ -61,6 +70,8 @@ namespace Project.Menus.Audio
             musicVolumeText.text = Mathf.RoundToInt(settings.musicVolume * 100) + "%";
             sfxVolumeSlider.value = settings.sfxVolume;
             sfxVolumeText.text = Mathf.RoundToInt(settings.sfxVolume * 100) + "%";
+            ambienceVolumeSlider.value = settings.ambienceVolume;
+            ambienceVolumeText.text = Mathf.RoundToInt(settings.ambienceVolume * 100) + "%";
         }
     }
 }
