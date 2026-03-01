@@ -3,9 +3,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 using System;
 
-// IMPORTANT: MultiItemStands cannot overlap; this will result in breaking possibly everything!
-
-
+// IMPORTANT: ItemRacks cannot overlap; this will result in breaking possibly everything!
 
 public enum ItemRackAlignment { Left, Right, Center, Justified }
 
@@ -61,7 +59,7 @@ public class ItemRack : MonoBehaviour
                     target = splineContainer.EvaluatePosition(dt * (i + 1));
                     break;
                 case ItemRackAlignment.Center:
-                    target = splineContainer.EvaluatePosition(dt * i - dt / 2);
+                    target = splineContainer.EvaluatePosition(dt * i + dt / 2);
                     break;
                 case ItemRackAlignment.Justified:
                     target = splineContainer.EvaluatePosition(1 / (1 / dt - 1) * i);

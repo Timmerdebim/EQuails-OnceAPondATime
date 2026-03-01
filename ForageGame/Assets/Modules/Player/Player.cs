@@ -94,20 +94,22 @@ public class Player : MonoBehaviour
         switch (upgradeType)
         {
             case PlayerUpgradeType.Attack:
-
+                playerData.attackUnlocked = true;
+                //TODO: spawn dummy
                 break;
             case PlayerUpgradeType.Lantern:
+                playerData.lanternUnlocked = true;
+                //TODO: activate light
                 break;
             case PlayerUpgradeType.Pouch:
+                playerData.pouchLevel += 1;
+                Inventory.Instance.hotbar.AddSlots(1);
                 break;
             case PlayerUpgradeType.Wing:
+                playerData.wingLevel += 1;
+                //TODO: change wing sprite stuff
                 break;
         }
-    }
-
-    private void SetWingLevel(int wingLevel)
-    {
-
     }
 
     #endregion

@@ -110,7 +110,6 @@ public class Energy : MonoBehaviour, IHitHandler
     }
 
     // Updates the UI bars positions based on current energy and damage.
-    // Assumes the full width is 100 units (adjust if your bar width differs).
     private void UpdateEnergyBar()
     {
         if (energyFill != null)

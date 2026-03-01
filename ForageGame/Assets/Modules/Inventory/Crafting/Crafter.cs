@@ -62,18 +62,27 @@ public class Crafter : MonoBehaviour
         }
 
         seq.AppendCallback(() => itemRack.RemoveAll())
+        .AppendInterval(0.5f)
 
         // Hop left
-        .Append(transform.DOJump(initialPosition + Vector3.up * 1, 2, 1, 0.5f))
-        .Join(transform.DOBlendableRotateBy(-15 * Vector3.forward, 1))
+        .Append(transform.DOJump(initialPosition + Vector3.up * 1, 3, 1, 0.5f))
+        .Join(transform.DOBlendableRotateBy(-15 * Vector3.forward, 0.7f).SetEase(Ease.OutBack))
+        .AppendInterval(0.2f)
 
         // Hop right
-        .Append(transform.DOJump(initialPosition + Vector3.up * 1, 2, 1, 0.5f))
-        .Join(transform.DOBlendableRotateBy(30 * Vector3.forward, 1))
+        .Append(transform.DOJump(initialPosition + Vector3.up * 1, 3, 1, 0.5f))
+        .Join(transform.DOBlendableRotateBy(30 * Vector3.forward, 0.7f).SetEase(Ease.OutBack))
+        .AppendInterval(0.2f)
+
+        // Hop left
+        .Append(transform.DOJump(initialPosition + Vector3.up * 1, 3, 1, 0.5f))
+        .Join(transform.DOBlendableRotateBy(-30 * Vector3.forward, 0.7f).SetEase(Ease.OutBack))
+        .AppendInterval(0.2f)
 
         // Return to initial
-        .Append(transform.DOJump(initialPosition, 1, 1, 1))
-        .Join(transform.DORotateQuaternion(initialRotation, 1))
+        .Append(transform.DOJump(initialPosition, 3, 1, 0.5f))
+        .Join(transform.DORotateQuaternion(initialRotation, 0.7f).SetEase(Ease.OutBack))
+        .AppendInterval(0.5f)
 
         // Open lid
         .Append(transformLid.DOMove(initialLidPosition, 0.5f).SetEase(Ease.OutExpo));
