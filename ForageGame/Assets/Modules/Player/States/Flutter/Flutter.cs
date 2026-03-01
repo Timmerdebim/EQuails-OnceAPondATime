@@ -26,7 +26,7 @@ public class Flutter : StateMachineBehaviour
 
         // Check if still can fly
         if (Player.Instance.energy.energy < 0.001f)
-            animator.SetBool("flutter", false);
+            animator.SetBool("fly", false);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

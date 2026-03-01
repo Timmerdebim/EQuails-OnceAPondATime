@@ -5,13 +5,17 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerUpgradeType { Attack, Lantern, Pouch, Wing }
+
 [System.Serializable]
 public class PlayerData
 {
     public Vector3 spawnPosition = new Vector3(0, 100, 0);
-    public bool canHop = false; // replace with story flags?
-    public bool canFlutter = false; // replace with story flags?
-    public bool canAttack = false; // replace with story flags?
+    public int wingLevel = 0;
+    public int pouchLevel = 0;
+    public bool attackUnlocked = false;
+    public bool dashUnlocked = false;
+    public bool lanternUnlocked = false;
 }
 
 [RequireComponent(typeof(Animator))]
@@ -63,7 +67,7 @@ public class Player : MonoBehaviour
         ExitStateReset();
     }
 
-    // ------------ Save & Load ------------
+    #region Save & Load
 
     public void SaveData(ref PlayerData data)
     {
@@ -82,17 +86,31 @@ public class Player : MonoBehaviour
         Debug.Log(transform.position);
     }
 
-    void Update()
+    #endregion
+
+    #region Upgrades
+    public void Upgrade(PlayerUpgradeType upgradeType)
     {
-        CheckEnergy(); // For knowing if we have sufficient energy
+        switch (upgradeType)
+        {
+            case PlayerUpgradeType.Attack:
+
+                break;
+            case PlayerUpgradeType.Lantern:
+                break;
+            case PlayerUpgradeType.Pouch:
+                break;
+            case PlayerUpgradeType.Wing:
+                break;
+        }
     }
-    private void CheckEnergy()
+
+    private void SetWingLevel(int wingLevel)
     {
-        animator.SetBool("dashEnergy", (dashEnergy < energy.energy));
-        animator.SetBool("hopEnergy", (hopEnergy < energy.energy));
-        animator.SetBool("flutterEnergy", (flutterEnergy < energy.energy));
-        animator.SetBool("attackEnergy", (attackEnergy < energy.energy));
+
     }
+
+    #endregion
 
     // ------------ ANIMATOR CLUNK ------------
 
@@ -107,9 +125,9 @@ public class Player : MonoBehaviour
         hitbox.gameObject.SetActive(false);
         trailRenderer.emitting = false;
 
-        animator.SetBool("dash", false);
-        animator.SetBool("attack", false);
-        animator.SetBool("hop", false);
+        animator.ResetTrigger("dash");
+        animator.ResetTrigger("attack");
+        animator.ResetTrigger("jump");
 
         if (interactInput) playerInteract?.StopInteract();
 

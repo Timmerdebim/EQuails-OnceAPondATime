@@ -66,50 +66,37 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
-            return;
-
         Vector2 moveInput = context.ReadValue<Vector2>();
         InputVector = new Vector3(moveInput.x, 0f, moveInput.y);
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
-            return;
-
-        if (context.action.WasPressedThisFrame())
-            Player.Instance.animator.SetBool("dash", true);
-        if (context.action.WasReleasedThisFrame())
-            Player.Instance.animator.SetBool("dash", false);
+        if (context.started
+        && Player.Instance.playerData.dashUnlocked
+        && Player.Instance.energy.energy > Player.Instance.dashEnergy)
+            Player.Instance.animator.SetTrigger("dash");
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
-            return;
-
-        if (context.action.WasPressedThisFrame() && Player.Instance.playerData.canAttack)
-            Player.Instance.animator.SetBool("attack", true);
-        if (context.action.WasReleasedThisFrame())
-            Player.Instance.animator.SetBool("attack", false);
+        if (context.started
+        && Player.Instance.playerData.attackUnlocked
+        && Player.Instance.energy.energy > Player.Instance.attackEnergy)
+            Player.Instance.animator.SetTrigger("attack");
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
-            return;
-
-        if (context.action.WasPressedThisFrame())
+        if (context.started)
         {
-            if (Player.Instance.playerData.canFlutter) Player.Instance.animator.SetBool("flutter", true);
-            else if (Player.Instance.playerData.canHop) Player.Instance.animator.SetBool("hop", true);
+            int wingLevel = Player.Instance.playerData.wingLevel;
+            float energy = Player.Instance.energy.energy;
+            if (wingLevel == 1 && energy > Player.Instance.hopEnergy) Player.Instance.animator.SetTrigger("jump");
+            else if (wingLevel >= 2 && energy > 0.1f) Player.Instance.animator.SetBool("fly", true);
         }
-        if (context.action.WasReleasedThisFrame())
-        {
-            Player.Instance.animator.SetBool("hop", false);
-            Player.Instance.animator.SetBool("flutter", false);
-        }
+        else if (context.canceled)
+            Player.Instance.animator.SetBool("fly", false);
     }
 
     #endregion

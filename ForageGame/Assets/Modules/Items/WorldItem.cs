@@ -7,7 +7,6 @@ using DG.Tweening;
 public class WorldItem : MonoBehaviour, IInteractable
 {
     public Item item;
-    public UnityEvent onPickup;
 
     void Awake()
     {

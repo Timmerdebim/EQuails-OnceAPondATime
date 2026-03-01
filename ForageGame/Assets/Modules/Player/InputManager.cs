@@ -10,16 +10,22 @@ public class InputManager : MonoBehaviour
 {
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.state != GameState.Gameplay)
+            return;
         Player.Instance?.playerController.OnMove(context);
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.state != GameState.Gameplay)
+            return;
         Player.Instance?.playerController.OnDash(context);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.state != GameState.Gameplay)
+            return;
         Player.Instance?.playerController.OnAttack(context);
     }
 
@@ -27,12 +33,13 @@ public class InputManager : MonoBehaviour
     {
         if (GameManager.Instance.state != GameState.Gameplay)
             return;
-
         Player.Instance.interactInput = context.action.IsPressed();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.state != GameState.Gameplay)
+            return;
         Player.Instance?.playerController.OnJump(context);
     }
 
