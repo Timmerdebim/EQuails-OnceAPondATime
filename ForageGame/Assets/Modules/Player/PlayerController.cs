@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         set
         {
             _viewDirection = Vector3.Normalize(value);
-            animator.SetFloat("FacingDirection", Mathf.Clamp01(_viewDirection.z));
+            animator.SetFloat("FacingDirection", _viewDirection.z > 0 ? 1f : 0f); //make sure it is always 0 or 1
             sprite.flipX = _viewDirection.x > 0;
         }
     }
