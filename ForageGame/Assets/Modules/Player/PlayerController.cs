@@ -1,13 +1,13 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.U2D.Animation;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private LayerMask playerLayer;
-    [SerializeField] public SpriteRenderer sprite;
     public Rigidbody Rigidbody { get; private set; }
     private Animator animator;
 
@@ -45,8 +45,7 @@ public class PlayerController : MonoBehaviour
         set
         {
             _viewDirection = Vector3.Normalize(value);
-            animator.SetFloat("FacingDirection", _viewDirection.z > 0 ? 1f : 0f); //make sure it is always 0 or 1
-            sprite.flipX = _viewDirection.x > 0;
+            Player.Instance.visuals.UpdateViewVisuals();
         }
     }
 

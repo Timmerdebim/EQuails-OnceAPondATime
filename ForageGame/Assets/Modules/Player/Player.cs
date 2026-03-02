@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     [SerializeField] public TrailRenderer trailRenderer;
     [SerializeField] private ParticleSystem hitParticleRenderer;
     [SerializeField] public SpriteRenderer sprite;
+    [SerializeField] public PlayerVisuals visuals;
 
     [Header("Player Data")]
     [SerializeField] public PlayerData playerData;
@@ -76,10 +77,8 @@ public class Player : MonoBehaviour
         playerData = data;
 
         playerController.TeleportTo(playerData.spawnPosition, true);
-
+        visuals.UpdateVisuals();
         ExitStateReset();
-
-        Debug.Log(transform.position);
     }
 
     #endregion
@@ -103,7 +102,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerUpgradeType.Wing:
                 playerData.wingLevel += 1;
-                //TODO: change wing sprite stuff
+                visuals.UpdateWingVisuals();
                 break;
         }
     }
