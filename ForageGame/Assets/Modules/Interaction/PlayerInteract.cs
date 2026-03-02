@@ -7,8 +7,10 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private LayerMask interactableLayers;
     [SerializeField] private float interactionRadius = 3f;
 
-    private IInteractable currentInteractable;
-    private Transform currentInteractableTransform;
+    private IInteractable currentFocus;
+    private Transform currentFocusTransform;
+
+    public IInteractable GetCurrentFocus() => currentFocus;
 
     private float lastScanTime = 0;
     private readonly float scanInterval = 0.2f; // Scan for interactables every 0.2 seconds
@@ -43,7 +45,6 @@ public class PlayerInteract : MonoBehaviour
         }
 
         EvaluateInteractableRelevance(nearbyInteractables);
-
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ public class PlayerInteract : MonoBehaviour
             }
         }
 
-        if (mostRelevantInteractable == null || mostRelevantInteractable == currentInteractable) return;
+        if (mostRelevantInteractable == null || mostRelevantInteractable == currentFocus) return;
         Focus(mostRelevantInteractable, mostRelevantInteractableTransform);
     }
 
@@ -87,9 +88,9 @@ public class PlayerInteract : MonoBehaviour
     /// </summary>
     public void Interact()
     {
-        if (currentInteractable == null || currentInteractableTransform == null) return;
-        Player.Instance.playerController.ViewDirection = currentInteractableTransform.position - Player.Instance.transform.position; //make duck face the target ~Lars
-        currentInteractable.Interact();
+        if (currentFocus == null || currentFocusTransform == null) return;
+        Player.Instance.playerController.ViewDirection = currentFocusTransform.position - Player.Instance.transform.position; //make duck face the target ~Lars
+        currentFocus.Interact();
     }
 
     /// <summary>
@@ -99,9 +100,9 @@ public class PlayerInteract : MonoBehaviour
     private void Focus(IInteractable interactable, Transform transform)
     {
         Defocus();
-        currentInteractable = interactable;
-        currentInteractableTransform = transform;
-        currentInteractable.Focus();
+        currentFocus = interactable;
+        currentFocusTransform = transform;
+        currentFocus.Focus();
     }
 
     /// <summary>
@@ -109,8 +110,8 @@ public class PlayerInteract : MonoBehaviour
     /// </summary>
     private void Defocus()
     {
-        currentInteractable?.Unfocus();
-        currentInteractable = null;
-        currentInteractableTransform = null;
+        currentFocus?.Unfocus();
+        currentFocus = null;
+        currentFocusTransform = null;
     }
 }

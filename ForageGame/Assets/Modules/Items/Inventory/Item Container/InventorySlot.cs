@@ -97,17 +97,20 @@ namespace Project.Items.Inventory
         {
             if (IsEmpty())
             {
-                itemImage.sprite = null;
                 itemImage.enabled = false;
-                itemQuantity.text = "";
                 itemQuantity.enabled = false;
             }
             else
             {
                 itemImage.sprite = Item.GetSprite();
                 itemImage.enabled = true;
-                itemQuantity.text = Quantity.ToString();
-                itemQuantity.enabled = true;
+                if (Quantity == 1)
+                    itemQuantity.enabled = false;
+                else
+                {
+                    itemQuantity.text = Quantity.ToString();
+                    itemQuantity.enabled = true;
+                }
             }
         }
 

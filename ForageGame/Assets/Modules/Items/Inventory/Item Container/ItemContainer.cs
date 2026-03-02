@@ -18,10 +18,7 @@ namespace Project.Items.Inventory
             return Slots[slotIndex].TryAddItem(item, quantity);
         }
 
-        public bool TryAddItemAtCurrent(Item item, int quantity = 1)
-        {
-            return TryAddItemAtIndex(item, currentSlotIndex, quantity);
-        }
+        public bool TryAddItemAtCurrent(Item item, int quantity = 1) => TryAddItemAtIndex(item, currentSlotIndex, quantity);
 
         public bool TryAddItemAtAny(Item item, int quantity = 1)
         {
@@ -58,10 +55,7 @@ namespace Project.Items.Inventory
             return Slots[slotIndex].TryRemoveItem(item, quantity);
         }
 
-        public bool TryRemoveItemAtCurrent(Item item, int quantity = 1)
-        {
-            return TryRemoveItemAtIndex(item, currentSlotIndex, quantity);
-        }
+        public bool TryRemoveItemAtCurrent(Item item, int quantity = 1) => TryRemoveItemAtIndex(item, currentSlotIndex, quantity);
 
         public bool TryRemoveAnyAtIndex(int slotIndex, int quantity = 1)
         {
@@ -71,10 +65,7 @@ namespace Project.Items.Inventory
             return TryRemoveItemAtIndex(Slots[slotIndex].Item, slotIndex, quantity);
         }
 
-        public bool TryRemoveAnyAtCurrent(int quantity = 1)
-        {
-            return TryRemoveAnyAtIndex(currentSlotIndex, quantity);
-        }
+        public bool TryRemoveAnyAtCurrent(int quantity = 1) => TryRemoveAnyAtIndex(currentSlotIndex, quantity);
 
         #endregion
 
@@ -95,6 +86,16 @@ namespace Project.Items.Inventory
 
         public void SelectNext() => SelectSlot(currentSlotIndex + 1);
         public void SelectPrevious() => SelectSlot(currentSlotIndex - 1);
+
+
+        public Item GetItemAtIndex(int index)
+        {
+            if (IsSlotValid(index))
+                return Slots[index].Item;
+            else return null;
+        }
+
+        public Item GetItemAtCurrent() => GetItemAtIndex(currentSlotIndex);
 
         #endregion
     }
