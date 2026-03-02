@@ -4,7 +4,7 @@ using UnityEngine;
 public static class SaveSystem
 {
     // static string path = Application.persistentDataPath + "/SaveData";
-    static string path = "Assets/SaveData";
+    static string path = "Assets/Save Data/Save Slots";
 
     public static bool SaveFileExists(int slotIndex)
     {
