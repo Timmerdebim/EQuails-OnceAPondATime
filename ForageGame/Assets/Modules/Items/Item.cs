@@ -1,35 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using Assets.Modules.Interaction;
 using UnityEngine;
-using UnityEngine.Animations;
-using System;
+using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "New Resource", menuName = "Items/Resource")]
-public class Item : ScriptableObject
+namespace Project.Items
 {
-    [SerializeField] protected string itemName;
-    [SerializeField] protected string description;
-    [SerializeField] protected Sprite sprite;
-
-    public int GetId() => Inventory.Instance.GetIdByItem(this);
-    public string GetName() => itemName;
-    public string GetDescription() => description;
-    public Sprite GetSprite() => sprite;
-
-    public virtual bool Use()
+    public class Item : ScriptableObject
     {
-        // Input use function; return true if executed successfully.
-        return true;
-    }
+        [SerializeField] protected string itemName;
+        [SerializeField] protected string description;
+        [SerializeField] protected Sprite sprite;
 
-    public virtual bool TryPickup()
-    {
-        if (!Inventory.Instance.hotbar.TryAddItemAtAny(this))
-            return false;
+        public int GetId() => ItemManager.Instance.GetIdByItem(this);
+        public string GetName() => itemName;
+        public string GetDescription() => description;
+        public Sprite GetSprite() => sprite;
 
-        // TODO: first time pickup screen
-        Inventory.Instance.itemPickupPopup.TriggerNewItemPopup(this);
-        return true;
+        // World item function; return true if executed successfully.
+        public virtual bool TryWorldItemInteract() => throw new System.NotImplementedException();
+
+        // Item function; return true if executed successfully.
+        public virtual bool TryUse() => throw new System.NotImplementedException();
     }
 }

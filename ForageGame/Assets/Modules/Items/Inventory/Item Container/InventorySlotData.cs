@@ -1,6 +1,9 @@
-[System.Serializable]
-public class InventorySlotData
+namespace Project.Items.Inventory
 {
-    public int itemId;
-    public int itemQuantity;
+    [System.Serializable]
+    public class InventorySlotData
+    {
+        public int itemId;
+        public int itemQuantity;
+    }
 }

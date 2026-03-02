@@ -1,21 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RecipePageUI : MonoBehaviour
+namespace Project.Items.Inventory
 {
-    private Animator animator;
-    void Awake()
+    public class RecipePageUI : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
+        private Animator animator;
+        void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        public void PlayFlipLeftAnim()
+        {
+            animator.SetTrigger("FlipLeft");
+        }
+
+        public void PlayFlipRightAnim()
+        {
+            animator.SetTrigger("FlipRight");
+        }
     }
 
-    public void PlayFlipLeftAnim()
-    {
-        animator.SetTrigger("FlipLeft");
-    }
-
-    public void PlayFlipRightAnim()
-    {
-        animator.SetTrigger("FlipRight");
-    }
 }

@@ -3,97 +3,97 @@ using Assets.Modules.Interaction;
 using UnityEngine.Events;
 using DG.Tweening;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class WorldItem : MonoBehaviour, IInteractable
+namespace Project.Items
 {
-    public Item item;
-
-    void Awake()
+    [RequireComponent(typeof(SpriteRenderer))]
+    public class WorldItem : MonoBehaviour, IInteractable
     {
-        Initialize(item);
-    }
+        public Item item;
 
-    public void Initialize(Item data)
-    {
-        item = data;
-        if (item != null)
+        void Awake()
         {
-            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = item.GetSprite();
+            Initialize(item);
         }
 
-        // Ground the item (TODO) (maybe do with rigid body?) (maybe check if an item can be dropped here?)
-        // hoverSequence = DOTween.Sequence()
-        // .Append(transform.DOJump())
-        // .OnComplete(() => OnGrounded());
-        Animate();
-    }
-
-
-    private Tweener doMove;
-    private Tweener doRotate;
-
-    public void MoveTo(Vector3 target, float duration)
-    {
-        doMove?.Kill();
-        doMove = transform.DOBlendableMoveBy(target - transform.position, duration)
-        .OnComplete(() => { Animate(); });
-
-        doRotate?.Kill();
-        doRotate = transform.DORotate(Vector3.zero, 5 / 4);
-    }
-
-    public void Animate()
-    {
-        float seqPosDuration = Mathf.PI; // Try to avoid the animations syncing up (looks weird if change direction and rotation at same time)
-        doMove?.Kill();
-        doMove = transform.DOBlendableMoveBy(0.3f * Vector3.up, seqPosDuration / 2)
-        .SetEase(Ease.InOutSine)
-        .SetLoops(-1, LoopType.Yoyo);
-
-        float seqRotDuration = 5;
-        doRotate?.Kill();
-        doRotate = transform.DORotate(-10 * Vector3.forward, seqRotDuration / 4)
-        .OnComplete(() =>
+        public void Initialize(Item data)
         {
+            item = data;
+            if (item != null)
+            {
+                SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+                spriteRenderer.sprite = item.GetSprite();
+            }
+
+            // Ground the item (TODO) (maybe do with rigid body?) (maybe check if an item can be dropped here?)
+            // hoverSequence = DOTween.Sequence()
+            // .Append(transform.DOJump())
+            // .OnComplete(() => OnGrounded());
+            Animate();
+        }
+
+
+        private Tweener doMove;
+        private Tweener doRotate;
+
+        public void MoveTo(Vector3 target, float duration)
+        {
+            doMove?.Kill();
+            doMove = transform.DOBlendableMoveBy(target - transform.position, duration)
+            .OnComplete(() => { Animate(); });
+
             doRotate?.Kill();
-            doRotate = transform.DOBlendableRotateBy(20 * Vector3.forward, seqRotDuration / 2)
+            doRotate = transform.DORotate(Vector3.zero, 5 / 4);
+        }
+
+        public void Animate()
+        {
+            float seqPosDuration = Mathf.PI; // Try to avoid the animations syncing up (looks weird if change direction and rotation at same time)
+            doMove?.Kill();
+            doMove = transform.DOBlendableMoveBy(0.3f * Vector3.up, seqPosDuration / 2)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
-        });
-    }
 
-    #region  Interactable Interface
-
-    virtual public void Interact(UnityAction StopInteractionCallback)
-    {
-        if (item.TryPickup())
-        {
-            // onPickup?.Invoke();
-            Destroy(gameObject);
+            float seqRotDuration = 5;
+            doRotate?.Kill();
+            doRotate = transform.DORotate(-10 * Vector3.forward, seqRotDuration / 4)
+            .OnComplete(() =>
+            {
+                doRotate?.Kill();
+                doRotate = transform.DOBlendableRotateBy(20 * Vector3.forward, seqRotDuration / 2)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
+            });
         }
-    }
 
-    public void StopInteract()
-    {
-        // None
-    }
+        #region  Interactable Interface
 
-    public void Focus()
-    {
-        // Todo: Highlight
-    }
+        virtual public void Interact(UnityAction StopInteractionCallback)
+        {
+            if (item.TryWorldItemInteract())
+                Destroy(gameObject);
+        }
 
-    public void Unfocus()
-    {
-        // Todo: De-Highlight
-    }
+        public void StopInteract()
+        {
+            // None
+        }
 
-    #endregion
+        public void Focus()
+        {
+            // Todo: Highlight
+        }
 
-    private void OnDestroy()
-    {
-        doMove?.Kill();
-        doRotate?.Kill();
+        public void Unfocus()
+        {
+            // Todo: De-Highlight
+        }
+
+        #endregion
+
+        private void OnDestroy()
+        {
+            doMove?.Kill();
+            doRotate?.Kill();
+        }
     }
 }

@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.Animations;
-using System;
 
-[CreateAssetMenu(fileName = "New Useable", menuName = "Items/Useable")]
-public class UseableItem : Item
+namespace Project.Items.Types
 {
-    [SerializeField] protected PlayerUpgradeType upgradeType = PlayerUpgradeType.Attack;
-
-    public override bool Use() => false;
-
-    public override bool TryPickup()
+    [CreateAssetMenu(fileName = "New Useable", menuName = "Items/Useable")]
+    public class UseableItem : Item
     {
-        if (!Player.Instance) return false;
-        Player.Instance?.Upgrade(upgradeType);
-        return true;
+        [SerializeField] protected PlayerUpgradeType upgradeType = PlayerUpgradeType.Attack;
+
+        public override bool TryWorldItemInteract()
+        {
+            if (!Player.Instance) return false;
+            Player.Instance?.Upgrade(upgradeType);
+            Inventory.Inventory.Instance.itemPickupUI.TriggerNewItemPopup(this);
+            return true;
+        }
+
+        public override bool TryUse() => false;
     }
 }

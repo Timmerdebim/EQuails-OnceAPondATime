@@ -2,6 +2,7 @@ using UnityEngine;
 using Assets.Modules.Interaction;
 using UnityEngine.Events;
 using System;
+using Project.Items;
 
 
 //TODO: just a testing script, should be integrated with general World Items I think ~Lars

@@ -7,7 +7,7 @@ namespace Project.Menus.Audio
     public class AudioSettingsManager : MonoBehaviour
     {
         public static AudioSettingsManager Instance { get; private set; }
-        [SerializeField] private string settingsPath = "Assets/SaveData";
+        private string settingsPath = "Assets/Save Data/Settings";
         public AudioSettings _settings { get; private set; }
 
         [Header("FMOD Studio Stuff")]

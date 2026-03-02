@@ -1,3 +1,4 @@
+using Project.Items.Inventory;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour

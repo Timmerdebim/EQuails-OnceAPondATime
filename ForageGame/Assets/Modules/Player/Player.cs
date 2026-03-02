@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using Unity.VisualScripting;
+using Project.Items.Inventory;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public enum PlayerUpgradeType { Attack, Lantern, Pouch, Wing }
 

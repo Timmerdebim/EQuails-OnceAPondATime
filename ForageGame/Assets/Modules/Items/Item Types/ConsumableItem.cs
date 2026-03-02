@@ -2,27 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.Animations;
-using System;
 
-[CreateAssetMenu(fileName = "New Consumable", menuName = "Items/Consumable")]
-public class ConsumableItem : Item
+namespace Project.Items.Types
 {
-    [SerializeField] protected float consumableEnergy;
-    [SerializeField] protected Item returnItem;
-
-    public override bool Use()
+    [CreateAssetMenu(fileName = "New Consumable", menuName = "Items/Consumable")]
+    public class ConsumableItem : Item
     {
-        if (!Inventory.Instance.hotbar.TryRemoveItemAtCurrent(this))
-            return false;
+        [SerializeField] protected float consumableEnergy;
+        [SerializeField] protected Item returnItem;
 
-        Player.Instance.energy.TakeDamage(-consumableEnergy); // a little botched but ok...
-
-        if (returnItem != null)
+        public override bool TryWorldItemInteract()
         {
-            if (!Inventory.Instance.hotbar.TryAddItemAtAny(returnItem))
-                Inventory.Instance.SpawnItemAt(returnItem, Player.Instance.transform.position);
+            if (!Inventory.Inventory.Instance.hotbar.TryAddItemAtAny(this))
+                return false;
+
+            // TODO: first time pickup screen
+            Inventory.Inventory.Instance.itemPickupUI.TriggerNewItemPopup(this);
+            return true;
         }
-        return true;
+
+        public override bool TryUse()
+        {
+            if (!Inventory.Inventory.Instance.hotbar.TryRemoveItemAtCurrent(this))
+                return false;
+
+            Player.Instance.energy.TakeDamage(-consumableEnergy); // a little botched but ok...
+
+            if (returnItem != null)
+            {
+                if (!Inventory.Inventory.Instance.hotbar.TryAddItemAtAny(returnItem))
+                    ItemManager.Instance.SpawnItemAt(returnItem, Player.Instance.transform.position);
+            }
+            return true;
+        }
     }
 }

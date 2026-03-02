@@ -6,7 +6,7 @@ namespace Project.Menus.Graphics
     public class GraphicsSettingsManager : MonoBehaviour
     {
         public static GraphicsSettingsManager Instance { get; private set; }
-        [SerializeField] private string settingsPath = "Assets/SaveData";
+        private string settingsPath = "Assets/Save Data/Settings";
         public Resolution[] _resolutions { get; private set; }
         public GraphicsSettings _settings { get; private set; }
 

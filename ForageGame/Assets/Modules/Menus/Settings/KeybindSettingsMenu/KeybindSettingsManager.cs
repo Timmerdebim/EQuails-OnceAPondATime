@@ -7,7 +7,7 @@ namespace Project.Menus.Keybind
     public class KeybindSettingsManager : MonoBehaviour
     {
         public static KeybindSettingsManager Instance { get; private set; }
-        [SerializeField] private string settingsPath = "Assets/SaveData";
+        private string settingsPath = "Assets/Save Data/Settings";
         [SerializeField] private InputActionAsset actions;
 
         private void Awake()

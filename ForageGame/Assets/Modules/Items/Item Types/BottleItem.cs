@@ -1,48 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.Animations;
-using System;
+using Project.Items.Inventory;
 
-[CreateAssetMenu(fileName = "New Bottle", menuName = "Items/Bottle")]
-public class Bottle : Item
+namespace Project.Items.Types
 {
-    [SerializeField] protected Item waterBottle;
-    [SerializeField] protected Item pollenBottle;
-    [SerializeField] protected Item sporeBottle;
-    [SerializeField] protected Item fireflyBottle;
-
-    public override bool Use()
+    [CreateAssetMenu(fileName = "New Bottle", menuName = "Items/Bottle")]
+    public class Bottle : Item
     {
-        // // Get colliders and check if any of them have the correct tag
-        // // if standing in water
-        // {
-        //     return TryUseBottleToGetItem(waterBottle);
-        // }
-        // // if standing in pollen cloud
-        // {
-        //     return TryUseBottleToGetItem(pollenBottle);
-        // }
-        // // if standing in spore cloud
-        // {
-        //     return TryUseBottleToGetItem(sporeBottle);
-        // }
-        // // if standing in firefly cloud
-        // {
-        //     return TryUseBottleToGetItem(fireflyBottle);
-        // }
+        [SerializeField] protected Item waterBottle;
+        [SerializeField] protected Item pollenBottle;
+        [SerializeField] protected Item sporeBottle;
+        [SerializeField] protected Item fireflyBottle;
 
-        return true;
-    }
+        public override bool TryWorldItemInteract()
+        {
+            if (!Inventory.Inventory.Instance.hotbar.TryAddItemAtAny(this))
+                return false;
 
-    private bool TryUseBottleToGetItem(Item item)
-    {
-        if (!Inventory.Instance.hotbar.TryRemoveItemAtCurrent(this))
-            return false;
+            // TODO: first time pickup screen
+            Inventory.Inventory.Instance.itemPickupUI.TriggerNewItemPopup(this);
+            return true;
+        }
 
-        if (!Inventory.Instance.hotbar.TryAddItemAtAny(item))
-            Inventory.Instance.SpawnItemAt(item, Player.Instance.transform.position);
-        return true;
+        public override bool TryUse()
+        {
+            // // Get colliders and check if any of them have the correct tag
+            // // if standing in water
+            // {
+            //     return TryUseBottleToGetItem(waterBottle);
+            // }
+            // // if standing in pollen cloud
+            // {
+            //     return TryUseBottleToGetItem(pollenBottle);
+            // }
+            // // if standing in spore cloud
+            // {
+            //     return TryUseBottleToGetItem(sporeBottle);
+            // }
+            // // if standing in firefly cloud
+            // {
+            //     return TryUseBottleToGetItem(fireflyBottle);
+            // }
+
+            return true;
+        }
+
+        private bool TryUseBottleToGetItem(Item item)
+        {
+            if (!Inventory.Inventory.Instance.hotbar.TryRemoveItemAtCurrent(this))
+                return false;
+
+            if (!Inventory.Inventory.Instance.hotbar.TryAddItemAtAny(item))
+                ItemManager.Instance.SpawnItemAt(item, Player.Instance.transform.position);
+            return true;
+        }
     }
 }

@@ -1,3 +1,5 @@
+using Project.Items.Inventory;
+
 [System.Serializable]
 public class SaveData
 {

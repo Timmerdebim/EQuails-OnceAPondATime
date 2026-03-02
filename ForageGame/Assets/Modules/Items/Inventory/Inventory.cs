@@ -1,86 +1,60 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
 using System;
+using System.Linq;
 using DG.Tweening;
 
-public class Inventory : MonoBehaviour
+namespace Project.Items.Inventory
 {
-    [SerializeField] public RecipeBook recipeBook;
-    [SerializeField] public Hotbar hotbar;
-    [SerializeField] public Chest chest;
-    [SerializeField] public ItemPickupPopup itemPickupPopup;
-    [SerializeField] private GameObject worldItemPrefab;
-    [SerializeField] private Item[] itemDatabase;
-
-    public static Inventory Instance { get; private set; }
-
-    void Awake()
+    public class Inventory : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static Inventory Instance { get; private set; }
+        [SerializeField] public RecipeBook recipeBook;
+        [SerializeField] public Hotbar hotbar;
+        [SerializeField] public ItemPickupUI itemPickupUI;
+
+        void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
         }
-        Instance = this;
-    }
 
-    public int GetIdByItem(Item item)
-    {
-        return Array.FindIndex(itemDatabase, row => row == item); // Returns -1 if not in database
-    }
-
-    public Item GetItemById(int id)
-    {
-        if (id < 0 || id >= itemDatabase.Count())
-            return null;
-        return itemDatabase[id];
-    }
-
-    public void SpawnItemAt(Item item, Vector3 position)
-    {
-        GameObject worldItem = Instantiate(worldItemPrefab, position, Quaternion.identity);
-        worldItem.GetComponent<WorldItem>().Initialize(item);
-
-        worldItem.transform.localScale = Vector3.zero;
-        worldItem.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBack);
-    }
-
-    public void Next()
-    {
-        if (recipeBook.IsVisualized)
-            recipeBook.NextPage();
-        else
-            hotbar.SelectNext();
-    }
-
-    public void Previous()
-    {
-        if (recipeBook.IsVisualized)
-            recipeBook.PreviousPage();
-        else
-            hotbar.SelectPrevious();
-    }
-
-    #region Save & Load
-
-    public void LoadData(InventoryData data)
-    {
-        hotbar.SetData(data.hotbarData);
-        chest.SetData(data.chestData);
-        recipeBook.SetData(data.recipeBookData);
-    }
-
-    public void SaveData(ref InventoryData data)
-    {
-        data = new InventoryData
+        public void Next()
         {
-            hotbarData = hotbar.GetData(),
-            chestData = chest.GetData(),
-            recipeBookData = recipeBook.GetData()
-        };
-    }
+            if (recipeBook.IsVisualized)
+                recipeBook.NextPage();
+            else
+                hotbar.SelectNext();
+        }
 
-    #endregion
+        public void Previous()
+        {
+            if (recipeBook.IsVisualized)
+                recipeBook.PreviousPage();
+            else
+                hotbar.SelectPrevious();
+        }
+
+        #region Save & Load
+
+        public void LoadData(InventoryData data)
+        {
+            hotbar.SetData(data.hotbarData);
+            recipeBook.SetData(data.recipeBookData);
+        }
+
+        public void SaveData(ref InventoryData data)
+        {
+            data = new InventoryData
+            {
+                hotbarData = hotbar.GetData(),
+                recipeBookData = recipeBook.GetData()
+            };
+        }
+
+        #endregion
+    }
 }
