@@ -27,7 +27,7 @@ namespace Project.Menus.Keybind
             //DontDestroyOnLoad(gameObject);
         }
 
-        public Sprite GetKeybindSprite(KeybindElement component, string bindingDisplayString, string deviceLayoutName, string controlPath)
+        public Sprite GetKeybindSprite(string bindingDisplayString, string deviceLayoutName, string controlPath)
         {
             if (InputSystem.IsFirstLayoutBasedOnSecond(deviceLayoutName, "Keyboard"))
                 return keyboard.GetSprite(controlPath);

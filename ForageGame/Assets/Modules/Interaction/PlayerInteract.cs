@@ -32,7 +32,7 @@ public class PlayerInteract : MonoBehaviour
 
         foreach (Collider col in colliders)
         {
-            if (col.TryGetComponent<IInteractable>(out IInteractable interactable))
+            if (col.TryGetComponent(out IInteractable interactable))
                 nearbyInteractables.Add(interactable, col.transform);
         }
 

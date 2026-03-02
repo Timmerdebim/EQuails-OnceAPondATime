@@ -204,7 +204,7 @@ namespace Project.Menus.Keybind
 
             // Set on label (if any).
             if (m_BindingImage != null)
-                m_BindingImage.sprite = KeybindSpritesDatabase.Instance?.GetKeybindSprite(this, displayString, deviceLayoutName, controlPath);
+                m_BindingImage.sprite = KeybindSpritesDatabase.Instance?.GetKeybindSprite(displayString, deviceLayoutName, controlPath);
 
             // Give listeners a chance to configure UI in response.
             m_UpdateBindingUIEvent?.Invoke(this, displayString, deviceLayoutName, controlPath);
