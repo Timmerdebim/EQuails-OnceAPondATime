@@ -13,7 +13,6 @@ namespace Project.Menus
         [SerializeField] private Menu fileSelectMenu;
         [SerializeField] private Menu settingsMenu;
         [SerializeField] private Menu creditsMenu;
-        [SerializeField] private Menu achievementsMenu;
 
         void Start()
         {
@@ -50,11 +49,6 @@ namespace Project.Menus
         public void OnCreditsClicked()
         {
             MenuManager.Instance.ToMenu(creditsMenu, true);
-        }
-
-        public void OnAchievementsClicked()
-        {
-            MenuManager.Instance.ToMenu(achievementsMenu, true);
         }
 
         public void OnQuitClicked()
