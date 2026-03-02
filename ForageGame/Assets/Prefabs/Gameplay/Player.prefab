@@ -5001,7 +5001,7 @@ Transform:
   m_GameObject: {fileID: 3453752863661084472}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5028,7 +5028,7 @@ MonoBehaviour:
   m_UVBias: {x: 0, y: 0}
   m_DecalLayerMask: 1
   m_ScaleMode: 0
-  m_Offset: {x: 0, y: 0, z: 3}
+  m_Offset: {x: 0, y: 0, z: 5}
   m_Size: {x: 2, y: 2, z: 10}
   m_FadeFactor: 1
 --- !u!1 &4104612903363515382
@@ -5059,8 +5059,8 @@ Transform:
   m_GameObject: {fileID: 4104612903363515382}
   serializedVersion: 2
   m_LocalRotation: {x: 0.19936788, y: 0, z: 0, w: 0.97992474}
-  m_LocalPosition: {x: 0, y: -1.3, z: 0}
-  m_LocalScale: {x: 0.13, y: 0.13, z: 1}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3218405337819507840}
@@ -5407,7 +5407,7 @@ GameObject:
   - component: {fileID: 4417091150437738957}
   - component: {fileID: 5878197811852665640}
   - component: {fileID: 7154177637054964034}
-  - component: {fileID: 7759300380127690268}
+  - component: {fileID: 2162551988642988768}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -5424,7 +5424,7 @@ Transform:
   m_GameObject: {fileID: 6760942821233357872}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5451,9 +5451,6 @@ MonoBehaviour:
   hitbox: {fileID: 3523305361774994790}
   trailRenderer: {fileID: 229097043921619139}
   hitParticleRenderer: {fileID: 7733002807732490052}
-  interactionLayer:
-    serializedVersion: 2
-    m_Bits: 4352
   sprite: {fileID: 5192637091550732600}
   playerData:
     spawnPosition: {x: 0, y: 100, z: 0}
@@ -5467,6 +5464,9 @@ MonoBehaviour:
   flutterEnergy: 10
   attackEnergy: 10
   interactInput: 0
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 4352
 --- !u!114 &1595567495064576390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5711,8 +5711,8 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!136 &7759300380127690268
-CapsuleCollider:
+--- !u!135 &2162551988642988768
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5729,11 +5729,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.6
-  m_Height: 1.6
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.2, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7692670296871027870
 GameObject:
   m_ObjectHideFlags: 0
@@ -5760,7 +5758,7 @@ Transform:
   m_GameObject: {fileID: 7692670296871027870}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.963, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

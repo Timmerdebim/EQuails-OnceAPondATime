@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateGrounded()
     {
-        if (Physics.SphereCast(transform.position, 0.5f, -transform.up, out RaycastHit hit, 0.6f)
+        if (Physics.SphereCast(transform.position, 0.2f, -transform.up, out RaycastHit hit, 0.6f)
     && hit.collider.gameObject.layer != playerLayer)
         {
             animator.SetBool("isGrounded", true);

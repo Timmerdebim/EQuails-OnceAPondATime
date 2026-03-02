@@ -31,10 +31,9 @@ public class Player : MonoBehaviour
     [SerializeField] public Hitbox hitbox;
     [SerializeField] public TrailRenderer trailRenderer;
     [SerializeField] private ParticleSystem hitParticleRenderer;
-    [SerializeField] private LayerMask interactionLayer;
     [SerializeField] public SpriteRenderer sprite;
 
-    [Header("Abilities")]
+    [Header("Player Data")]
     [SerializeField] public PlayerData playerData;
     [Header("Energy Requirements")]
     [SerializeField] public float dashEnergy = 10f;
@@ -42,8 +41,9 @@ public class Player : MonoBehaviour
     [SerializeField] public float flutterEnergy = 10f; // this is energy per second
     [SerializeField] public float attackEnergy = 10f;
 
-    [Header("Misc")]
+    [Header("Interaction")]
     [SerializeField] public bool interactInput = false;
+    [SerializeField] private LayerMask interactionLayer;
 
     private void Awake()
     {
