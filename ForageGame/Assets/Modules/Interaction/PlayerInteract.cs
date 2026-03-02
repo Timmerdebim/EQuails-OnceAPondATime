@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    [SerializeField] private LayerMask interactablesLayer;
+    [SerializeField] private LayerMask interactableLayers;
     [SerializeField] private float interactionRadius = 3f;
 
-    private IInteractable focusedInteractable;
-    private Transform focusedInteractableTransform;
+    private IInteractable currentInteractable;
+    private Transform currentInteractableTransform;
 
-    bool interacting;
-    float lastScanTime;
-    float scanInterval = 0.2f; // Scan for interactables every 0.2 seconds
+    private float lastScanTime = 0;
+    private readonly float scanInterval = 0.2f; // Scan for interactables every 0.2 seconds
 
     private void Update()
     {
-        if (!interacting && Time.time > lastScanTime + scanInterval)
+        if (Time.time > lastScanTime + scanInterval)
         {
             lastScanTime = Time.time;
             ScanInteractables();
@@ -28,25 +27,22 @@ public class PlayerInteract : MonoBehaviour
     /// </summary>
     private void ScanInteractables()
     {
-        Collider[] nearbyInteractables = Physics.OverlapSphere(transform.position, interactionRadius, interactablesLayer);
-        Dictionary<IInteractable, Transform> currentNearbyInteractables = new();
+        Dictionary<IInteractable, Transform> nearbyInteractables = new();
+        Collider[] colliders = Physics.OverlapSphere(Player.Instance.transform.position, interactionRadius, interactableLayers);
 
-        foreach (Collider col in nearbyInteractables)
+        foreach (Collider col in colliders)
         {
-            IInteractable interactable;
-            if (col.TryGetComponent<IInteractable>(out interactable))
-            {
-                currentNearbyInteractables.Add(interactable, col.transform);
-            }
+            if (col.TryGetComponent<IInteractable>(out IInteractable interactable))
+                nearbyInteractables.Add(interactable, col.transform);
         }
 
-        if (currentNearbyInteractables.Count == 0)
+        if (nearbyInteractables.Count == 0)
         {
             Defocus();
             return;
         }
 
-        EvaluateInteractableRelevance(currentNearbyInteractables);
+        EvaluateInteractableRelevance(nearbyInteractables);
 
     }
 
@@ -57,17 +53,19 @@ public class PlayerInteract : MonoBehaviour
     private void EvaluateInteractableRelevance(Dictionary<IInteractable, Transform> nearbyInteractables)
     {
         float smallestLossFunction = Mathf.Infinity;
-        //The most relevant interactable is the one which best minimizes the loss function
-        (IInteractable interactable, Transform transform) mostRelevantInteractable = (null, null);
+        // The most relevant interactable is the one which best minimizes the loss function
+        IInteractable mostRelevantInteractable = null;
+        Transform mostRelevantInteractableTransform = null;
 
         foreach (var interactable_ in nearbyInteractables)
         {
             IInteractable interactable = interactable_.Key;
             Transform interactableTransform = interactable_.Value;
 
-            float distance = Vector3.Distance(transform.position, interactableTransform.transform.position);
+            Vector3 playerPos = Player.Instance.transform.position;
+            float distance = Vector3.Distance(playerPos, interactableTransform.position);
             float normDistance = distance / interactionRadius;
-            float angle = Vector3.Angle(transform.forward, (interactableTransform.transform.position - transform.position).normalized);
+            float angle = Vector3.Angle(Player.Instance.playerController.ViewDirection, (interactableTransform.position - playerPos).normalized);
             float normAngle = angle / 180f; // Normalize angle to [0, 1]
 
             float lossFunction = Mathf.Pow(normAngle, 2) + normDistance; // The closer and more directly in front of the player, the better
@@ -75,12 +73,13 @@ public class PlayerInteract : MonoBehaviour
             if (lossFunction < smallestLossFunction)
             {
                 smallestLossFunction = lossFunction;
-                mostRelevantInteractable = (interactable, interactableTransform);
+                mostRelevantInteractable = interactable;
+                mostRelevantInteractableTransform = interactableTransform;
             }
         }
 
-        if (mostRelevantInteractable.interactable == null || mostRelevantInteractable.interactable == focusedInteractable) { return; }
-        Focus(mostRelevantInteractable.interactable, mostRelevantInteractable.transform);
+        if (mostRelevantInteractable == null || mostRelevantInteractable == currentInteractable) return;
+        Focus(mostRelevantInteractable, mostRelevantInteractableTransform);
     }
 
     /// <summary>
@@ -88,34 +87,21 @@ public class PlayerInteract : MonoBehaviour
     /// </summary>
     public void Interact()
     {
-        if (focusedInteractable == null || interacting) { return; }
-
-        interacting = true;
-        Player.Instance.FaceTarget(focusedInteractableTransform); //make duck face the target ~Lars
-        focusedInteractable.Interact(StopInteract);
-    }
-
-    /// <summary>
-    /// Stop interacting with the currently focused interactable, if any. Will call the StopInteract callback on the interactable and rescan for interactables (if the previous interactable has been destroyed, this ensures we focus on a new one)
-    /// </summary>
-    public void StopInteract()
-    {
-        if (!interacting) { return; }
-        focusedInteractable?.StopInteract();
-        interacting = false;
-        ScanInteractables();
+        if (currentInteractable == null || currentInteractableTransform == null) return;
+        Player.Instance.playerController.ViewDirection = currentInteractableTransform.position - Player.Instance.transform.position; //make duck face the target ~Lars
+        currentInteractable.Interact();
     }
 
     /// <summary>
     /// Focuses on the given interactable, defocusing any previously focused interactable.
     /// </summary>
     /// <param name="interactable"></param>
-    private void Focus(IInteractable interactable, Transform interactableTransform)
+    private void Focus(IInteractable interactable, Transform transform)
     {
         Defocus();
-        focusedInteractable = interactable;
-        focusedInteractableTransform = interactableTransform;
-        focusedInteractable.Focus();
+        currentInteractable = interactable;
+        currentInteractableTransform = transform;
+        currentInteractable.Focus();
     }
 
     /// <summary>
@@ -123,8 +109,8 @@ public class PlayerInteract : MonoBehaviour
     /// </summary>
     private void Defocus()
     {
-        StopInteract();
-        focusedInteractable?.Unfocus();
-        focusedInteractable = null;
+        currentInteractable?.Unfocus();
+        currentInteractable = null;
+        currentInteractableTransform = null;
     }
 }

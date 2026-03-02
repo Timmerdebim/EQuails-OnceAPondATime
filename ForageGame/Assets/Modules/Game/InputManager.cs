@@ -30,18 +30,18 @@ public class InputManager : MonoBehaviour
         Player.Instance?.playerController.OnAttack(context);
     }
 
-    public void OnInteract(InputAction.CallbackContext context)
-    {
-        if (GameManager.Instance.state != GameState.Gameplay)
-            return;
-        Player.Instance.interactInput = context.action.IsPressed();
-    }
-
     public void OnJump(InputAction.CallbackContext context)
     {
         if (GameManager.Instance.state != GameState.Gameplay)
             return;
-        Player.Instance?.playerController.OnJump(context);
+        Player.Instance?.playerController?.OnJump(context);
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        if (GameManager.Instance.state != GameState.Gameplay) return;
+        Player.Instance?.playerInteract?.Interact();
     }
 
     // ------------ Pausing ------------

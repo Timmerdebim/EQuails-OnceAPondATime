@@ -9,13 +9,20 @@ namespace Assets.Modules.Interaction
         InteractablePrompt PopupPrompt; // UI element to prompt the player to interact
 
         public UnityEvent onInteract; // Event to invoke when interacting
-        public UnityEvent onStopInteract; // Event to invoke when stopping interaction
         public UnityEvent onFocus;
         public UnityEvent OnUnfocus;
 
         private void Start()
         {
             PopupPrompt = GetComponentInChildren<InteractablePrompt>(true);
+        }
+
+        public virtual void Interact()
+        {
+            print("Interacting with " + gameObject.name);
+
+            onInteract?.Invoke();
+            GetComponentInChildren<Renderer>().material.color = Color.cyan;
         }
 
         public virtual void Focus()
@@ -35,22 +42,5 @@ namespace Assets.Modules.Interaction
 
             PopupPrompt?.Deactivate();
         }
-
-        public virtual void Interact(UnityAction StopInteractionCallback)
-        {
-            print("Interacting with " + gameObject.name);
-
-            onInteract?.Invoke();
-            GetComponentInChildren<Renderer>().material.color = Color.cyan;
-        }
-
-        public virtual void StopInteract()
-        {
-            print("Stopped interacting with " + gameObject.name);
-
-            onStopInteract?.Invoke();
-            GetComponentInChildren<Renderer>().material.color = Color.gray;
-        }
-
     }
 }

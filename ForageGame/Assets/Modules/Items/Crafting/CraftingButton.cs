@@ -8,16 +8,12 @@ namespace Project.Items.Crafting
     {
         [SerializeField] Crafter crafter;
 
-        public void Focus()
-        {
-        }
-
-        public void Interact(UnityAction StopInteractionCallback)
+        public void Interact()
         {
             crafter.TryCraft();
         }
 
-        public void StopInteract()
+        public void Focus()
         {
         }
 

@@ -12,11 +12,6 @@ public class Walk : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Player.Instance.interactInput)
-            Player.Instance.playerInteract?.Interact();
-        else
-            Player.Instance.playerInteract?.StopInteract();
-
         Player.Instance.playerController.locomotionTargetVelocity = moveSpeed * Player.Instance.playerController.InputVector;
     }
 

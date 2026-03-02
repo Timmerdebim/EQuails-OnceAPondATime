@@ -67,15 +67,10 @@ namespace Project.Items
 
         #region  Interactable Interface
 
-        virtual public void Interact(UnityAction StopInteractionCallback)
+        virtual public void Interact()
         {
             if (item.TryWorldItemInteract())
                 Destroy(gameObject);
-        }
-
-        public void StopInteract()
-        {
-            // None
         }
 
         public void Focus()

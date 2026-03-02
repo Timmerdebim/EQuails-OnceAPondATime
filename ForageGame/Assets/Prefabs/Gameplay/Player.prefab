@@ -5110,7 +5110,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1be17da5690f04306bc3ae5a3f0da316, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bec3b958cb198486b929373af6560a29, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5134,7 +5134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: d2a965f4a21194342889c58c6d130d6a, type: 3}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: d6139f46406cae545a311b6d30d4f9a0, type: 3}
 --- !u!114 &5229203663154989773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5420,13 +5420,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3218405337819507840}
   - component: {fileID: 4156479463314959500}
+  - component: {fileID: 5878197811852665640}
   - component: {fileID: 1595567495064576390}
   - component: {fileID: 2495748716159609964}
   - component: {fileID: 5297287321932333479}
   - component: {fileID: 8491966899435948482}
   - component: {fileID: 7479819836795385893}
   - component: {fileID: 4417091150437738957}
-  - component: {fileID: 5878197811852665640}
   - component: {fileID: 7154177637054964034}
   - component: {fileID: 2162551988642988768}
   m_Layer: 9
@@ -5472,7 +5472,6 @@ MonoBehaviour:
   hitbox: {fileID: 3523305361774994790}
   trailRenderer: {fileID: 229097043921619139}
   hitParticleRenderer: {fileID: 7733002807732490052}
-  sprite: {fileID: 5192637091550732600}
   visuals: {fileID: 6941911297845455562}
   playerData:
     spawnPosition: {x: 0, y: 100, z: 0}
@@ -5485,10 +5484,30 @@ MonoBehaviour:
   hopEnergy: 10
   flutterEnergy: 10
   attackEnergy: 10
-  interactInput: 0
-  interactionLayer:
+--- !u!114 &5878197811852665640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760942821233357872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad05c3a852cfa41a019408965553f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLayer:
     serializedVersion: 2
-    m_Bits: 4352
+    m_Bits: 512
+  groundFriction: 5
+  externalAcceleration: {x: 0, y: 0, z: 0}
+  useGravity: 0
+  useLocomotion:
+    x: 0
+    y: 0
+    z: 0
+  locomotionTargetVelocity: {x: 0, y: 0, z: 0}
+  locomotionAcceleration: 0
 --- !u!114 &1595567495064576390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5501,7 +5520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989160d0ff7f8be41a006c22379c8549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactablesLayer:
+  interactableLayers:
     serializedVersion: 2
     m_Bits: 12544
   interactionRadius: 3
@@ -5626,30 +5645,6 @@ MonoBehaviour:
       Data3: -1780569161
       Data4: 1373550982
     Path: event:/Sfx/Player/Water/Swim
---- !u!114 &5878197811852665640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6760942821233357872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2ad05c3a852cfa41a019408965553f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  groundFriction: 5
-  externalAcceleration: {x: 0, y: 0, z: 0}
-  useGravity: 0
-  useLocomotion:
-    x: 0
-    y: 0
-    z: 0
-  locomotionTargetVelocity: {x: 0, y: 0, z: 0}
-  locomotionAcceleration: 0
 --- !u!54 &7154177637054964034
 Rigidbody:
   m_ObjectHideFlags: 0

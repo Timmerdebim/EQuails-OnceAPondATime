@@ -10,7 +10,7 @@ public class StoryFlagItem : WorldItem
 {
     [SerializeField] private StoryFlag flag;
 
-    override public void Interact(UnityAction StopInteractionCallback)
+    override public void Interact()
     {
         StoryFlagManager.Instance.AddFlag(flag);
         // Unlock Recipies

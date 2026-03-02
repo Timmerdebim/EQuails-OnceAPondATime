@@ -14,24 +14,23 @@ public class PlayerData
     public bool lanternUnlocked = false;
 }
 
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Energy))]
-[RequireComponent(typeof(PlayerInteract))]
 [RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerInteract))]
+[RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
     [Header("Components")]
-    public Animator animator { get; private set; }
     public Energy energy { get; private set; }
     public PlayerInteract playerInteract { get; private set; }
     public PlayerController playerController { get; private set; }
+    public Animator animator { get; private set; }
 
     [SerializeField] public Hitbox hitbox;
     [SerializeField] public TrailRenderer trailRenderer;
     [SerializeField] private ParticleSystem hitParticleRenderer;
-    [SerializeField] public SpriteRenderer sprite;
     [SerializeField] public PlayerVisuals visuals;
 
     [Header("Player Data")]
@@ -41,10 +40,6 @@ public class Player : MonoBehaviour
     [SerializeField] public float hopEnergy = 10f;
     [SerializeField] public float flutterEnergy = 10f; // this is energy per second
     [SerializeField] public float attackEnergy = 10f;
-
-    [Header("Interaction")]
-    [SerializeField] public bool interactInput = false;
-    [SerializeField] private LayerMask interactionLayer;
 
     private void Awake()
     {
@@ -56,10 +51,10 @@ public class Player : MonoBehaviour
         Instance = this;
 
         // Get components on this GameObject
-        animator = GetComponent<Animator>();
         energy = GetComponent<Energy>();
         playerInteract = GetComponent<PlayerInteract>();
         playerController = GetComponent<PlayerController>();
+        animator = GetComponent<Animator>();
 
         ExitStateReset();
     }
@@ -126,15 +121,6 @@ public class Player : MonoBehaviour
         animator.ResetTrigger("attack");
         animator.ResetTrigger("jump");
 
-        if (interactInput) playerInteract?.StopInteract();
-
         playerController.ApplyDefaultSettings();
-    }
-
-    //Helper function, can also be used for cutscenes or something
-    public void FaceTarget(Transform target)
-    {
-        animator.SetFloat("FacingDirection", Mathf.Clamp01(target.position.z - transform.position.z));
-        sprite.flipX = target.position.x > transform.position.x;
     }
 }

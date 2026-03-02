@@ -1,7 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.U2D.Animation;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
@@ -32,10 +31,10 @@ public class PlayerController : MonoBehaviour
             if (value.magnitude > 0.1f)
             {
                 ViewDirection = _inputVector;
-                Player.Instance.animator.SetBool("isMoving", true);
+                animator.SetBool("isMoving", true);
             }
             else
-                Player.Instance.animator.SetBool("isMoving", false);
+                animator.SetBool("isMoving", false);
         }
     }
     private Vector3 _viewDirection = Vector3.right;
@@ -73,7 +72,7 @@ public class PlayerController : MonoBehaviour
         if (context.started
         && Player.Instance.playerData.dashUnlocked
         && Player.Instance.energy.energy > Player.Instance.dashEnergy)
-            Player.Instance.animator.SetTrigger("dash");
+            animator.SetTrigger("dash");
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -81,7 +80,7 @@ public class PlayerController : MonoBehaviour
         if (context.started
         && Player.Instance.playerData.attackUnlocked
         && Player.Instance.energy.energy > Player.Instance.attackEnergy)
-            Player.Instance.animator.SetTrigger("attack");
+            animator.SetTrigger("attack");
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -90,17 +89,30 @@ public class PlayerController : MonoBehaviour
         {
             int wingLevel = Player.Instance.playerData.wingLevel;
             float energy = Player.Instance.energy.energy;
-            if (wingLevel == 1 && energy > Player.Instance.hopEnergy) Player.Instance.animator.SetTrigger("jump");
-            else if (wingLevel >= 2 && energy > 0.1f) Player.Instance.animator.SetBool("fly", true);
+            if (wingLevel == 1 && energy > Player.Instance.hopEnergy) animator.SetTrigger("jump");
+            else if (wingLevel >= 2 && energy > 0.1f) animator.SetBool("fly", true);
         }
         else if (context.canceled)
-            Player.Instance.animator.SetBool("fly", false);
+            animator.SetBool("fly", false);
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+
+        }
     }
 
     #endregion
 
-    #region  Physics 
+    #region Interact
 
+
+
+    #endregion
+
+    #region  Physics 
 
     public Vector3 externalAcceleration = Vector3.zero;
     public bool useGravity = true;
