@@ -4,6 +4,8 @@ using UnityEngine;
 namespace Project.Signals.Actuators
 {
     [RequireComponent(typeof(IActuator))]
+    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Rigidbody))]
     public class ColliderActuator : MonoBehaviour
     {
         private IActuator actuator;

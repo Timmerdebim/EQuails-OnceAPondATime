@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Project.Signals.Actuators
 {
-    [RequireComponent(typeof(IActuator))]
+    [RequireComponent(typeof(Collider))]
     public class InteractionActuator : MonoBehaviour, IInteractable
     {
         private IActuator actuator;

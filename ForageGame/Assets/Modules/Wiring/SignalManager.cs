@@ -24,13 +24,11 @@ namespace Project.Signals
         public void SendSignalFrom<T>(T signal, ISignalSource source)
         {
             foreach (Wire wire in currentWires)
-            {
                 if (wire.source == source)
-                    wire.target.ReceiveSignal<T>(signal);
-            }
+                    wire.target.ReceiveSignal(signal);
         }
         public void SendSignalTo<T>(T signal, ISignalTarget target) =>
-            target.ReceiveSignal<T>(signal);
+            target.ReceiveSignal(signal);
 
         #endregion
 

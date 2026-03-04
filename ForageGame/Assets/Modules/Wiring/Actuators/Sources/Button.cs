@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Project.Signals.Sources
 {
     // A button calls out each time it is triggered
-    public class Button : SignalSource, IActuator
+    public class Button : ISignalSource, IActuator
     {
         public void OnTrigger() => SignalManager.Instance.SendSignalFrom<EmptySignal>(null, this);
         public virtual void Focus() { }
