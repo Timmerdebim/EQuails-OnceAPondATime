@@ -10,7 +10,7 @@ public class Flutter : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        GameObject obj = animator.gameObject;
+        Player.Instance.playerData.hasUsedFly = true;
 
         targetHight = flutterHeight + Player.Instance.playerController.LastGroundedHeight;
 

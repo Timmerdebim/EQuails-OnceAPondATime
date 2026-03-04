@@ -8,6 +8,7 @@ public class Attack : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Player.Instance.energy.UseEnergy(Player.Instance.attackEnergy);
+        Player.Instance.playerData.hasUsedAttack = true;
 
         Player.Instance.hitbox.Reset();
         Player.Instance.hitbox.PivotTarget(Player.Instance.playerController.ViewDirection);

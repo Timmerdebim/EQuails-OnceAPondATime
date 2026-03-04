@@ -12,6 +12,12 @@ public class PlayerData
     public bool attackUnlocked = false;
     public bool dashUnlocked = false;
     public bool lanternUnlocked = false;
+
+    // The "hasUsed" referes to the fact you have used this ability ever (for the InGameHints system)
+    public bool hasUsedJump = false;
+    public bool hasUsedDash = false;
+    public bool hasUsedFly = false;
+    public bool hasUsedAttack = false;
 }
 
 [RequireComponent(typeof(Energy))]

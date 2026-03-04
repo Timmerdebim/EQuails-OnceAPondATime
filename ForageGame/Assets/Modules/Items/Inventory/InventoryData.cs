@@ -7,5 +7,6 @@ namespace Project.Items.Inventory
     {
         public List<InventorySlotData> hotbarData = new();
         public List<int> recipeBookData = new();
+        public HashSet<int> seenItemsData = new();
     }
 }

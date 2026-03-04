@@ -7,6 +7,7 @@ public class Dash : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Player.Instance.energy.UseEnergy(Player.Instance.dashEnergy);
+        Player.Instance.playerData.hasUsedDash = true;
 
         Player.Instance.trailRenderer.emitting = true;
         Player.Instance.trailRenderer.startColor = Color.black;

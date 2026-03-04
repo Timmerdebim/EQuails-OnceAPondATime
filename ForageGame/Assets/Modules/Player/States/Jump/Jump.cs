@@ -10,6 +10,7 @@ public class Jump : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Player.Instance.energy.UseEnergy(Player.Instance.hopEnergy);
+        Player.Instance.playerData.hasUsedJump = true;
 
         Player.Instance.playerController.ApplyMoveSettings(moveAcceleration);
 

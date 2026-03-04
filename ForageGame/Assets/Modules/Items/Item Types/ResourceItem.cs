@@ -13,8 +13,11 @@ namespace Project.Items.Types
             if (!Inventory.Inventory.Instance.hotbar.TryAddItemAtAny(this))
                 return false;
 
-            // TODO: first time pickup screen
-            Inventory.Inventory.Instance.itemPickupUI.TriggerNewItemPopup(this);
+            if (!Inventory.Inventory.Instance.seenItems.Contains(this))
+            {
+                Inventory.Inventory.Instance.seenItems.Add(this);
+                Inventory.Inventory.Instance.itemPickupUI.TriggerNewItemPopup(this);
+            }
             return true;
         }
 
