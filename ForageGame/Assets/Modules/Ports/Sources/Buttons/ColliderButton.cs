@@ -7,13 +7,12 @@ using UnityEngine;
 public class ColliderButton : MonoBehaviour
 {
     [SerializeField] private SlidingDoor door; // will try and get the toggle ports
-    public OutputPort<Unit> myport { get; } = new();
+    public OutputPort<Unit> clickPort { get; } = new();
 
     void Start()
     {
-        myport.Connect(door._togglePort);
+        clickPort.Connect(door._togglePort);
     }
 
-    public void OnTriggerEnter(Collider other) => myport.Send(new Unit());
-
+    public void OnTriggerEnter(Collider other) => clickPort.Send(new Unit());
 }

@@ -9,7 +9,7 @@ namespace Project.Signals.Targets
     public class SlidingDoor : MonoBehaviour
     {
         public InputPort<Unit> _togglePort;
-        private InputPort<bool> _setPort;
+        public InputPort<bool> _setPort;
 
         [SerializeField] private bool startOpen = false;
         [SerializeField] private bool singnalUse = false;
@@ -27,7 +27,6 @@ namespace Project.Signals.Targets
         {
             _togglePort = new InputPort<Unit>(ToggleDoor);
             _setPort = new InputPort<bool>(SetDoorState);
-            // PortSystem.RegisterPorts(this);
         }
 
         void Start()
