@@ -71,6 +71,27 @@ public class GameManager : MonoBehaviour
         });
     }
 
+    public void Sleep()
+    {
+        SetGameState(GameState.Transitioning);
+        CutsceneManager.Instance.PlayGame(() =>
+        {
+            SaveManager.Instance.SaveGame();
+            SetGameState(GameState.Gameplay);
+        });
+    }
+
+    public void Death()
+    {
+        SetGameState(GameState.Cutscene);
+        // TODO: add duck falling and eating shit?
+        CutsceneManager.Instance.PlayGame(() =>
+        {
+            SaveManager.Instance.SaveGame();
+            SetGameState(GameState.Gameplay);
+        });
+    }
+
     public void PauseGame()
     {
         SetGameState(GameState.Transitioning);
