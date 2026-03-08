@@ -1,6 +1,4 @@
-using Assets.Modules.Interaction;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Project.Items
 {

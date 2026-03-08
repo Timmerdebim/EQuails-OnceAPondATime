@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class LoadingZone : MonoBehaviour
+namespace Project.SceneLoading
 {
-    [SerializeField] private LayerMask triggeringLayers;
-    [SerializeField] private SceneGroup loadGroup;
-
-    void OnTriggerEnter(Collider other)
+    public class LoadingZone : MonoBehaviour
     {
-        if ((triggeringLayers.value & (1 << other.gameObject.layer)) != 0)
-            GameManager.Instance.sceneLoader.LoadScenesByGroup(loadGroup);
-    }
+        [SerializeField] private LayerMask triggeringLayers;
+        [SerializeField] private SceneGroup loadGroup;
 
-    void OnTriggerExit(Collider other)
-    {
-        if ((triggeringLayers.value & (1 << other.gameObject.layer)) != 0)
-            GameManager.Instance.sceneLoader.UnloadScenesByGroup(loadGroup);
+        void OnTriggerEnter(Collider other)
+        {
+            if ((triggeringLayers.value & (1 << other.gameObject.layer)) != 0)
+                GameManager.Instance.sceneLoader.LoadScenesByGroup(loadGroup);
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if ((triggeringLayers.value & (1 << other.gameObject.layer)) != 0)
+                GameManager.Instance.sceneLoader.UnloadScenesByGroup(loadGroup);
+        }
     }
 }

@@ -5,14 +5,19 @@ using UnityEngine.UI;
 using System;
 using Project.Menus;
 using System.Threading.Tasks;
+using Project.SceneLoading;
 
 public class CutsceneManager : MonoBehaviour
 {
     public static CutsceneManager Instance { get; private set; }
 
+    [Header("Images")]
     [SerializeField] private Image blackOverlay;
     [SerializeField] private Image[] introImages;
     [SerializeField] private Image[] outroImages;
+    [Header("Scenes")]
+    [SerializeField] private SceneGroup mainMenuSceneGroup;
+    [SerializeField] private SceneGroup worldSceneGroup;
 
     private Sequence cutsceneSeq;
     private bool isCutsceneDone = true;
@@ -36,22 +41,22 @@ public class CutsceneManager : MonoBehaviour
 
     public void PlayNewGame(Action callback = null)
     {
-        PlayCutscene(introImages, SceneGroup.World, callback);
+        PlayCutscene(introImages, worldSceneGroup, callback);
     }
 
     public void PlayGame(Action callback = null)
     {
-        PlayCutscene(null, SceneGroup.World, callback);
+        PlayCutscene(null, worldSceneGroup, callback);
     }
 
     public void QuitToMainMenu(Action callback = null)
     {
-        PlayCutscene(null, SceneGroup.MainMenu, callback);
+        PlayCutscene(null, mainMenuSceneGroup, callback);
     }
 
     public void FinishGame(Action callback = null)
     {
-        PlayCutscene(outroImages, SceneGroup.MainMenu, callback);
+        PlayCutscene(outroImages, mainMenuSceneGroup, callback);
     }
 
     // ------------ Cutscene Under da hood Functions ------------

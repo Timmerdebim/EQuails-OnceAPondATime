@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System;
 using Project.Menus;
+using Project.SceneLoading;
 
 public enum GameState { MainMenu, PauseMenu, Gameplay, Cutscene, Transitioning }
 
@@ -12,8 +13,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public SceneLoader sceneLoader { get; private set; }
-    public GameState state { get; private set; }
-    [SerializeField] SceneGroup initialSceneGroup;
+    [SerializeField] public GameState state = GameState.Gameplay;
+    [SerializeField] private SceneGroup initialSceneGroup;
+
+    [Header("Important Scenes")]
+    [SerializeField] private SceneInfo pauseScene;
 
     void Awake()
     {
@@ -29,13 +33,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (initialSceneGroup == SceneGroup.MainMenu)
-            SetGameState(GameState.MainMenu);
-        else if (initialSceneGroup == SceneGroup.Pause)
-            SetGameState(GameState.PauseMenu);
-        else
-            SetGameState(GameState.Gameplay);
-
         sceneLoader.FullLoadSceneGroup(initialSceneGroup);
     }
 
@@ -95,14 +92,14 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         SetGameState(GameState.Transitioning);
-        sceneLoader.LoadScenesByGroup(SceneGroup.Pause, () => SetGameState(GameState.PauseMenu));
+        sceneLoader.LoadScene(pauseScene, () => SetGameState(GameState.PauseMenu));
     }
 
     public void ResumeGame()
     {
         SetGameState(GameState.Transitioning);
         MenuManager.Instance.ToMenu(null, false);
-        sceneLoader.UnloadScenesByGroup(SceneGroup.Pause, () => SetGameState(GameState.Gameplay));
+        sceneLoader.UnloadScene(pauseScene, () => SetGameState(GameState.Gameplay));
     }
 
     public void PlayNewGame(int slotIndex = -1)
