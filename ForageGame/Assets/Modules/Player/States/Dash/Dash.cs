@@ -19,6 +19,7 @@ public class Dash : StateMachineBehaviour
 
         Player.Instance.playerController.Reset();
         Player.Instance.playerController.SetGravity(false);
+        Player.Instance.playerController.LM_Set(new(true, false, true), Vector3.zero, deceleration);
         Player.Instance.playerController.SetImpulse(impulse * Player.Instance.playerController.ViewDirection);
     }
 

@@ -106,12 +106,12 @@ public class PlayerController : MonoBehaviour
 
     private bool3 LM_EnabledAxes = new(false, false, false);
     private Vector3 LM_TargetVelocity = Vector3.zero;
-    public float LM_Acceleration = 0;
+    private float LM_Acceleration = 0;
 
     private enum LocomotionTrack { None, Input, View }
     private LocomotionTrack LT_Mode = LocomotionTrack.None;
     private float LT_VelocityScaleFactor = 1;
-    public float LT_Acceleration = 0;
+    private float LT_Acceleration = 0;
 
     void FixedUpdate()
     {
