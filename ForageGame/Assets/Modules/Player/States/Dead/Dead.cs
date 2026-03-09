@@ -4,7 +4,7 @@ public class Dead : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.Instance.playerController.ApplyDefaultSettings();
+        Player.Instance.playerController.Reset();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

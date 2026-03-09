@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -72,7 +73,9 @@ public class PlayerController : MonoBehaviour
         if (context.started
         && Player.Instance.playerData.dashUnlocked
         && Player.Instance.energy.energy > Player.Instance.dashEnergy)
-            animator.SetTrigger("dash");
+            animator.SetBool("run", true);
+        else if (context.canceled)
+            animator.SetBool("run", false);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -96,65 +99,50 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("fly", false);
     }
 
-    public void OnInteract(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-
-        }
-    }
-
-    #endregion
-
-    #region Interact
-
-
-
     #endregion
 
     #region  Physics 
 
     public Vector3 externalAcceleration = Vector3.zero;
-    public bool useGravity = true;
-
-    public bool3 useLocomotion = new(false, false, false);
-    public Vector3 locomotionTargetVelocity = Vector3.zero;
-    public float locomotionAcceleration = 0;
-
     public float LastGroundedHeight { get; private set; } = 0;
+
+    private bool3 LM_EnabledAxes = new(false, false, false);
+    private Vector3 LM_TargetVelocity = Vector3.zero;
+    public float LM_Acceleration = 0;
+
+    private enum LocomotionTrack { None, Input, View }
+    private LocomotionTrack LT_Mode = LocomotionTrack.None;
+    private float LT_VelocityScaleFactor = 1;
+    public float LT_Acceleration = 0;
 
     void FixedUpdate()
     {
         Rigidbody.AddForce(externalAcceleration, ForceMode.Acceleration);
-        Rigidbody.useGravity = useGravity;
-        ApplyFriction();
-        ApplyLocomotion();
-
+        ApplyLocomotion(LM_EnabledAxes, LM_TargetVelocity, LM_Acceleration);    // Manual Locomotion
+        switch (LT_Mode)                                                        // Tracking Locomotion
+        {
+            case LocomotionTrack.None:
+                break;
+            case LocomotionTrack.Input:
+                ApplyLocomotion(new(true, false, true), InputVector * LT_VelocityScaleFactor, LT_Acceleration);
+                break;
+            case LocomotionTrack.View:
+                ApplyLocomotion(new(true, false, true), ViewDirection * LT_VelocityScaleFactor, LT_Acceleration);
+                break;
+        }
         UpdateGrounded();
     }
 
-    private void ApplyFriction()
-    {
-        if (animator.GetBool("isGrounded"))
-        {
-            // if (Rigidbody.linearVelocity.magnitude < 0.1f) // (fake) Static friction moment be like :0  [This is to help "snap" the player to a stop]
-            //      Rigidbody.AddForce(GetLockedVector(new(true, false, true), -Rigidbody.linearVelocity), ForceMode.VelocityChange);
-            // else
-            if (Rigidbody.linearVelocity.magnitude > 0.01f)
-                Rigidbody.AddForce(groundFriction * GetLockedVector(new(true, false, true), -Rigidbody.linearVelocity).normalized);
-        }
-    }
-
-    private void ApplyLocomotion()
+    private void ApplyLocomotion(bool3 enabledAxes, Vector3 targetVelocity, float acceleration)
     {
         Rigidbody.AddForce(
-            Vector3.MoveTowards(
-                Vector3.zero,
-                GetLockedVector(
-                    useLocomotion,
-                    locomotionTargetVelocity - Rigidbody.linearVelocity),
-                Time.fixedDeltaTime * locomotionAcceleration),
-            ForceMode.VelocityChange);
+        Vector3.MoveTowards(
+            Vector3.zero,
+            GetLockedVector(
+                enabledAxes,
+                targetVelocity - Rigidbody.linearVelocity),
+            Time.fixedDeltaTime * acceleration),
+        ForceMode.VelocityChange);
     }
 
     private Vector3 GetLockedVector(bool3 useVector, Vector3 vector)
@@ -181,36 +169,44 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    #region Settings Helper Functions
+    #region Set Functions
 
-    public void ApplyDefaultSettings()
-    {
-        // Reset to idle state settings
-        externalAcceleration = Vector3.zero;
-        useGravity = true;
-        useLocomotion = new(false, false, false);
-        locomotionTargetVelocity = Vector3.zero;
-        locomotionAcceleration = 0;
-    }
-
-    public void ApplyMoveSettings(float a)
+    public void Reset() // Resets the acceleration, gravity, and locomotion to their defaults.
     {
         externalAcceleration = Vector3.zero;
-        useGravity = true;
-        useLocomotion = new(true, false, true);
-        locomotionTargetVelocity = Vector3.zero;
-        locomotionAcceleration = a;
+        SetGravity(true);
+        LM_Disable();
+        LT_Disable();
+        animator.ResetTrigger("attack");
+        animator.ResetTrigger("jump");
     }
 
-    public void ApplyDashSettings()
+    public void SetGravity(bool useGravity) => Rigidbody.useGravity = useGravity;
+
+    public void SetImpulse(Vector3 vector) => Rigidbody.AddForce(vector, ForceMode.VelocityChange);
+
+    #region Locomotion Setting
+
+    public void LM_Set(bool3 enabledAxes, Vector3 targetVelocity, float acceleration)
     {
-        // Dash settings (ie. Dash, Attack)
-        externalAcceleration = Vector3.zero;
-        useGravity = false;
-        useLocomotion = new(false, false, false);
-        locomotionTargetVelocity = Vector3.zero;
-        locomotionAcceleration = 0;
+        LM_EnabledAxes = enabledAxes;
+        LM_TargetVelocity = targetVelocity;
+        LM_Acceleration = acceleration;
     }
+    public void LM_Disable() => LM_Set(new(false, false, false), Vector3.zero, 0);
+    public void LM_Update(Vector3 targetVelocity) => LM_TargetVelocity = targetVelocity;
+
+    private void LT_Set(LocomotionTrack mode, float velocityScaleFactor, float acceleration)
+    {
+        LT_Mode = mode;
+        LT_VelocityScaleFactor = velocityScaleFactor;
+        LT_Acceleration = acceleration;
+    }
+    public void LT_Disable() => LT_Set(LocomotionTrack.None, 1, 0);
+    public void LT_TrackInput(float targetVelocity, float acceleration) => LT_Set(LocomotionTrack.Input, targetVelocity, acceleration);
+    public void LT_TrackView(float targetVelocity, float acceleration) => LT_Set(LocomotionTrack.View, targetVelocity, acceleration);
+
+    #endregion
 
     #endregion
 }

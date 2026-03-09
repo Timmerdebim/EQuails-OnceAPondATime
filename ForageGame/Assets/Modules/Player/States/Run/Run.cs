@@ -1,24 +1,22 @@
-using System;
 using UnityEngine;
 
-public class Jump : StateMachineBehaviour
+public class Run : StateMachineBehaviour
 {
     [SerializeField] private float maxSpeed = 10;
     [SerializeField] private float acceleration = 10;
-    [SerializeField] private float hopHeight;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.Instance.energy.UseEnergy(Player.Instance.hopEnergy);
-        Player.Instance.playerData.hasUsedJump = true;
-
         Player.Instance.playerController.Reset();
-        Player.Instance.playerController.LT_TrackView(maxSpeed, acceleration);
-        Player.Instance.playerController.SetImpulse(-Physics.gravity.normalized * Mathf.Sqrt(2 * Physics.gravity.magnitude * hopHeight));
+        Player.Instance.playerController.LT_TrackInput(maxSpeed, acceleration);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Player.Instance.energy.UseEnergy(Player.Instance.runEnergy * Time.deltaTime);
+        // Check if still can run
+        if (Player.Instance.energy.energy < 0.001f)
+            animator.SetBool("run", false);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

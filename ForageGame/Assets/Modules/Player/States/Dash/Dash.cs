@@ -16,8 +16,9 @@ public class Dash : StateMachineBehaviour
         if (!animator.GetBool("isGrounded"))
             animator.SetBool("airDashed", true);
 
-        Player.Instance.playerController.ApplyDashSettings();
-        Player.Instance.playerController.Rigidbody.AddForce(impulse * Player.Instance.playerController.ViewDirection, ForceMode.Impulse);
+        Player.Instance.playerController.Reset();
+        Player.Instance.playerController.SetGravity(false);
+        Player.Instance.playerController.SetImpulse(impulse * Player.Instance.playerController.ViewDirection);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     [Header("Player Data")]
     [SerializeField] public PlayerData playerData;
     [Header("Energy Requirements")]
+    [SerializeField] public float runEnergy = 10f; // this is energy per second
     [SerializeField] public float dashEnergy = 10f;
     [SerializeField] public float hopEnergy = 10f;
     [SerializeField] public float flutterEnergy = 10f; // this is energy per second
@@ -123,10 +124,6 @@ public class Player : MonoBehaviour
         hitbox.gameObject.SetActive(false);
         trailRenderer.emitting = false;
 
-        animator.ResetTrigger("dash");
-        animator.ResetTrigger("attack");
-        animator.ResetTrigger("jump");
-
-        playerController.ApplyDefaultSettings();
+        playerController.Reset();
     }
 }

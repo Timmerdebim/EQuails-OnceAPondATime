@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class Idle : StateMachineBehaviour
 {
+    [SerializeField] private float deceleration = 10;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.Instance.playerController.ApplyDefaultSettings();
+        Player.Instance.playerController.Reset();
+        Player.Instance.playerController.LM_Set(new(true, false, true), Vector3.zero, deceleration);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
