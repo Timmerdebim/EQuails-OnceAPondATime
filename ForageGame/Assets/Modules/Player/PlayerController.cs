@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     public Rigidbody Rigidbody { get; private set; }
     private Animator animator;
 
-    [SerializeField] public float groundFriction = 5;
-
     void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();

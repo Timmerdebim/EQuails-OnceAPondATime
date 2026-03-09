@@ -3,6 +3,7 @@ using UnityEngine;
 public class Dash : StateMachineBehaviour
 {
     [SerializeField] private float impulse = 10;
+    [SerializeField] private float deceleration = 10;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
