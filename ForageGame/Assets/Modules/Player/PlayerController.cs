@@ -136,7 +136,13 @@ public class PlayerController : MonoBehaviour
     private void ApplyFriction()
     {
         if (animator.GetBool("isGrounded"))
-            Rigidbody.AddForce(groundFriction * GetLockedVector(new(true, false, true), -Rigidbody.linearVelocity.normalized));
+        {
+            // if (Rigidbody.linearVelocity.magnitude < 0.1f) // (fake) Static friction moment be like :0  [This is to help "snap" the player to a stop]
+            //      Rigidbody.AddForce(GetLockedVector(new(true, false, true), -Rigidbody.linearVelocity), ForceMode.VelocityChange);
+            // else
+            if (Rigidbody.linearVelocity.magnitude > 0.01f)
+                Rigidbody.AddForce(groundFriction * GetLockedVector(new(true, false, true), -Rigidbody.linearVelocity).normalized);
+        }
     }
 
     private void ApplyLocomotion()
