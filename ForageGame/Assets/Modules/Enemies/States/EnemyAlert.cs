@@ -14,7 +14,7 @@ public class EnemyAlert : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // Look at player
-        targetDir = enemy.player.transform.position - enemy.transform.position;
+        targetDir = Player.Instance.transform.position - enemy.transform.position;
         enemy.spriteRenderer.flipX = targetDir.x < 0;
     }
 

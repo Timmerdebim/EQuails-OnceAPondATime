@@ -3,20 +3,22 @@ using UnityEngine;
 
 public class Attack : StateMachineBehaviour
 {
-    protected DuckController duck;
+    [SerializeField] private float impulse = 10;
+    [SerializeField] private float deceleration = 10;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        GameObject obj = animator.gameObject;
-        duck = obj.GetComponent<DuckController>();
+        Player.Instance.energy.UseEnergy(Player.Instance.attackEnergy);
+        Player.Instance.playerData.hasUsedAttack = true;
 
-        duck.hitbox.Reset();
-        duck.hitbox.PivotTarget(new Vector3(duck._viewDirection.x, 0, duck._viewDirection.y));
-        duck.hitbox.gameObject.SetActive(true);
-        duck.SetDuckVelocity(duck._viewDirection, duck.attackMoveSpeed);
-        duck.DisableGravity();
+        Player.Instance.hitbox.Reset();
+        Player.Instance.hitbox.PivotTarget(Player.Instance.playerController.ViewDirection);
+        Player.Instance.hitbox.gameObject.SetActive(true);
 
-        duck.duckEnergy.UseEnergy(duck.attackEnergy);
+        Player.Instance.playerController.Reset();
+        Player.Instance.playerController.SetGravity(false);
+        Player.Instance.playerController.LM_Set(new(true, false, true), Vector3.zero, deceleration);
+        Player.Instance.playerController.SetImpulse(impulse * Player.Instance.playerController.ViewDirection);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -25,6 +27,6 @@ public class Attack : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.ExitStateReset();
+        Player.Instance.ExitStateReset();
     }
 }

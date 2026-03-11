@@ -2,33 +2,25 @@ using UnityEngine;
 
 public class Dash : StateMachineBehaviour
 {
-    protected DuckController duck;
+    [SerializeField] private float impulse = 10;
+    [SerializeField] private float deceleration = 10;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        GameObject obj = animator.gameObject;
-        duck = obj.GetComponent<DuckController>();
+        Player.Instance.energy.UseEnergy(Player.Instance.dashEnergy);
+        Player.Instance.playerData.hasUsedDash = true;
 
-        duck.trailRenderer.emitting = true;
+        Player.Instance.trailRenderer.emitting = true;
+        Player.Instance.trailRenderer.startColor = Color.black;
+        Player.Instance.trailRenderer.endColor = Color.black;
 
         if (!animator.GetBool("isGrounded"))
             animator.SetBool("airDashed", true);
 
-        if (duck.dashType == DuckController.DashType.throughDash)
-        {
-            duck.trailRenderer.startColor = Color.black;
-            duck.trailRenderer.endColor = Color.black;
-        }
-        else
-        {
-            duck.trailRenderer.startColor = Color.yellow;
-            duck.trailRenderer.endColor = Color.yellow;
-        }
-
-        duck.DisableGravity();
-        duck.SetDuckVelocity(duck._viewDirection, duck.dashMoveSpeed);
-
-        duck.duckEnergy.UseEnergy(duck.dashEnergy);
+        Player.Instance.playerController.Reset();
+        Player.Instance.playerController.SetGravity(false);
+        Player.Instance.playerController.LM_Set(new(true, false, true), Vector3.zero, deceleration);
+        Player.Instance.playerController.SetImpulse(impulse * Player.Instance.playerController.ViewDirection);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -37,6 +29,6 @@ public class Dash : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.ExitStateReset();
+        Player.Instance.ExitStateReset();
     }
 }

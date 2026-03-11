@@ -1,22 +1,23 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Fall : StateMachineBehaviour
 {
-    protected DuckController duck;
+    [SerializeField] private float maxSpeed = 10;
+    [SerializeField] private float acceleration = 10;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        GameObject obj = animator.gameObject;
-        duck = obj.GetComponent<DuckController>();
+        Player.Instance.playerController.Reset();
+        Player.Instance.playerController.LT_TrackInput(maxSpeed, acceleration);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.SetDuckVelocity(duck._inputDirection, duck.fallMoveSpeed);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.ExitStateReset();
+        Player.Instance.ExitStateReset();
     }
 }

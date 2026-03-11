@@ -11,18 +11,14 @@ namespace Modules.Dialogue.DialogueDB
         
         private DialogueDatabase _database;
         private DialogueRuntimeState _state; 
-        private HashSet<string> _activeFlags = new HashSet<string>();
 
-        private void Awake()
+        //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
+        private void Start()
         {
             List<string> rawText = _sourceFiles.Select(f => f.text).ToList();
             _database = DialogueParser.Parse(rawText);
             _state = new DialogueRuntimeState();
         }
-
-        // --- FLAG MANAGEMENT ---
-        public void SetFlag(string flag) => _activeFlags.Add(flag);
-        public void RemoveFlag(string flag) => _activeFlags.Remove(flag);
 
         // --- DIALOGUE FLOW ---
 
@@ -115,7 +111,7 @@ namespace Modules.Dialogue.DialogueDB
         /// </summary>
         private bool IsBlockValidByFlags(DialogueBlock block)
         {
-            return block.RequiredFlags.All(f => _activeFlags.Contains(f));
+            return StoryFlagManager.Instance.FlagListActive(block.RequiredFlags);
         }
 
         private void StartBlock(CharacterState state, DialogueBlock block)
@@ -137,6 +133,20 @@ namespace Modules.Dialogue.DialogueDB
 
             var line = block.StandardLines[state.CurrentLineIndex];
             state.CurrentLineIndex++;
+            if (state.CurrentLineIndex >= block.StandardLines.Count)
+            {
+                state.CompletedBlocks.Add(block.BlockID);
+                state.CurrentBlockID = null;
+
+                // Apply the Set-Flags
+                foreach (string flagID in block.SetFlags)
+                {
+                    // NOTE: Replace 'SetFlag' with whatever method your StoryFlagManager uses 
+                    // to add/activate a flag (e.g., AddFlag, ActivateFlag, SetBool, etc.)
+                    StoryFlagManager.Instance.AddFlag(new StoryFlag(flagID));
+                    
+                }
+            }
 
             // If we just finished the last line, mark complete immediately
             if (state.CurrentLineIndex >= block.StandardLines.Count)

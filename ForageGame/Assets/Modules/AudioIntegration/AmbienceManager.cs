@@ -7,14 +7,21 @@ public class AmbienceManager : MonoBehaviour
     //This is to be a singleton, so we need to re-use this thing when we change regions!
     public static AmbienceManager Instance { get; private set; }
 
-    //list of themes that can be played rn, depending on what trigger regions we are in
-    private Dictionary<string, FMOD.Studio.PARAMETER_ID> parameters = new Dictionary<string, FMOD.Studio.PARAMETER_ID>();
+    public GameObject playerListener;
 
-    //Yes, I need all three. Thanks FMOD ~Lars
-    [SerializeField] private FMODUnity.EventReference ambienceEvent;
 
-    private FMOD.Studio.EventDescription ambienceEventDescription; 
-    private FMOD.Studio.EventInstance ambienceEventInstance; 
+    [System.Serializable]
+    public class AmbienceEvent
+    {
+        public bool active = false; //is this event playing
+        public FMOD.Studio.EventInstance instance; 
+        public Dictionary<string, FMOD.Studio.PARAMETER_ID> parameters = new Dictionary<string, FMOD.Studio.PARAMETER_ID>();
+    }
+
+    [SerializeField] private List<Region> regions;
+
+    //kinda lame to *also* have this, but I want to edit the list above in the editor, and ofc I can't serialize a dictionary
+    private Dictionary<Region, AmbienceEvent> events = new Dictionary<Region, AmbienceEvent>();
 
     private void Awake() 
     { 
@@ -30,32 +37,78 @@ public class AmbienceManager : MonoBehaviour
     }
     private void Start()
     {
-        ambienceEventInstance = FMODUnity.RuntimeManager.CreateInstance(ambienceEvent);
-        ambienceEventInstance.getDescription(out ambienceEventDescription);
-
-        //TODO: this is debug. It should be done uuhhh with walkover triggers or something ~Lars
-        ambienceEventInstance.start();
-
-        //Populate the dictionary with parameters
-        ambienceEventDescription.getParameterDescriptionCount(out int paramcount);
-        for (int i = 0; i < paramcount; i++)
+        foreach(Region r in regions)
         {
-            ambienceEventDescription.getParameterDescriptionByIndex(i, out var param);
-            parameters.Add(param.name, param.id);
-            print("Dict entry added: " + param.name + " with Id: " + param.id);
+            if(events.ContainsKey(r)) Debug.LogError($"Duplicate AmbienceRegion Id: {r}");
+
+            AmbienceEvent e = new AmbienceEvent();
+            e.instance = FMODUnity.RuntimeManager.CreateInstance(r.eventReference);
+            e.instance.getDescription(out FMOD.Studio.EventDescription desc);
+
+            desc.getParameterDescriptionCount(out int paramcount);
+            for (int i = 0; i < paramcount; i++)
+            {
+                desc.getParameterDescriptionByIndex(i, out var param);
+                e.parameters.Add(param.name, param.id);
+                print("Dict entry added: " + param.name + " with Id: " + param.id + "for region: " + r);
+            }
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(e.instance, playerListener); //Dear FMOD, sincerely: fuck you ~Lars
+            events.Add(r, e);
         }
     }
 
-    public void SetParameter(string name, float value)
+    public void SetParameter(string param, float value)
     {
-        if (parameters.ContainsKey(name))
+        foreach(AmbienceEvent e in events.Values)
         {
-            ambienceEventInstance.setParameterByID(parameters[name], value);
+            if(e.active) //only check active events
+            {
+                if (e.parameters.TryGetValue(param, out var id))
+                {
+                    e.instance.setParameterByID(id, value);
+                    return;
+                }
+            }
+        }
+        Debug.LogError("Recieved parameter name: " + name + " does not exist in an active ambience event");
+    }
+
+    public void StartEvent(Region r)
+    {
+        if (events.TryGetValue(r, out var e))
+        {
+            if(e.active) 
+            {
+                Debug.LogError($"Event {e} already playing");
+                return;
+            }
+            e.instance.start(); //e is a class, so this is fine
+            e.active = true; 
+            Debug.Log($"Event {e} started");
         }
         else
         {
-            Debug.LogError("Recieved parameter name: " + name + " does not exist in current event");
+            Debug.LogError($"Region not found: {r}");
         }
     }
 
+    public void StopEvent(Region r)
+    {
+        if (events.TryGetValue(r, out var e))
+        {
+            if(!e.active) 
+            {
+                Debug.LogError($"Event {e} already stopped");
+                return;
+            }
+            e.instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); 
+            e.active = false; 
+            Debug.Log($"Event {e} stopped");
+        }
+        else
+        {
+            Debug.LogError($"Region not found: {r}");
+        }
+    }
 }
+

@@ -1,33 +1,36 @@
-using KinematicCharacterController;
 using UnityEngine;
 
 public class Flutter : StateMachineBehaviour
 {
-    protected DuckController duck;
     private float targetHight;
+    [SerializeField] private float moveSpeed = 10;
+    [SerializeField] private float moveAcceleration = 10;
+    [SerializeField] private float flutterHeight = 6;
+    [SerializeField] private float flutterNaturalFrequency;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        GameObject obj = animator.gameObject;
-        duck = obj.GetComponent<DuckController>();
+        Player.Instance.playerData.hasUsedFly = true;
 
-        targetHight = duck.flutterHeight + duck.lastGroundHeight;
-        duck.DisableGravity();
+        targetHight = flutterHeight + Player.Instance.playerController.LastGroundedHeight;
+
+        Player.Instance.playerController.Reset();
+        Player.Instance.playerController.LT_TrackInput(moveSpeed, moveAcceleration);
+        Player.Instance.playerController.SetGravity(false);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.duckEnergy.UseEnergy(duck.flutterEnergy * Time.deltaTime);
-        duck.SetDuckVelocity(duck._inputDirection, duck.flutterMoveSpeed);
-        duck.duckForce = new Vector3(0, duck.flutterNaturalFrequency * duck.flutterNaturalFrequency * (targetHight - duck.transform.position.y) - 2 * duck.flutterNaturalFrequency * duck.rb.linearVelocity.y, 0);
+        Player.Instance.energy.UseEnergy(Player.Instance.flutterEnergy * Time.deltaTime); // TODO: fix this?
+        Player.Instance.playerController.externalAcceleration = Vector3.up * (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - Player.Instance.transform.position.y) - 2 * flutterNaturalFrequency * Player.Instance.playerController.Rigidbody.linearVelocity.y);
 
         // Check if still can fly
-        if (duck.duckEnergy.energy < 0.001f)
-            animator.SetBool("flutter", false);
+        if (Player.Instance.energy.energy < 0.001f)
+            animator.SetBool("fly", false);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        duck.ExitStateReset();
+        Player.Instance.ExitStateReset();
     }
 }

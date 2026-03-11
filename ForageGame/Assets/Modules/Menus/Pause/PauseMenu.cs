@@ -1,0 +1,42 @@
+using NUnit.Framework.Internal;
+using UnityEditor.Build.Content;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace Project.Menus
+{
+    public class PauseMenu : Menu
+    {
+        [Header("Connected Menus")]
+        [SerializeField] private Menu settingsMenu;
+
+        void Start()
+        {
+            MenuManager.Instance.ToMenu(this, false);
+        }
+
+        public override void Escape()
+        {
+            GameManager.Instance.ResumeGame();
+        }
+
+        // ------------ Buttons ------------
+
+        public void OnSettingsClicked()
+        {
+            MenuManager.Instance.ToMenu(settingsMenu, true);
+        }
+
+        public void OnMainMenuClicked()
+        {
+            GameManager.Instance.QuitToMainMenu();
+        }
+
+        public void OnQuitClicked()
+        {
+            GameManager.Instance.QuitToDesktop();
+        }
+
+        // ------------ Functions ------------
+    }
+}
