@@ -1,35 +1,45 @@
-// using Assets.Modules.Interaction;
-// using TDK.GadgetSystem.Runtime.Gadgets;
-// using UnityEngine;
+using Assets.Modules.Interaction;
+using TDK.GadgetSystem.Runtime;
+using UnityEngine;
 
-// namespace TDK.Gadgets
-// {
-//     [RequireComponent(typeof(SwitchGadget))]
-//     [RequireComponent(typeof(Animator))]
-//     public class SwitchController : MonoBehaviour, IInteractable
-//     {
-//         private SwitchGadget switchGadget;
-//         private Animator animator;
-//         void Awake()
-//         {
-//             switchGadget = GetComponent<SwitchGadget>();
-//             animator = GetComponent<Animator>();
-//         }
+namespace TDK.Gadgets
+{
+    [RequireComponent(typeof(OutputPort))]
+    [RequireComponent(typeof(Animator))]
+    public class PowerSwitchController : MonoBehaviour, IInteractable
+    {
+        private OutputPort _outputPower;
+        private Animator _animator;
 
-//         public void Interact()
-//         {
-//             switchGadget.Toggle();
-//             animator.SetBool("isOpen", switchGadget.IsActive);
-//         }
+        [SerializeField] private bool _isActive = false;
 
-//         public void Focus()
-//         {
-//             throw new System.NotImplementedException();
-//         }
+        void Awake()
+        {
+            _outputPower = GetComponent<OutputPort>();
+            _animator = GetComponent<Animator>();
+        }
 
-//         public void Unfocus()
-//         {
-//             throw new System.NotImplementedException();
-//         }
-//     }
-// }
+        void Start()
+        {
+            _outputPower.SetSignal(_isActive);
+            _animator.SetBool("isActive", _isActive);
+        }
+
+        public void Interact()
+        {
+            _isActive = !_isActive;
+            _outputPower.SetSignal(_isActive);
+            _animator.SetBool("isActive", _isActive);
+        }
+
+        public void Focus()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Unfocus()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+}

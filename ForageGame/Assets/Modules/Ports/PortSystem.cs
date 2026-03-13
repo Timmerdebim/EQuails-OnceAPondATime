@@ -6,7 +6,8 @@
 // {
 //     public static class PortSystem
 //     {
-//         private static readonly Dictionary<object, Dictionary<string, Port>> _ports = new();
+//         private static Dictionary<object, Dictionary<string, Port>> _ports = new();
+
 
 //         // Call this after constructing an object that uses [HasPorts]
 //         public static void RegisterPorts(object owner)
