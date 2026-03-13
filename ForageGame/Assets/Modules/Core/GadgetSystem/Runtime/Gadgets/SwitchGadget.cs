@@ -17,12 +17,6 @@ namespace TDK.GadgetSystem.Runtime.Gadgets
         public UnityEvent OnSwitchedOn;
         public UnityEvent OnSwitchedOff;
 
-        private void Update()
-        {
-            if (debugKey != KeyCode.None && Input.GetKeyDown(debugKey))
-                Interact();
-        }
-
         /// <summary>
         /// Call this from player interaction, UI button, trigger zone, etc.
         /// Toggles the switch or (if momentary) turns it ON.

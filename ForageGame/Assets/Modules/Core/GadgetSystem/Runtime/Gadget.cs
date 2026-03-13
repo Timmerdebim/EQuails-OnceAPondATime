@@ -13,7 +13,7 @@ namespace TDK.GadgetSystem.Runtime
         [SerializeField] private bool startActive = false;
         [SerializeField] private string gadgetLabel = "";
 
-        [Header("Wire Visuals")]
+        [Header("Gizmo Settings")]
         [SerializeField] private Color wireColor = Color.yellow;
         [SerializeField] private bool showWireLabels = true;
 
@@ -49,7 +49,8 @@ namespace TDK.GadgetSystem.Runtime
             OnStateChanged(_isActive);
         }
 
-        // ── Connection API ──────────────────────────────────────────────
+        // ────────────────────────────────────────────────────────────────────────────────────────────
+        #region Connection API
 
         /// <summary>Connect this Gadget's output to another Gadget's input.</summary>
         public void ConnectTo(Gadget target)
@@ -71,7 +72,10 @@ namespace TDK.GadgetSystem.Runtime
             outputs.Clear();
         }
 
-        // ── State API ───────────────────────────────────────────────────
+        #endregion
+
+        // ────────────────────────────────────────────────────────────────────────────────────────────
+        #region State API
 
         /// <summary>Set this Gadget active or inactive and propagate to outputs.</summary>
         public void SetActive(bool active)
@@ -100,12 +104,15 @@ namespace TDK.GadgetSystem.Runtime
             SetActive(signal);
         }
 
+        #endregion
+
         // ── Abstract / Virtual hooks ─────────────────────────────────────
 
         /// <summary>Fired whenever IsActive changes. Implement visual/audio/logic responses here.</summary>
         protected abstract void OnStateChanged(bool isActive);
 
         // ── Gizmos ───────────────────────────────────────────────────────
+        #region Gizmos
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
@@ -186,5 +193,6 @@ namespace TDK.GadgetSystem.Runtime
             }
         }
 #endif
+        #endregion
     }
 }

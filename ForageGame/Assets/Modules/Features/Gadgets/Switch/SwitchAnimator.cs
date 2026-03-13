@@ -1,16 +1,20 @@
 using System;
 using DG.Tweening;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TDK.Gadgets.Switch
+namespace TDK.Gadgets
 {
-    [RequireComponent(typeof(Animator))]
-    public class SwitchAnimator : MonoBehaviour
+    public class HindgeAnimator : MonoBehaviour
     {
         [SerializeField] private Transform _hingeTransform;
-        [SerializeField] private float _rotationAngle = 20;
-        [SerializeField] private float _duration = 1;
+        [SerializeField] private Vector3 _openAngle = new(30, 0, 0);
+        [SerializeField] private float _openDuration = 1;
+        [SerializeField] private CurveField _openCurve;
+        [SerializeField] private Vector3 _closedAngle = new(30, 0, 0);
+        [SerializeField] private float _closeDuration = 1;
+        [SerializeField] private CurveField _closeCurve;
         private Sequence sequence;
 
         public void ToStateOn(Action callback = null, bool instant = false)
@@ -33,6 +37,15 @@ namespace TDK.Gadgets.Switch
             .Append(_hingeTransform.DOLocalRotate(_rotationAngle * Vector3.forward, _duration))
             .OnComplete(() => callback?.Invoke());
         }
+
+        public void AnimateInstant(float targetAngle)
+        {
+            sequence?.Kill();
+            _hingeTransform.localEulerAngles = targetAngle * Vector3.forward;
+            callback?.Invoke();
+        }
+
+        public void Animate()
 
         public void ToStateOff(Action callback = null, bool instant = false)
         {
