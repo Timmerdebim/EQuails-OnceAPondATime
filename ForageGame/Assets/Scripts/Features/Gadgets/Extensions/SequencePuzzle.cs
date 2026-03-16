@@ -1,40 +1,41 @@
-using System;
 using System.Collections.Generic;
-using TDK.Gadgets;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SequencePuzzle : MonoBehaviour
+namespace TDK.Gadgets
 {
-    [SerializeField] private List<SwitchController> _solution = new();
-
-    public UnityEvent OnSolved;
-    public UnityEvent OnFailed;
-
-    public bool Locked = false;
-
-    private int _sequenceIndex = 0;
-
-    public void LogInput(SwitchController switchController)
+    public class SequencePuzzle : MonoBehaviour
     {
-        if (Locked) return;
+        [SerializeField] private List<SwitchController> _solution = new();
 
-        if (_solution[_sequenceIndex] != switchController)
+        public UnityEvent OnSolved;
+        public UnityEvent OnFailed;
+
+        public bool Locked = false;
+
+        private int _sequenceIndex = 0;
+
+        public void LogInput(SwitchController switchController)
         {
-            _sequenceIndex = 0;
-            OnFailed.Invoke();
-            return;
-        }
+            if (Locked) return;
 
-        _sequenceIndex++;
+            if (_solution[_sequenceIndex] != switchController)
+            {
+                _sequenceIndex = 0;
+                OnFailed.Invoke();
+                return;
+            }
 
-        if (_sequenceIndex == _solution.Count)
-        {
-            foreach (SwitchController key in _solution)
-                key.Locked = true;
+            _sequenceIndex++;
 
-            OnSolved.Invoke();
-            Locked = true;
+            if (_sequenceIndex == _solution.Count)
+            {
+                foreach (SwitchController key in _solution)
+                    key.Locked = true;
+
+                OnSolved.Invoke();
+                Locked = true;
+            }
         }
     }
 }

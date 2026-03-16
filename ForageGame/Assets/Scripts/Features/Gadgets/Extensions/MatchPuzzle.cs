@@ -1,30 +1,38 @@
+using System;
 using System.Collections.Generic;
-using TDK.Gadgets;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MatchPuzzle : MonoBehaviour
+namespace TDK.Gadgets
 {
-    [SerializeField] private Dictionary<SwitchController, SwitchController> _switches = new();
-
-    public UnityEvent OnSolved;
-
-    public bool Locked = false;
-
-    public void CheckAnswer()
+    public class MatchPuzzle : MonoBehaviour
     {
-        if (Locked) return;
+        [SerializeField] private SolutionEntry[] _solution;
 
-        foreach (SwitchController key in _switches.Keys)
-            if (key.State != _switches[key].State) return;
-
-        foreach (SwitchController key in _switches.Keys)
+        [Serializable]
+        private struct SolutionEntry
         {
-            key.Locked = true;
-            _switches[key].Locked = true;
+            public SwitchController Switch1;
+            public SwitchController Switch2;
         }
+        public UnityEvent OnSolved;
+        public bool Locked = false;
 
-        OnSolved.Invoke();
-        Locked = true;
+        public void CheckAnswer()
+        {
+            if (Locked) return;
+
+            foreach (SolutionEntry entry in _solution)
+                if (entry.Switch1.State != entry.Switch2.State) return;
+
+            foreach (SolutionEntry entry in _solution)
+            {
+                entry.Switch1.Locked = true;
+                entry.Switch2.Locked = true;
+            }
+
+            OnSolved.Invoke();
+            Locked = true;
+        }
     }
 }

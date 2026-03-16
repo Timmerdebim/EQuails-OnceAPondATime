@@ -1,28 +1,47 @@
+using System;
 using System.Collections.Generic;
-using TDK.Gadgets;
-using TDK.PortSystem;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
-public class CodePuzzle : MonoBehaviour
+namespace TDK.Gadgets
 {
-    [SerializeField] private Dictionary<SwitchController, bool> _solutionDict = new();
-
-    public UnityEvent OnSolved;
-
-    public bool Locked = false;
-
-    public void CheckAnswer()
+    public class CodePuzzle : MonoBehaviour
     {
-        if (Locked) return;
+        [SerializeField] private SolutionEntry[] _solution;
 
-        foreach (SwitchController key in _solutionDict.Keys)
-            if (key.State != _solutionDict[key]) return;
+        [Serializable]
+        private struct SolutionEntry
+        {
+            public SwitchController SwitchController;
+            public bool Target;
+        }
 
-        foreach (SwitchController key in _solutionDict.Keys)
-            key.Locked = true;
+        public UnityEvent OnSolved;
 
-        OnSolved.Invoke();
-        Locked = true;
+        public bool Locked = false;
+
+        public void CheckAnswer()
+        {
+            if (Locked) return;
+
+            foreach (SolutionEntry entry in _solution)
+                if (entry.SwitchController.State != entry.Target) return;
+
+            PuzzleSolved();
+        }
+
+        private void PuzzleSolved()
+        {
+            LockSwitches();
+            OnSolved.Invoke();
+            Locked = true;
+        }
+
+        private void LockSwitches()
+        {
+            foreach (SolutionEntry entry in _solution)
+                entry.SwitchController.Locked = true;
+        }
     }
 }

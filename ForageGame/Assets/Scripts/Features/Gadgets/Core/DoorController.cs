@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +9,7 @@ namespace TDK.Gadgets
         public UnityEvent OnDoorClosed;
 
         [SerializeField] private bool _initialStateOpen = false;
-        [SerializeField] private bool _state = false;
+        private bool _state = false;
 
         void Start()
         {
