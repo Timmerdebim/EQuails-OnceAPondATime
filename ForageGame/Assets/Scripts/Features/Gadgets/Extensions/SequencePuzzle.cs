@@ -21,21 +21,28 @@ namespace TDK.Gadgets
 
             if (_solution[_sequenceIndex] != switchController)
             {
-                _sequenceIndex = 0;
-                OnFailed.Invoke();
+                PuzzleFailed();
                 return;
             }
 
             _sequenceIndex++;
 
-            if (_sequenceIndex == _solution.Count)
-            {
-                foreach (SwitchController key in _solution)
-                    key.Locked = true;
+            if (_sequenceIndex == _solution.Count) PuzzleSolved();
+        }
 
-                OnSolved.Invoke();
-                Locked = true;
-            }
+        private void PuzzleFailed()
+        {
+            _sequenceIndex = 0;
+            OnFailed.Invoke();
+        }
+
+        private void PuzzleSolved()
+        {
+            foreach (SwitchController key in _solution)
+                key.Locked = true;
+
+            OnSolved.Invoke();
+            Locked = true;
         }
     }
 }

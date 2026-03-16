@@ -63,6 +63,7 @@ public class CutsceneManager : MonoBehaviour
 
     private void PlayCutscene(Image[] images, SceneGroup sceneGroup, Action callback = null)
     {
+        if (isBusy) Debug.Log("crap.");
         isBusy = true;
         isCutsceneDone = false;
         isLoadingDone = false;

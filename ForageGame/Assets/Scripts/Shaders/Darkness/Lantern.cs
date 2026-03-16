@@ -6,7 +6,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class Lantern : MonoBehaviour
 {
-    [SerializeField] Light light;
+    [SerializeField] private Light _light;
 
     [SerializeField] private Color mutedColor = Color.red;
     [SerializeField] private Color BrightColor = Color.yellow;
@@ -14,9 +14,9 @@ public class Lantern : MonoBehaviour
     [SerializeField] private float minIntensity = 0f;
     [SerializeField] private float maxIntensity = 5f;
 
-    [SerializeField] [Range(0f, 1f)] private float lanternStrength = 0.5f;
+    [SerializeField][Range(0f, 1f)] private float lanternStrength = 0.5f;
 
-    [SerializeField] [Range(0f, 10f)] private float flickerSpeed = 1f;
+    [SerializeField][Range(0f, 10f)] private float flickerSpeed = 1f;
 
     [SerializeField] FBM1D fbm = new FBM1D(FBM1D.NoiseFunctionType.Sin, 4, 1.97f, 0.43f);
 
@@ -29,8 +29,8 @@ public class Lantern : MonoBehaviour
     [ContextMenu("Set Lantern Visuals")]
     private void SetLanternVisuals()
     {
-        light.color = Color.Lerp(mutedColor, BrightColor, lanternStrength);
-        light.intensity = Mathf.Lerp(minIntensity, maxIntensity, lanternStrength);
+        _light.color = Color.Lerp(mutedColor, BrightColor, lanternStrength);
+        _light.intensity = Mathf.Lerp(minIntensity, maxIntensity, lanternStrength);
     }
 
 }

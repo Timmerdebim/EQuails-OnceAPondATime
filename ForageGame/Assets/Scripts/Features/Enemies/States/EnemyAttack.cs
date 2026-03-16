@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class EnemyAttack : StateMachineBehaviour
 {
-    [Header("Lunge Collision")]
-    [Tooltip("The layers that the goose will collide with during its lunge (e.g., Walls, Obstacles).")]
-    public LayerMask collisionLayerMask;
-    [Tooltip("The radius of the goose for collision detection. Should be about half the goose's width.")]
-    private float collisionRadius = 0.5f;
+    // [Header("Lunge Collision")]
+    // [Tooltip("The layers that the goose will collide with during its lunge (e.g., Walls, Obstacles).")]
+    // public LayerMask collisionLayerMask;
+    // [Tooltip("The radius of the goose for collision detection. Should be about half the goose's width.")]
+    // private float collisionRadius = 0.5f;
     // ------------------------------------
 
     // Private state variables
