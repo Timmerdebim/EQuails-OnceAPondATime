@@ -8,7 +8,7 @@ namespace Modules.Dialogue.DialogueDB
     public class DialogueDatabase
     {
         public List<CharacterProfile> Characters = new List<CharacterProfile>();
-        public CharacterProfile GetCharacter(string name) => 
+        public CharacterProfile GetCharacter(string name) =>
             Characters.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
 
@@ -28,10 +28,10 @@ namespace Modules.Dialogue.DialogueDB
         public List<DialogueLine> Lines = new List<DialogueLine>();
 
         // --- Helpers for specific line types ---
-        
+
         // The numeric story lines (0, 1, 2...)
         public List<DialogueLine> StandardLines => Lines.Where(l => l.IsStoryStage).ToList();
-        
+
         // Helper to check if this block contains a specific special stage
         public DialogueLine GetSpecialLine(string stageID)
         {
@@ -42,13 +42,13 @@ namespace Modules.Dialogue.DialogueDB
     [Serializable]
     public class DialogueLine
     {
-        public string StageID; 
+        public string StageID;
         public string Text;
-        
+
         // Returns true if the stage is NOT one of our special keywords
-        public bool IsStoryStage 
+        public bool IsStoryStage
         {
-            get 
+            get
             {
                 // If it parses as a number, it's a story stage. 
                 // Alternatively, just check against known keywords.
@@ -77,5 +77,13 @@ namespace Modules.Dialogue.DialogueDB
         public string CurrentBlockID;
         public int CurrentLineIndex;
         public HashSet<string> CompletedBlocks = new HashSet<string>();
+    }
+
+
+    enum MyStuff
+    {
+        Thing1,
+        Thing2,
+        Thing3
     }
 }
