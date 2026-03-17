@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class SilhouetteRendererFeature : ScriptableRendererFeature
 {
     Material m_IDMaterial;
-    SilhouettePass m_Pass;
+    SilhouettePass_old m_Pass;
 
     public bool debugView = false;
     DebugBlitPass m_DebugPass;
@@ -15,7 +15,7 @@ public class SilhouetteRendererFeature : ScriptableRendererFeature
     public override void Create()
     {
         m_IDMaterial = CoreUtils.CreateEngineMaterial("Hidden/SilhouetteID");
-        m_Pass = new SilhouettePass(m_IDMaterial, debugView);
+        m_Pass = new SilhouettePass_old(m_IDMaterial, debugView);
         m_DebugPass = new DebugBlitPass();
     }
 

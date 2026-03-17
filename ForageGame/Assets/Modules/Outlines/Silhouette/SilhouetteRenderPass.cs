@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.RenderGraphModule;
 
-public class SilhouettePass : ScriptableRenderPass
+public class SilhouettePass_old : ScriptableRenderPass
 {
     class PassData
     {
@@ -18,7 +18,7 @@ public class SilhouettePass : ScriptableRenderPass
     static readonly int s_SilhouetteTexID = Shader.PropertyToID("_SilhouetteTex");
     static readonly int s_ObjectIDPropID = Shader.PropertyToID("_ObjectID");
 
-    public SilhouettePass(Material idMaterial, bool debugView)
+    public SilhouettePass_old(Material idMaterial, bool debugView)
     {
         m_DebugView = debugView;
         m_IDMaterial = idMaterial;

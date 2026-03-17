@@ -11,21 +11,21 @@ public class DebugBlitPass : ScriptableRenderPass
         public TextureHandle src;
     }
 
-    public DebugBlitPass()
+    TextureHandle textureToBlit;
+
+    public DebugBlitPass(TextureHandle textureToBlit)
     {
+        this.textureToBlit = textureToBlit;
         renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
     }
 
     public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
     {
-        var silhouetteData = frameData.GetOrCreate<SilhouetteContextItem>();
-        if (!silhouetteData.silhouetteTex.IsValid()) return;
-
         var resourceData = frameData.Get<UniversalResourceData>();
 
         using (var builder = renderGraph.AddRasterRenderPass<PassData>("DebugBlitSilhouette", out var passData))
         {
-            passData.src = silhouetteData.silhouetteTex;
+            passData.src = textureToBlit;
 
             builder.UseTexture(passData.src, AccessFlags.Read);
             builder.SetRenderAttachment(resourceData.activeColorTexture, 0, AccessFlags.Write);
