@@ -1,64 +1,67 @@
 using Project.Items.Inventory;
 using UnityEngine;
 
-public class SaveManager : MonoBehaviour
+namespace TDK.SaveSystem
 {
-    public static SaveManager Instance { get; private set; }
-    private SaveData _currentSaveData;
-    private int _currentSaveSlot = -1;
-    public int CurrentSaveSlot
+    public class SaveManager : MonoBehaviour
     {
-        get => _currentSaveSlot;
-        set
+        public static SaveManager Instance { get; private set; }
+        private SaveData _currentSaveData;
+        private int _currentSaveSlot = -1;
+        public int CurrentSaveSlot
         {
-            _currentSaveSlot = value;
-            PlayerPrefs.SetInt("lastSlotIndexUsed", value);
-            PlayerPrefs.Save();
+            get => _currentSaveSlot;
+            set
+            {
+                _currentSaveSlot = value;
+                PlayerPrefs.SetInt("lastSlotIndexUsed", value);
+                PlayerPrefs.Save();
+            }
         }
-    }
 
-    void Awake()
-    {
-        if (Instance != null && Instance != this)
+        void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
         }
-        Instance = this;
+
+        // ------------ Load ------------
+
+        public void LoadGame()
+        {
+            _currentSaveData = SaveServices.GetSaveFile(_currentSaveSlot);
+
+            Player.Instance?.LoadData(_currentSaveData.playerData);
+            Inventory.Instance?.LoadData(_currentSaveData.inventoryData);
+        }
+
+        public void LoadRegion()
+        {
+
+        }
+
+        // ------------ Save ------------
+
+        public void SaveGame()
+        {
+            if (_currentSaveData == null || _currentSaveSlot < 0)
+                return;
+
+            Player.Instance?.SaveData(ref _currentSaveData.playerData);
+            Inventory.Instance?.SaveData(ref _currentSaveData.inventoryData);
+
+            SaveServices.SetSaveFile(_currentSaveSlot, _currentSaveData);
+        }
+
+        public void SaveRegion()
+        {
+
+        }
+
+        // TODO: add autosaving
     }
-
-    // ------------ Load ------------
-
-    public void LoadGame()
-    {
-        _currentSaveData = SaveSystem.GetSaveFile(_currentSaveSlot);
-
-        Player.Instance?.LoadData(_currentSaveData.playerData);
-        Inventory.Instance?.LoadData(_currentSaveData.inventoryData);
-    }
-
-    public void LoadRegion()
-    {
-
-    }
-
-    // ------------ Save ------------
-
-    public void SaveGame()
-    {
-        if (_currentSaveData == null || _currentSaveSlot < 0)
-            return;
-
-        Player.Instance?.SaveData(ref _currentSaveData.playerData);
-        Inventory.Instance?.SaveData(ref _currentSaveData.inventoryData);
-
-        SaveSystem.SetSaveFile(_currentSaveSlot, _currentSaveData);
-    }
-
-    public void SaveRegion()
-    {
-
-    }
-
-    // TODO: add autosaving
 }

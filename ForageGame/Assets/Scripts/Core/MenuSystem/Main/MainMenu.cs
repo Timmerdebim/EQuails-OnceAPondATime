@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using TDK.SaveSystem;
 
 namespace Project.Menus
 {
@@ -66,7 +67,7 @@ namespace Project.Menus
         {
             int slotIndex = PlayerPrefs.GetInt("lastSlotIndexUsed", -1);
 
-            if (slotIndex < 0 || !SaveSystem.SaveFileExists(slotIndex))
+            if (slotIndex < 0 || !SaveServices.SaveFileExists(slotIndex))
                 continueText.text = "New Game";
             else
                 continueText.text = "Continue";

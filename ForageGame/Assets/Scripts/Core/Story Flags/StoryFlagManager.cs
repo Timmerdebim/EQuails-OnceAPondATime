@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using System;
 
+[Serializable]
+public class StoryData
+{
+
+}
+
+
 public class StoryFlagManager : MonoBehaviour
 {
     public static StoryFlagManager Instance { get; private set; }

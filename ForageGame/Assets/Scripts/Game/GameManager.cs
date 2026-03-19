@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using Project.Menus;
 using Project.SceneLoading;
+using TDK.SaveSystem;
 
 public enum GameState { MainMenu, PauseMenu, Gameplay, Cutscene, Transitioning }
 
@@ -107,7 +108,7 @@ public class GameManager : MonoBehaviour
         if (slotIndex < 0)
         {
             slotIndex = 1; // First slot is 1 (not 0).
-            while (SaveSystem.SaveFileExists(slotIndex) == true)
+            while (SaveServices.SaveFileExists(slotIndex) == true)
                 slotIndex += 1; // Get the first free slot
         }
         SaveManager.Instance.CurrentSaveSlot = slotIndex;
@@ -123,7 +124,7 @@ public class GameManager : MonoBehaviour
         if (slotIndex < 0)
             slotIndex = PlayerPrefs.GetInt("lastSlotIndexUsed", -1);
 
-        if (slotIndex < 0 || !SaveSystem.SaveFileExists(slotIndex))
+        if (slotIndex < 0 || !SaveServices.SaveFileExists(slotIndex))
         {   // We instead start a new game if unable to load an old game
             PlayNewGame();
             return;

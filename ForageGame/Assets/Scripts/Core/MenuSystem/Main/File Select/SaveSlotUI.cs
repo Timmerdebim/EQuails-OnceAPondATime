@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.IO;
 using TMPro;
+using TDK.SaveSystem;
 
 namespace Project.Menus.FileSelect
 {
@@ -20,9 +21,9 @@ namespace Project.Menus.FileSelect
 
         public void Refresh()
         {
-            if (SaveSystem.SaveFileExists(slotIndex))
+            if (SaveServices.SaveFileExists(slotIndex))
             {
-                SaveData data = SaveSystem.GetSaveFile(slotIndex);
+                SaveData data = SaveServices.GetSaveFile(slotIndex);
                 slotText.text = "continue"; // TODO: add duck progress image?
                 playtimeText.text = FormatPlaytime(data.playtimeSeconds);
                 deleteButton.gameObject.SetActive(true);
@@ -39,7 +40,7 @@ namespace Project.Menus.FileSelect
 
         public void OnSlotSelected()
         {
-            if (SaveSystem.SaveFileExists(slotIndex))
+            if (SaveServices.SaveFileExists(slotIndex))
                 GameManager.Instance.PlayGame(slotIndex);   // Load game with this save file
             else
                 GameManager.Instance.PlayNewGame(slotIndex);    // Create new game in this slot
@@ -47,9 +48,9 @@ namespace Project.Menus.FileSelect
 
         public void OnDeleteSlot()
         {
-            if (SaveSystem.SaveFileExists(slotIndex))
+            if (SaveServices.SaveFileExists(slotIndex))
             {
-                SaveSystem.DeleteSaveFile(slotIndex);
+                SaveServices.DeleteSaveFile(slotIndex);
                 Refresh();
             }
         }
