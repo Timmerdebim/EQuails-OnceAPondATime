@@ -7,13 +7,9 @@ using UnityEngine.Rendering.Universal;
 
 public class JFAOutlineRenderPass : ScriptableRenderPass
 {
-    Material silhouetteMaterial;
     bool debugView = false;
-    Material thresholdMaterial;
-    public JFAOutlineRenderPass(Material silhouetteMaterial, Material thresholdMaterial, bool debugView)
+    public JFAOutlineRenderPass(bool debugView)
     {
-        this.silhouetteMaterial = silhouetteMaterial;
-        this.thresholdMaterial = thresholdMaterial;
         this.debugView = debugView;
     }
 
@@ -35,7 +31,7 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
 
         if (debugView)
         {
-            TextureHandle output = ThresholdTexture.Threshold(silhouetteTextures[0], 0.001f, renderGraph, thresholdMaterial);
+            TextureHandle output = ThresholdTexture.Threshold(silhouetteTextures[0], 0.001f, renderGraph);
             DebugBlitTexture.BlitTexture(output, renderGraph, frameData);
         }
 
@@ -50,7 +46,7 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
         foreach (OutlineObject outlineObject in outlineObjects)
         {
             List<Renderer> renderersToOutline = new List<Renderer>(outlineObject.Renderers);
-            TextureHandle silhouetteTexture = SilhouettePass.BuildSilhouette(renderGraph, frameData, silhouetteMaterial, renderersToOutline);
+            TextureHandle silhouetteTexture = SilhouettePass.BuildSilhouette(renderGraph, frameData, renderersToOutline);
             if (silhouetteTexture.IsValid())
             {
                 silhouetteTextures.Add(silhouetteTexture);

@@ -17,20 +17,27 @@ public static class ThresholdTexture
 
     static Material ThresholdMat;
 
-    //static Material GetMaterial()
-    //{
-    //    if (ThresholdMat == null)
-    //        ThresholdMat = CoreUtils.CreateEngineMaterial("Hidden/ThresholdWhite");
+    private static Material thresholdMat;
+    static Material GetMaterial()
+    {
+        if (thresholdMat != null) return thresholdMat;
 
-    //    return ThresholdMat;
-    //}
+        var shader = Shader.Find("Hidden/ThresholdWhite");
+        if (shader == null)
+        {
+            Debug.LogError("Could not find shader Hidden/ThresholdWhite");
+            return null;
+        }
+
+        thresholdMat = CoreUtils.CreateEngineMaterial(shader);
+        return thresholdMat;
+    }
 
 
     public static TextureHandle Threshold(
         TextureHandle textureToThreshold,
         float threshold,
-        RenderGraph renderGraph,
-        Material thresholdMaterial
+        RenderGraph renderGraph
         )
     {
         TextureDesc desc = textureToThreshold.GetDescriptor(renderGraph);
@@ -42,7 +49,7 @@ public static class ThresholdTexture
         using (var builder = renderGraph.AddRasterRenderPass<PassData>("ThresholdTexturePass", out var passData))
         {
             passData.src = textureToThreshold;
-            passData.mat = thresholdMaterial;
+            passData.mat = GetMaterial();
             passData.target = output;
             passData.threshold = threshold;
             Debug.Log(passData.mat.name);

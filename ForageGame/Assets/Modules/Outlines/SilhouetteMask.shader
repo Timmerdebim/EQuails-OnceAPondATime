@@ -1,5 +1,4 @@
-// SilhouetteID.shader
-Shader "Hidden/SilhouetteID"
+Shader "Hidden/SilhouetteMask"
 {
     Properties
     {

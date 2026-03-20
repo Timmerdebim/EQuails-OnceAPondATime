@@ -14,9 +14,23 @@ public class SilhouettePass
         public List<Renderer> renderersToOutline;
     }
 
-    static readonly int s_ObjectIDPropID = Shader.PropertyToID("_ObjectID");
-    
-    public static TextureHandle BuildSilhouette(RenderGraph renderGraph, ContextContainer frameData, Material silhouetteMaterial, List<Renderer> renderersToOutline)
+    private static Material _silhouetteMaterial;
+    static Material GetMaterial()
+    {
+        if (_silhouetteMaterial != null) return _silhouetteMaterial;
+        const string shaderName = "Hidden/SilhouetteMask";
+        var shader = Shader.Find(shaderName);
+        if (shader == null)
+        {
+            Debug.LogError($"Could not find shader {shaderName}");
+            return null;
+        }
+
+        _silhouetteMaterial = CoreUtils.CreateEngineMaterial(shader);
+        return _silhouetteMaterial;
+    }
+
+    public static TextureHandle BuildSilhouette(RenderGraph renderGraph, ContextContainer frameData, List<Renderer> renderersToOutline)
     {
         var resourceData = frameData.Get<UniversalResourceData>();
         var source = resourceData.activeColorTexture;
@@ -36,8 +50,8 @@ public class SilhouettePass
 
         using (var builder = renderGraph.AddRasterRenderPass<PassData>("SilhouettePass", out var passData))
         {
-            passData.SilhouetteMaterial = silhouetteMaterial;
             passData.renderersToOutline = renderersToOutline;
+            passData.SilhouetteMaterial = GetMaterial();
 
             builder.SetRenderAttachment(outputTexture, 0, AccessFlags.Write);
             builder.AllowPassCulling(false);
