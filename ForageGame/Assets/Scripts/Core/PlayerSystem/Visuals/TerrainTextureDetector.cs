@@ -6,18 +6,40 @@ public class TerrainTextureDetector : MonoBehaviour
     private TerrainData terrainData;
     private Vector3 terrainPosition;
 
-    void Start()
+
+    private void OnEnable()
     {
-        terrain = Terrain.activeTerrain;
-        terrainData = terrain.terrainData;
-        terrainPosition = terrain.transform.position;
+        TerrainRegistrar.OnTerrainLoaded += HandleTerrainLoaded;
+        TerrainRegistrar.OnTerrainUnloaded += HandleTerrainUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        TerrainRegistrar.OnTerrainLoaded -= HandleTerrainLoaded;
+        TerrainRegistrar.OnTerrainUnloaded -= HandleTerrainUnloaded;
+    }
+
+    private void HandleTerrainLoaded(Terrain t)
+    {
+        terrain = t;
+        terrainData = t.terrainData;
+        terrainPosition = t.transform.position;
+        Debug.Log($"Terrain {t} loaded!");
+    }
+
+    private void HandleTerrainUnloaded(Terrain t)
+    {
+        if (terrain == t)
+        {
+            terrain = null;
+            terrainData = null;
+            Debug.Log($"Terrain {t} unloaded!");
+        }
     }
 
     void Update()
     {
-        terrain = Terrain.activeTerrain;
-        terrainData = terrain.terrainData;
-        terrainPosition = terrain.transform.position;
+        if(terrain == null) return; //no reason to do anything if no terrain is loaded
         int textureIndex = GetDominantTextureIndex(transform.position);
         string textureName = terrainData.terrainLayers[textureIndex].diffuseTexture.name;
         Debug.Log($"Walking on: {textureName}");
