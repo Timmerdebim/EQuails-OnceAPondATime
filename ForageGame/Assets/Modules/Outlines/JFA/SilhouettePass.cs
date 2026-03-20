@@ -30,7 +30,7 @@ public class SilhouettePass
         TextureHandle outputTexture = renderGraph.CreateTexture(desc);
 
         List<OutlineObject> objects = OutlineObject.All;
-        if (objects.Count == 0) return outputTexture;
+        if (objects.Count == 0) return TextureHandle.nullHandle;
 
         int totalRenderers = 0;
         foreach (var obj in objects)
@@ -60,9 +60,11 @@ public class SilhouettePass
             passData.drawList = drawList;
 
             builder.SetRenderAttachment(outputTexture, 0, AccessFlags.Write);
+            builder.AllowPassCulling(false);
 
             builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
             {
+                Debug.Log("Executing SilhouettePass");
                 var cmd = context.cmd;
 
                 // Clear to 0 (background) 

@@ -278,11 +278,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 14c339aba5cd21e488ff10a7c08c7607, type: 3}
   m_PrefabInstance: {fileID: 1660105225}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &295321712 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 14c339aba5cd21e488ff10a7c08c7607, type: 3}
-  m_PrefabInstance: {fileID: 1660105225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &295321715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,11 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835510d8644c50148b93320b278054a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlinePixelWidth: 130
-  renderers:
-  - {fileID: 295321712}
-  outlineShader: {fileID: 4800000, guid: 08ab41c3f41d1854aa411c1ddb2eadbc, type: 3}
 --- !u!1 &348639801
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +643,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ecffdbc388f407e478cd464010c9664e, type: 3}
       propertyPath: m_Name
       value: Wide Rock (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ecffdbc388f407e478cd464010c9664e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -16,7 +16,7 @@ public class SilhouetteRendererFeature : ScriptableRendererFeature
     {
         m_IDMaterial = CoreUtils.CreateEngineMaterial("Hidden/SilhouetteID");
         m_Pass = new SilhouettePass_old(m_IDMaterial, debugView);
-        m_DebugPass = new DebugBlitPass();
+        //m_DebugPass = new DebugBlitPass();
     }
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)

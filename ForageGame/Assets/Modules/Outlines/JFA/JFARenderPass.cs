@@ -5,5 +5,5 @@ using UnityEngine.Rendering.RenderGraphModule;
 
 public class JFARenderPass
 {
- 
+    
 }

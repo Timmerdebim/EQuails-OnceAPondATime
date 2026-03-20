@@ -25,7 +25,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1baa1658ead044fac2029f5f6a16ab, type: 3}
   m_Name: DitherEffectRendererFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   injectionPoint: 550
   material: {fileID: 2100000, guid: 32ec88e0af729624988e952203b4182b, type: 2}
 --- !u!114 &-4424393697478201247
@@ -49,6 +49,23 @@ MonoBehaviour:
       surfaceData: 2
     screenSpaceSettings:
       normalBlend: 0
+--- !u!114 &-3080786089050377823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614ee054da840fe4a8f92e1434110097, type: 3}
+  m_Name: JFA_Outline_Feature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  SilhouetteMaterial: {fileID: 2100000, guid: bb97e387d7e24e64fb38cdccbe5488da, type: 2}
+  ThresholdMaterial: {fileID: 2100000, guid: 86064c11737a2114fa54cd0dee396020, type: 2}
+  debugView: 0
+  injectionPoint: 550
 --- !u!114 &-2533390047982256039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +137,8 @@ MonoBehaviour:
   - {fileID: -4424393697478201247}
   - {fileID: -2533390047982256039}
   - {fileID: -5768139534627827114}
-  m_RendererFeatureMap: ad6b866f10d7b46c61b055a35f6599c2590082802c97d7dc56129f77a773f3af
+  - {fileID: -3080786089050377823}
+  m_RendererFeatureMap: ad6b866f10d7b46c61b055a35f6599c2590082802c97d7dc56129f77a773f3afa1f12fed5fd93ed5
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}

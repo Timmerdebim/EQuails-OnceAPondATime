@@ -1,28 +1,20 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.RenderGraphModule;
+using UnityEngine.Rendering.Universal;
 
-public class DebugBlitPass : ScriptableRenderPass
+public class DebugBlitTexture
 {
     class PassData
     {
         public TextureHandle src;
     }
 
-    TextureHandle textureToBlit;
-
-    public DebugBlitPass(TextureHandle textureToBlit)
-    {
-        this.textureToBlit = textureToBlit;
-        renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
-    }
-
-    public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
+    public static void BlitTexture(TextureHandle textureToBlit, RenderGraph renderGraph, ContextContainer frameData)
     {
         var resourceData = frameData.Get<UniversalResourceData>();
 
-        using (var builder = renderGraph.AddRasterRenderPass<PassData>("DebugBlitSilhouette", out var passData))
+        using (var builder = renderGraph.AddRasterRenderPass<PassData>("DebugBlitTexture", out var passData))
         {
             passData.src = textureToBlit;
 
@@ -32,6 +24,7 @@ public class DebugBlitPass : ScriptableRenderPass
 
             builder.SetRenderFunc((PassData data, RasterGraphContext ctx) =>
             {
+                Debug.Log("Executing DebugBlitTexture Pass");
                 Blitter.BlitTexture(ctx.cmd, data.src, new Vector4(1, 1, 0, 0), 0, false);
             });
         }

@@ -6,19 +6,23 @@ using UnityEngine.Rendering.Universal;
 
 public class JFA_Outline_Feature : ScriptableRendererFeature
 {
-    JFARenderPass pass;
+    JFAOutlineRenderPass pass;
 
-    Material SilhouetteMaterial;
+    public Material SilhouetteMaterial;
+    public Material ThresholdMaterial;
     public bool debugView = false;
+    public RenderPassEvent injectionPoint = RenderPassEvent.BeforeRenderingPostProcessing;
 
     private TextureHandle silhouetteTH;
     private List<TextureHandle> distanceFieldTHs;
 
     public override void Create()
     {
-        SilhouetteMaterial = CoreUtils.CreateEngineMaterial("Hidden/SilhouetteID");
+        //SilhouetteMaterial = CoreUtils.CreateEngineMaterial("Hidden/SilhouetteID");
 
-        pass = new JFARenderPass();
+        pass = new JFAOutlineRenderPass(SilhouetteMaterial, ThresholdMaterial, debugView);
+        pass.renderPassEvent = injectionPoint;
+
     }
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
@@ -28,7 +32,7 @@ public class JFA_Outline_Feature : ScriptableRendererFeature
 
     protected override void Dispose(bool disposing)
     {
-        CoreUtils.Destroy(SilhouetteMaterial);
+        //CoreUtils.Destroy(SilhouetteMaterial);
     }
 
 
