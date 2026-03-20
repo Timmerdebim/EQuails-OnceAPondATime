@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
@@ -24,19 +26,41 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
 
         UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
 
-        TextureHandle silhouetteTexture = SilhouettePass.BuildSilhouette(renderGraph, frameData, silhouetteMaterial);
-        if (!silhouetteTexture.IsValid())
+        List<TextureHandle> silhouetteTextures = GetSilhouetteTextures(renderGraph, frameData);
+
+        if (silhouetteTextures.Count == 0)
         {
-            // If the silhouette texture isn't valid, it means there were no objects to render in the silhouette pass. In this case, we can skip the rest of the outline rendering process.
-            return;
+            return; // No silhouettes to process, skip the rest of the pass
         }
 
-        TextureHandle output = silhouetteTexture;
         if (debugView)
         {
-            output = ThresholdTexture.Threshold(silhouetteTexture, 0.001f, renderGraph, thresholdMaterial);
+            TextureHandle output = ThresholdTexture.Threshold(silhouetteTextures[0], 0.001f, renderGraph, thresholdMaterial);
             DebugBlitTexture.BlitTexture(output, renderGraph, frameData);
         }
 
+    }
+
+    private List<TextureHandle> GetSilhouetteTextures(RenderGraph renderGraph, ContextContainer frameData)
+    {
+        List<TextureHandle> silhouetteTextures = new List<TextureHandle>();
+
+        OutlineObject[] outlineObjects = OutlineObject.All.ToArray();
+
+        foreach (OutlineObject outlineObject in outlineObjects)
+        {
+            List<Renderer> renderersToOutline = new List<Renderer>(outlineObject.Renderers);
+            TextureHandle silhouetteTexture = SilhouettePass.BuildSilhouette(renderGraph, frameData, silhouetteMaterial, renderersToOutline);
+            if (silhouetteTexture.IsValid())
+            {
+                silhouetteTextures.Add(silhouetteTexture);
+            }
+            else
+            {
+                Debug.LogWarning($"Silhouette texture for {outlineObject.gameObject.name} is not valid. This likely means there were no renderers to outline for this object.");
+            }
+        }
+
+        return silhouetteTextures;
     }
 }

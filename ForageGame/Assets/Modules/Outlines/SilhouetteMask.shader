@@ -3,7 +3,6 @@ Shader "Hidden/SilhouetteID"
 {
     Properties
     {
-        _ObjectID("Object ID", Float) = 0
     }
 
     SubShader
@@ -37,7 +36,7 @@ Shader "Hidden/SilhouetteID"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                return half4(_ObjectID, 0, 0, 1);
+                return half4(1, 0, 0, 1);
             }
             ENDHLSL
         }
