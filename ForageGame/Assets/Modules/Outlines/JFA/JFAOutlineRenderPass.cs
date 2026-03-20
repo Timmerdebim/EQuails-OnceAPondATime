@@ -35,6 +35,12 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
             DebugBlitTexture.BlitTexture(output, renderGraph, frameData);
         }
 
+        foreach (TextureHandle silhouetteTexture in silhouetteTextures)
+        {
+            TextureHandle JFA_Tex = JFARenderPass.JFAPass(renderGraph, frameData, silhouetteTexture);
+            DebugBlitTexture.BlitTexture(JFA_Tex, renderGraph, frameData);
+        }
+
     }
 
     private List<TextureHandle> GetSilhouetteTextures(RenderGraph renderGraph, ContextContainer frameData)
