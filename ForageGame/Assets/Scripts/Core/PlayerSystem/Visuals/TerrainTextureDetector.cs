@@ -41,6 +41,7 @@ public class TerrainTextureDetector : MonoBehaviour
     {
         if(terrain == null) return; //no reason to do anything if no terrain is loaded
         int textureIndex = GetDominantTextureIndex(transform.position);
+        if(terrainData.terrainLayers.Length == 0) return; //terrain has no uhhhh terrain (textures)
         string textureName = terrainData.terrainLayers[textureIndex].diffuseTexture.name;
         Debug.Log($"Walking on: {textureName}");
     }
