@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TerrainTextureDetector : MonoBehaviour
@@ -5,6 +6,9 @@ public class TerrainTextureDetector : MonoBehaviour
     private Terrain terrain;
     private TerrainData terrainData;
     private Vector3 terrainPosition;
+
+    [SerializeField] private TerrainTypeLayerMap terrainTypeLayerMap;
+    private Dictionary<TerrainLayer, TerrainType> terrainTypeLayerDict; //dict version of the SO above
 
 
     private void OnEnable()
@@ -17,6 +21,14 @@ public class TerrainTextureDetector : MonoBehaviour
     {
         TerrainRegistrar.OnTerrainLoaded -= HandleTerrainLoaded;
         TerrainRegistrar.OnTerrainUnloaded -= HandleTerrainUnloaded;
+    }
+
+    private void Awake()
+    {
+        terrainTypeLayerDict = new Dictionary<TerrainLayer, TerrainType>();
+        foreach (var e in terrainTypeLayerMap.entries)
+            if (e.layer != null)
+                terrainTypeLayerDict[e.layer] = e.type;
     }
 
     private void HandleTerrainLoaded(Terrain t)
@@ -43,7 +55,8 @@ public class TerrainTextureDetector : MonoBehaviour
         int textureIndex = GetDominantTextureIndex(transform.position);
         if(terrainData.terrainLayers.Length == 0) return; //terrain has no uhhhh terrain (textures)
         string textureName = terrainData.terrainLayers[textureIndex].diffuseTexture.name;
-        Debug.Log($"Walking on: {textureName}");
+        Debug.Log($"Walking on: {textureName} of TerrainType: {GetTerrainType(terrainData.terrainLayers[textureIndex])}");
+        //TODO: hookup to audio
     }
 
     private int GetDominantTextureIndex(Vector3 worldPos)
@@ -82,5 +95,13 @@ public class TerrainTextureDetector : MonoBehaviour
             mix[i] = splatmapData[0, 0, i];
 
         return mix;
+    }
+
+    public TerrainType GetTerrainType(TerrainLayer layer)
+    {
+        if (terrainTypeLayerDict != null && terrainTypeLayerDict.TryGetValue(layer, out var type))
+            return type;
+        Debug.Log("Terrain Type not present in TerrainMap, falling back to Dirt!");
+        return TerrainType.Dirt;
     }
 }
