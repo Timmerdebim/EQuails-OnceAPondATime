@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class TerrainTextureDetector : MonoBehaviour
@@ -49,14 +50,17 @@ public class TerrainTextureDetector : MonoBehaviour
         }
     }
 
-    void Update()
+    public TerrainType GetTerrainType()
     {
-        if(terrain == null) return; //no reason to do anything if no terrain is loaded
+        if(terrain == null || terrainData.terrainLayers.Length == 0) 
+        {
+            Debug.LogError("No terrain loaded or Terrain has no textures, defaulting to grass footsteps!");
+            return TerrainType.Grass;
+        }
         int textureIndex = GetDominantTextureIndex(transform.position);
-        if(terrainData.terrainLayers.Length == 0) return; //terrain has no uhhhh terrain (textures)
         string textureName = terrainData.terrainLayers[textureIndex].diffuseTexture.name;
-        Debug.Log($"Walking on: {textureName} of TerrainType: {GetTerrainType(terrainData.terrainLayers[textureIndex])}");
-        //TODO: hookup to audio
+        Debug.Log($"Walking on: {textureName} of TerrainType: {GetLayerTerrainType(terrainData.terrainLayers[textureIndex])}");
+        return GetLayerTerrainType(terrainData.terrainLayers[textureIndex]);
     }
 
     private int GetDominantTextureIndex(Vector3 worldPos)
@@ -77,17 +81,18 @@ public class TerrainTextureDetector : MonoBehaviour
         return dominantIndex;
     }
 
+    //Special thanks to mr. Claude for this one
     private float[] GetTextureMix(Vector3 worldPos)
     {
-        // Convert world position to terrain-local coordinates (0..1 range)
+        //Convert world position to terrain-local coordinates (0..1 range)
         float normX = (worldPos.x - terrainPosition.x) / terrainData.size.x;
         float normZ = (worldPos.z - terrainPosition.z) / terrainData.size.z;
 
-        // Convert to alphamap coordinates
+        //Convert to alphamap coordinates
         int mapX = Mathf.RoundToInt(normX * (terrainData.alphamapWidth - 1));
         int mapZ = Mathf.RoundToInt(normZ * (terrainData.alphamapHeight - 1));
 
-        // alphamaps[z, x, layerIndex] — note the z/x order!
+        //alphamaps[z, x, layerIndex] — note the z/x order!
         float[,,] splatmapData = terrainData.GetAlphamaps(mapX, mapZ, 1, 1);
 
         float[] mix = new float[splatmapData.GetUpperBound(2) + 1];
@@ -97,11 +102,11 @@ public class TerrainTextureDetector : MonoBehaviour
         return mix;
     }
 
-    public TerrainType GetTerrainType(TerrainLayer layer)
+    private TerrainType GetLayerTerrainType(TerrainLayer layer)
     {
         if (terrainTypeLayerDict != null && terrainTypeLayerDict.TryGetValue(layer, out var type))
             return type;
-        Debug.Log("Terrain Type not present in TerrainMap, falling back to Dirt!");
-        return TerrainType.Dirt;
+        Debug.Log("Terrain Type not present in TerrainMap, falling back to Grass!");
+        return TerrainType.Grass;
     }
 }

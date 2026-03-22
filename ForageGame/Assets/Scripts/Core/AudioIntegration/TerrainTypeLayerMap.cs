@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-public enum TerrainType { Grass, Dirt, Sand, Rock, Snow, Wood }
+public enum TerrainType { Sand, Grass, Dirt, Rock, Snow, Wood } //DO NOT EDIT, THIS CORRESPONDS WITH FMOD STUFF ~Lars
 
 [System.Serializable]
 public struct TerrainMapEntry

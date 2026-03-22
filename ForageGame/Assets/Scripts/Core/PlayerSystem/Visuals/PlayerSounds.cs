@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerSounds : MonoBehaviour
 {
+    [SerializeField] private TerrainTextureDetector terrainTextureDetector;
     [SerializeField] private FMODUnity.EventReference footstepEvent;
 
     [SerializeField] private FMODUnity.EventReference quackEvent;
@@ -19,14 +20,8 @@ public class PlayerSounds : MonoBehaviour
     {
         var instance = FMODUnity.RuntimeManager.CreateInstance(footstepEvent);
         instance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform.position));
-        instance.setParameterByName("TerrainType", GetTerrainType()); //yes IK this sucks, I can't pass a label for a labeled parameter, FMOD is great :)
+        instance.setParameterByName("TerrainType", (float)terrainTextureDetector.GetTerrainType()); //yes IK this sucks, I can't pass a label for a labeled parameter, FMOD is great :)
         instance.start();
         instance.release();
-    }
-
-    //TODO: raycast to get current terrain type, now just default to grass
-    private float GetTerrainType()
-    {
-        return 1f; //grass
     }
 }
