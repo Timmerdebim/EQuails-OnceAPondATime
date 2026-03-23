@@ -52,9 +52,10 @@ public class TerrainTextureDetector : MonoBehaviour
 
     public TerrainType GetTerrainType()
     {
-        if(terrain == null || terrainData.terrainLayers.Length == 0) 
+        if (terrain == null || terrainData.terrainLayers.Length == 0)
         {
-            Debug.LogError("No terrain loaded or Terrain has no textures, defaulting to grass footsteps!");
+            // Debug disabled by Tim; WAY TO MANY ERRORS, PLEASE STOP!!!
+            // Debug.LogError("No terrain loaded or Terrain has no textures, defaulting to grass footsteps!");
             return TerrainType.Grass;
         }
         int textureIndex = GetDominantTextureIndex(transform.position);

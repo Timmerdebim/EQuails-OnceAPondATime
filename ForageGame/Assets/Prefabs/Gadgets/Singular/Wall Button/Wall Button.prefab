@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8231433079002447910}
-  - component: {fileID: 4646039065096528920}
+  - component: {fileID: 5909143316093997891}
   m_Layer: 13
   m_Name: Wall Button
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 1350166919706154439}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4646039065096528920
+--- !u!114 &5909143316093997891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,40 +43,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 406018826699898042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e39021ae0767e49bb189b54b40305d, type: 3}
+  m_Script: {fileID: 11500000, guid: be0de6ec3b5f5ff4abbea9a039fe00d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnSwitchedOn:
+  OnButtonPressed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8992658409816208840}
-        m_TargetAssemblyTypeName: TDK.BlendTreeDrivers.BlendDriver1D, Assembly-CSharp
-        m_MethodName: SetTarget
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnSwitchedOff:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8992658409816208840}
-        m_TargetAssemblyTypeName: TDK.BlendTreeDrivers.BlendDriver1D, Assembly-CSharp
-        m_MethodName: SetTarget
-        m_Mode: 4
+      - m_Target: {fileID: 696388166157237751}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: On
           m_BoolArgument: 0
         m_CallState: 2
-  _initialState: 0
   Locked: 0
 --- !u!1 &1603837286383424823
 GameObject:
@@ -88,7 +72,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3609429763518529341}
   - component: {fileID: 696388166157237751}
-  - component: {fileID: 8992658409816208840}
   m_Layer: 13
   m_Name: Visuals
   m_TagString: Untagged
@@ -135,20 +118,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8992658409816208840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603837286383424823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7072920993abfed49bfa752e7af5c5e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameterName: Blend
-  transitionSpeed: 1
 --- !u!1 &5187405150167427405
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,9 +273,9 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4646039065096528920}
-        m_TargetAssemblyTypeName: TDK.Gadgets.SwitchController, Assembly-CSharp
-        m_MethodName: ToggleState
+      - m_Target: {fileID: 5909143316093997891}
+        m_TargetAssemblyTypeName: TDK.Gadgets.ButtonController, Assembly-CSharp
+        m_MethodName: PressButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

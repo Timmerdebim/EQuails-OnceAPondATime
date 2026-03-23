@@ -50,13 +50,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _solution:
-  - {fileID: 2321663129110950863}
-  - {fileID: 9181681413929032417}
-  - {fileID: 2888265769672237294}
-  - {fileID: 3855473482688443829}
-  - {fileID: 2888265769672237294}
-  - {fileID: 9181681413929032417}
-  - {fileID: 2321663129110950863}
+  - {fileID: 3621810204041348244}
+  - {fileID: 7858948446051986874}
+  - {fileID: 4210402802280257461}
+  - {fileID: 2880634517605286638}
+  - {fileID: 4210402802280257461}
+  - {fileID: 7858948446051986874}
+  - {fileID: 3621810204041348244}
   OnSolved:
     m_PersistentCalls:
       m_Calls:
@@ -102,6 +102,42 @@ PrefabInstance:
     - target: {fileID: 406018826699898042, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
       propertyPath: m_Name
       value: Wall Button (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6447656168539609473}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LogInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TDK.Gadgets.SequencePuzzle, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 7858948446051986874}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: On
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: TDK.Gadgets.ButtonController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8231433079002447910, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -153,15 +189,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8231433079002447910, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
   m_PrefabInstance: {fileID: 4544670168816647929}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9181681413929032417 stripped
+--- !u!114 &7858948446051986874 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4646039065096528920, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
   m_PrefabInstance: {fileID: 4544670168816647929}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e39021ae0767e49bb189b54b40305d, type: 3}
+  m_Script: {fileID: 11500000, guid: be0de6ec3b5f5ff4abbea9a039fe00d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6936176441070262231
@@ -175,6 +211,42 @@ PrefabInstance:
     - target: {fileID: 406018826699898042, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
       propertyPath: m_Name
       value: Wall Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6447656168539609473}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LogInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TDK.Gadgets.SequencePuzzle, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 3621810204041348244}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: On
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: TDK.Gadgets.ButtonController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8231433079002447910, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -226,15 +298,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8231433079002447910, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
   m_PrefabInstance: {fileID: 6936176441070262231}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2321663129110950863 stripped
+--- !u!114 &3621810204041348244 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4646039065096528920, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
   m_PrefabInstance: {fileID: 6936176441070262231}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e39021ae0767e49bb189b54b40305d, type: 3}
+  m_Script: {fileID: 11500000, guid: be0de6ec3b5f5ff4abbea9a039fe00d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7525274750244963574
@@ -248,6 +320,42 @@ PrefabInstance:
     - target: {fileID: 406018826699898042, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
       propertyPath: m_Name
       value: Wall Button (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6447656168539609473}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LogInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TDK.Gadgets.SequencePuzzle, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 4210402802280257461}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: On
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: TDK.Gadgets.ButtonController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8231433079002447910, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -299,15 +407,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8231433079002447910, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
   m_PrefabInstance: {fileID: 7525274750244963574}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2888265769672237294 stripped
+--- !u!114 &4210402802280257461 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4646039065096528920, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
   m_PrefabInstance: {fileID: 7525274750244963574}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e39021ae0767e49bb189b54b40305d, type: 3}
+  m_Script: {fileID: 11500000, guid: be0de6ec3b5f5ff4abbea9a039fe00d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8501511168546804141
@@ -321,6 +429,42 @@ PrefabInstance:
     - target: {fileID: 406018826699898042, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
       propertyPath: m_Name
       value: Wall Button (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6447656168539609473}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LogInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TDK.Gadgets.SequencePuzzle, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 2880634517605286638}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: On
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+      propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: TDK.Gadgets.ButtonController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8231433079002447910, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -372,14 +516,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8231433079002447910, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
   m_PrefabInstance: {fileID: 8501511168546804141}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3855473482688443829 stripped
+--- !u!114 &2880634517605286638 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4646039065096528920, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5909143316093997891, guid: 686414fb8db3e1c43ac04a7e22a4b29b, type: 3}
   m_PrefabInstance: {fileID: 8501511168546804141}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e39021ae0767e49bb189b54b40305d, type: 3}
+  m_Script: {fileID: 11500000, guid: be0de6ec3b5f5ff4abbea9a039fe00d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

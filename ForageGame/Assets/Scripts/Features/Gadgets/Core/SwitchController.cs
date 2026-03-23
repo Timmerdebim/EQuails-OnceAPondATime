@@ -23,6 +23,7 @@ namespace TDK.Gadgets
             }
         }
 
+        void Awake() { _state = _initialState; }
         void Start() { State = _initialState; }
 
         public void ToggleState() => SetState(!State);
