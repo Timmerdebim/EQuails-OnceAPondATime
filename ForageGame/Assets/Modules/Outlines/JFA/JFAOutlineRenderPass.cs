@@ -37,18 +37,18 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
         if (debugView)
         {
             TextureHandle output = ThresholdTexture.Threshold(silhouetteTextures[0], 0.001f, renderGraph);
-            DebugBlitTexture.BlitTexture(output, renderGraph, frameData);
+            BlitTexture.BlitToScreen(output, renderGraph, frameData);
         }
 
         foreach (TextureHandle silhouetteTexture in silhouetteTextures)
         {
             TextureHandle JFA_Tex = JFARenderPass.JFAPass(renderGraph, frameData, silhouetteTexture);
-            TextureHandle outlineTexture = Outline_pass.OutlinePass(renderGraph, frameData, JFA_Tex, outlineWidth, outlineColor);
+            TextureHandle outlineTexture = Outline_pass.OutlinePass(renderGraph, frameData, JFA_Tex, silhouetteTexture, outlineWidth, outlineColor);
             
             
-            TextureHandle composite = CompositePass.Composite(renderGraph, frameData, resourceData.activeColorTexture, outlineTexture);
+            TextureHandle composite = OutlineFinalComposite.Composite(renderGraph, frameData, resourceData.activeColorTexture, outlineTexture);
             
-            DebugBlitTexture.BlitTexture(composite, renderGraph, frameData);
+            BlitTexture.BlitToScreen(composite, renderGraph, frameData);
         }
 
     }

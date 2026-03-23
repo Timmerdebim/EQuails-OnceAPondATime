@@ -35,9 +35,9 @@ public class SilhouettePass
         var resourceData = frameData.Get<UniversalResourceData>();
         var source = resourceData.activeColorTexture;
         var desc = renderGraph.GetTextureDesc(source);
-        desc.colorFormat = GraphicsFormat.R8_UNorm;
+        desc.colorFormat = GraphicsFormat.R16_UNorm;
         desc.depthBufferBits = 0;
-        desc.msaaSamples = MSAASamples.None;
+        desc.msaaSamples = MSAASamples.MSAA4x;
         desc.name = "_SilhouetteMask";
 
         if(renderersToOutline.Count == 0)
@@ -70,8 +70,15 @@ public class SilhouettePass
                 }
             });
         }
+        
+        // Resolve MSAA
+        TextureDesc resolvedDesc = desc;
+        resolvedDesc.msaaSamples = MSAASamples.None;
+        resolvedDesc.name = "SilhouetteMask_MSAAResolved";
+        TextureHandle resolved = renderGraph.CreateTexture(resolvedDesc);
+        BlitTexture.BlitFromTo(outputTexture, resolved, renderGraph, frameData, "Resolve MSAA");
 
-        return outputTexture;
+        return resolved;
     }
 
 }

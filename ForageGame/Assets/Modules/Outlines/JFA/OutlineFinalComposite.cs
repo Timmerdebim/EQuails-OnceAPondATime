@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace Modules.Outlines
 {
-    public class CompositePass
+    public class OutlineFinalComposite
     {
         private static Material _CompositeMat;
 

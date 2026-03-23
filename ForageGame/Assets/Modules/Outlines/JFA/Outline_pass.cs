@@ -28,11 +28,19 @@ public class Outline_pass
         }
 
     }
+
+    private class PassData
+    {
+        public Material OutlineMaterial;
+        public MaterialPropertyBlock mpb;
+        public TextureHandle JFATexture;
+        public TextureHandle SilhouetteTexture;
+    }
     
     public static TextureHandle OutlinePass(RenderGraph renderGraph, ContextContainer frameData,
-        TextureHandle JFATexture, float outlineWidth, Color outlineColor)
+        TextureHandle JFATex, TextureHandle SilhouetteTex, float outlineWidth, Color outlineColor)
     {
-        TextureDesc desc = JFATexture.GetDescriptor(renderGraph);
+        TextureDesc desc = JFATex.GetDescriptor(renderGraph);
         desc.name = "Outline Pass Output";
         desc.colorFormat = GraphicsFormat.R8G8B8A8_UNorm;
         TextureHandle output = renderGraph.CreateTexture(desc);
@@ -40,7 +48,28 @@ public class Outline_pass
         MaterialPropertyBlock mpb = new MaterialPropertyBlock(); 
         mpb.SetFloat("_OutlineWidth", outlineWidth);
         mpb.SetColor("_OutlineColor", outlineColor);
-        RenderFullscreenWithMaterial.RenderPass(renderGraph, JFATexture, output, OutlineMaterial, "Outline Pass", "_MainTex", mpb);
+        
+        using (var builder = renderGraph.AddRasterRenderPass<PassData>("Outline_Pass", out var passData))
+        {
+            passData.OutlineMaterial = OutlineMaterial;
+            passData.mpb = mpb;
+            passData.JFATexture = JFATex;
+            passData.SilhouetteTexture = SilhouetteTex;
+            
+            builder.SetRenderAttachment(output, 0, AccessFlags.Write);
+            
+            builder.UseTexture(passData.JFATexture, AccessFlags.Read);
+            builder.UseTexture(passData.SilhouetteTexture, AccessFlags.Read);
+
+            builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
+            {
+                passData.mpb.SetTexture("_JFATex", passData.JFATexture);
+                passData.mpb.SetTexture("_SilhouetteTex", passData.SilhouetteTexture);
+                
+                context.cmd.DrawProcedural(Matrix4x4.identity, passData.OutlineMaterial, 0,
+                    MeshTopology.Triangles, 3, 1, passData.mpb);
+            });
+        }
         return output; 
     }
 

@@ -2,7 +2,8 @@ Shader "Hidden/OutlineFromJFA"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _JFATex ("Texture", 2D) = "white" {}
+        _SilhouetteTex ("Silhouette Texture", 2D) = "black" {}
         _OutlineWidth ("Outline Width", Float) = 1.0
         _OutlineColor ("Outline Color", Color) = (0.5, 0.8, 1, 1)
     }
@@ -18,11 +19,14 @@ Shader "Hidden/OutlineFromJFA"
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
 
-            TEXTURE2D(_MainTex);
-            SAMPLER(sampler_MainTex);
+            TEXTURE2D(_JFATex);
+            SAMPLER(sampler_JFATex);
+            TEXTURE2D(_SilhouetteTex);
+            SAMPLER(sampler_SilhouetteTex);
     
             float4 _OutlineColor;
             float _OutlineWidth;
+            float4 _ScreenParams;
             
             struct Varyings { float4 pos : SV_POSITION; float2 uv : TEXCOORD0; };
 
@@ -36,24 +40,21 @@ Shader "Hidden/OutlineFromJFA"
 
             float4 Frag(Varyings i) : SV_Target
             {
-                float2 seed_uv = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv).rg;
-                float2 uv = i.uv;
-                float distanceToSeed = distance(seed_uv, uv);
-                float4 default_color = float4(0, 0, 0, 0);
+                float2 seed_uv = SAMPLE_TEXTURE2D(_JFATex, sampler_JFATex, i.uv).rg;
                 
-                if (distanceToSeed <= 0.001)
-                {
-                    return default_color;
-                }
+                // Convert to pixel space to fix aspect ratio and get correct fwidth scale
+                float2 pixelPos = i.uv * _ScreenParams.xy;
+                float2 seedPixelPos = seed_uv * _ScreenParams.xy;
+                float distanceToSeed = length(pixelPos - seedPixelPos);
+
+                float silhouetteAlpha = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, i.uv).r;
+
+                float softOutline = smoothstep(_OutlineWidth, _OutlineWidth - fwidth(distanceToSeed), distanceToSeed);
+                float finalOutline = softOutline * (1.0 - silhouetteAlpha);
                 
-                if (distanceToSeed < _OutlineWidth)
-                {
-                    return _OutlineColor;
-                }
-                else
-                {
-                    return default_color;
-                }
+                float outlineAlpha = _OutlineColor.a * finalOutline;
+                float4 outColor = _OutlineColor * outlineAlpha;
+                return outColor;
             }
             ENDHLSL
         }
