@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class JFA_Outline_Feature : ScriptableRendererFeature
 {
     JFAOutlineRenderPass pass;
-
+    
     public bool debugView = false;
     public Color outlineColor;
     public float outlineWidth;
@@ -26,6 +26,4 @@ public class JFA_Outline_Feature : ScriptableRendererFeature
     {
         renderer.EnqueuePass(pass);
     }
-
-
 }

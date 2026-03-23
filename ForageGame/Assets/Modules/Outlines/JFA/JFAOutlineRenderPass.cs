@@ -43,12 +43,12 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
         foreach (TextureHandle silhouetteTexture in silhouetteTextures)
         {
             TextureHandle JFA_Tex = JFARenderPass.JFAPass(renderGraph, frameData, silhouetteTexture);
-            TextureHandle outlineTexture = Outline_pass.OutlinePass(renderGraph, frameData, JFA_Tex, silhouetteTexture, outlineWidth, outlineColor);
+            Outline_pass.OutlinePass(renderGraph, frameData, JFA_Tex, silhouetteTexture, outlineWidth, outlineColor);
             
             
-            TextureHandle composite = OutlineFinalComposite.Composite(renderGraph, frameData, resourceData.activeColorTexture, outlineTexture);
+            // TextureHandle composite = OutlineFinalComposite.Composite(renderGraph, frameData, resourceData.activeColorTexture, outlineTexture);
             
-            BlitTexture.BlitToScreen(composite, renderGraph, frameData);
+            // BlitTexture.BlitToScreen(composite, renderGraph, frameData);
         }
 
     }

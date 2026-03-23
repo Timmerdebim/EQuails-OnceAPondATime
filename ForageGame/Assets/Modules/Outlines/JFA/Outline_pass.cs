@@ -37,13 +37,10 @@ public class Outline_pass
         public TextureHandle SilhouetteTexture;
     }
     
-    public static TextureHandle OutlinePass(RenderGraph renderGraph, ContextContainer frameData,
+    public static void OutlinePass(RenderGraph renderGraph, ContextContainer frameData,
         TextureHandle JFATex, TextureHandle SilhouetteTex, float outlineWidth, Color outlineColor)
     {
-        TextureDesc desc = JFATex.GetDescriptor(renderGraph);
-        desc.name = "Outline Pass Output";
-        desc.colorFormat = GraphicsFormat.R8G8B8A8_UNorm;
-        TextureHandle output = renderGraph.CreateTexture(desc);
+        UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
         
         MaterialPropertyBlock mpb = new MaterialPropertyBlock(); 
         mpb.SetFloat("_OutlineWidth", outlineWidth);
@@ -56,10 +53,14 @@ public class Outline_pass
             passData.JFATexture = JFATex;
             passData.SilhouetteTexture = SilhouetteTex;
             
-            builder.SetRenderAttachment(output, 0, AccessFlags.Write);
+            TextureHandle camera = resourceData.activeColorTexture;
+            TextureHandle depth =  resourceData.activeDepthTexture;
+            builder.SetRenderAttachment(camera, 0, AccessFlags.ReadWrite);
+            builder.SetRenderAttachmentDepth(depth, AccessFlags.ReadWrite);
             
             builder.UseTexture(passData.JFATexture, AccessFlags.Read);
             builder.UseTexture(passData.SilhouetteTexture, AccessFlags.Read);
+            builder.UseTexture(frameData.Get<UniversalResourceData>().cameraDepthTexture, AccessFlags.Read);
 
             builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
             {
@@ -70,7 +71,6 @@ public class Outline_pass
                     MeshTopology.Triangles, 3, 1, passData.mpb);
             });
         }
-        return output; 
     }
 
 }

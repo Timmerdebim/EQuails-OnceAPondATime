@@ -4,12 +4,13 @@ Shader "Hidden/OutlineFromJFA"
     {
         _JFATex ("Texture", 2D) = "white" {}
         _SilhouetteTex ("Silhouette Texture", 2D) = "black" {}
+        _DepthTex ("Depth Texture", 2D) = "white" {}
         _OutlineWidth ("Outline Width", Float) = 1.0
         _OutlineColor ("Outline Color", Color) = (0.5, 0.8, 1, 1)
     }
     SubShader
     {
-        Cull Off ZWrite Off ZTest Always
+        Cull Off ZWrite On ZTest LEqual
 
         Pass
         {
@@ -18,15 +19,17 @@ Shader "Hidden/OutlineFromJFA"
             #pragma fragment Frag
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+            
             TEXTURE2D(_JFATex);
             SAMPLER(sampler_JFATex);
             TEXTURE2D(_SilhouetteTex);
             SAMPLER(sampler_SilhouetteTex);
+            TEXTURE2D(_DepthTex);
+            SAMPLER(sampler_DepthTex);
     
             float4 _OutlineColor;
             float _OutlineWidth;
-            float4 _ScreenParams;
             
             struct Varyings { float4 pos : SV_POSITION; float2 uv : TEXCOORD0; };
 
@@ -37,9 +40,32 @@ Shader "Hidden/OutlineFromJFA"
                 o.uv  = GetFullScreenTriangleTexCoord(id);
                 return o;
             }
-
-            float4 Frag(Varyings i) : SV_Target
+            
+            struct FragOutput
             {
+                float4 color : SV_Target;
+                float depth : SV_Depth;
+            };
+            
+            float SampleSeedDepth(float2 seed_uv)
+            {
+                float2 texelSize = 1.0 / _ScreenParams.xy;
+                float minDepth = 1;
+                
+                for (int x = -1; x <= 1; x++)
+                for (int y = -1; y <= 1; y++)
+                {
+                    float2 offset = float2(x, y) * texelSize;
+                    minDepth = min(minDepth, SampleSceneDepth(seed_uv + offset));
+                }
+                
+                return minDepth;
+            }
+            
+            FragOutput Frag(Varyings i)
+            {
+                FragOutput o;
+                
                 float2 seed_uv = SAMPLE_TEXTURE2D(_JFATex, sampler_JFATex, i.uv).rg;
                 
                 // Convert to pixel space to fix aspect ratio and get correct fwidth scale
@@ -52,9 +78,22 @@ Shader "Hidden/OutlineFromJFA"
                 float softOutline = smoothstep(_OutlineWidth, _OutlineWidth - fwidth(distanceToSeed), distanceToSeed);
                 float finalOutline = softOutline * (1.0 - silhouetteAlpha);
                 
+                if (finalOutline <= 0.0)
+                {
+                    discard;
+                }
+                
                 float outlineAlpha = _OutlineColor.a * finalOutline;
                 float4 outColor = _OutlineColor * outlineAlpha;
-                return outColor;
+                o.color = outColor;
+                
+                float seedDepth = SampleSeedDepth(seed_uv);
+                
+                o.depth = seedDepth;
+                
+                // o.color = float4(seedDepth, seedDepth, seedDepth, 1);
+                return o;
+
             }
             ENDHLSL
         }
