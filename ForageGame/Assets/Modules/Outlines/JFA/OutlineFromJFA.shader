@@ -39,10 +39,11 @@ Shader "Hidden/OutlineFromJFA"
                 float2 seed_uv = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv).rg;
                 float2 uv = i.uv;
                 float distanceToSeed = distance(seed_uv, uv);
+                float4 default_color = float4(0, 0, 0, 0);
                 
                 if (distanceToSeed <= 0.001)
                 {
-                    return float4(0, 0, 0, 0);
+                    return default_color;
                 }
                 
                 if (distanceToSeed < _OutlineWidth)
@@ -51,7 +52,7 @@ Shader "Hidden/OutlineFromJFA"
                 }
                 else
                 {
-                    return float4(0, 0, 0, 0); 
+                    return default_color;
                 }
             }
             ENDHLSL

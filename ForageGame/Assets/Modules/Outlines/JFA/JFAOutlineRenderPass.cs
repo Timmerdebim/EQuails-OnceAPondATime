@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Modules.Outlines;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
@@ -43,7 +44,11 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
         {
             TextureHandle JFA_Tex = JFARenderPass.JFAPass(renderGraph, frameData, silhouetteTexture);
             TextureHandle outlineTexture = Outline_pass.OutlinePass(renderGraph, frameData, JFA_Tex, outlineWidth, outlineColor);
-            DebugBlitTexture.BlitTexture(outlineTexture, renderGraph, frameData);
+            
+            
+            TextureHandle composite = CompositePass.Composite(renderGraph, frameData, resourceData.activeColorTexture, outlineTexture);
+            
+            DebugBlitTexture.BlitTexture(composite, renderGraph, frameData);
         }
 
     }

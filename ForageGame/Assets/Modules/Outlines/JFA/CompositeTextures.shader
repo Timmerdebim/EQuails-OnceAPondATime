@@ -1,4 +1,4 @@
-Shader "Custom/BlendTextures"
+Shader "Hidden/CompositeTextures"
 {
     Properties
     {
@@ -35,8 +35,10 @@ Shader "Custom/BlendTextures"
             {
                 float4 bgColor = SAMPLE_TEXTURE2D(_BackgroundTex, sampler_BackgroundTex, i.uv);
                 float4 overlayColor = SAMPLE_TEXTURE2D(_OverlayTex, sampler_OverlayTex, i.uv);
-                
-                return lerp(bgColor, overlayColor, overlayColor.a);
+                // Alpha blending: outColor = overlayColor * overlayAlpha + bgColor * (1 - overlayAlpha)
+                float overlayAlpha = overlayColor.a;
+                float4 outColor = overlayColor * overlayAlpha + bgColor * (1.0 - overlayAlpha);
+                return outColor;
             }
             ENDHLSL
         }

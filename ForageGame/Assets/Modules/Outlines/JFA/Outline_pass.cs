@@ -1,5 +1,6 @@
 using Modules.Outlines;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
@@ -33,6 +34,7 @@ public class Outline_pass
     {
         TextureDesc desc = JFATexture.GetDescriptor(renderGraph);
         desc.name = "Outline Pass Output";
+        desc.colorFormat = GraphicsFormat.R8G8B8A8_UNorm;
         TextureHandle output = renderGraph.CreateTexture(desc);
         
         MaterialPropertyBlock mpb = new MaterialPropertyBlock(); 
