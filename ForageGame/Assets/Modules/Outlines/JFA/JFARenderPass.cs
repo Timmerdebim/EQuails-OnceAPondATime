@@ -1,3 +1,4 @@
+using Modules.Outlines;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -63,7 +64,7 @@ public class JFARenderPass
         
         CopyInitToStep(renderGraph, initializedTex, JFA_A);
 
-        int N = 5;
+        int N = 8;
         TextureHandle output = JFA_A;
         
         for (int i = 0; i < N; i++)
@@ -88,33 +89,18 @@ public class JFARenderPass
         public TextureHandle src;
         public TextureHandle target;
         public Material mat;
+        public MaterialPropertyBlock mpb;
     }
 
     private static TextureHandle UVPositionsPrepass(RenderGraph renderGraph, ContextContainer frameData, TextureHandle silhouetteTexture)
     {
         TextureDesc desc = silhouetteTexture.GetDescriptor(renderGraph);
         desc.name = "JFA_Init_Texture";
-        desc.colorFormat = GraphicsFormat.R8G8_SNorm;
+        desc.colorFormat = GraphicsFormat.R16G16_SFloat;
 
         TextureHandle output = renderGraph.CreateTexture(desc);
 
-        using (var builder = renderGraph.AddRasterRenderPass<PassData>("JFA_UV_Positions_Prepass", out var passData))
-        {
-            passData.src = silhouetteTexture;
-            passData.mat = JFAInitMat;
-            passData.target = output;
-
-            builder.UseTexture(passData.src, AccessFlags.Read);
-            builder.SetRenderAttachment(passData.target, 0, AccessFlags.Write);
-
-            builder.SetRenderFunc((PassData data, RasterGraphContext ctx) =>
-            {
-                Debug.Log("Executing JFA_UV_Positions_Prepass");
-                data.mat.SetTexture("_SilhouetteTex", data.src);
-                ctx.cmd.DrawProcedural(Matrix4x4.identity, data.mat, 0,
-                                       MeshTopology.Triangles, 3, 1);
-            });
-        }
+        RenderFullscreenWithMaterial.RenderPass(renderGraph, silhouetteTexture, output, JFAInitMat, "JFA_UV_Positions_Prepass", "_SilhouetteTex");
 
         return output;
     }
@@ -138,23 +124,26 @@ public class JFARenderPass
 
     private static void JFA_Step(RenderGraph renderGraph, ContextContainer frameData, TextureHandle inputTexture, TextureHandle outputTexture, int stepSize)
     {
-        TextureDesc desc = inputTexture.GetDescriptor(renderGraph);
-
-        using (var builder = renderGraph.AddRasterRenderPass<PassData>("JFA_Step", out var passData))
+        using (var builder = renderGraph.AddRasterRenderPass<PassData>($"JFA_Step_{stepSize}", out var passData))
         {
             passData.src = inputTexture;
             passData.mat = JFAStepMat;
             passData.target = outputTexture;
+            
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            passData.mpb = mpb;
+            passData.mpb.SetFloat("_StepSize", stepSize);
 
             builder.UseTexture(passData.src, AccessFlags.Read);
             builder.SetRenderAttachment(passData.target, 0, AccessFlags.Write);
-
+            
+            
             builder.SetRenderFunc((PassData data, RasterGraphContext ctx) =>
             {
-                Debug.Log("Executing JFA_Step");
-                data.mat.SetTexture("_SeedTex", data.src);
+                // TextureHandle can only be resolved while inside an executing RenderGraph pass.
+                data.mpb.SetTexture("_InputTex", data.src);
                 ctx.cmd.DrawProcedural(Matrix4x4.identity, data.mat, 0,
-                    MeshTopology.Triangles, 3, 1);
+                    MeshTopology.Triangles, 3, 1, data.mpb);
             });
         }
     }

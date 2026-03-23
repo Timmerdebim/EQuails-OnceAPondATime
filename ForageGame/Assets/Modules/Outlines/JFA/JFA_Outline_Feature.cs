@@ -9,6 +9,8 @@ public class JFA_Outline_Feature : ScriptableRendererFeature
     JFAOutlineRenderPass pass;
 
     public bool debugView = false;
+    public Color outlineColor;
+    public float outlineWidth;
     public RenderPassEvent injectionPoint = RenderPassEvent.BeforeRenderingPostProcessing;
 
     private TextureHandle silhouetteTH;
@@ -16,7 +18,7 @@ public class JFA_Outline_Feature : ScriptableRendererFeature
 
     public override void Create()
     {
-        pass = new JFAOutlineRenderPass(debugView);
+        pass = new JFAOutlineRenderPass(debugView, outlineColor, outlineWidth);
         pass.renderPassEvent = injectionPoint;
     }
 

@@ -2,7 +2,7 @@ Shader "Hidden/JFA_Step"
 {
     Properties
     {
-        _SeedTex("Seed Texture", 2D) = "black" {}
+        _InputTex("Input Texture", 2D) = "black" {}
         _StepSize("Step Size", Float) = 1.0
     }
     SubShader
@@ -16,8 +16,8 @@ Shader "Hidden/JFA_Step"
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
 
-            TEXTURE2D(_SeedTex);
-            SAMPLER(sampler_SeedTex);
+            TEXTURE2D(_InputTex);
+            SAMPLER(sampler_InputTex);
 
             float4 _ScreenParams;
             float _StepSize;
@@ -25,20 +25,21 @@ Shader "Hidden/JFA_Step"
             struct Varyings { float4 pos : SV_POSITION; float2 uv : TEXCOORD0; };
             
             
-            bool is_colored(float2 uv)
+            bool is_valid(float2 uv)
             {
             	// Uncolored pixels have UV (-1, -1), so we can check if the UV is valid by checking if it's greater than or equal to 0
                 return uv.x >= 0 && uv.y >= 0; 
             }
             
-            float2 JFA(float2 P_UV)
+            float2 jfa(float2 p_uv)
             {
-                float2 resolution = _ScreenParams.xy;
-				float2 P_pos = P_UV * resolution;
-
-				float2 seed_UV = LOAD_TEXTURE2D(_SeedTex, P_pos).rg;
+                int2 resolution = _ScreenParams.xy;
             	
-            	float2 output_UV = float2(-1, -1);
+				int2 p_pos = clamp(floor(p_uv * resolution), int2(0, 0), resolution - 1);
+				float2 p_seed_uv = LOAD_TEXTURE2D(_InputTex, p_pos).rg;
+            	float2 p_seed_pos = p_seed_uv * resolution; 
+
+            	float2 output_uv = p_seed_uv; // Default to the current pixel's seed UV, which may be (-1, -1) if it's uncolored
             	
                 for (int x = -1; x <= 1; x++)
 				{
@@ -46,34 +47,33 @@ Shader "Hidden/JFA_Step"
 					{
 						if (x == 0 && y == 0) continue; // Skip the current pixel
 						
-						float2 pixel_offset = float2(x, y) * _StepSize / resolution; 
-                        
-						float2 Q_UV = LOAD_TEXTURE2D(_SeedTex, P_pos + pixel_offset).rg;
-						float2 Q_pos = Q_UV * resolution;
-
-						if (is_colored(Q_UV)) 
+						int2 pixel_offset = float2(x, y) * _StepSize; 
+						
+                        int2 q_pos = clamp(p_pos + pixel_offset, int2(0, 0), resolution - 1);
+						float2 q_seed_uv = LOAD_TEXTURE2D(_InputTex, q_pos).rg;
+						float2 q_seed_pos = q_seed_uv * resolution;
+						
+						if (is_valid(q_seed_uv)) 
 						{
-							if(is_colored(P_UV))
+							if(is_valid(p_seed_uv))
                             {
-								float2 seed_pos = seed_UV * resolution; 
+								float p_dist = distance(p_pos, p_seed_pos);
+								float q_dist = distance(p_pos, q_seed_pos);
 
-								float P_dist = distance(P_pos, seed_pos);
-								float Q_dist = distance(Q_pos, seed_pos);
-
-								if (Q_dist < P_dist)
+								if (q_dist < p_dist)
 								{
-									output_UV = Q_UV; 
+									output_uv = q_seed_uv; 
 								}
 							}
 							else
 							{
-								output_UV = Q_UV;
+								output_uv = q_seed_uv;
                             }
 						}
 					}
                 }
             	
-            	return output_UV;
+            	return output_uv;
             }
             
             Varyings vert(uint id : SV_VertexID)
@@ -91,8 +91,8 @@ Shader "Hidden/JFA_Step"
                 // Call the current point "P" and the neighbour point "Q".
 
                 // float2 P_UV = SAMPLE_TEXTURE2D(_SeedTex, sampler_SeedTex, i.uv).rg; 
-                float2 P_UV = JFA(i.uv);
-            	return float4(P_UV, 0, 0);
+                float2 p_uv = jfa(i.uv);
+            	return float4(p_uv, 0, 0);
             }
 
 

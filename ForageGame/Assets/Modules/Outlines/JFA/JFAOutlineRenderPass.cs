@@ -8,8 +8,12 @@ using UnityEngine.Rendering.Universal;
 public class JFAOutlineRenderPass : ScriptableRenderPass
 {
     bool debugView = false;
-    public JFAOutlineRenderPass(bool debugView)
+    Color outlineColor = Color.white;
+    private float outlineWidth = 1f;
+    public JFAOutlineRenderPass(bool debugView,  Color outlineColor, float outlineWidth)
     {
+        this.outlineColor = outlineColor;
+        this.outlineWidth = outlineWidth;
         this.debugView = debugView;
     }
 
@@ -38,7 +42,8 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
         foreach (TextureHandle silhouetteTexture in silhouetteTextures)
         {
             TextureHandle JFA_Tex = JFARenderPass.JFAPass(renderGraph, frameData, silhouetteTexture);
-            DebugBlitTexture.BlitTexture(JFA_Tex, renderGraph, frameData);
+            TextureHandle outlineTexture = Outline_pass.OutlinePass(renderGraph, frameData, JFA_Tex, outlineWidth, outlineColor);
+            DebugBlitTexture.BlitTexture(outlineTexture, renderGraph, frameData);
         }
 
     }
