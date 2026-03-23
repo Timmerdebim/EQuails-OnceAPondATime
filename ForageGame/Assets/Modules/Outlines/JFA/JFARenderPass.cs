@@ -64,12 +64,13 @@ public class JFARenderPass
         
         CopyInitToStep(renderGraph, initializedTex, JFA_A);
 
-        int N = 8;
+        Vector2 screenSize = new Vector2(descA.width, descA.height);
+        int N_steps = (int)Mathf.Ceil(Mathf.Log(Mathf.Max(screenSize.x, screenSize.y), 2)) + 1; // +1 to ensure we cover the last pixel in cases where screen size is not a power of 2.
         TextureHandle output = JFA_A;
         
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < N_steps; i++)
         {
-            int stepsize = (int)Mathf.Pow(2, N - 1 - i);
+            int stepsize = (int)Mathf.Pow(2, N_steps - 1 - i);
             if (i % 2 == 0)
             {
                 JFA_Step(renderGraph, frameData, JFA_A, JFA_B, stepsize);

@@ -2,8 +2,8 @@ Shader "Custom/BlendTextures"
 {
     Properties
     {
-        _Tex1("Texture 1", 2D) = "white" {}
-        _Tex2("Texture 2", 2D) = "white" {}
+        _BackgroundTex("Background Texture", 2D) = "white" {}
+        _OverlayTex("Foreground Texture", 2D) = "white" {}
     }
     SubShader
     {
@@ -16,10 +16,10 @@ Shader "Custom/BlendTextures"
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
 
-            TEXTURE2D(_Tex1);
-            SAMPLER(sampler_Tex1);
-            TEXTURE2D(_Tex2);
-            SAMPLER(sampler_Tex2);
+            TEXTURE2D(_BackgroundTex);
+            SAMPLER(sampler_BackgroundTex);
+            TEXTURE2D(_OverlayTex);
+            SAMPLER(sampler_OverlayTex);
 
             struct Varyings { float4 pos : SV_POSITION; float2 uv : TEXCOORD0; };
 
@@ -33,11 +33,10 @@ Shader "Custom/BlendTextures"
 
             float4 Frag(Varyings i) : SV_Target
             {
-                float4 color1 = SAMPLE_TEXTURE2D(_Tex1, sampler_Tex1, i.uv);
-                float4 color2 = SAMPLE_TEXTURE2D(_Tex2, sampler_Tex2, i.uv);
+                float4 bgColor = SAMPLE_TEXTURE2D(_BackgroundTex, sampler_BackgroundTex, i.uv);
+                float4 overlayColor = SAMPLE_TEXTURE2D(_OverlayTex, sampler_OverlayTex, i.uv);
                 
-                // Lerp based on alpha
-                return lerp(color1, color2, color2.a);
+                return lerp(bgColor, overlayColor, overlayColor.a);
             }
             ENDHLSL
         }
