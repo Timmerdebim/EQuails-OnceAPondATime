@@ -6,23 +6,23 @@ namespace TDK.Gadgets
 {
     public class SequencePuzzle : MonoBehaviour
     {
-        [SerializeField] private List<SwitchController> _solution = new();
+        [SerializeField] private List<ButtonController> _solution = new();
 
         public UnityEvent OnSolved;
         public UnityEvent OnFailed;
 
         public bool Locked = false;
-
         private int _sequenceIndex = 0;
 
-        public void LogInput(SwitchController switchController)
+        public void LogInput(ButtonController buttonController)
         {
             if (Locked) return;
 
-            if (_solution[_sequenceIndex] != switchController)
+            if (_solution[_sequenceIndex] != buttonController)
             {
                 PuzzleFailed();
-                return;
+                if (_solution[0] != buttonController)
+                    return;
             }
 
             _sequenceIndex++;
@@ -38,7 +38,7 @@ namespace TDK.Gadgets
 
         private void PuzzleSolved()
         {
-            foreach (SwitchController key in _solution)
+            foreach (ButtonController key in _solution)
                 key.Locked = true;
 
             OnSolved.Invoke();
