@@ -18,7 +18,6 @@ public class JFA_Outline_Feature : ScriptableRendererFeature
     {
         pass = new JFAOutlineRenderPass(debugView);
         pass.renderPassEvent = injectionPoint;
-
     }
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)

@@ -28,9 +28,59 @@ public class JFARenderPass
 
     }
 
+    private static Material _JFAStepMat;
+    static Material JFAStepMat
+    {
+        get
+        {
+            const string shaderName = "Hidden/JFA_Step";
+
+            if (_JFAStepMat != null) return _JFAStepMat;
+
+            var shader = Shader.Find(shaderName);
+            if (shader == null)
+            {
+                Debug.LogError($"Could not find shader {shaderName}");
+                return null;
+            }
+
+            _JFAStepMat = CoreUtils.CreateEngineMaterial(shader);
+            return _JFAStepMat;
+        }
+
+    }
+    
     public static TextureHandle JFAPass(RenderGraph renderGraph, ContextContainer frameData, TextureHandle silhouetteTexture)
     {
-        return UVPositionsPrepass(renderGraph, frameData, silhouetteTexture);
+        TextureHandle initializedTex = UVPositionsPrepass(renderGraph, frameData, silhouetteTexture);
+
+        TextureDesc descA = initializedTex.GetDescriptor(renderGraph);
+        TextureDesc descB = initializedTex.GetDescriptor(renderGraph);
+        descA.name = "JFA_A";
+        descB.name = "JFA_B";
+        TextureHandle JFA_A = renderGraph.CreateTexture(descA);
+        TextureHandle JFA_B = renderGraph.CreateTexture(descB);
+        
+        CopyInitToStep(renderGraph, initializedTex, JFA_A);
+
+        int N = 5;
+        TextureHandle output = JFA_A;
+        
+        for (int i = 0; i < N; i++)
+        {
+            int stepsize = (int)Mathf.Pow(2, N - 1 - i);
+            if (i % 2 == 0)
+            {
+                JFA_Step(renderGraph, frameData, JFA_A, JFA_B, stepsize);
+                output = JFA_B;
+            }
+            else
+            {
+                JFA_Step(renderGraph, frameData, JFA_B, JFA_A, stepsize);
+                output = JFA_A;
+            }        
+        }
+        return output;
     }
 
     class PassData
@@ -68,26 +118,44 @@ public class JFARenderPass
 
         return output;
     }
-
-    private TextureHandle JFA_Step(RenderGraph renderGraph, ContextContainer frameData, TextureHandle inputTexture, int stepSize)
+    
+    private static void CopyInitToStep(RenderGraph renderGraph, TextureHandle initializedTex, TextureHandle JFA_A)
     {
-        float[][] offsets = new float[][]
+        using (var builder = renderGraph.AddRasterRenderPass<PassData>("JFA_Copy_Init_To_Step", out var passData))
         {
-            new float[2] {0, 0 },
-            new float[2] { -stepSize, -stepSize },
-            new float[2] { 0, -stepSize },
-            new float[2] { stepSize, -stepSize },
-            new float[2] { -stepSize, 0 },
-            new float[2] { stepSize, 0 },
-            new float[2] { -stepSize, stepSize },
-            new float[2] { 0, stepSize },
-            new float[2] { stepSize, stepSize }
-        };
+            passData.src = initializedTex;
+            passData.target = JFA_A;
 
-        foreach (float[] offset in offsets)
+            builder.UseTexture(passData.src, AccessFlags.Read);
+            builder.SetRenderAttachment(passData.target, 0, AccessFlags.Write);
+
+            builder.SetRenderFunc((PassData data, RasterGraphContext ctx) =>
+            {
+                Blitter.BlitTexture(ctx.cmd, data.src, new Vector4(1, 1, 0, 0), 0, false);
+            });
+        }
+    }
+
+    private static void JFA_Step(RenderGraph renderGraph, ContextContainer frameData, TextureHandle inputTexture, TextureHandle outputTexture, int stepSize)
+    {
+        TextureDesc desc = inputTexture.GetDescriptor(renderGraph);
+
+        using (var builder = renderGraph.AddRasterRenderPass<PassData>("JFA_Step", out var passData))
         {
-            // For each offset, sample the input texture and write to the output if it's a valid position (not background)
-            // This will likely involve setting the offset as a shader parameter and doing a draw call similar to the UVPositionsPrepass
+            passData.src = inputTexture;
+            passData.mat = JFAStepMat;
+            passData.target = outputTexture;
+
+            builder.UseTexture(passData.src, AccessFlags.Read);
+            builder.SetRenderAttachment(passData.target, 0, AccessFlags.Write);
+
+            builder.SetRenderFunc((PassData data, RasterGraphContext ctx) =>
+            {
+                Debug.Log("Executing JFA_Step");
+                data.mat.SetTexture("_SeedTex", data.src);
+                ctx.cmd.DrawProcedural(Matrix4x4.identity, data.mat, 0,
+                    MeshTopology.Triangles, 3, 1);
+            });
         }
     }
 }
