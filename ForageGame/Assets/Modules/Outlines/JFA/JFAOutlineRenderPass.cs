@@ -8,14 +8,8 @@ using UnityEngine.Rendering.Universal;
 
 public class JFAOutlineRenderPass : ScriptableRenderPass
 {
-    bool debugView = false;
-    Color outlineColor = Color.white;
-    private float outlineWidth = 1f;
-    public JFAOutlineRenderPass(bool debugView,  Color outlineColor, float outlineWidth)
+    public JFAOutlineRenderPass()
     {
-        this.outlineColor = outlineColor;
-        this.outlineWidth = outlineWidth;
-        this.debugView = debugView;
     }
 
     public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)

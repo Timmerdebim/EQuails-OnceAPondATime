@@ -1,4 +1,4 @@
-Shader "Hidden/SilhouetteMask"
+Shader "Hidden/Silhouette"
 {
     Properties
     {

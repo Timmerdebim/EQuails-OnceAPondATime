@@ -17,7 +17,7 @@ public class SilhouettePass
     static Material GetMaterial()
     {
         if (_silhouetteMaterial != null) return _silhouetteMaterial;
-        const string shaderName = "Hidden/SilhouetteMask";
+        const string shaderName = "Hidden/Silhouette";
         var shader = Shader.Find(shaderName);
         if (shader == null)
         {
