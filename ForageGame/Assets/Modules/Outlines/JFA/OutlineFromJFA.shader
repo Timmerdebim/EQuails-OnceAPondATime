@@ -10,6 +10,7 @@ Shader "Hidden/OutlineFromJFA"
     }
     SubShader
     {
+        Blend SrcAlpha OneMinusSrcAlpha
         Cull Off ZWrite On ZTest LEqual
 
         Pass
@@ -90,10 +91,7 @@ Shader "Hidden/OutlineFromJFA"
                     discard;
                 }
                 
-                float outlineAlpha = _OutlineColor.a * finalOutline;
-                float4 outColor = _OutlineColor * outlineAlpha;
-                o.color = outColor;
-                
+                o.color = float4(_OutlineColor.rgb, _OutlineColor.a * finalOutline);                
                 float seedDepth = SampleSeedDepth(i.uv, seed_uv);
                 
                 o.depth = seedDepth;
