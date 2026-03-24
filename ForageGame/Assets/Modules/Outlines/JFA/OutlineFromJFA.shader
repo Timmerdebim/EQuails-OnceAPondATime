@@ -19,7 +19,6 @@ Shader "Hidden/OutlineFromJFA"
             #pragma fragment Frag
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
             
             TEXTURE2D(_JFATex);
             SAMPLER(sampler_JFATex);
@@ -30,6 +29,7 @@ Shader "Hidden/OutlineFromJFA"
     
             float4 _OutlineColor;
             float _OutlineWidth;
+            float4 _ScreenParams; // x = width, y = height, z = 1/width, w = 1/height
             
             struct Varyings { float4 pos : SV_POSITION; float2 uv : TEXCOORD0; };
 
@@ -56,10 +56,11 @@ Shader "Hidden/OutlineFromJFA"
                 for (int y = -1; y <= 1; y++)
                 {
                     float2 offset = float2(x, y) * texelSize;
-                    minDepth = min(minDepth, SampleSceneDepth(seed_uv + offset));
+                    float depth = SAMPLE_TEXTURE2D(_DepthTex, sampler_DepthTex, seed_uv + offset).r;
+                    minDepth = min(minDepth, depth);
                 }
                 
-                return minDepth;
+                return SAMPLE_TEXTURE2D(_DepthTex, sampler_DepthTex, seed_uv).r;
             }
             
             FragOutput Frag(Varyings i)
@@ -91,7 +92,7 @@ Shader "Hidden/OutlineFromJFA"
                 
                 o.depth = seedDepth;
                 
-                // o.color = float4(seedDepth, seedDepth, seedDepth, 1);
+                o.color = float4(seedDepth, seedDepth, seedDepth, 1);
                 return o;
 
             }

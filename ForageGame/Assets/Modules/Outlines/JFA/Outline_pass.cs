@@ -35,10 +35,11 @@ public class Outline_pass
         public MaterialPropertyBlock mpb;
         public TextureHandle JFATexture;
         public TextureHandle SilhouetteTexture;
+        public TextureHandle depthTexture;
     }
     
     public static void OutlinePass(RenderGraph renderGraph, ContextContainer frameData,
-        TextureHandle JFATex, TextureHandle SilhouetteTex, float outlineWidth, Color outlineColor)
+        TextureHandle JFATex, TextureHandle SilhouetteTex, TextureHandle depthTex, float outlineWidth, Color outlineColor)
     {
         UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
         
@@ -52,6 +53,7 @@ public class Outline_pass
             passData.mpb = mpb;
             passData.JFATexture = JFATex;
             passData.SilhouetteTexture = SilhouetteTex;
+            passData.depthTexture = depthTex;
             
             TextureHandle camera = resourceData.activeColorTexture;
             TextureHandle depth =  resourceData.activeDepthTexture;
@@ -60,12 +62,14 @@ public class Outline_pass
             
             builder.UseTexture(passData.JFATexture, AccessFlags.Read);
             builder.UseTexture(passData.SilhouetteTexture, AccessFlags.Read);
+            builder.UseTexture(passData.depthTexture, AccessFlags.Read);
             builder.UseTexture(frameData.Get<UniversalResourceData>().cameraDepthTexture, AccessFlags.Read);
 
             builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
             {
                 passData.mpb.SetTexture("_JFATex", passData.JFATexture);
                 passData.mpb.SetTexture("_SilhouetteTex", passData.SilhouetteTexture);
+                passData.mpb.SetTexture("_DepthTex", passData.depthTexture);
                 
                 context.cmd.DrawProcedural(Matrix4x4.identity, passData.OutlineMaterial, 0,
                     MeshTopology.Triangles, 3, 1, passData.mpb);

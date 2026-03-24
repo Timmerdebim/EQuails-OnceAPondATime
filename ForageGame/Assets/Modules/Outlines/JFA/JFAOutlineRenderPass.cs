@@ -27,7 +27,7 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
 
         UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
 
-        List<TextureHandle> silhouetteTextures = GetSilhouetteTextures(renderGraph, frameData);
+        List<SilhouettePass.TextureSet> silhouetteTextures = GetSilhouetteTextures(renderGraph, frameData);
 
         if (silhouetteTextures.Count == 0)
         {
@@ -36,14 +36,14 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
 
         if (debugView)
         {
-            TextureHandle output = ThresholdTexture.Threshold(silhouetteTextures[0], 0.001f, renderGraph);
+            TextureHandle output = ThresholdTexture.Threshold(silhouetteTextures[0].colorTexture, 0.001f, renderGraph);
             BlitTexture.BlitToScreen(output, renderGraph, frameData);
         }
 
-        foreach (TextureHandle silhouetteTexture in silhouetteTextures)
+        foreach (SilhouettePass.TextureSet silhouetteTexture in silhouetteTextures)
         {
-            TextureHandle JFA_Tex = JFARenderPass.JFAPass(renderGraph, frameData, silhouetteTexture);
-            Outline_pass.OutlinePass(renderGraph, frameData, JFA_Tex, silhouetteTexture, outlineWidth, outlineColor);
+            TextureHandle JFA_Tex = JFARenderPass.JFAPass(renderGraph, frameData, silhouetteTexture.colorTexture);
+            Outline_pass.OutlinePass(renderGraph, frameData, JFA_Tex, silhouetteTexture.colorTexture, silhouetteTexture.depthTexture, outlineWidth, outlineColor);
             
             
             // TextureHandle composite = OutlineFinalComposite.Composite(renderGraph, frameData, resourceData.activeColorTexture, outlineTexture);
@@ -53,17 +53,17 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
 
     }
 
-    private List<TextureHandle> GetSilhouetteTextures(RenderGraph renderGraph, ContextContainer frameData)
+    private List<SilhouettePass.TextureSet> GetSilhouetteTextures(RenderGraph renderGraph, ContextContainer frameData)
     {
-        List<TextureHandle> silhouetteTextures = new List<TextureHandle>();
+        List<SilhouettePass.TextureSet> silhouetteTextures = new List<SilhouettePass.TextureSet>();
 
         OutlineObject[] outlineObjects = OutlineObject.All.ToArray();
 
         foreach (OutlineObject outlineObject in outlineObjects)
         {
             List<Renderer> renderersToOutline = new List<Renderer>(outlineObject.Renderers);
-            TextureHandle silhouetteTexture = SilhouettePass.BuildSilhouette(renderGraph, frameData, renderersToOutline);
-            if (silhouetteTexture.IsValid())
+            SilhouettePass.TextureSet silhouetteTexture = SilhouettePass.BuildSilhouette(renderGraph, frameData, renderersToOutline);
+            if (silhouetteTexture.colorTexture.IsValid())
             {
                 silhouetteTextures.Add(silhouetteTexture);
             }
