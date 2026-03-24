@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Modules.Outlines;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -9,8 +10,7 @@ public class OutlineObject : MonoBehaviour
     Renderer[] m_Renderers;
     public Renderer[] Renderers => m_Renderers;
     
-    [SerializeField] public float OutlineWidth = 10f;
-    [SerializeField] public Color OutlineColor = Color.white;
+    public OutlineInfo outlineInfo = new OutlineInfo();
 
     void OnEnable()
     {

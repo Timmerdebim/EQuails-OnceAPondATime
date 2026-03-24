@@ -151,8 +151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb8faeacfb83d043a6d38d38700dafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OutlineWidth: 83.54
-  OutlineColor: {r: 0, g: 1, b: 0.16342616, a: 1}
+  outlineInfo:
+    outlineWidth: 72.6
+    outlineColor: {r: 0.30838373, g: 0.413005, b: 0.8490566, a: 0.59607846}
+    doWobble: 1
+    wobbleScale: 1
+    wobbleSpeed: 1
+    wobbleMaxIndentFactor: 0.5
 --- !u!135 &160947771
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -668,13 +673,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657127910}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eb8faeacfb83d043a6d38d38700dafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OutlineWidth: 34.43
-  OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineInfo:
+    outlineWidth: 10
+    outlineColor: {r: 1, g: 1, b: 1, a: 1}
+    doWobble: 0
+    wobbleScale: 1
+    wobbleSpeed: 1
+    wobbleMaxIndentFactor: 0.5
 --- !u!1001 &712655545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -851,7 +861,7 @@ Transform:
   m_GameObject: {fileID: 743870613}
   serializedVersion: 2
   m_LocalRotation: {x: -0.27677205, y: -0.47844037, z: -0.028915444, w: 0.83286005}
-  m_LocalPosition: {x: -0.78, y: 2.18, z: -0.99}
+  m_LocalPosition: {x: 1.64, y: 2.18, z: -4.47}
   m_LocalScale: {x: 2.1491, y: 2.1491, z: 2.1491}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -864,13 +874,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743870613}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eb8faeacfb83d043a6d38d38700dafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OutlineWidth: 45.31
-  OutlineColor: {r: 0, g: 0.55093956, b: 1, a: 0.56078434}
+  outlineInfo:
+    outlineWidth: 10
+    outlineColor: {r: 1, g: 1, b: 1, a: 1}
+    doWobble: 0
+    wobbleScale: 1
+    wobbleSpeed: 1
+    wobbleMaxIndentFactor: 0.5
 --- !u!1001 &1606223650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -964,8 +979,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb8faeacfb83d043a6d38d38700dafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OutlineWidth: 10
-  OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineInfo:
+    outlineWidth: 10
+    outlineColor: {r: 1, g: 1, b: 1, a: 1}
+    doWobble: 0
+    wobbleScale: 1
+    wobbleSpeed: 1
+    wobbleMaxIndentFactor: 0.5
 --- !u!1001 &1660105225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -988,7 +1008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14c339aba5cd21e488ff10a7c08c7607, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.73
+      value: -5.94
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14c339aba5cd21e488ff10a7c08c7607, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1054,13 +1074,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660105226}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eb8faeacfb83d043a6d38d38700dafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OutlineWidth: 327.4
-  OutlineColor: {r: 1, g: 0.08018869, b: 0.25483668, a: 0.7176471}
+  outlineInfo:
+    outlineWidth: 10
+    outlineColor: {r: 1, g: 1, b: 1, a: 1}
+    doWobble: 0
+    wobbleScale: 1
+    wobbleSpeed: 1
+    wobbleMaxIndentFactor: 0.5
 --- !u!1 &1708287458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,7 +1151,7 @@ Transform:
   m_GameObject: {fileID: 1708287458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.112, y: 1.137, z: -10.048}
+  m_LocalPosition: {x: 4.07, y: 2.4, z: -10.048}
   m_LocalScale: {x: 1.875, y: 1.875, z: 1.875}
   m_ConstrainProportionsScale: 0
   m_Children: []

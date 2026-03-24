@@ -9,10 +9,10 @@ Shader "Hidden/OutlineFromJFA"
         _OutlineWidth ("Outline Width", Float) = 1.0
         _OutlineColor ("Outline Color", Color) = (0.5, 0.8, 1, 1)
         
-        _DoWobbleBool ("Do Wobble", Float) = 1.0
-        _WobbleNoiseScale ("Wobble Noise Scale", Float) = 10.0
-        _WobbleNoiseSpeed ("Wobble Noise Speed", Float) = 5
-        _WobbleMaxIndentFactor ("Wobble Noise Max Indent Factor", Float) = 10
+        _DoWobbleBool ("Do Wobble", Float) = 0.0
+        _WobbleNoiseScale ("Wobble Noise Scale", Float) = 0.2
+        _WobbleNoiseSpeed ("Wobble Noise Speed", Float) = 0.5
+        _WobbleMaxIndentFactor ("Wobble Noise Max Indent Factor", Float) = 0.5
     }
     SubShader
     {
@@ -93,38 +93,49 @@ Shader "Hidden/OutlineFromJFA"
                 return SAMPLE_TEXTURE2D(_JFATex, sampler_JFATex, pixel_uv).rg;
             }
             
-            float2 hash2(float2 p)
+            float hash3(float3 p)
             {
-                p = float2(dot(p, float2(127.1, 311.7)), dot(p, float2(269.5, 183.3)));
-                return frac(sin(p) * 43758.5453);
+                p = float3(dot(p, float3(127.1, 311.7, 74.7)),
+                           dot(p, float3(269.5, 183.3, 246.1)),
+                           dot(p, float3(113.5, 271.9, 124.6)));
+                return frac(sin(p.x + p.y + p.z) * 43758.5453);
             }
 
-            float valueNoise(float2 p)
+            float valueNoise3D(float3 p)
             {
-                float2 i = floor(p);
-                float2 f = frac(p);
+                float3 i = floor(p);
+                float3 f = frac(p);
                 
                 // Cubic smoothstep interpolation
-                float2 u = f * f * (3.0 - 2.0 * f);
+                float3 u = f * f * (3.0 - 2.0 * f);
                 
-                float a = hash2(i).x;
-                float b = hash2(i + float2(1, 0)).x;
-                float c = hash2(i + float2(0, 1)).x;
-                float d = hash2(i + float2(1, 1)).x;
+                float a = hash3(i + float3(0, 0, 0));
+                float b = hash3(i + float3(1, 0, 0));
+                float c = hash3(i + float3(0, 1, 0));
+                float d = hash3(i + float3(1, 1, 0));
+                float e = hash3(i + float3(0, 0, 1));
+                float f_ = hash3(i + float3(1, 0, 1));
+                float g = hash3(i + float3(0, 1, 1));
+                float h = hash3(i + float3(1, 1, 1));
                 
-                return lerp(lerp(a, b, u.x), lerp(c, d, u.x), u.y);
+                // Trilinear interpolation
+                return lerp(
+                    lerp(lerp(a, b, u.x), lerp(c, d, u.x), u.y),
+                    lerp(lerp(e, f_, u.x), lerp(g, h, u.x), u.y),
+                    u.z
+                );
             }
 
-            float noise(float2 p)
+            float noise(float2 p, float t)
             {
                 float value = 0.0;
-                float amplitude = 0.5;
+                float amplitude = 1.0;
                 float frequency = 1.0;
                 int octaves = 4;
                 
                 for (int i = 0; i < octaves; i++)
                 {
-                    value += amplitude * valueNoise(p * frequency);
+                    value += amplitude * valueNoise3D(float3(p * frequency, t * frequency));
                     amplitude *= 0.5;
                     frequency *= 2.0;
                 }
@@ -149,7 +160,7 @@ Shader "Hidden/OutlineFromJFA"
             {
                 if (_DoWobbleBool < 0.5) return 1.0; // No wobble
                 
-                float noiseValue = noise(seed_uv * _WobbleNoiseScale + _Time.y * _WobbleNoiseSpeed);
+                float noiseValue = noise(seed_uv / _WobbleNoiseScale, _Time.y * _WobbleNoiseSpeed);
                 float wobble = lerp(0, _WobbleMaxIndentFactor * outlineWidth, noiseValue);
                 
                 float newWidth = outlineWidth - wobble;
@@ -188,6 +199,7 @@ Shader "Hidden/OutlineFromJFA"
                 o.depth = seedDepth;
                 
                 // o.color = float4(seedDepth, seedDepth, seedDepth, 1);
+                // o.color = float4(noise(pixel_uv * _WobbleNoiseScale + _Time.y * _WobbleNoiseSpeed).xxx, 1);
                 return o;
 
             }

@@ -35,7 +35,7 @@ public class JFA_Outline_Main_Pass : ScriptableRenderPass
         {
             TextureSet silhouetteTex = GetSilhouetteTexture(renderGraph, frameData, outlineObject);
             TextureHandle jfaTex = JFA_Pass.JFA(renderGraph, frameData, silhouetteTex.ColorTexture);
-            Outline_pass.DrawOutline(renderGraph, frameData, jfaTex, silhouetteTex.ColorTexture, silhouetteTex.DepthTexture, outlineObject.OutlineWidth, outlineObject.OutlineColor);
+            Outline_pass.DrawOutline(renderGraph, frameData, jfaTex, silhouetteTex.ColorTexture, silhouetteTex.DepthTexture, outlineObject.outlineInfo);
         }
     }
     

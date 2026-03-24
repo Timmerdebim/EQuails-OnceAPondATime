@@ -19,13 +19,17 @@ public class Outline_pass
     }
     
     public static void DrawOutline(RenderGraph renderGraph, ContextContainer frameData,
-        TextureHandle JFATex, TextureHandle SilhouetteTex, TextureHandle depthTex, float outlineWidth, Color outlineColor)
+        TextureHandle JFATex, TextureHandle SilhouetteTex, TextureHandle depthTex, OutlineInfo outlineInfo)
     {
         UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
         
         MaterialPropertyBlock mpb = new MaterialPropertyBlock(); 
-        mpb.SetFloat("_OutlineWidth", outlineWidth);
-        mpb.SetColor("_OutlineColor", outlineColor);
+        mpb.SetFloat("_OutlineWidth", outlineInfo.outlineWidth);
+        mpb.SetColor("_OutlineColor", outlineInfo.outlineColor);
+        mpb.SetFloat("_DoWobbleBool", outlineInfo.doWobble ? 1f : 0f);
+        mpb.SetFloat("_WobbleNoiseScale", outlineInfo.wobbleScale);
+        mpb.SetFloat("_WobbleNoiseSpeed", outlineInfo.wobbleSpeed);
+        mpb.SetFloat("_WobbleMaxIndentFactor", outlineInfo.wobbleMaxIndentFactor);
         
         using (var builder = renderGraph.AddRasterRenderPass<PassData>("Outline_Pass", out var passData))
         {
