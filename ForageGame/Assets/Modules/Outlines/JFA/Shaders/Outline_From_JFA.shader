@@ -5,8 +5,14 @@ Shader "Hidden/OutlineFromJFA"
         _JFATex ("Texture", 2D) = "white" {}
         _SilhouetteTex ("Silhouette Texture", 2D) = "black" {}
         _DepthTex ("Depth Texture", 2D) = "white" {}
+        
         _OutlineWidth ("Outline Width", Float) = 1.0
         _OutlineColor ("Outline Color", Color) = (0.5, 0.8, 1, 1)
+        
+        _DoWobbleBool ("Do Wobble", Float) = 1.0
+        _WobbleNoiseScale ("Wobble Noise Scale", Float) = 10.0
+        _WobbleNoiseSpeed ("Wobble Noise Speed", Float) = 5
+        _WobbleMaxIndentFactor ("Wobble Noise Max Indent Factor", Float) = 10
     }
     SubShader
     {
@@ -32,6 +38,12 @@ Shader "Hidden/OutlineFromJFA"
             float _OutlineWidth;
             float4 _ScreenParams; // x = width, y = height, z = 1/width, w = 1/height
             
+            float4 _Time;
+            float _DoWobbleBool;
+            float _WobbleNoiseScale;
+            float _WobbleNoiseSpeed;
+            float _WobbleMaxIndentFactor;
+            
             struct Varyings { float4 pos : SV_POSITION; float2 uv : TEXCOORD0; };
 
             Varyings Vert(uint id : SV_VertexID)
@@ -47,6 +59,8 @@ Shader "Hidden/OutlineFromJFA"
                 float4 color : SV_Target;
                 float depth : SV_Depth;
             };
+            
+            // ----- UTILITY FUNCTIONS -----
             
             float SampleSeedDepth(float2 pixel_uv, float2 seed_uv)
             {
@@ -79,15 +93,68 @@ Shader "Hidden/OutlineFromJFA"
                 return SAMPLE_TEXTURE2D(_JFATex, sampler_JFATex, pixel_uv).rg;
             }
             
+            float2 hash2(float2 p)
+            {
+                p = float2(dot(p, float2(127.1, 311.7)), dot(p, float2(269.5, 183.3)));
+                return frac(sin(p) * 43758.5453);
+            }
+
+            float valueNoise(float2 p)
+            {
+                float2 i = floor(p);
+                float2 f = frac(p);
+                
+                // Cubic smoothstep interpolation
+                float2 u = f * f * (3.0 - 2.0 * f);
+                
+                float a = hash2(i).x;
+                float b = hash2(i + float2(1, 0)).x;
+                float c = hash2(i + float2(0, 1)).x;
+                float d = hash2(i + float2(1, 1)).x;
+                
+                return lerp(lerp(a, b, u.x), lerp(c, d, u.x), u.y);
+            }
+
+            float noise(float2 p)
+            {
+                float value = 0.0;
+                float amplitude = 0.5;
+                float frequency = 1.0;
+                int octaves = 4;
+                
+                for (int i = 0; i < octaves; i++)
+                {
+                    value += amplitude * valueNoise(p * frequency);
+                    amplitude *= 0.5;
+                    frequency *= 2.0;
+                }
+                
+                return value;
+            }
+            
+            // ----- OUTLINE EFFECTS -----
+            
             float SilhouetteMask(float2 pixel_uv)
             {
                 float silhouetteAlpha = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, pixel_uv).r;
                 return (1.0 - silhouetteAlpha);
             }
             
-            float SmoothOutlineEdge(float distanceToSeed)
+            float OutlineMask(float outlineWidth, float distanceToSeed)
             {
-                return smoothstep(_OutlineWidth, _OutlineWidth - fwidth(distanceToSeed), distanceToSeed);
+                return smoothstep(outlineWidth, outlineWidth - fwidth(distanceToSeed), distanceToSeed);
+            }
+            
+            float ApplyWobbleToOutlineWidth(float outlineWidth, float2 seed_uv)
+            {
+                if (_DoWobbleBool < 0.5) return 1.0; // No wobble
+                
+                float noiseValue = noise(seed_uv * _WobbleNoiseScale + _Time.y * _WobbleNoiseSpeed);
+                float wobble = lerp(0, _WobbleMaxIndentFactor * outlineWidth, noiseValue);
+                
+                float newWidth = outlineWidth - wobble;
+                return newWidth;
+                
             }
             
             FragOutput Frag(Varyings i)
@@ -99,8 +166,15 @@ Shader "Hidden/OutlineFromJFA"
                 
                 float distanceToSeed = DistanceToSeed(pixel_uv, seed_uv);
 
+                float outlineWidth = _OutlineWidth;
+                
+                if (_DoWobbleBool >= 0.5)
+                {
+                    outlineWidth = ApplyWobbleToOutlineWidth(outlineWidth, seed_uv);
+                }
+                
                 float outlineAlpha = 1;
-                outlineAlpha = outlineAlpha * SmoothOutlineEdge(distanceToSeed);
+                outlineAlpha = outlineAlpha * OutlineMask(outlineWidth, distanceToSeed);
                 outlineAlpha = outlineAlpha * SilhouetteMask(pixel_uv);
                 
                 if (outlineAlpha <= 0.0)
