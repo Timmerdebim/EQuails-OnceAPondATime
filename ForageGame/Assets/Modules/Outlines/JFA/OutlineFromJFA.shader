@@ -98,7 +98,7 @@ Shader "Hidden/OutlineFromJFA"
                 
                 o.depth = seedDepth;
                 
-                o.color = float4(seedDepth, seedDepth, seedDepth, 1);
+                // o.color = float4(seedDepth, seedDepth, seedDepth, 1);
                 return o;
 
             }

@@ -50,7 +50,7 @@ public class SilhouettePass_old : ScriptableRenderPass
             {
                 normalizedID = 1;
             }
-            objects[i].OutlineID = i + 1;
+            // objects[i].OutlineID = i + 1;
 
             foreach (var r in objects[i].Renderers)
                 drawList[index++] = (r, normalizedID);

@@ -5,10 +5,12 @@ using UnityEngine;
 public class OutlineObject : MonoBehaviour
 {
     public static readonly List<OutlineObject> All = new();
-    public int OutlineID { get; internal set; }
 
     Renderer[] m_Renderers;
     public Renderer[] Renderers => m_Renderers;
+    
+    [SerializeField] public float OutlineWidth = 10f;
+    [SerializeField] public Color OutlineColor = Color.white;
 
     void OnEnable()
     {
