@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class JFA_Outline_Feature : ScriptableRendererFeature
 {
-    JFAOutlineRenderPass pass;
+    JFA_Outline_Main_Pass pass;
     
     public RenderPassEvent injectionPoint = RenderPassEvent.BeforeRenderingPostProcessing;
 
@@ -15,7 +15,7 @@ public class JFA_Outline_Feature : ScriptableRendererFeature
 
     public override void Create()
     {
-        pass = new JFAOutlineRenderPass();
+        pass = new JFA_Outline_Main_Pass();
         pass.renderPassEvent = injectionPoint;
     }
 

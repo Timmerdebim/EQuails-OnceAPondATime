@@ -5,7 +5,7 @@ using UnityEngine.Rendering.RenderGraphModule;
 using System.Collections.Generic;
 using UnityEngine.Experimental.Rendering;
 
-public class SilhouettePass
+public class Silhouette_Pass
 {
     class PassData
     {
@@ -61,7 +61,7 @@ public class SilhouettePass
         TextureHandle outputTexture = renderGraph.CreateTexture(desc);
         TextureHandle depthTexture = renderGraph.CreateTexture(depthDesc);
         
-        using (var builder = renderGraph.AddRasterRenderPass<PassData>("SilhouettePass", out var passData))
+        using (var builder = renderGraph.AddRasterRenderPass<PassData>("Silhouette_Pass", out var passData))
         {
             passData.renderersToOutline = renderersToOutline;
             passData.SilhouetteMaterial = GetMaterial();
@@ -72,7 +72,7 @@ public class SilhouettePass
 
             builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
             {
-                Debug.Log("Executing SilhouettePass");
+                Debug.Log("Executing Silhouette_Pass");
                 var cmd = context.cmd;
 
                 // Clear to 0 (background) 
@@ -90,7 +90,7 @@ public class SilhouettePass
         resolvedDesc.msaaSamples = MSAASamples.None;
         resolvedDesc.name = "SilhouetteMask_MSAAResolved";
         TextureHandle resolved = renderGraph.CreateTexture(resolvedDesc);
-        BlitTexture.BlitFromTo(outputTexture, resolved, renderGraph, frameData, "Resolve MSAA");
+        Blit_Texture_Pass.BlitFromTo(outputTexture, resolved, renderGraph, frameData, "Resolve MSAA");
 
         output.colorTexture = resolved;
         output.depthTexture = depthTexture;

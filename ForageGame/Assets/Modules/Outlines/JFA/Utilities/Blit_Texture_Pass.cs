@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
 
-public class BlitTexture
+public class Blit_Texture_Pass
 {
     class PassData
     {
@@ -15,7 +15,7 @@ public class BlitTexture
     {
         TextureHandle camera = frameData.Get<UniversalResourceData>().activeColorTexture;
         
-        BlitTexture.BlitFromTo(textureToBlit, camera, renderGraph, frameData);
+        Blit_Texture_Pass.BlitFromTo(textureToBlit, camera, renderGraph, frameData);
     }
     
     public static void BlitFromTo(TextureHandle from, TextureHandle to, RenderGraph renderGraph, ContextContainer frameData, string PassName = "Blit Texture")

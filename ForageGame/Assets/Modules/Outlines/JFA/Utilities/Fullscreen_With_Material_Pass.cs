@@ -3,7 +3,7 @@ using UnityEngine.Rendering.RenderGraphModule;
 
 namespace Modules.Outlines
 {
-    public class RenderFullscreenWithMaterial
+    public class Fullscreen_with_material_pass
     {
         class PassData
         {

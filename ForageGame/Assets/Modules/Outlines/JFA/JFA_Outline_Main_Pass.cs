@@ -6,9 +6,9 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
 
-public class JFAOutlineRenderPass : ScriptableRenderPass
+public class JFA_Outline_Main_Pass : ScriptableRenderPass
 {
-    public JFAOutlineRenderPass()
+    public JFA_Outline_Main_Pass()
     {
     }
 
@@ -29,17 +29,17 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
 
         foreach (OutlineObject outlineObject in outlineObjects)
         {
-            SilhouettePass.TextureSet silhouetteTex = GetSilhouetteTexture(renderGraph, frameData, outlineObject);
-            TextureHandle jfaTex = JFARenderPass.JFAPass(renderGraph, frameData, silhouetteTex.colorTexture);
+            Silhouette_Pass.TextureSet silhouetteTex = GetSilhouetteTexture(renderGraph, frameData, outlineObject);
+            TextureHandle jfaTex = JFA_Pass.JFAPass(renderGraph, frameData, silhouetteTex.colorTexture);
             Outline_pass.OutlinePass(renderGraph, frameData, jfaTex, silhouetteTex.colorTexture, silhouetteTex.depthTexture, outlineObject.OutlineWidth, outlineObject.OutlineColor);
         }
 
     }
     
-    private SilhouettePass.TextureSet GetSilhouetteTexture(RenderGraph renderGraph, ContextContainer frameData, OutlineObject outlineObject)
+    private Silhouette_Pass.TextureSet GetSilhouetteTexture(RenderGraph renderGraph, ContextContainer frameData, OutlineObject outlineObject)
     {
         List<Renderer> renderersToOutline = new List<Renderer>(outlineObject.Renderers);
-        SilhouettePass.TextureSet silhouetteTexture = SilhouettePass.BuildSilhouette(renderGraph, frameData, renderersToOutline);
+        Silhouette_Pass.TextureSet silhouetteTexture = Silhouette_Pass.BuildSilhouette(renderGraph, frameData, renderersToOutline);
         if (!silhouetteTexture.colorTexture.IsValid())
         {
             Debug.LogWarning($"Silhouette texture for {outlineObject.gameObject.name} is not valid. This likely means there were no renderers to outline for this object.");

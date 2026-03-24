@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace Modules.Outlines
 {
-    public class OutlineFinalComposite
+    public class Composite_Textures_Pass
     {
         private static Material _CompositeMat;
 
@@ -38,7 +38,7 @@ namespace Modules.Outlines
             public TextureHandle target;
         }
 
-    public static TextureHandle Composite(RenderGraph renderGraph, ContextContainer frameData, TextureHandle bgTex,
+    private static TextureHandle Composite(RenderGraph renderGraph, ContextContainer frameData, TextureHandle bgTex,
             TextureHandle overlayTex)
         {
             MaterialPropertyBlock mpb = new MaterialPropertyBlock();

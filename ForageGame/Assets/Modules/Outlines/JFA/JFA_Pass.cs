@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Experimental.Rendering;
 
-public class JFARenderPass
+public class JFA_Pass
 {
     private static Material _JFAInitMat;
     static Material JFAInitMat
@@ -101,7 +101,7 @@ public class JFARenderPass
 
         TextureHandle output = renderGraph.CreateTexture(desc);
 
-        RenderFullscreenWithMaterial.RenderPass(renderGraph, silhouetteTexture, output, JFAInitMat, "JFA_UV_Positions_Prepass", "_SilhouetteTex");
+        Fullscreen_with_material_pass.RenderPass(renderGraph, silhouetteTexture, output, JFAInitMat, "JFA_UV_Positions_Prepass", "_SilhouetteTex");
 
         return output;
     }
