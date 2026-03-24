@@ -18,9 +18,12 @@ public class JFA_Outline_Main_Pass : ScriptableRenderPass
         CameraType cameraType = cameraData.camera.cameraType;
         if (cameraType != CameraType.Game && cameraType != CameraType.SceneView)
             return;
+                
+        RegisterPasses(renderGraph, frameData);
+    }
 
-        UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
-        
+    private void RegisterPasses(RenderGraph renderGraph, ContextContainer frameData)
+    {
         OutlineObject[] outlineObjects = OutlineObject.All.ToArray();
 
         if (outlineObjects.Length == 0)
@@ -34,7 +37,6 @@ public class JFA_Outline_Main_Pass : ScriptableRenderPass
             TextureHandle jfaTex = JFA_Pass.JFA(renderGraph, frameData, silhouetteTex.ColorTexture);
             Outline_pass.DrawOutline(renderGraph, frameData, jfaTex, silhouetteTex.ColorTexture, silhouetteTex.DepthTexture, outlineObject.OutlineWidth, outlineObject.OutlineColor);
         }
-
     }
     
     private TextureSet GetSilhouetteTexture(RenderGraph renderGraph, ContextContainer frameData, OutlineObject outlineObject)
