@@ -7,27 +7,7 @@ using UnityEngine.Rendering.Universal;
 
 public class Outline_pass
 {
-    private static Material _OutlineMaterial;
-    static Material OutlineMaterial
-    {
-        get
-        {
-            const string shaderName = "Hidden/OutlineFromJFA";
-
-            if (_OutlineMaterial != null) return _OutlineMaterial;
-
-            var shader = Shader.Find(shaderName);
-            if (shader == null)
-            {
-                Debug.LogError($"Could not find shader {shaderName}");
-                return null;
-            }
-
-            _OutlineMaterial = CoreUtils.CreateEngineMaterial(shader);
-            return _OutlineMaterial;
-        }
-
-    }
+    private static ShaderMaterial OutlineMaterial = new ShaderMaterial("Hidden/OutlineFromJFA");
 
     private class PassData
     {
@@ -38,7 +18,7 @@ public class Outline_pass
         public TextureHandle depthTexture;
     }
     
-    public static void OutlinePass(RenderGraph renderGraph, ContextContainer frameData,
+    public static void DrawOutline(RenderGraph renderGraph, ContextContainer frameData,
         TextureHandle JFATex, TextureHandle SilhouetteTex, TextureHandle depthTex, float outlineWidth, Color outlineColor)
     {
         UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
@@ -49,7 +29,7 @@ public class Outline_pass
         
         using (var builder = renderGraph.AddRasterRenderPass<PassData>("Outline_Pass", out var passData))
         {
-            passData.OutlineMaterial = OutlineMaterial;
+            passData.OutlineMaterial = OutlineMaterial.GetMaterial();
             passData.mpb = mpb;
             passData.JFATexture = JFATex;
             passData.SilhouetteTexture = SilhouetteTex;

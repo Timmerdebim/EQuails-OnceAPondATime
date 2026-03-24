@@ -7,51 +7,10 @@ using UnityEngine.Experimental.Rendering;
 
 public class JFA_Pass
 {
-    private static Material _JFAInitMat;
-    static Material JFAInitMat
-    {
-        get
-        {
-            const string shaderName = "Hidden/JFA_Init";
-
-            if (_JFAInitMat != null) return _JFAInitMat;
-
-            var shader = Shader.Find(shaderName);
-            if (shader == null)
-            {
-                Debug.LogError($"Could not find shader {shaderName}");
-                return null;
-            }
-
-            _JFAInitMat = CoreUtils.CreateEngineMaterial(shader);
-            return _JFAInitMat;
-        }
-
-    }
-
-    private static Material _JFAStepMat;
-    static Material JFAStepMat
-    {
-        get
-        {
-            const string shaderName = "Hidden/JFA_Step";
-
-            if (_JFAStepMat != null) return _JFAStepMat;
-
-            var shader = Shader.Find(shaderName);
-            if (shader == null)
-            {
-                Debug.LogError($"Could not find shader {shaderName}");
-                return null;
-            }
-
-            _JFAStepMat = CoreUtils.CreateEngineMaterial(shader);
-            return _JFAStepMat;
-        }
-
-    }
+    private static ShaderMaterial _JFAInitMaterial = new ShaderMaterial("Hidden/JFA_Init");
+    private static ShaderMaterial _JFAStepMaterial = new ShaderMaterial("Hidden/JFA_Step");
     
-    public static TextureHandle JFAPass(RenderGraph renderGraph, ContextContainer frameData, TextureHandle silhouetteTexture)
+    public static TextureHandle JFA(RenderGraph renderGraph, ContextContainer frameData, TextureHandle silhouetteTexture)
     {
         TextureHandle initializedTex = UVPositionsPrepass(renderGraph, frameData, silhouetteTexture);
 
@@ -101,7 +60,7 @@ public class JFA_Pass
 
         TextureHandle output = renderGraph.CreateTexture(desc);
 
-        Fullscreen_with_material_pass.RenderPass(renderGraph, silhouetteTexture, output, JFAInitMat, "JFA_UV_Positions_Prepass", "_SilhouetteTex");
+        Fullscreen_with_material_pass.RenderPass(renderGraph, silhouetteTexture, output, _JFAInitMaterial.GetMaterial(), "JFA_UV_Positions_Prepass", "_SilhouetteTex");
 
         return output;
     }
@@ -128,7 +87,7 @@ public class JFA_Pass
         using (var builder = renderGraph.AddRasterRenderPass<PassData>($"JFA_Step_{stepSize}", out var passData))
         {
             passData.src = inputTexture;
-            passData.mat = JFAStepMat;
+            passData.mat = _JFAStepMaterial.GetMaterial();
             passData.target = outputTexture;
             
             MaterialPropertyBlock mpb = new MaterialPropertyBlock();

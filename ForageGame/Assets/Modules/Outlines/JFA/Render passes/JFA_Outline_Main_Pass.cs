@@ -20,6 +20,7 @@ public class JFA_Outline_Main_Pass : ScriptableRenderPass
             return;
 
         UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
+        
         OutlineObject[] outlineObjects = OutlineObject.All.ToArray();
 
         if (outlineObjects.Length == 0)
@@ -29,18 +30,18 @@ public class JFA_Outline_Main_Pass : ScriptableRenderPass
 
         foreach (OutlineObject outlineObject in outlineObjects)
         {
-            Silhouette_Pass.TextureSet silhouetteTex = GetSilhouetteTexture(renderGraph, frameData, outlineObject);
-            TextureHandle jfaTex = JFA_Pass.JFAPass(renderGraph, frameData, silhouetteTex.colorTexture);
-            Outline_pass.OutlinePass(renderGraph, frameData, jfaTex, silhouetteTex.colorTexture, silhouetteTex.depthTexture, outlineObject.OutlineWidth, outlineObject.OutlineColor);
+            TextureSet silhouetteTex = GetSilhouetteTexture(renderGraph, frameData, outlineObject);
+            TextureHandle jfaTex = JFA_Pass.JFA(renderGraph, frameData, silhouetteTex.ColorTexture);
+            Outline_pass.DrawOutline(renderGraph, frameData, jfaTex, silhouetteTex.ColorTexture, silhouetteTex.DepthTexture, outlineObject.OutlineWidth, outlineObject.OutlineColor);
         }
 
     }
     
-    private Silhouette_Pass.TextureSet GetSilhouetteTexture(RenderGraph renderGraph, ContextContainer frameData, OutlineObject outlineObject)
+    private TextureSet GetSilhouetteTexture(RenderGraph renderGraph, ContextContainer frameData, OutlineObject outlineObject)
     {
         List<Renderer> renderersToOutline = new List<Renderer>(outlineObject.Renderers);
-        Silhouette_Pass.TextureSet silhouetteTexture = Silhouette_Pass.BuildSilhouette(renderGraph, frameData, renderersToOutline);
-        if (!silhouetteTexture.colorTexture.IsValid())
+        TextureSet silhouetteTexture = Silhouette_Pass.BuildSilhouette(renderGraph, frameData, renderersToOutline);
+        if (!silhouetteTexture.ColorTexture.IsValid())
         {
             Debug.LogWarning($"Silhouette texture for {outlineObject.gameObject.name} is not valid. This likely means there were no renderers to outline for this object.");
         }

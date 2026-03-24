@@ -3,6 +3,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.RenderGraphModule;
 using System.Collections.Generic;
+using Modules.Outlines;
 using UnityEngine.Experimental.Rendering;
 
 public class Silhouette_Pass
@@ -10,31 +11,11 @@ public class Silhouette_Pass
     class PassData
     {
         public Material SilhouetteMaterial;
-        public List<Renderer> renderersToOutline;
+        public List<Renderer> RenderersToOutline;
     }
 
-    private static Material _silhouetteMaterial;
-    static Material GetMaterial()
-    {
-        if (_silhouetteMaterial != null) return _silhouetteMaterial;
-        const string shaderName = "Hidden/Silhouette";
-        var shader = Shader.Find(shaderName);
-        if (shader == null)
-        {
-            Debug.LogError($"Could not find shader {shaderName}");
-            return null;
-        }
-
-        _silhouetteMaterial = CoreUtils.CreateEngineMaterial(shader);
-        return _silhouetteMaterial;
-    }
-
-    public struct TextureSet
-    {
-        public TextureHandle colorTexture;
-        public TextureHandle depthTexture;
-    }
-
+    private static ShaderMaterial silhouetteMaterial = new ShaderMaterial("Hidden/Silhouette");
+    
     public static TextureSet BuildSilhouette(RenderGraph renderGraph, ContextContainer frameData, List<Renderer> renderersToOutline)
     {
         var resourceData = frameData.Get<UniversalResourceData>();
@@ -50,8 +31,8 @@ public class Silhouette_Pass
         depthDesc.colorFormat = GraphicsFormat.R32_SFloat;
         
         TextureSet output = new TextureSet();
-        output.colorTexture = TextureHandle.nullHandle;
-        output.depthTexture = TextureHandle.nullHandle;
+        output.ColorTexture = TextureHandle.nullHandle;
+        output.DepthTexture = TextureHandle.nullHandle;
 
         if(renderersToOutline.Count == 0)
         {
@@ -63,37 +44,27 @@ public class Silhouette_Pass
         
         using (var builder = renderGraph.AddRasterRenderPass<PassData>("Silhouette_Pass", out var passData))
         {
-            passData.renderersToOutline = renderersToOutline;
-            passData.SilhouetteMaterial = GetMaterial();
+            passData.RenderersToOutline = renderersToOutline;
+            passData.SilhouetteMaterial = silhouetteMaterial.GetMaterial();
 
             builder.SetRenderAttachment(outputTexture, 0, AccessFlags.Write);
             builder.SetRenderAttachment(depthTexture, 1, AccessFlags.Write);
-            builder.AllowPassCulling(false);
 
             builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
             {
-                Debug.Log("Executing Silhouette_Pass");
                 var cmd = context.cmd;
 
-                // Clear to 0 (background) 
                 cmd.ClearRenderTarget(RTClearFlags.All, Color.black, 1f, 0);
 
-                foreach (var renderer in passData.renderersToOutline)
+                foreach (var renderer in passData.RenderersToOutline)
                 {
                     cmd.DrawRenderer(renderer, passData.SilhouetteMaterial, 0, 0);
                 }
             });
         }
         
-        // Resolve MSAA
-        TextureDesc resolvedDesc = desc;
-        resolvedDesc.msaaSamples = MSAASamples.None;
-        resolvedDesc.name = "SilhouetteMask_MSAAResolved";
-        TextureHandle resolved = renderGraph.CreateTexture(resolvedDesc);
-        Blit_Texture_Pass.BlitFromTo(outputTexture, resolved, renderGraph, frameData, "Resolve MSAA");
-
-        output.colorTexture = resolved;
-        output.depthTexture = depthTexture;
+        output.ColorTexture = outputTexture;
+        output.DepthTexture = depthTexture;
         return output;
     }
 
