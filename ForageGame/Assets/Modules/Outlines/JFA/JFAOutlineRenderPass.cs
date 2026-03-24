@@ -36,7 +36,8 @@ public class JFAOutlineRenderPass : ScriptableRenderPass
 
         if (debugView)
         {
-            TextureHandle output = ThresholdTexture.Threshold(silhouetteTextures[0].colorTexture, 0.001f, renderGraph);
+            // TextureHandle output = ThresholdTexture.Threshold(silhouetteTextures[0].colorTexture, 0.001f, renderGraph);
+            TextureHandle output = silhouetteTextures[0].depthTexture;
             BlitTexture.BlitToScreen(output, renderGraph, frameData);
         }
 

@@ -47,20 +47,26 @@ Shader "Hidden/OutlineFromJFA"
                 float depth : SV_Depth;
             };
             
-            float SampleSeedDepth(float2 seed_uv)
+            float SampleSeedDepth(float2 pixel_uv, float2 seed_uv)
             {
-                float2 texelSize = 1.0 / _ScreenParams.xy;
-                float minDepth = 1;
+                float2 texelSize = _ScreenParams.zw; // zw = 1/width, 1/height
+                float maxDepth = 0.0;
                 
                 for (int x = -1; x <= 1; x++)
                 for (int y = -1; y <= 1; y++)
                 {
-                    float2 offset = float2(x, y) * texelSize;
-                    float depth = SAMPLE_TEXTURE2D(_DepthTex, sampler_DepthTex, seed_uv + offset).r;
-                    minDepth = min(minDepth, depth);
+                    float2 offset = float2(x, y);
+                    float2 pos = seed_uv * _ScreenParams.xy + offset;
+                    float depth = LOAD_TEXTURE2D(_DepthTex, pos).r;
+                    maxDepth = max(maxDepth, depth);
                 }
                 
-                return SAMPLE_TEXTURE2D(_DepthTex, sampler_DepthTex, seed_uv).r;
+                return maxDepth;
+                
+                float2 seed_pos = seed_uv * _ScreenParams.xy;
+                float depth = LOAD_TEXTURE2D(_DepthTex, int2(seed_pos)).r;
+                // depth = SAMPLE_TEXTURE2D(_DepthTex, sampler_DepthTex, seed_uv).r;
+                return depth;
             }
             
             FragOutput Frag(Varyings i)
@@ -88,7 +94,7 @@ Shader "Hidden/OutlineFromJFA"
                 float4 outColor = _OutlineColor * outlineAlpha;
                 o.color = outColor;
                 
-                float seedDepth = SampleSeedDepth(seed_uv);
+                float seedDepth = SampleSeedDepth(i.uv, seed_uv);
                 
                 o.depth = seedDepth;
                 
