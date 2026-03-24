@@ -33,6 +33,9 @@ Shader "Hidden/JFA_Step"
             
             float2 jfa(float2 p_uv)
             {
+            	// The JFA step is to sample the seed texture at the current pixel and return the UV of the seed if it exists, otherwise return (-1, -1)
+                // We store the UV of the seed in the red and green channels of the seed texture, so we can sample it directly
+                // Call the current point "P" and the neighbour point "Q".
                 int2 resolution = _ScreenParams.xy;
             	
 				int2 p_pos = clamp(floor(p_uv * resolution), int2(0, 0), resolution - 1);
@@ -94,11 +97,6 @@ Shader "Hidden/JFA_Step"
 
             float4 frag(Varyings i) : SV_Target
             {
-                // The JFA step is to sample the seed texture at the current pixel and return the UV of the seed if it exists, otherwise return (-1, -1)
-                // We store the UV of the seed in the red and green channels of the seed texture, so we can sample it directly
-                // Call the current point "P" and the neighbour point "Q".
-
-                // float2 P_UV = SAMPLE_TEXTURE2D(_SeedTex, sampler_SeedTex, i.uv).rg; 
                 float2 p_uv = jfa(i.uv);
             	return float4(p_uv, 0, 0);
             }

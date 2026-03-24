@@ -63,35 +63,52 @@ Shader "Hidden/OutlineFromJFA"
                 }
                 
                 return maxDepth;
-                
-                float2 seed_pos = seed_uv * _ScreenParams.xy;
-                float depth = LOAD_TEXTURE2D(_DepthTex, int2(seed_pos)).r;
-                // depth = SAMPLE_TEXTURE2D(_DepthTex, sampler_DepthTex, seed_uv).r;
-                return depth;
+            }
+            
+            float DistanceToSeed(float2 pixel_uv, float2 seed_uv)
+            {
+                // Convert to pixel space to fix aspect ratio and get correct fwidth scale
+                float2 pixelPos = pixel_uv * _ScreenParams.xy;
+                float2 seedPixelPos = seed_uv * _ScreenParams.xy;
+                float distanceToSeed = length(pixelPos - seedPixelPos);
+                return distanceToSeed;
+            }
+            
+            float2 GetSeedUV(float2 pixel_uv)
+            {
+                return SAMPLE_TEXTURE2D(_JFATex, sampler_JFATex, pixel_uv).rg;
+            }
+            
+            float SilhouetteMask(float2 pixel_uv)
+            {
+                float silhouetteAlpha = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, pixel_uv).r;
+                return (1.0 - silhouetteAlpha);
+            }
+            
+            float SmoothOutlineEdge(float distanceToSeed)
+            {
+                return smoothstep(_OutlineWidth, _OutlineWidth - fwidth(distanceToSeed), distanceToSeed);
             }
             
             FragOutput Frag(Varyings i)
             {
                 FragOutput o;
                 
-                float2 seed_uv = SAMPLE_TEXTURE2D(_JFATex, sampler_JFATex, i.uv).rg;
+                float2 pixel_uv = i.uv;
+                float2 seed_uv = GetSeedUV(pixel_uv);
                 
-                // Convert to pixel space to fix aspect ratio and get correct fwidth scale
-                float2 pixelPos = i.uv * _ScreenParams.xy;
-                float2 seedPixelPos = seed_uv * _ScreenParams.xy;
-                float distanceToSeed = length(pixelPos - seedPixelPos);
+                float distanceToSeed = DistanceToSeed(pixel_uv, seed_uv);
 
-                float silhouetteAlpha = SAMPLE_TEXTURE2D(_SilhouetteTex, sampler_SilhouetteTex, i.uv).r;
-
-                float softOutline = smoothstep(_OutlineWidth, _OutlineWidth - fwidth(distanceToSeed), distanceToSeed);
-                float finalOutline = softOutline * (1.0 - silhouetteAlpha);
+                float outlineAlpha = 1;
+                outlineAlpha = outlineAlpha * SmoothOutlineEdge(distanceToSeed);
+                outlineAlpha = outlineAlpha * SilhouetteMask(pixel_uv);
                 
-                if (finalOutline <= 0.0)
+                if (outlineAlpha <= 0.0)
                 {
                     discard;
                 }
                 
-                o.color = float4(_OutlineColor.rgb, _OutlineColor.a * finalOutline);                
+                o.color = float4(_OutlineColor.rgb, _OutlineColor.a * outlineAlpha);                
                 float seedDepth = SampleSeedDepth(i.uv, seed_uv);
                 
                 o.depth = seedDepth;
