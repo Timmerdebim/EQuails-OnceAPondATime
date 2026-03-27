@@ -30,6 +30,9 @@ public class Outline_pass
         mpb.SetFloat("_WobbleNoiseScale", outlineInfo.wobbleScale);
         mpb.SetFloat("_WobbleNoiseSpeed", outlineInfo.wobbleSpeed);
         mpb.SetFloat("_WobbleMaxIndentFactor", outlineInfo.wobbleMaxIndentFactor);
+        mpb.SetFloat("_WobbleNoisePersistence", outlineInfo.wobblePersistence);
+        mpb.SetFloat("_WobbleNoiseLacunarity", outlineInfo.wobbleLacunarity);
+        mpb.SetInt("_WobbleNoiseOctaves", outlineInfo.wobbleOctaves);
         
         using (var builder = renderGraph.AddRasterRenderPass<PassData>("Outline_Pass", out var passData))
         {

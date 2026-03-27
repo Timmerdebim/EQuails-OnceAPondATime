@@ -57,7 +57,6 @@ public class JFA_Pass
         TextureDesc desc = silhouetteTexture.GetDescriptor(renderGraph);
         desc.name = "JFA_Init_Texture";
         desc.colorFormat = GraphicsFormat.R16G16_SFloat;
-
         TextureHandle output = renderGraph.CreateTexture(desc);
 
         Fullscreen_with_material_pass.RenderPass(renderGraph, silhouetteTexture, output, _JFAInitMaterial.GetMaterial(), "JFA_UV_Positions_Prepass", "_SilhouetteTex");

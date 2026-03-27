@@ -152,12 +152,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineInfo:
-    outlineWidth: 72.6
+    outlineWidth: 41.4
     outlineColor: {r: 0.30838373, g: 0.413005, b: 0.8490566, a: 0.59607846}
-    doWobble: 1
-    wobbleScale: 1
-    wobbleSpeed: 1
-    wobbleMaxIndentFactor: 0.5
+    doWobble: 0
+    wobbleScale: 0.3
+    wobbleSpeed: 1.57
+    wobblePersistence: 0.24
+    wobbleLacunarity: 2
+    wobbleOctaves: 5
+    wobbleMaxIndentFactor: 0.687
 --- !u!135 &160947771
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -684,6 +687,9 @@ MonoBehaviour:
     doWobble: 0
     wobbleScale: 1
     wobbleSpeed: 1
+    wobblePersistence: 0.5
+    wobbleLacunarity: 2
+    wobbleOctaves: 5
     wobbleMaxIndentFactor: 0.5
 --- !u!1001 &712655545
 PrefabInstance:
@@ -885,6 +891,9 @@ MonoBehaviour:
     doWobble: 0
     wobbleScale: 1
     wobbleSpeed: 1
+    wobblePersistence: 0.5
+    wobbleLacunarity: 2
+    wobbleOctaves: 5
     wobbleMaxIndentFactor: 0.5
 --- !u!1001 &1606223650
 PrefabInstance:
@@ -985,6 +994,9 @@ MonoBehaviour:
     doWobble: 0
     wobbleScale: 1
     wobbleSpeed: 1
+    wobblePersistence: 0.5
+    wobbleLacunarity: 2
+    wobbleOctaves: 5
     wobbleMaxIndentFactor: 0.5
 --- !u!1001 &1660105225
 PrefabInstance:
@@ -1085,6 +1097,9 @@ MonoBehaviour:
     doWobble: 0
     wobbleScale: 1
     wobbleSpeed: 1
+    wobblePersistence: 0.5
+    wobbleLacunarity: 2
+    wobbleOctaves: 5
     wobbleMaxIndentFactor: 0.5
 --- !u!1 &1708287458
 GameObject:

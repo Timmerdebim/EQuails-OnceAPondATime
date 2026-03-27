@@ -13,6 +13,9 @@ Shader "Hidden/OutlineFromJFA"
         _WobbleNoiseScale ("Wobble Noise Scale", Float) = 0.2
         _WobbleNoiseSpeed ("Wobble Noise Speed", Float) = 0.5
         _WobbleMaxIndentFactor ("Wobble Noise Max Indent Factor", Float) = 0.5
+        _WobbleNoiseLacunarity ("Wobble Noise Lacunarity", Float) = 2.0
+        _WobbleNoisePersistence ("Wobble Noise Persistence", Float) = 0.5
+        _WobbleNoiseOctaves("Wobble Noise Octaves", Int) = 5
     }
     SubShader
     {
@@ -26,6 +29,7 @@ Shader "Hidden/OutlineFromJFA"
             #pragma fragment Frag
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+            #include "PerlinNoise3D.hlsl"
             
             TEXTURE2D(_JFATex);
             SAMPLER(sampler_JFATex);
@@ -43,6 +47,9 @@ Shader "Hidden/OutlineFromJFA"
             float _WobbleNoiseScale;
             float _WobbleNoiseSpeed;
             float _WobbleMaxIndentFactor;
+            float _WobbleNoiseLacunarity;
+            float _WobbleNoisePersistence;
+            int _WobbleNoiseOctaves;
             
             struct Varyings { float4 pos : SV_POSITION; float2 uv : TEXCOORD0; };
 
@@ -92,53 +99,25 @@ Shader "Hidden/OutlineFromJFA"
             {
                 return SAMPLE_TEXTURE2D(_JFATex, sampler_JFATex, pixel_uv).rg;
             }
-            
-            float hash3(float3 p)
-            {
-                p = float3(dot(p, float3(127.1, 311.7, 74.7)),
-                           dot(p, float3(269.5, 183.3, 246.1)),
-                           dot(p, float3(113.5, 271.9, 124.6)));
-                return frac(sin(p.x + p.y + p.z) * 43758.5453);
-            }
-
-            float valueNoise3D(float3 p)
-            {
-                float3 i = floor(p);
-                float3 f = frac(p);
-                
-                // Cubic smoothstep interpolation
-                float3 u = f * f * (3.0 - 2.0 * f);
-                
-                float a = hash3(i + float3(0, 0, 0));
-                float b = hash3(i + float3(1, 0, 0));
-                float c = hash3(i + float3(0, 1, 0));
-                float d = hash3(i + float3(1, 1, 0));
-                float e = hash3(i + float3(0, 0, 1));
-                float f_ = hash3(i + float3(1, 0, 1));
-                float g = hash3(i + float3(0, 1, 1));
-                float h = hash3(i + float3(1, 1, 1));
-                
-                // Trilinear interpolation
-                return lerp(
-                    lerp(lerp(a, b, u.x), lerp(c, d, u.x), u.y),
-                    lerp(lerp(e, f_, u.x), lerp(g, h, u.x), u.y),
-                    u.z
-                );
-            }
 
             float noise(float2 p, float t)
             {
                 float value = 0.0;
                 float amplitude = 1.0;
                 float frequency = 1.0;
-                int octaves = 4;
                 
-                for (int i = 0; i < octaves; i++)
+                for (int i = 0; i < _WobbleNoiseOctaves; i++)
                 {
-                    value += amplitude * valueNoise3D(float3(p * frequency, t * frequency));
-                    amplitude *= 0.5;
-                    frequency *= 2.0;
+                    value += amplitude * perlin3(float3(p * frequency, t * frequency));
+                    amplitude *= _WobbleNoisePersistence;
+                    frequency *= _WobbleNoiseLacunarity;
                 }
+                
+                
+                float maxValue = (1.0 - pow(_WobbleNoisePersistence, _WobbleNoiseOctaves)) 
+                     / (1.0 - _WobbleNoisePersistence);
+                
+                value = value / maxValue; // Normalize to [0, 1]
                 
                 return value;
             }
@@ -165,7 +144,6 @@ Shader "Hidden/OutlineFromJFA"
                 
                 float newWidth = outlineWidth - wobble;
                 return newWidth;
-                
             }
             
             FragOutput Frag(Varyings i)
@@ -182,6 +160,8 @@ Shader "Hidden/OutlineFromJFA"
                 if (_DoWobbleBool >= 0.5)
                 {
                     outlineWidth = ApplyWobbleToOutlineWidth(outlineWidth, seed_uv);
+                    float derivative = fwidth(distanceToSeed);
+                    // outlineWidth = smoothstep(outlineWidth, outlineWidth - derivative, derivative) * outlineWidth;
                 }
                 
                 float outlineAlpha = 1;
@@ -191,6 +171,9 @@ Shader "Hidden/OutlineFromJFA"
                 if (outlineAlpha <= 0.0)
                 {
                     discard;
+                    // o.color = noise(pixel_uv / _WobbleNoiseScale, _Time.y * _WobbleNoiseSpeed);
+                    // o.depth = 1.0;
+                    // return o;
                 }
                 
                 o.color = float4(_OutlineColor.rgb, _OutlineColor.a * outlineAlpha);                
