@@ -1,6 +1,7 @@
 using Assets.Modules.Interaction;
 using System.Collections.Generic;
 using UnityEngine;
+using TDK.PlayerSystem;
 
 public class PlayerInteract : MonoBehaviour
 {

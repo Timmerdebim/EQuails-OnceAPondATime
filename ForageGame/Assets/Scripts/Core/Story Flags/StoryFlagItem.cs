@@ -2,11 +2,11 @@ using UnityEngine;
 using Assets.Modules.Interaction;
 using UnityEngine.Events;
 using System;
-using Project.Items;
+using TDK.ItemSystem;
 
 
 //TODO: just a testing script, should be integrated with general World Items I think ~Lars
-public class StoryFlagItem : WorldItem
+public class StoryFlagItem : ItemController
 {
     [SerializeField] private StoryFlag flag;
 

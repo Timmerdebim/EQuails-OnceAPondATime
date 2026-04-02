@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Project.Items.Inventory;
+using TDK.ItemSystem.Inventory;
+using TDK.PlayerSystem;
 using Project.Menus;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -64,7 +65,7 @@ public class InputManager : MonoBehaviour
             return;
 
         if (context.started)
-            Inventory.Instance?.Next();
+            InventoryServices.Next();
     }
 
     public void Previous(InputAction.CallbackContext context)
@@ -73,7 +74,7 @@ public class InputManager : MonoBehaviour
             return;
 
         if (context.started)
-            Inventory.Instance?.Previous();
+            InventoryServices.Previous();
     }
 
     public void DropItem(InputAction.CallbackContext context)
@@ -82,7 +83,7 @@ public class InputManager : MonoBehaviour
             return;
 
         if (context.started)
-            Inventory.Instance?.hotbar.TryDropItem();
+            InventoryController.Instance?.TryDropItem();
     }
 
     public void UseItem(InputAction.CallbackContext context)
@@ -91,7 +92,7 @@ public class InputManager : MonoBehaviour
             return;
 
         if (context.started)
-            Inventory.Instance?.hotbar.TryUseItem();
+            InventoryController.Instance?.TryUseItem();
     }
 
     public void SelectSlot(int index)
@@ -99,7 +100,7 @@ public class InputManager : MonoBehaviour
         if (GameManager.Instance.state != GameState.Gameplay)
             return;
 
-        Inventory.Instance?.hotbar.SelectSlot(index);
+        InventoryController.Instance?.SelectSlot(index);
     }
 
     // ------------ Recipes ------------
@@ -110,6 +111,6 @@ public class InputManager : MonoBehaviour
             return;
 
         if (context.started)
-            Inventory.Instance?.recipeBook.TriggerVisualization();
+            RecipeBookController.Instance?.TriggerVisualization();
     }
 }

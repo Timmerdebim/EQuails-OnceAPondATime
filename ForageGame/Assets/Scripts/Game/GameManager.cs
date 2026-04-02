@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
     public void QuitToDesktop()
     {
         SetGameState(GameState.Transitioning);
-        SaveManager.Instance.SaveGame();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -53,7 +52,7 @@ public class GameManager : MonoBehaviour
     public void QuitToMainMenu()
     {
         SetGameState(GameState.Transitioning);
-        SaveManager.Instance.SaveGame();
+        SaveManager.Instance.SaveWorld();
         MenuManager.Instance.ToMenu(null, false);
         CutsceneManager.Instance.QuitToMainMenu(() => SetGameState(GameState.MainMenu));
     }
@@ -61,7 +60,7 @@ public class GameManager : MonoBehaviour
     public void FinishGame()
     {
         SetGameState(GameState.Transitioning);
-        SaveManager.Instance.SaveGame();
+        SaveManager.Instance.SaveWorld();
         CutsceneManager.Instance.FinishGame(() =>
         {
             SetGameState(GameState.MainMenu);
@@ -74,7 +73,7 @@ public class GameManager : MonoBehaviour
         SetGameState(GameState.Transitioning);
         CutsceneManager.Instance.PlayGame(() =>
         {
-            SaveManager.Instance.SaveGame();
+            SaveManager.Instance.SaveWorld();
             SetGameState(GameState.Gameplay);
         });
     }
@@ -85,7 +84,7 @@ public class GameManager : MonoBehaviour
         // TODO: add duck falling and eating shit?
         CutsceneManager.Instance.PlayGame(() =>
         {
-            SaveManager.Instance.SaveGame();
+            SaveManager.Instance.SaveWorld();
             SetGameState(GameState.Gameplay);
         });
     }
@@ -103,36 +102,35 @@ public class GameManager : MonoBehaviour
         sceneLoader.UnloadScene(pauseScene, () => SetGameState(GameState.Gameplay));
     }
 
-    public void PlayNewGame(int slotIndex = -1)
+    private readonly string[] _worldIds = { "1", "2", "3" };
+
+    public void PlayNewGame(string worldId = null)
     {
-        if (slotIndex < 0)
+        if (worldId == null || SaveServices.ExistsWorld(worldId))
+            worldId = SaveServices.GetFreeWorldId(_worldIds);
+
+        if (worldId == null)
         {
-            slotIndex = 1; // First slot is 1 (not 0).
-            while (SaveServices.SaveFileExists(slotIndex) == true)
-                slotIndex += 1; // Get the first free slot
+            Debug.LogWarning("Main: Cannot make any new worlds; ruh oh!.");
+            return;
         }
-        SaveManager.Instance.CurrentSaveSlot = slotIndex;
+        SaveManager.Instance.SelectWorld(worldId);
         CutsceneManager.Instance.PlayNewGame(() =>
-        {
-            SaveManager.Instance.LoadGame();
-            SetGameState(GameState.Gameplay);
-        });
+            SetGameState(GameState.Gameplay));
     }
 
-    public void PlayGame(int slotIndex = -1)
+    public void PlayGame(string worldId = null)
     {
-        if (slotIndex < 0)
-            slotIndex = PlayerPrefs.GetInt("lastSlotIndexUsed", -1);
-
-        if (slotIndex < 0 || !SaveServices.SaveFileExists(slotIndex))
-        {   // We instead start a new game if unable to load an old game
+        worldId ??= PlayerPrefs.GetString("lastWorldUsed", null);
+        if (worldId == null || !SaveServices.ExistsWorld(worldId))
+        {
             PlayNewGame();
             return;
         }
-        SaveManager.Instance.CurrentSaveSlot = slotIndex;
+        SaveManager.Instance.SelectWorld(worldId);
         CutsceneManager.Instance.PlayGame(() =>
         {
-            SaveManager.Instance.LoadGame();
+            SaveManager.Instance.LoadWorld();
             SetGameState(GameState.Gameplay);
         });
     }

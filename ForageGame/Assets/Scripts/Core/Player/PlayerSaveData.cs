@@ -1,0 +1,22 @@
+using TDK.ItemSystem.Inventory;
+using UnityEngine;
+
+namespace TDK.PlayerSystem
+{
+    [System.Serializable]
+    public class PlayerSaveData
+    {
+        public Vector3 spawnPosition = new Vector3(0, 100, 0);
+        public int wingLevel = 0;
+        public int pouchLevel = 0;
+        public bool attackUnlocked = false;
+        public bool dashUnlocked = false;
+        public bool lanternUnlocked = false;
+
+        // The "hasUsed" referes to the fact you have used this ability ever (for the InGameHints system)
+        public bool hasUsedJump = false;
+        public bool hasUsedDash = false;
+        public bool hasUsedFly = false;
+        public bool hasUsedAttack = false;
+    }
+}

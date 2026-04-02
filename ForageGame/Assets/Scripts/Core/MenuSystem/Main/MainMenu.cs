@@ -54,20 +54,16 @@ namespace Project.Menus
 
         public void OnQuitClicked()
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+            GameManager.Instance.QuitToDesktop();
         }
 
         // ------------ Functions ------------
 
         private void RefreshVisuals()
         {
-            int slotIndex = PlayerPrefs.GetInt("lastSlotIndexUsed", -1);
+            string worldId = PlayerPrefs.GetString("lastWorldUsed", null);
 
-            if (slotIndex < 0 || !SaveServices.SaveFileExists(slotIndex))
+            if (worldId == null || !SaveServices.ExistsWorld(worldId))
                 continueText.text = "New Game";
             else
                 continueText.text = "Continue";

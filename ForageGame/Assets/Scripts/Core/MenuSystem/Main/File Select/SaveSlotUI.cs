@@ -16,14 +16,14 @@ namespace Project.Menus.FileSelect
         [SerializeField] private Button deleteButton;
 
         [Header("Settings")]
-        [SerializeField] private int slotIndex;
+        [SerializeField] private string _worldId;
 
 
         public void Refresh()
         {
-            if (SaveServices.SaveFileExists(slotIndex))
+            if (SaveServices.ExistsWorld(_worldId))
             {
-                SaveData data = SaveServices.GetSaveFile(slotIndex);
+                WorldSaveData data = SaveServices.GetWorld(_worldId);
                 slotText.text = "continue"; // TODO: add duck progress image?
                 playtimeText.text = FormatPlaytime(data.playtimeSeconds);
                 deleteButton.gameObject.SetActive(true);
@@ -40,17 +40,17 @@ namespace Project.Menus.FileSelect
 
         public void OnSlotSelected()
         {
-            if (SaveServices.SaveFileExists(slotIndex))
-                GameManager.Instance.PlayGame(slotIndex);   // Load game with this save file
+            if (SaveServices.ExistsWorld(_worldId))
+                GameManager.Instance.PlayGame(_worldId);   // Load game with this save file
             else
-                GameManager.Instance.PlayNewGame(slotIndex);    // Create new game in this slot
+                GameManager.Instance.PlayNewGame(_worldId);    // Create new game in this slot
         }
 
         public void OnDeleteSlot()
         {
-            if (SaveServices.SaveFileExists(slotIndex))
+            if (SaveServices.ExistsWorld(_worldId))
             {
-                SaveServices.DeleteSaveFile(slotIndex);
+                SaveServices.DeleteWorld(_worldId);
                 Refresh();
             }
         }

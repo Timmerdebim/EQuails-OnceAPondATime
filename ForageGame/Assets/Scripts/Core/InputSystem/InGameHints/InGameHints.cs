@@ -3,13 +3,14 @@ using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.InputSystem;
-using Project.Items.Inventory;
+using TDK.ItemSystem.Inventory;
 using System;
-using Project.Items.Types;
+using TDK.ItemSystem.Types;
 using UnityEngine.UI;
 using TMPro;
 using Project.Menus.Keybind;
-using Project.Items;
+using TDK.ItemSystem;
+using TDK.PlayerSystem;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class InGameHints : MonoBehaviour
@@ -122,10 +123,10 @@ public class InGameHints : MonoBehaviour
     {
         currentHints = new();
 
-        if (Inventory.Instance.hotbar.GetItemAtCurrent() is ConsumableItem)
+        if (InventoryController.Instance.GetItemAtCurrent() is ConsumableItem)
             currentHints.Add(consumeHint);
 
-        if (Player.Instance.playerInteract.GetCurrentFocus() is WorldItem)
+        if (Player.Instance.playerInteract.GetCurrentFocus() is ItemController)
             currentHints.Add(pickupHint);
 
         if (Player.Instance.playerInteract.GetCurrentFocus() is NPC)
