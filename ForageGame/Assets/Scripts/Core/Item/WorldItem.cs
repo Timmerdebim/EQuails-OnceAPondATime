@@ -19,7 +19,7 @@ namespace TDK.ItemSystem
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        void Reset()
+        void OnValidate()
         {
             if (ItemData != null)
             {
