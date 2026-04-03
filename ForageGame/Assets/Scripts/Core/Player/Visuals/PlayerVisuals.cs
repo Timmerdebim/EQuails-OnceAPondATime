@@ -30,6 +30,7 @@ namespace TDK.PlayerSystem
                 }
             }
         }
+
         [SerializeField] private DuckOrientationGroup[] _duckOrientationGroup = new DuckOrientationGroup[4];
         private SpriteLibrary spriteLibrary;
         private SpriteRenderer spriteRenderer;
@@ -45,46 +46,58 @@ namespace TDK.PlayerSystem
 
         public void UpdateVisuals()
         {
-            UpdateWingVisuals();
-            UpdateViewVisuals();
+            bool wingChanged = SetWingState();
+            bool xChanged = SetViewStateX();
+            bool zChanged = SetViewStateZ();
+            if (wingChanged || xChanged || zChanged)
+                ApplyVisuals();
         }
 
         public void UpdateWingVisuals()
         {
-            int oldWingLevel = _wingLevel;
-            _wingLevel = Player.Instance.playerData.wingLevel;
-            if (oldWingLevel == _wingLevel) return;
-            SetSpriteLibraryAsset();
+            if (SetWingState())
+                ApplyVisuals();
         }
 
         public void UpdateViewVisuals()
         {
-            UpdateViewVisualsX();
-            UpdateViewVisualsZ();
+            bool xChanged = SetViewStateX();
+            bool zChanged = SetViewStateZ();
+            if (xChanged || zChanged)
+                ApplyVisuals();
         }
 
-        public void UpdateViewVisualsX()
+        private bool SetWingState() // returns true if anything changed
+        {
+            int oldWingLevel = _wingLevel;
+            _wingLevel = Player.Instance.playerData.wingLevel;
+            if (oldWingLevel == _wingLevel) return false;
+            return true;
+        }
+
+        private bool SetViewStateX()
         {
             bool oldIsFacingLeft = _isFacingLeft;
             if (Player.Instance.playerController.ViewDirection.x < 0) _isFacingLeft = true;
             else if (Player.Instance.playerController.ViewDirection.x > 0) _isFacingLeft = false;
             // else if == 0, we do nothing as not to snap the player around
-            if (oldIsFacingLeft == _isFacingLeft) return;
-            spriteRenderer.flipX = !_isFacingLeft;
+            if (oldIsFacingLeft == _isFacingLeft) return false;
+            return true;
         }
 
-        public void UpdateViewVisualsZ()
+        private bool SetViewStateZ()
         {
             bool oldIsFacingFront = _isFacingFront;
             _isFacingFront = Player.Instance.playerController.ViewDirection.z <= 0;
             // We do snap the player to face forward if given the option
-            if (oldIsFacingFront == _isFacingFront) return;
-            SetSpriteLibraryAsset();
+            if (oldIsFacingFront == _isFacingFront) return false;
+            return true;
         }
 
-        private void SetSpriteLibraryAsset()
+        private void ApplyVisuals()
         {
             spriteLibrary.spriteLibraryAsset = _duckOrientationGroup[_wingLevel].GetSpriteLibrary(_isFacingLeft, _isFacingFront);
+            spriteRenderer.flipX = !_isFacingLeft;
         }
     }
 }
