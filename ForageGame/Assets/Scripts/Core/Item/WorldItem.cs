@@ -6,12 +6,11 @@ using TDK.SaveSystem;
 
 namespace TDK.ItemSystem
 {
-    [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Rigidbody))]
     public class ItemController : MonoBehaviour, IInteractable, ISaveable
     {
         public ItemData ItemData;
-
+        [SerializeField] private SpriteRenderer _spriteRenderer;
         private Rigidbody _rigidbody;
 
         void Awake()
@@ -21,11 +20,7 @@ namespace TDK.ItemSystem
 
         void OnValidate()
         {
-            if (ItemData != null)
-            {
-                SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-                spriteRenderer.sprite = ItemData.GetSprite();
-            }
+            UpdateVisuals();
         }
 
         public void Initialize(ItemSaveData data) => Initialize(data.GetItemData(), data.Position, data.Velocity);
@@ -35,11 +30,13 @@ namespace TDK.ItemSystem
             transform.position = position;
             Rigidbody rigidbody = GetComponent<Rigidbody>();
             rigidbody.linearVelocity = velocity;
-            if (ItemData != null)
-            {
-                SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-                spriteRenderer.sprite = item.GetSprite();
-            }
+            UpdateVisuals();
+        }
+
+        public void UpdateVisuals()
+        {
+            if (ItemData != null && _spriteRenderer != null)
+                _spriteRenderer.sprite = ItemData.GetSprite();
         }
 
 
