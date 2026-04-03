@@ -51,6 +51,11 @@ namespace TDK.PlayerSystem
             ExitStateReset();
         }
 
+        private void OnValidate()
+        {
+            visuals.UpdateVisuals();
+        }
+
         #region Save & Load
 
         public void SaveData(ref PlayerSaveData data)
