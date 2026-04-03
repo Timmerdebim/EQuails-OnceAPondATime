@@ -8,14 +8,34 @@ namespace TDK.PlayerSystem
     [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerVisuals : MonoBehaviour
     {
+        [System.Serializable]
+        public class DuckOrientationGroup
+        {
+            public SpriteLibraryAsset FrontLeft;
+            public SpriteLibraryAsset FrontRight;
+            public SpriteLibraryAsset BackLeft;
+            public SpriteLibraryAsset BackRight;
+
+            public SpriteLibraryAsset GetSpriteLibrary(bool isFacingLeft, bool isFacingFront)
+            {
+                if (isFacingLeft)
+                {
+                    if (isFacingFront) return FrontLeft;
+                    else return BackLeft;
+                }
+                else
+                {
+                    if (isFacingFront) return FrontRight;
+                    else return BackRight;
+                }
+            }
+        }
+        [SerializeField] private DuckOrientationGroup[] _duckOrientationGroup = new DuckOrientationGroup[4];
         private SpriteLibrary spriteLibrary;
         private SpriteRenderer spriteRenderer;
-        [SerializeField] private SpriteLibraryAsset[] spriteLibraryAssets = new SpriteLibraryAsset[8];
-        // 0, 2, 4, 6 are the wing levels
-        // 0, 1 are back and front
-        private bool isFacingLeft = true;
-        private bool isFacingFront = true;
-        private int wingLevel = 0;
+        private bool _isFacingLeft = true;
+        private bool _isFacingFront = true;
+        private int _wingLevel = 0;
 
         void Awake()
         {
@@ -31,9 +51,9 @@ namespace TDK.PlayerSystem
 
         public void UpdateWingVisuals()
         {
-            int oldWingLevel = wingLevel;
-            wingLevel = Player.Instance.playerData.wingLevel;
-            if (oldWingLevel == wingLevel) return;
+            int oldWingLevel = _wingLevel;
+            _wingLevel = Player.Instance.playerData.wingLevel;
+            if (oldWingLevel == _wingLevel) return;
             SetSpriteLibraryAsset();
         }
 
@@ -45,28 +65,26 @@ namespace TDK.PlayerSystem
 
         public void UpdateViewVisualsX()
         {
-            bool oldIsFacingLeft = isFacingLeft;
-            if (Player.Instance.playerController.ViewDirection.x < 0) isFacingLeft = true;
-            else if (Player.Instance.playerController.ViewDirection.x > 0) isFacingLeft = false;
+            bool oldIsFacingLeft = _isFacingLeft;
+            if (Player.Instance.playerController.ViewDirection.x < 0) _isFacingLeft = true;
+            else if (Player.Instance.playerController.ViewDirection.x > 0) _isFacingLeft = false;
             // else if == 0, we do nothing as not to snap the player around
-            if (oldIsFacingLeft == isFacingLeft) return;
-            spriteRenderer.flipX = !isFacingLeft;
+            if (oldIsFacingLeft == _isFacingLeft) return;
+            spriteRenderer.flipX = !_isFacingLeft;
         }
 
         public void UpdateViewVisualsZ()
         {
-            bool oldIsFacingFront = isFacingFront;
-            isFacingFront = Player.Instance.playerController.ViewDirection.z <= 0;
+            bool oldIsFacingFront = _isFacingFront;
+            _isFacingFront = Player.Instance.playerController.ViewDirection.z <= 0;
             // We do snap the player to face forward if given the option
-            if (oldIsFacingFront == isFacingFront) return;
+            if (oldIsFacingFront == _isFacingFront) return;
             SetSpriteLibraryAsset();
         }
 
         private void SetSpriteLibraryAsset()
         {
-            int index = 2 * Math.Clamp(wingLevel, 0, 3);
-            index += isFacingFront ? 1 : 0;
-            spriteLibrary.spriteLibraryAsset = spriteLibraryAssets[index];
+            spriteLibrary.spriteLibraryAsset = _duckOrientationGroup[_wingLevel].GetSpriteLibrary(_isFacingLeft, _isFacingFront);
         }
     }
 }
