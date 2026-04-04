@@ -10,7 +10,7 @@ namespace TDK.PlayerSystem.States
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             Player.Instance.playerController.Reset();
-            Player.Instance.playerController.LT_TrackInput(maxSpeed, acceleration);
+            Player.Instance.playerController.SetInputLocomotion(maxSpeed, acceleration);
         }
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

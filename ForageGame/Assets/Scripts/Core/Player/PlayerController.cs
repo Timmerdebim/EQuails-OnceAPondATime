@@ -1,22 +1,24 @@
+using TDK.Physics3DSystem;
 using Unity.Mathematics;
-using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace TDK.PlayerSystem
 {
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(VelocityDriver))]
     [RequireComponent(typeof(Animator))]
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private LayerMask playerLayer;
-        public Rigidbody Rigidbody { get; private set; }
+        public Rigidbody _rigidbody { get; private set; }
         private Animator animator;
         [SerializeField] private PlayerVisuals _visuals;
+        [SerializeField] private VelocityDriver _velocityDriver;
 
         void Awake()
         {
-            Rigidbody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
         }
 
@@ -34,6 +36,8 @@ namespace TDK.PlayerSystem
                 {
                     ViewDirection = _inputVector;
                     animator.SetBool("isMoving", true);
+                    if (_vdTarget == VelocityDriverTarget.Input)
+                        _velocityDriver.SetTargetDirection(InputVector);
                 }
                 else
                     animator.SetBool("isMoving", false);
@@ -45,8 +49,10 @@ namespace TDK.PlayerSystem
             get => _viewDirection;
             set
             {
-                _viewDirection = Vector3.Normalize(value);
+                _viewDirection = value.normalized;
                 _visuals.UpdateViewVisuals(ViewDirection);
+                if (_vdTarget == VelocityDriverTarget.View)
+                    _velocityDriver.SetTargetDirection(ViewDirection);
             }
         }
 
@@ -56,11 +62,11 @@ namespace TDK.PlayerSystem
 
         public void TeleportTo(Vector3 position, bool maintainMomentum)
         {
-            Vector3 v = Rigidbody.linearVelocity;
-            Rigidbody.isKinematic = true;
-            Rigidbody.position = position;
-            Rigidbody.isKinematic = false;
-            Rigidbody.linearVelocity = v;
+            Vector3 v = _rigidbody.linearVelocity;
+            _rigidbody.isKinematic = true;
+            _rigidbody.position = position;
+            _rigidbody.isKinematic = false;
+            _rigidbody.linearVelocity = v;
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -104,55 +110,16 @@ namespace TDK.PlayerSystem
 
         #region  Physics 
 
-        public Vector3 externalAcceleration = Vector3.zero;
+        private Vector3 _externalForce = Vector3.zero;
         public float LastGroundedHeight { get; private set; } = 0;
 
-        private bool3 LM_EnabledAxes = new(false, false, false);
-        private Vector3 LM_TargetVelocity = Vector3.zero;
-        private float LM_Acceleration = 0;
-
-        private enum LocomotionTrack { None, Input, View }
-        private LocomotionTrack LT_Mode = LocomotionTrack.None;
-        private float LT_VelocityScaleFactor = 1;
-        private float LT_Acceleration = 0;
+        private enum VelocityDriverTarget { Manual, Input, View }
+        private VelocityDriverTarget _vdTarget = VelocityDriverTarget.Manual;
 
         void FixedUpdate()
         {
-            Rigidbody.AddForce(externalAcceleration, ForceMode.Acceleration);
-            ApplyLocomotion(LM_EnabledAxes, LM_TargetVelocity, LM_Acceleration);    // Manual Locomotion
-            switch (LT_Mode)                                                        // Tracking Locomotion
-            {
-                case LocomotionTrack.None:
-                    break;
-                case LocomotionTrack.Input:
-                    ApplyLocomotion(new(true, false, true), InputVector * LT_VelocityScaleFactor, LT_Acceleration);
-                    break;
-                case LocomotionTrack.View:
-                    ApplyLocomotion(new(true, false, true), ViewDirection * LT_VelocityScaleFactor, LT_Acceleration);
-                    break;
-            }
+            _rigidbody.AddForce(_externalForce, ForceMode.Acceleration);
             UpdateGrounded();
-        }
-
-        private void ApplyLocomotion(bool3 enabledAxes, Vector3 targetVelocity, float acceleration)
-        {
-            Rigidbody.AddForce(
-            Vector3.MoveTowards(
-                Vector3.zero,
-                GetLockedVector(
-                    enabledAxes,
-                    targetVelocity - Rigidbody.linearVelocity),
-                Time.fixedDeltaTime * acceleration),
-            ForceMode.VelocityChange);
-        }
-
-        private Vector3 GetLockedVector(bool3 useVector, Vector3 vector)
-        {
-            Vector3 result = Vector3.zero;
-            result.x = useVector.x ? vector.x : 0;
-            result.y = useVector.y ? vector.y : 0;
-            result.z = useVector.z ? vector.z : 0;
-            return result;
         }
 
         private void UpdateGrounded()
@@ -161,7 +128,6 @@ namespace TDK.PlayerSystem
         && hit.collider.gameObject.layer != playerLayer)
             {
                 animator.SetBool("isGrounded", true);
-                animator.SetBool("airDashed", false);
                 LastGroundedHeight = transform.position.y;
             }
             else
@@ -170,42 +136,53 @@ namespace TDK.PlayerSystem
 
         #endregion
 
-        #region Set Functions
+        #region API
 
         public void Reset() // Resets the acceleration, gravity, and locomotion to their defaults.
         {
-            externalAcceleration = Vector3.zero;
+            _externalForce = Vector3.zero;
             SetGravity(true);
-            LM_Disable();
-            LT_Disable();
+            ResetLocomotion();
             animator.ResetTrigger("attack");
             animator.ResetTrigger("jump");
         }
+        public void SetGravity(bool useGravity) => _rigidbody.useGravity = useGravity;
+        public void SetImpulse(Vector3 vector) => _rigidbody.AddForce(vector, ForceMode.VelocityChange);
+        public void SetExternalForce(Vector3 vector) => _externalForce = vector;
 
-        public void SetGravity(bool useGravity) => Rigidbody.useGravity = useGravity;
 
-        public void SetImpulse(Vector3 vector) => Rigidbody.AddForce(vector, ForceMode.VelocityChange);
+        #region Locomotion API
 
-        #region Locomotion Setting
-
-        public void LM_Set(bool3 enabledAxes, Vector3 targetVelocity, float acceleration)
+        public void SetManualLocomotion(Vector3 targetVelocity, float acceleration)
         {
-            LM_EnabledAxes = enabledAxes;
-            LM_TargetVelocity = targetVelocity;
-            LM_Acceleration = acceleration;
+            _vdTarget = VelocityDriverTarget.Manual;
+            SetLocomotion(InputVector, targetVelocity.magnitude, acceleration);
         }
-        public void LM_Disable() => LM_Set(new(false, false, false), Vector3.zero, 0);
-        public void LM_Update(Vector3 targetVelocity) => LM_TargetVelocity = targetVelocity;
-
-        private void LT_Set(LocomotionTrack mode, float velocityScaleFactor, float acceleration)
+        public void SetInputLocomotion(float speed, float acceleration)
         {
-            LT_Mode = mode;
-            LT_VelocityScaleFactor = velocityScaleFactor;
-            LT_Acceleration = acceleration;
+            _vdTarget = VelocityDriverTarget.Input;
+            SetLocomotion(InputVector, speed, acceleration);
         }
-        public void LT_Disable() => LT_Set(LocomotionTrack.None, 1, 0);
-        public void LT_TrackInput(float targetVelocity, float acceleration) => LT_Set(LocomotionTrack.Input, targetVelocity, acceleration);
-        public void LT_TrackView(float targetVelocity, float acceleration) => LT_Set(LocomotionTrack.View, targetVelocity, acceleration);
+        public void SetViewLocomotion(float speed, float acceleration)
+        {
+            _vdTarget = VelocityDriverTarget.View;
+            SetLocomotion(ViewDirection, speed, acceleration);
+        }
+        private void SetLocomotion(Vector3 direction, float speed, float acceleration)
+        {
+            _velocityDriver.enabled = true;
+            _velocityDriver.SetTargetDirection(direction);
+            _velocityDriver.SetTargetSpeed(speed);
+            _velocityDriver.SetAcceleration(acceleration);
+            _velocityDriver.SetAffectMode(VelocityDriver.AffectedAxesMode.NormalPlane);
+            _velocityDriver.SetAffectNormal(transform.up);
+            _velocityDriver.SetNormalTracksTarget(false);
+        }
+        private void ResetLocomotion()
+        {
+            _velocityDriver.Reset();
+            _velocityDriver.enabled = false;
+        }
 
         #endregion
 

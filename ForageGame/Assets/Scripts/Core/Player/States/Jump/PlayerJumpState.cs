@@ -15,7 +15,7 @@ namespace TDK.PlayerSystem.States
             Player.Instance.playerData.hasUsedJump = true;
 
             Player.Instance.playerController.Reset();
-            Player.Instance.playerController.LT_TrackInput(maxSpeed, acceleration);
+            Player.Instance.playerController.SetInputLocomotion(maxSpeed, acceleration);
             Player.Instance.playerController.SetImpulse(-Physics.gravity.normalized * Mathf.Sqrt(2 * Physics.gravity.magnitude * hopHeight));
         }
 

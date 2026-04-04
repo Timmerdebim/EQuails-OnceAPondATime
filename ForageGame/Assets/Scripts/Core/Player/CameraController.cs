@@ -22,7 +22,7 @@ namespace TDK.CameraSystem
 
             targetPos.y += followYDistance;
             targetPos.z -= followZDistance;
-            targetPos += velocityWeight * Player.Instance.playerController.Rigidbody.linearVelocity;
+            targetPos += velocityWeight * Player.Instance.playerController._rigidbody.linearVelocity;
             targetPos += lookingDirectionOffset * Player.Instance.playerController.ViewDirection;
 
             transform.position = Vector3.Lerp(transform.position, targetPos, followSharpness * Time.deltaTime);

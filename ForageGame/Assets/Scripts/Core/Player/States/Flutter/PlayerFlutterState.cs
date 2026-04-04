@@ -17,14 +17,14 @@ namespace TDK.PlayerSystem.States
             targetHight = flutterHeight + Player.Instance.playerController.LastGroundedHeight;
 
             Player.Instance.playerController.Reset();
-            Player.Instance.playerController.LT_TrackInput(moveSpeed, moveAcceleration);
+            Player.Instance.playerController.SetInputLocomotion(moveSpeed, moveAcceleration);
             Player.Instance.playerController.SetGravity(false);
         }
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             Player.Instance.energy.UseEnergy(Player.Instance.flutterEnergy * Time.deltaTime); // TODO: fix this?
-            Player.Instance.playerController.externalAcceleration = Vector3.up * (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - Player.Instance.transform.position.y) - 2 * flutterNaturalFrequency * Player.Instance.playerController.Rigidbody.linearVelocity.y);
+            Player.Instance.playerController.SetExternalForce(Vector3.up * (flutterNaturalFrequency * flutterNaturalFrequency * (targetHight - Player.Instance.transform.position.y) - 2 * flutterNaturalFrequency * Player.Instance.playerController._rigidbody.linearVelocity.y));
 
             // Check if still can fly
             if (Player.Instance.energy.energy < 0.001f)
