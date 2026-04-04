@@ -32,65 +32,61 @@ namespace TDK.PlayerSystem
         }
 
         [SerializeField] private DuckOrientationGroup[] _duckOrientationGroup = new DuckOrientationGroup[4];
-        private SpriteLibrary spriteLibrary;
-        private SpriteRenderer spriteRenderer;
+        [SerializeField] private SpriteLibrary spriteLibrary;
+        [SerializeField] private SpriteRenderer spriteRenderer;
         private bool _isFacingLeft = true;
         private bool _isFacingFront = true;
         private int _wingLevel = 0;
 
-        void Awake()
+        public void UpdateVisuals(int wingLevel, Vector3 viewDir)
         {
-            spriteLibrary = GetComponent<SpriteLibrary>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-
-        public void UpdateVisuals()
-        {
-            bool wingChanged = SetWingState();
-            bool xChanged = SetViewStateX();
-            bool zChanged = SetViewStateZ();
+            bool wingChanged = SetWingState(wingLevel);
+            bool xChanged = SetViewStateX(viewDir);
+            bool zChanged = SetViewStateZ(viewDir);
             if (wingChanged || xChanged || zChanged)
                 ApplyVisuals();
         }
 
-        public void UpdateWingVisuals()
+        public void UpdateWingVisuals(int wingLevel)
         {
-            if (SetWingState())
+            if (SetWingState(wingLevel))
                 ApplyVisuals();
         }
 
-        public void UpdateViewVisuals()
+        public void UpdateViewVisuals(Vector3 viewDir)
         {
-            bool xChanged = SetViewStateX();
-            bool zChanged = SetViewStateZ();
+            bool xChanged = SetViewStateX(viewDir);
+            bool zChanged = SetViewStateZ(viewDir);
             if (xChanged || zChanged)
                 ApplyVisuals();
         }
 
-        private bool SetWingState() // returns true if anything changed
+        private bool SetWingState(int wingLevel) // returns true if anything changed
         {
-            int oldWingLevel = _wingLevel;
-            _wingLevel = Player.Instance.playerData.wingLevel;
-            if (oldWingLevel == _wingLevel) return false;
+            if (_wingLevel == wingLevel) return false;
+            _wingLevel = wingLevel;
             return true;
         }
 
-        private bool SetViewStateX()
+        private bool SetViewStateX(Vector3 viewDir)
         {
-            bool oldIsFacingLeft = _isFacingLeft;
-            if (Player.Instance.playerController.ViewDirection.x < 0) _isFacingLeft = true;
-            else if (Player.Instance.playerController.ViewDirection.x > 0) _isFacingLeft = false;
+            bool isFacingLeft = _isFacingLeft;
+            if (viewDir.x < 0) isFacingLeft = true;
+            else if (viewDir.x > 0) isFacingLeft = false;
             // else if == 0, we do nothing as not to snap the player around
-            if (oldIsFacingLeft == _isFacingLeft) return false;
+            if (_isFacingLeft == isFacingLeft) return false;
+            _isFacingLeft = isFacingLeft;
             return true;
         }
 
-        private bool SetViewStateZ()
+        private bool SetViewStateZ(Vector3 viewDir)
         {
-            bool oldIsFacingFront = _isFacingFront;
-            _isFacingFront = Player.Instance.playerController.ViewDirection.z <= 0;
+            bool isFacingFront = _isFacingFront;
+            if (viewDir.z < 0) isFacingFront = true;
+            else if (viewDir.z > 0) isFacingFront = false;
             // We do snap the player to face forward if given the option
-            if (oldIsFacingFront == _isFacingFront) return false;
+            if (_isFacingFront == isFacingFront) return false;
+            _isFacingFront = isFacingFront;
             return true;
         }
 

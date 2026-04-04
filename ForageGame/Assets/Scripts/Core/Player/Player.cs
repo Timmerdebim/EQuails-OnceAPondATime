@@ -53,7 +53,7 @@ namespace TDK.PlayerSystem
 
         private void OnValidate()
         {
-            visuals.UpdateVisuals();
+            visuals.UpdateWingVisuals(playerData.wingLevel);
         }
 
         #region Save & Load
@@ -69,7 +69,7 @@ namespace TDK.PlayerSystem
             playerData = data;
 
             playerController.TeleportTo(playerData.spawnPosition, true);
-            visuals.UpdateVisuals();
+            visuals.UpdateWingVisuals(playerData.wingLevel);
             ExitStateReset();
         }
 
@@ -94,7 +94,7 @@ namespace TDK.PlayerSystem
                     break;
                 case PlayerUpgradeType.Wing:
                     playerData.wingLevel += 1;
-                    visuals.UpdateWingVisuals();
+                    visuals.UpdateWingVisuals(playerData.wingLevel);
                     break;
             }
         }

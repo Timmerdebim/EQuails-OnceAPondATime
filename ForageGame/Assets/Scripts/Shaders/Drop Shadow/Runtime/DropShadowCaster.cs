@@ -101,17 +101,5 @@ public class DropShadowCaster : DecalProjector
         this.size = new(2 * maxRadius, 2 * maxRadius, _length);
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Vector3 pos = transform.position;
-        Vector3 tar = pos + _length * transform.forward;
-
-        Handles.DrawWireDisc(pos, transform.forward, _initialRadius);
-        Handles.DrawWireDisc(tar, transform.forward, _finalRadius);
-
-        Handles.DrawLine(pos + _initialRadius * transform.up, tar + _finalRadius * transform.up);
-        Handles.DrawLine(pos - _initialRadius * transform.up, tar - _finalRadius * transform.up);
-        Handles.DrawLine(pos + _initialRadius * transform.right, tar + _finalRadius * transform.right);
-        Handles.DrawLine(pos - _initialRadius * transform.right, tar - _finalRadius * transform.right);
-    }
+    void OnValidate() => UpdateDecalProjector();
 }

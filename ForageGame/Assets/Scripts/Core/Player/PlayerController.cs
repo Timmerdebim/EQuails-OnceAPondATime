@@ -12,6 +12,7 @@ namespace TDK.PlayerSystem
         [SerializeField] private LayerMask playerLayer;
         public Rigidbody Rigidbody { get; private set; }
         private Animator animator;
+        [SerializeField] private PlayerVisuals _visuals;
 
         void Awake()
         {
@@ -45,7 +46,7 @@ namespace TDK.PlayerSystem
             set
             {
                 _viewDirection = Vector3.Normalize(value);
-                Player.Instance.visuals.UpdateViewVisuals();
+                _visuals.UpdateViewVisuals(ViewDirection);
             }
         }
 

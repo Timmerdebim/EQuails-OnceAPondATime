@@ -4,15 +4,6 @@ using UnityEngine;
 [CustomEditor(typeof(DropShadowCaster))]
 public class DropShadowCasterEditor : Editor
 {
-    private SerializedProperty materialProperty;
-    private DropShadowCaster myTarget;
-
-    private void OnEnable()
-    {
-        materialProperty = serializedObject.FindProperty("_material");
-        myTarget = (DropShadowCaster)target;
-    }
-
     private float NonNegativeFloatField(string label, float value)
     {
         float newValue = EditorGUILayout.FloatField(label, value);
@@ -23,6 +14,8 @@ public class DropShadowCasterEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        // Get the target component
+        DropShadowCaster myTarget = (DropShadowCaster)target;
         // Update serialized object
         serializedObject.Update();
 
@@ -37,6 +30,7 @@ public class DropShadowCasterEditor : Editor
 
         EditorGUILayout.EndVertical();
 
+        SerializedProperty materialProperty = serializedObject.FindProperty("_material");
         EditorGUILayout.PropertyField(materialProperty, new GUIContent("Drop Shadow Material"));
 
         // Apply changes to serialized object
@@ -47,7 +41,9 @@ public class DropShadowCasterEditor : Editor
     private void OnSceneGUI()
     {
         // Get the target component
-        myTarget = (DropShadowCaster)target;
+        DropShadowCaster myTarget = (DropShadowCaster)target;
+
+
 
         if (myTarget == null)
             return;
