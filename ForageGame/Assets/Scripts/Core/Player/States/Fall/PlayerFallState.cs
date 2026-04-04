@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TDK.PlayerSystem.States
 {
-    public class Fall : StateMachineBehaviour
+    public class PlayerFallState : StateMachineBehaviour
     {
         [SerializeField] private float maxSpeed = 10;
         [SerializeField] private float acceleration = 10;

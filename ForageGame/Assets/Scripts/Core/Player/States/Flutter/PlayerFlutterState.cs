@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TDK.PlayerSystem.States
 {
-    public class Flutter : StateMachineBehaviour
+    public class PlayerFlutterState : StateMachineBehaviour
     {
         private float targetHight;
         [SerializeField] private float moveSpeed = 10;

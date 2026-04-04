@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TDK.PlayerSystem.States
 {
-    public class Attack : StateMachineBehaviour
+    public class PlayerAttackState : StateMachineBehaviour
     {
         [SerializeField] private float impulse = 10;
         [SerializeField] private float deceleration = 10;
