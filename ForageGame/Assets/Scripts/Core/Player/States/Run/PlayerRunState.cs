@@ -17,7 +17,7 @@ namespace TDK.PlayerSystem.States
         {
             Player.Instance.energy.UseEnergy(Player.Instance.runEnergy * Time.deltaTime);
             // Check if still can run
-            if (Player.Instance.energy.energy < 0.001f)
+            if (Player.Instance.energy.energy < 0.01f)
                 animator.SetBool("run", false);
         }
 

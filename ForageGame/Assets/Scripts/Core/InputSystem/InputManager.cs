@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
     {
         if (GameManager.Instance.state != GameState.Gameplay)
             return;
-        Player.Instance?.playerController.OnDash(context);
+        Player.Instance?.playerController.OnSprint(context);
     }
 
     public void OnAttack(InputAction.CallbackContext context)

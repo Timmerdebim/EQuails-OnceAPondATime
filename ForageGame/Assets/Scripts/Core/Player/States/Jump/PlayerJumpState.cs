@@ -11,6 +11,8 @@ namespace TDK.PlayerSystem.States
 
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            animator.SetBool("isBusy", true);
+
             Player.Instance.energy.UseEnergy(Player.Instance.hopEnergy);
             Player.Instance.playerData.hasUsedJump = true;
 
@@ -25,6 +27,8 @@ namespace TDK.PlayerSystem.States
 
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            animator.SetBool("isBusy", false);
+            animator.SetBool("jump", false);
             Player.Instance.ExitStateReset();
         }
     }

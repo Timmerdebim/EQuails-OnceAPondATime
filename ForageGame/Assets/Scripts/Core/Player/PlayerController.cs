@@ -60,6 +60,20 @@ namespace TDK.PlayerSystem
 
         #region Triggers
 
+        [SerializeField] private LayerMask waterLayer;
+
+        void OnTriggerEnter(Collider other)
+        {
+            if ((waterLayer.value & (1 << other.gameObject.layer)) != 0)
+                animator.SetBool("isSwimming", true);
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if ((waterLayer.value & (1 << other.gameObject.layer)) != 0)
+                animator.SetBool("isSwimming", false);
+        }
+
         public void TeleportTo(Vector3 position, bool maintainMomentum)
         {
             Vector3 v = _rigidbody.linearVelocity;
@@ -75,11 +89,11 @@ namespace TDK.PlayerSystem
             InputVector = new Vector3(moveInput.x, 0f, moveInput.y);
         }
 
-        public void OnDash(InputAction.CallbackContext context)
+        public void OnSprint(InputAction.CallbackContext context)
         {
             if (context.started
-            && Player.Instance.playerData.dashUnlocked
-            && Player.Instance.energy.energy > Player.Instance.dashEnergy)
+            && Player.Instance.playerData.sprintUnlocked
+            && Player.Instance.energy.energy > 0.01f)
                 animator.SetBool("run", true);
             else if (context.canceled)
                 animator.SetBool("run", false);
@@ -90,7 +104,8 @@ namespace TDK.PlayerSystem
             if (context.started
             && Player.Instance.playerData.attackUnlocked
             && Player.Instance.energy.energy > Player.Instance.attackEnergy)
-                animator.SetTrigger("attack");
+                animator.SetBool("attack", true);
+            else if (context.canceled) animator.SetBool("attack", false);
         }
 
         public void OnJump(InputAction.CallbackContext context)
@@ -99,11 +114,14 @@ namespace TDK.PlayerSystem
             {
                 int wingLevel = Player.Instance.playerData.wingLevel;
                 float energy = Player.Instance.energy.energy;
-                if (wingLevel == 1 && energy > Player.Instance.hopEnergy) animator.SetTrigger("jump");
-                else if (wingLevel >= 2 && energy > 0.1f) animator.SetBool("fly", true);
+                if (wingLevel == 1 && energy > Player.Instance.hopEnergy) animator.SetBool("jump", true);
+                else if (wingLevel >= 2 && energy > 0.01f) animator.SetBool("fly", true);
             }
             else if (context.canceled)
+            {
+                animator.SetBool("jump", false);
                 animator.SetBool("fly", false);
+            }
         }
 
         #endregion
@@ -143,8 +161,6 @@ namespace TDK.PlayerSystem
             _externalForce = Vector3.zero;
             SetGravity(true);
             ResetLocomotion();
-            animator.ResetTrigger("attack");
-            animator.ResetTrigger("jump");
         }
         public void SetGravity(bool useGravity) => _rigidbody.useGravity = useGravity;
         public void SetImpulse(Vector3 vector) => _rigidbody.AddForce(vector, ForceMode.VelocityChange);

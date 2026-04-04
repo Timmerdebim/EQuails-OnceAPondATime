@@ -10,6 +10,8 @@ namespace TDK.PlayerSystem.States
 
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            animator.SetBool("isBusy", true);
+
             Player.Instance.energy.UseEnergy(Player.Instance.attackEnergy);
             Player.Instance.playerData.hasUsedAttack = true;
 
@@ -29,6 +31,8 @@ namespace TDK.PlayerSystem.States
 
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            animator.SetBool("isBusy", false);
+            animator.SetBool("attack", false); // force the release of the attack button
             Player.Instance.ExitStateReset();
         }
     }

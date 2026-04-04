@@ -10,7 +10,7 @@ namespace TDK.PlayerSystem
         public int wingLevel = 0;
         public int pouchLevel = 0;
         public bool attackUnlocked = false;
-        public bool dashUnlocked = false;
+        public bool sprintUnlocked = false;
         public bool lanternUnlocked = false;
 
         // The "hasUsed" referes to the fact you have used this ability ever (for the InGameHints system)
