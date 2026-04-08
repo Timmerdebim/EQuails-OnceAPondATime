@@ -159,7 +159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1385442558600974962, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
       propertyPath: m_Name
-      value: Dialogue Interactable
+      value: NpcTerminal
       objectReference: {fileID: 0}
     - target: {fileID: 1385442558600974962, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
       propertyPath: m_Layer
@@ -168,6 +168,10 @@ PrefabInstance:
     - target: {fileID: 2486634407662961313, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6294650303629963070, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6294650303629963070, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
       propertyPath: OnUnfocus.m_PersistentCalls.m_Calls.Array.size
@@ -273,14 +277,69 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 6294650303629963070, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 9140333254301317787, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8566944946918400140, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3278140425246957174}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1385442558600974962, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5587496134180908035}
   m_SourcePrefab: {fileID: 100100000, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
+--- !u!1 &2652010453141416473 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1385442558600974962, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
+  m_PrefabInstance: {fileID: 4032905152204863595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5587496134180908035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2652010453141416473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e8d7dc38f6b41d6abe12f963e7ea85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8224583927433250202}
+        m_TargetAssemblyTypeName: Dialogue, Assembly-CSharp
+        m_MethodName: Next
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFocus:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnfocus:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8224583927433250202}
+        m_TargetAssemblyTypeName: Dialogue, Assembly-CSharp
+        m_MethodName: WalkAway
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &4689415805071612135 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8566944946918400140, guid: 05581b7aea155c24c854485efe6ea992, type: 3}

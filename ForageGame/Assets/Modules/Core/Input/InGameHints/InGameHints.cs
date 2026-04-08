@@ -11,6 +11,7 @@ using TMPro;
 using Project.Menus.Keybind;
 using TDK.ItemSystem;
 using TDK.PlayerSystem;
+using NPC;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class InGameHints : MonoBehaviour
@@ -129,7 +130,7 @@ public class InGameHints : MonoBehaviour
         if (Player.Instance.playerInteract.GetCurrentFocus() is ItemController)
             currentHints.Add(pickupHint);
 
-        if (Player.Instance.playerInteract.GetCurrentFocus() is NPC)
+        if (Player.Instance.playerInteract.GetCurrentFocus() is NpcTerminal)
             currentHints.Add(talkHint);
 
         if (!Player.Instance.playerData.hasUsedAttack)
