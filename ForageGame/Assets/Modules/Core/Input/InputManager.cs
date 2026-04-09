@@ -11,28 +11,28 @@ public class InputManager : MonoBehaviour
 {
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
         Player.Instance?.playerController.OnMove(context);
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
         Player.Instance?.playerController.OnSprint(context);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
         Player.Instance?.playerController.OnAttack(context);
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
         Player.Instance?.playerController?.OnJump(context);
     }
@@ -40,7 +40,7 @@ public class InputManager : MonoBehaviour
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        if (GameManager.Instance.state != GameState.Gameplay) return;
+        if (AppController.Instance.state != AppController.State.Gameplay) return;
         Player.Instance?.playerInteract?.Interact();
     }
 
@@ -50,10 +50,10 @@ public class InputManager : MonoBehaviour
     {
         if (context.started)
         {
-            if (GameManager.Instance.state == GameState.Gameplay)
-                GameManager.Instance.PauseGame();
-            else if (GameManager.Instance.state == GameState.MainMenu || GameManager.Instance.state == GameState.PauseMenu)
-                MenuManager.Instance.Escape();
+            if (AppController.Instance.state == AppController.State.Gameplay)
+                GameplayController.Instance?.Escape();
+            else if (AppController.Instance.state == AppController.State.MainMenu)
+                MenuManager.Instance?.Escape();
         }
     }
 
@@ -61,7 +61,7 @@ public class InputManager : MonoBehaviour
 
     public void Next(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
 
         if (context.started)
@@ -70,7 +70,7 @@ public class InputManager : MonoBehaviour
 
     public void Previous(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
 
         if (context.started)
@@ -79,7 +79,7 @@ public class InputManager : MonoBehaviour
 
     public void DropItem(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
 
         if (context.started)
@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
 
     public void UseItem(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
 
         if (context.started)
@@ -97,7 +97,7 @@ public class InputManager : MonoBehaviour
 
     public void SelectSlot(int index)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
 
         InventoryController.Instance?.SelectSlot(index);
@@ -107,7 +107,7 @@ public class InputManager : MonoBehaviour
 
     public void ShowRecipes(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.state != GameState.Gameplay)
+        if (AppController.Instance.state != AppController.State.Gameplay)
             return;
 
         if (context.started)

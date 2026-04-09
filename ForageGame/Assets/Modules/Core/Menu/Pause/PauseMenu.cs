@@ -17,7 +17,7 @@ namespace Project.Menus
 
         public override void Escape()
         {
-            GameManager.Instance.ResumeGame();
+            GameplayController.Instance.ResumeGame();
         }
 
         // ------------ Buttons ------------
@@ -29,12 +29,12 @@ namespace Project.Menus
 
         public void OnMainMenuClicked()
         {
-            GameManager.Instance.QuitToMainMenu();
+            GameplayController.Instance.QuitToMainMenu();
         }
 
         public void OnQuitClicked()
         {
-            GameManager.Instance.QuitToDesktop();
+            GameplayController.Instance.QuitToDesktop();
         }
 
         // ------------ Functions ------------
