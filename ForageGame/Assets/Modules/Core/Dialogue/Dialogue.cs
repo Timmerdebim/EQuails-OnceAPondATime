@@ -2,17 +2,19 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Assets.Modules.Dialogue;
-using Modules.Dialogue.DialogueDB;
 using UnityEngine;
 
 namespace NPC
 {
+    /// <summary>
+    /// THIS SCRIPT IS UNUSED ~Lars
+    /// </summary>
     public class Dialogue : MonoBehaviour 
     {
         [Header("References")]
         [SerializeField] private DialogueBox dialogueBox;
         public DialogueController dialogueController;
-        [SerializeField] private DialogueBox.Character character;
+        [SerializeField] private Character character;
 
         [SerializeField] private NpcController npcController;
 

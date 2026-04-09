@@ -4,8 +4,6 @@ using UnityEngine.Events;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Assets.Modules.Dialogue;
-using Modules.Dialogue.DialogueDB;
 
 namespace NPC
 {
@@ -21,7 +19,6 @@ namespace NPC
         [Header("References")]
         [SerializeField] private DialogueBox dialogueBox;
         public DialogueController dialogueController; //TODO: replace
-        [SerializeField] private DialogueBox.Character character; //TODO: remove
 
         [SerializeField] private NpcController npcController;
 
@@ -48,6 +45,9 @@ namespace NPC
         }
 
         #region Interaction
+        /// <summary>
+        /// These are mostly unused now, they just call Next() and WalkAway()
+        /// </summary>
 
         public virtual void Interact()
         {
@@ -99,9 +99,11 @@ namespace NPC
             ResetToken();
 
             //DialogueLine line = dialogueController.GetNextDialogue(character.ToString());
+            //TODO: fix
             DialogueLine line = new DialogueLine();
             line.StageID="repeat";
             line.Text = "E-Quail!";
+            Character character = Character.Bracken; //TODO: merge with DB
 
             if (line == null) {
                 EndDialogue();
@@ -140,18 +142,19 @@ namespace NPC
             ResetToken();
 
             string textToDisplay = null; //very useful assignment of null value to uninitialized local variable, this one is new to me ~Lars
+            Character character = Character.Bracken; //TODO: DEBUG
 
             if (isDialogueActive) {
                 // Rude: Left while box was open
-                textToDisplay = dialogueController.GetLeaveRudeDialogue(character.ToString())?.Text;
+                //textToDisplay = dialogueController.GetLeaveRudeDialogue(character.ToString())?.Text;
             } 
             else {
                 // Polite: Left after closing the box
-                textToDisplay = dialogueController.GetLeavePoliteDialogue(character.ToString())?.Text;
+                //textToDisplay = dialogueController.GetLeavePoliteDialogue(character.ToString())?.Text;
             }
 
             if (!string.IsNullOrEmpty(textToDisplay)) {
-                _ = ShowShortMessage(textToDisplay);
+                _ = ShowShortMessage(textToDisplay, character);
             }
             else {
                 CancelCurrentToken();
@@ -159,7 +162,7 @@ namespace NPC
             }
         }
 
-        private async Task ShowShortMessage(string message) {
+        private async Task ShowShortMessage(string message, Character character) {
             try {
                 if (!isDialogueActive) {
                     dialogueBox.OpenDialogue();

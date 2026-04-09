@@ -6,7 +6,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Assets.Modules.Dialogue
+namespace NPC
 {
     public class DialogueBox : MonoBehaviour
     {
@@ -28,7 +28,6 @@ namespace Assets.Modules.Dialogue
         FMOD.Studio.EventInstance DuckAllForDialogue; 
         FMOD.Studio.PARAMETER_ID CharacterParameterId, SyllableCountParameterId; 
 
-        public enum Character { Bracken, Mosswick, Grimble, Lyria }; 
 
         private void Start()
         {

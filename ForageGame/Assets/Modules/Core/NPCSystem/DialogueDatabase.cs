@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Modules.Dialogue.DialogueDB
+namespace NPC
 {
     [Serializable]
     public class DialogueDatabase

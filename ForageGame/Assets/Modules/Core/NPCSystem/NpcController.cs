@@ -21,6 +21,8 @@ namespace NPC
         public NpcLocation gameObject;
     }
 
+    public enum Character { Bracken, Mosswick, Grimble, Lyria }; 
+
     public class NpcController : MonoBehaviour
     {
         [SerializeField] private List<DialogueActionEntry> dialogueActionMap; //serializable dict in inspector...
@@ -28,6 +30,8 @@ namespace NPC
 
         [SerializeField] private List<NpcLocationEntry> NpcLocationMap; //serializable dict in inspector...
         [SerializeField] private Dictionary<string, NpcLocation> NpcLocations; //...actual dict at runtime
+
+        [SerializeField] private Character character;
 
         void Awake()
         {

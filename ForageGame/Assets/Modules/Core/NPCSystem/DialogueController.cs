@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Modules.Dialogue.DialogueDB
+namespace NPC
 {
     public class DialogueController : MonoBehaviour
     {
