@@ -41,9 +41,9 @@ namespace Project.Menus.FileSelect
         public void OnSlotSelected()
         {
             if (SaveServices.ExistsWorld(_worldId))
-                AppController.Instance.ToWorld(_worldId);   // Load game with this save file
+                _ = AppController.Instance.ToWorld(_worldId);   // Load game with this save file
             else
-                AppController.Instance.ToNewWorld(_worldId);    // Create new game in this slot
+                _ = AppController.Instance.ToNewWorld(_worldId);    // Create new game in this slot
         }
 
         public void OnDeleteSlot()
