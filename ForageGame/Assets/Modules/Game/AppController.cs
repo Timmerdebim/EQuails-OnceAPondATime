@@ -6,19 +6,21 @@ using System;
 using Project.Menus;
 using Project.SceneLoading;
 using TDK.SaveSystem;
+using Eflatun.SceneReference;
+using TDK.SceneSystem;
+using System.Threading.Tasks;
 
-
-[RequireComponent(typeof(SceneLoader))]
 public class AppController : MonoBehaviour
 {
     public enum State { MainMenu, Gameplay, Cutscene, Transitioning }
     public static AppController Instance { get; private set; }
-    public SceneLoader sceneLoader { get; private set; }
     [SerializeField] public State state = State.Transitioning;
-    [SerializeField] private SceneGroup initialSceneGroup = null;
 
-    [Header("Important Scenes")]
-    [SerializeField] private SceneInfo pauseScene;
+
+    [Header("Scenes")]
+    [SerializeField] private SceneReference _mainMenuScene;
+    [SerializeField] private SceneReference _worldScene;
+    [SerializeField] private ImageCutsceneController _cutscene;
 
     void Awake()
     {
@@ -28,14 +30,14 @@ public class AppController : MonoBehaviour
             return;
         }
         Instance = this;
-
-        sceneLoader = GetComponent<SceneLoader>();
     }
 
     void Start()
     {
-        if (initialSceneGroup == null) return;
-        sceneLoader.FullLoadSceneGroup(initialSceneGroup);
+#if UNITY_EDITOR
+        return;
+#endif
+        _ = ToMainMenu();
     }
 
     // ------------ Transitions ------------
@@ -50,27 +52,25 @@ public class AppController : MonoBehaviour
 #endif
     }
 
-    public void ToMainMenu()
+    public async Task ToMainMenu()
     {
         SetGameState(State.Transitioning);
-        SaveManager.Instance.SaveWorld();
-        MenuManager.Instance.ToMenu(null, false);
-        CutsceneManager.Instance.QuitToMainMenu(() => SetGameState(State.MainMenu));
+        await SceneServices.UnloadAllScenes();
+        await SceneServices.LoadScene(_mainMenuScene);
+        SetGameState(State.MainMenu);
     }
 
-    public void ToCreditsSequence()
+    public async Task ToCreditsSequence()
     {
         SetGameState(State.Transitioning);
-        CutsceneManager.Instance.FinishGame(() =>
-        {
-            SetGameState(State.MainMenu);
-            // TODO: directly open credits menu
-        });
+        await SceneServices.UnloadAllScenes();
+        await SceneServices.LoadScene(_mainMenuScene);
+        SetGameState(State.MainMenu);
     }
 
     private readonly string[] _worldIds = { "1", "2", "3" };
 
-    public void ToNewWorld(string worldId = null)
+    public async Task ToNewWorld(string worldId = null)
     {
         if (worldId == null || SaveServices.ExistsWorld(worldId))
             worldId = SaveServices.GetFreeWorldId(_worldIds);
@@ -81,24 +81,22 @@ public class AppController : MonoBehaviour
             return;
         }
         SaveManager.Instance.SelectWorld(worldId);
-        CutsceneManager.Instance.PlayNewGame(() =>
-            SetGameState(State.Gameplay));
+        await SceneServices.LoadScene(_worldScene);
+        SetGameState(State.Gameplay);
     }
 
-    public void ToWorld(string worldId = null)
+    public async Task ToWorld(string worldId = null)
     {
         worldId ??= PlayerPrefs.GetString("lastWorldUsed", null);
         if (worldId == null || !SaveServices.ExistsWorld(worldId))
         {
-            ToNewWorld();
+            await ToNewWorld();
             return;
         }
         SaveManager.Instance.SelectWorld(worldId);
-        CutsceneManager.Instance.PlayGame(() =>
-        {
-            SaveManager.Instance.LoadWorld();
-            SetGameState(State.Gameplay);
-        });
+        await SceneServices.LoadScene(_worldScene);
+        SaveManager.Instance.LoadWorld();
+        SetGameState(State.Gameplay);
     }
 
     // ------------ Other Functions ------------
@@ -129,3 +127,12 @@ public class AppController : MonoBehaviour
     }
 }
 
+// public class MenuController : MonoBehaviour
+// {
+//     public void ToMainMenu()
+//     {
+//         SetGameState(State.Transitioning);
+//         MenuManager.Instance.ToMenu(null, false);
+//         CutsceneManager.Instance.QuitToMainMenu(() => SetGameState(State.MainMenu));
+//     }
+// }

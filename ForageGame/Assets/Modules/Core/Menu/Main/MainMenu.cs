@@ -34,7 +34,7 @@ namespace Project.Menus
 
         public void OnContinueClicked()
         {
-            AppController.Instance.ToWorld();
+            _ = AppController.Instance.ToWorld();
         }
 
         public void OnFileSelectClicked()

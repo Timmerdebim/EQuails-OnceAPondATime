@@ -6,17 +6,20 @@ using System;
 using Project.Menus;
 using Project.SceneLoading;
 using TDK.SaveSystem;
+using System.Threading.Tasks;
+using TDK.SceneSystem;
+using Eflatun.SceneReference;
 
-[RequireComponent(typeof(SceneLoader))]
 public class GameplayController : MonoBehaviour
 {
     public enum State { Paused, Playing, Transitioning }
     public static GameplayController Instance { get; private set; }
-    public SceneLoader sceneLoader { get; private set; }
     [SerializeField] public State state = State.Transitioning;
 
+    [SerializeField] private TransitionScreenController _tsc;
+
     [Header("Important Scenes")]
-    [SerializeField] private SceneInfo pauseScene;
+    [SerializeField] private SceneReference _pauseScene;
 
     void Awake()
     {
@@ -26,8 +29,6 @@ public class GameplayController : MonoBehaviour
             return;
         }
         Instance = this;
-
-        sceneLoader = GetComponent<SceneLoader>();
     }
 
     // ------------ Transitions ------------
@@ -42,62 +43,61 @@ public class GameplayController : MonoBehaviour
 #endif
     }
 
-    public void QuitToMainMenu()
+    public async Task QuitToMainMenu()
     {
         SetGameState(State.Transitioning);
+        await _tsc.EnterTransitionScreen();
         SaveManager.Instance.SaveWorld();
         MenuManager.Instance.ToMenu(null, false);
-        CutsceneManager.Instance.QuitToMainMenu();
+        await AppController.Instance.ToMainMenu();
     }
 
-    public void FinishGame()
+    public async Task FinishGame()
     {
         SetGameState(State.Transitioning);
+        await _tsc.EnterTransitionScreen();
         SaveManager.Instance.SaveWorld();
-        CutsceneManager.Instance.FinishGame(() =>
-        {
-            // TODO: directly open credits menu
-        });
+        await AppController.Instance.ToCreditsSequence();
     }
 
-    public void Sleep()
+    public async Task Sleep()
     {
         SetGameState(State.Transitioning);
-        CutsceneManager.Instance.PlayGame(() =>
-        {
-            SaveManager.Instance.SaveWorld();
-            SetGameState(State.Playing);
-        });
+        await _tsc.EnterTransitionScreen();
+        SaveManager.Instance.SaveWorld();
+        await _tsc.ExitTransitionScreen();
+        SetGameState(State.Playing);
     }
 
-    public void Death()
+    public async Task Death()
     {
         SetGameState(State.Transitioning);
         // TODO: add duck falling and eating shit?
-        CutsceneManager.Instance.PlayGame(() =>
-        {
-            SaveManager.Instance.SaveWorld();
-            SetGameState(State.Playing);
-        });
+        await _tsc.EnterTransitionScreen();
+        SaveManager.Instance.SaveWorld();
+        await _tsc.ExitTransitionScreen();
+        SetGameState(State.Playing);
     }
 
     public void Escape()
     {
-        if (state == State.Paused) ResumeGame();
-        else if (state == State.Playing) PauseGame();
+        if (state == State.Paused) _ = ResumeGame();
+        else if (state == State.Playing) _ = PauseGame();
     }
 
-    public void PauseGame()
+    public async Task PauseGame()
     {
         SetGameState(State.Transitioning);
-        sceneLoader.LoadScene(pauseScene, () => SetGameState(State.Paused));
+        await SceneServices.LoadScene(_pauseScene);
+        SetGameState(State.Paused);
     }
 
-    public void ResumeGame()
+    public async Task ResumeGame()
     {
         SetGameState(State.Transitioning);
         MenuManager.Instance.ToMenu(null, false);
-        sceneLoader.UnloadScene(pauseScene, () => SetGameState(State.Playing));
+        await SceneServices.UnloadScene(_pauseScene);
+        SetGameState(State.Playing);
     }
 
     // ------------ Other Functions ------------

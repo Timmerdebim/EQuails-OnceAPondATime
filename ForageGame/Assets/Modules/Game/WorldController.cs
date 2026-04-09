@@ -7,7 +7,6 @@ using Project.Menus;
 using Project.SceneLoading;
 using TDK.SaveSystem;
 
-[RequireComponent(typeof(SceneLoader))]
 public class WorldController : MonoBehaviour
 {
     public static WorldController Instance { get; private set; }
