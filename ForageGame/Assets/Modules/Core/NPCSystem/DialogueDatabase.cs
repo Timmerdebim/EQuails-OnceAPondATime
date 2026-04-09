@@ -10,7 +10,7 @@ namespace NPC
     [Serializable]
     public class DialogueDatabase
     {
-        public List<StoryStage> StoryStages = new List<StoryStage>();
+        public List<StoryStage> storyStages = new List<StoryStage>();
     }
 
     /// <summary>
@@ -26,16 +26,6 @@ namespace NPC
         public List<string> SetFlags = new List<string>();
         public List<LocationDialogue> locationDialogues = new List<LocationDialogue>();
 
-        // --- Helpers for specific line types ---
-
-        // The numeric story lines (0, 1, 2...)
-        //public List<DialogueLine> StandardLines => Lines.Where(l => l.IsStoryStage).ToList();
-
-        // Helper to check if this block contains a specific special stage
-        // public DialogueLine GetSpecialLine(string stageID)
-        // {
-        //     return Lines.FirstOrDefault(l => l.StageID.Equals(stageID, StringComparison.OrdinalIgnoreCase));
-        // }
     }
 
     /// <summary>
@@ -47,6 +37,16 @@ namespace NPC
         //Flavor dialogue does not progress StoryStage. Use for puzzle hints indeed flavor text
         public bool isFlavorDialogue = false;
         public List<DialogueLine> Lines = new List<DialogueLine>();
+
+        // --- Helpers for specific line types ---
+        //TODO: Lars no likey
+
+        // The numeric story lines (0, 1, 2...)
+        public List<DialogueLine> StandardLines => Lines.Where(l => l.IsStoryStage).ToList();
+        public DialogueLine GetSpecialLine(string stageID) //TODO: THIS IS HOW WE GET LEAVE MESSAGES AND STUFF! SUCKS!
+        {
+            return Lines.FirstOrDefault(l => l.StageID.Equals(stageID, StringComparison.OrdinalIgnoreCase));
+        }
     }
 
     [Serializable]

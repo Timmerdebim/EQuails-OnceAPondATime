@@ -58,7 +58,7 @@ namespace NPC
 
             ResetToken();
 
-            DialogueLine line = dialogueController.GetNextDialogue(character.ToString());
+            DialogueLine line = dialogueController.GetNextDialogue();//character.ToString()); //Removed to make it shut up
             
             if (line == null) {
                 EndDialogue();

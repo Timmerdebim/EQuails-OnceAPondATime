@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using UnityEngine;
 
@@ -22,23 +23,25 @@ namespace NPC
 
         // --- DIALOGUE FLOW ---
 
-        public DialogueLine GetNextDialogue(string charName)
+        public DialogueLine GetNextDialogue()
         {
-            CharacterProfile character = _database.GetCharacter(charName);
-            if (character == null) return null;
+            //CharacterProfile character = _database.GetCharacter(charName);
+            if (_database == null) return null;
 
-            CharacterState charState = _state.GetOrAddState(charName);
+            CharacterState charState = _state.GetOrAddState("Bracken");//TODO: fucked
+
+            var stage = _database.storyStages[0]; //TODO: this is of course bs
 
             // 1. CONTINUE CURRENT BLOCK
             if (!string.IsNullOrEmpty(charState.CurrentBlockID))
             {
-                var line = GetNextLineInBlock(character, charState);
+                var line = GetNextLineInBlock(stage, charState);
                 if (line != null) return line;
             }
 
             // 2. FIND NEW UNREAD CONTENT (Catch-up logic)
             // Checks Inventory Flags to see what is *possible* to play.
-            var nextNewBlock = character.Blocks
+            var nextNewBlock = _database.storyStages
                 .Where(b => IsBlockValidByFlags(b) && !charState.CompletedBlocks.Contains(b.BlockID))
                 .OrderBy(b => b.RequiredFlags.Count) // Play simplest first (Catch-up)
                 .FirstOrDefault();
@@ -46,24 +49,24 @@ namespace NPC
             if (nextNewBlock != null)
             {
                 StartBlock(charState, nextNewBlock);
-                return GetNextLineInBlock(character, charState);
+                return GetNextLineInBlock(nextNewBlock, charState);
             }
 
             // 3. FALLBACK (Repeat)
             // Uses History Logic (Only repeats what we have actually talked about)
-            return GetMostRelevantLine(character, "repeat");
+            return GetMostRelevantLine(_database, "repeat");
         }
 
         // --- LEAVE METHODS ---
 
         public DialogueLine GetLeaveRudeDialogue(string charName)
         {
-            return GetMostRelevantLine(_database.GetCharacter(charName), "leave_rude");
+            return GetMostRelevantLine(_database, "leave_rude");
         }
 
         public DialogueLine GetLeavePoliteDialogue(string charName)
         {
-            return GetMostRelevantLine(_database.GetCharacter(charName), "leave_polite");
+            return GetMostRelevantLine(_database, "leave_polite");
         }
 
         // --- CORE HELPERS ---
@@ -71,28 +74,29 @@ namespace NPC
         /// <summary>
         /// Finds the most complex block that the user has ALREADY EXPERIENCED.
         /// </summary>
-        private DialogueLine GetMostRelevantLine(CharacterProfile character, string specialStageID)
+        private DialogueLine GetMostRelevantLine(DialogueDatabase db, string specialStageID)
         {
-            if (character == null) return null;
-            CharacterState state = _state.GetOrAddState(character.Name);
+            if (db == null) return null;
+            CharacterState state = _state.GetOrAddState("Bracken"); //db.Name); //TODO: make it shut up
 
             // Logic:
             // 1. Filter blocks to only those we have "Listened To" (Active, Completed, or Base).
             // 2. Sort by DESCENDING complexity (Show the most advanced topic we have discussed).
             // 3. Find the first one with the requested stage.
 
-            var bestBlock = character.Blocks
+            var bestBlock = db.storyStages
                 .Where(b => IsBlockListenedTo(b, state)) 
                 .OrderByDescending(b => b.RequiredFlags.Count)
-                .FirstOrDefault(b => b.GetSpecialLine(specialStageID) != null);
+                .FirstOrDefault(); //TODO: FUCKED NOW
+                //.FirstOrDefault(b => b.GetSpecialLine(specialStageID) != null);
 
-            return bestBlock?.GetSpecialLine(specialStageID);
+            return bestBlock?.locationDialogues[0].GetSpecialLine(specialStageID); //TODO: FUCKED NOW
         }
 
         /// <summary>
         /// Determines if a block is part of the player's conversation history.
         /// </summary>
-        private bool IsBlockListenedTo(DialogueBlock block, CharacterState state)
+        private bool IsBlockListenedTo(StoryStage block, CharacterState state)
         {
             // Case 1: It is the base layer (always valid context)
             if (block.RequiredFlags.Count == 0) return true;
@@ -109,31 +113,32 @@ namespace NPC
         /// <summary>
         /// Determines if the player has the inventory required to START this block.
         /// </summary>
-        private bool IsBlockValidByFlags(DialogueBlock block)
+        private bool IsBlockValidByFlags(StoryStage block)
         {
             return StoryFlagManager.Instance.FlagListActive(block.RequiredFlags);
         }
 
-        private void StartBlock(CharacterState state, DialogueBlock block)
+        private void StartBlock(CharacterState state, StoryStage block)
         {
             state.CurrentBlockID = block.BlockID;
             state.CurrentLineIndex = 0;
         }
 
-        private DialogueLine GetNextLineInBlock(CharacterProfile character, CharacterState state)
+        private DialogueLine GetNextLineInBlock(StoryStage stage, CharacterState state)
         {
-            var block = character.Blocks.FirstOrDefault(b => b.BlockID == state.CurrentBlockID);
+            var block = stage;//.Blocks.FirstOrDefault(b => b.BlockID == state.CurrentBlockID);
+            var locDialog = stage.locationDialogues[0]; //TODO: this entire var is bs
             
-            if (block == null || state.CurrentLineIndex >= block.StandardLines.Count)
+            if (block == null || state.CurrentLineIndex >= locDialog.StandardLines.Count)
             {
                 if (block != null) state.CompletedBlocks.Add(block.BlockID);
                 state.CurrentBlockID = null;
                 return null;
             }
 
-            var line = block.StandardLines[state.CurrentLineIndex];
+            var line = locDialog.StandardLines[state.CurrentLineIndex];
             state.CurrentLineIndex++;
-            if (state.CurrentLineIndex >= block.StandardLines.Count)
+            if (state.CurrentLineIndex >= locDialog.StandardLines.Count)
             {
                 state.CompletedBlocks.Add(block.BlockID);
                 state.CurrentBlockID = null;
@@ -149,7 +154,7 @@ namespace NPC
             }
 
             // If we just finished the last line, mark complete immediately
-            if (state.CurrentLineIndex >= block.StandardLines.Count)
+            if (state.CurrentLineIndex >= locDialog.StandardLines.Count)
             {
                 state.CompletedBlocks.Add(block.BlockID);
                 state.CurrentBlockID = null;

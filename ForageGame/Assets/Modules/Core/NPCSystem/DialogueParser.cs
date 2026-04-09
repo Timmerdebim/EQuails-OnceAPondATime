@@ -47,7 +47,7 @@ namespace NPC
                                 }
                             }
                         }
-                        db.StoryStages.Add(currentStage);
+                        db.storyStages.Add(currentStage);
                     }
                     // 3. SET FLAGS
                     else if (line.StartsWith("Set-Flags:", StringComparison.OrdinalIgnoreCase))
