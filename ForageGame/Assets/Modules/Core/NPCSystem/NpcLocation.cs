@@ -98,11 +98,7 @@ namespace NPC
 
             ResetToken();
 
-            //DialogueLine line = dialogueController.GetNextDialogue(character.ToString());
-            //TODO: fix
-            DialogueLine line = new DialogueLine();
-            line.StageID="repeat";
-            line.Text = "E-Quail!";
+            DialogueLine line = npcController.GetNextDialogue(this);
             Character character = Character.Bracken; //TODO: merge with DB
 
             if (line == null) {

@@ -25,13 +25,20 @@ namespace NPC
 
     public class NpcController : MonoBehaviour
     {
+
+        [Header("Dialogue Data")]
+        [SerializeField] private Character character;
+        [SerializeField] private List<TextAsset> _sourceFiles;
+        
+        private DialogueDatabase _database;
+        private DialogueRuntimeState _state; 
+
+        [Header("Dialogue References")]
         [SerializeField] private List<DialogueActionEntry> dialogueActionMap; //serializable dict in inspector...
-        [SerializeField] private Dictionary<string, UnityEvent> dialogueActions; //...actual dict at runtime
+        private Dictionary<string, UnityEvent> dialogueActions; //...actual dict at runtime
 
         [SerializeField] private List<NpcLocationEntry> NpcLocationMap; //serializable dict in inspector...
-        [SerializeField] private Dictionary<string, NpcLocation> NpcLocations; //...actual dict at runtime
-
-        [SerializeField] private Character character;
+        private Dictionary<string, NpcLocation> NpcLocations; //...actual dict at runtime
 
         void Awake()
         {
@@ -44,10 +51,12 @@ namespace NPC
                 NpcLocations[entry.location] = entry.gameObject;
         }
 
-        // Update is called once per frame
-        void Update()
+        public DialogueLine GetNextDialogue(NpcLocation location)
         {
-            
+            DialogueLine line = new DialogueLine();
+            line.StageID="repeat";
+            line.Text = $"This is location: {location.gameObject.name}";
+            return line;
         }
     }
 }
