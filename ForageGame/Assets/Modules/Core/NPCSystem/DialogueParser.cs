@@ -10,8 +10,7 @@ namespace NPC
         public static DialogueDatabase Parse(List<string> fileContents)
         {
             DialogueDatabase db = new DialogueDatabase();
-            CharacterProfile currentCharacter = null;
-            DialogueBlock currentBlock = null;
+            StoryStage currentStage = null;
             DialogueLine currentLine = null;
 
             foreach (var content in fileContents)
@@ -27,23 +26,11 @@ namespace NPC
                     if (string.IsNullOrEmpty(line)) continue;
                     if (line.StartsWith("---")) continue;
 
-                    // 1. CHARACTER HEADER
-                    if (line.StartsWith("Character:", StringComparison.OrdinalIgnoreCase))
-                    {
-                        string name = ParseValue(line);
-                        currentCharacter = db.GetCharacter(name);
-                        if (currentCharacter == null)
-                        {
-                            currentCharacter = new CharacterProfile { Name = name };
-                            db.Characters.Add(currentCharacter);
-                        }
-                        currentBlock = null;
-                    }
+                    // 1. CHARACTER HEADER IS GONE NOW ~Lars
                     // 2. REQUIRED FLAGS (Start of Block)
-                    else if (line.StartsWith("Flags:", StringComparison.OrdinalIgnoreCase))
+                    if (line.StartsWith("Flags:", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (currentCharacter == null) continue;
-                        currentBlock = new DialogueBlock();
+                        currentStage = new StoryStage();
                         
                         string val = ParseValue(line);
                         if (!val.Equals("<none>", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(val))
@@ -52,7 +39,7 @@ namespace NPC
                             {
                                 if (StoryFlagManager.Instance.TryGetStoryFlag(raw, out var flag))
                                 {
-                                    currentBlock.RequiredFlags.Add(flag);
+                                    currentStage.RequiredFlags.Add(flag);
                                 }
                                 else
                                 {
@@ -60,30 +47,29 @@ namespace NPC
                                 }
                             }
                         }
-                        
-                        currentCharacter.Blocks.Add(currentBlock);
+                        db.StoryStages.Add(currentStage);
                     }
                     // 3. SET FLAGS
                     else if (line.StartsWith("Set-Flags:", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (currentBlock == null) continue;
+                        if (currentStage == null) continue;
 
                         string val = ParseValue(line);
                         if (!val.Equals("<none>", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(val))
                         {
                             // Parse simply as strings to pass to the Manager later
                             var flagsToSet = val.Split(',').Select(s => s.Trim());
-                            currentBlock.SetFlags.AddRange(flagsToSet);
+                            currentStage.SetFlags.AddRange(flagsToSet);
                         }
                     }
                     // 4. STAGE/LINE CONTENT
                     else if (line.StartsWith("Stage:", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (currentBlock == null) continue;
+                        if (currentStage == null) continue;
                         
                         string stageInfo = ParseValue(line);
                         currentLine = new DialogueLine { StageID = stageInfo, Text = "" };
-                        currentBlock.Lines.Add(currentLine);
+                        //currentStage.Lines.Add(currentLine); TODO: THIS DOES NOTHING BEWARE!!!
                     }
                     // 5. TEXT BODY
                     else
