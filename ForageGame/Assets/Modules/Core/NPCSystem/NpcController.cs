@@ -14,16 +14,30 @@ namespace NPC
         public UnityEvent gadgetAction;
     }
 
+    [System.Serializable]
+    public struct NpcLocationEntry
+    {
+        public string location;
+        public NpcLocation gameObject;
+    }
+
     public class NpcController : MonoBehaviour
     {
         [SerializeField] private List<DialogueActionEntry> dialogueActionMap; //serializable dict in inspector...
         [SerializeField] private Dictionary<string, UnityEvent> dialogueActions; //...actual dict at runtime
+
+        [SerializeField] private List<NpcLocationEntry> NpcLocationMap; //serializable dict in inspector...
+        [SerializeField] private Dictionary<string, NpcLocation> NpcLocations; //...actual dict at runtime
 
         void Awake()
         {
             dialogueActions = new Dictionary<string, UnityEvent>();
             foreach (var entry in dialogueActionMap)
                 dialogueActions[entry. dialogueAction] = entry.gadgetAction;
+
+            NpcLocations = new Dictionary<string, NpcLocation>();
+            foreach (var entry in NpcLocationMap)
+                NpcLocations[entry.location] = entry.gameObject;
         }
 
         // Update is called once per frame

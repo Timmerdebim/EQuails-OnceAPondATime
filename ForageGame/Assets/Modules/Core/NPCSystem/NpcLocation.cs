@@ -1,22 +1,31 @@
+using UnityEngine;
+using Assets.Modules.Interaction;
+using UnityEngine.Events;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Assets.Modules.Dialogue;
 using Modules.Dialogue.DialogueDB;
-using UnityEngine;
 
 namespace NPC
 {
-    public class Dialogue : MonoBehaviour 
+    public class NpcLocation : MonoBehaviour, IInteractable
     {
+        //InteractablePrompt PopupPrompt; // UI element to prompt the player to interact
+
+        [Header("Interaction Callbacks")]
+        public UnityEvent onInteract; // Event to invoke when interacting
+        public UnityEvent onFocus;
+        public UnityEvent OnUnfocus;
+
         [Header("References")]
         [SerializeField] private DialogueBox dialogueBox;
-        public DialogueController dialogueController;
-        [SerializeField] private DialogueBox.Character character;
+        public DialogueController dialogueController; //TODO: replace
+        [SerializeField] private DialogueBox.Character character; //TODO: remove
 
         [SerializeField] private NpcController npcController;
 
-        [Header("Settings")]
+        [Header("Dialogue Display Settings")]
         [SerializeField] private float shortMessageDuration = 2000f;
 
         // State Tracking
@@ -25,16 +34,49 @@ namespace NPC
         private CancellationTokenSource textCtxSource;
         private Task currentTypingTask;
 
-        // Public getter
+        // Public getter, TODO: unused publicly?
         public bool MessageRead { get; private set; } = false;
 
-        private void Start() {
+        private void Start()
+        {
+            //PopupPrompt = GetComponentInChildren<InteractablePrompt>(true);
             textCtxSource = new CancellationTokenSource();
         }
 
         private void OnDestroy() {
             CancelCurrentToken();
         }
+
+        #region Interaction
+
+        public virtual void Interact()
+        {
+            print("Interacting with " + gameObject.name);
+
+            onInteract?.Invoke();
+            GetComponentInChildren<Renderer>().material.color = Color.cyan;
+            Next();
+        }
+
+        public virtual void Focus()
+        {
+            print("Focused on " + gameObject.name);
+            onFocus?.Invoke();
+
+            //PopupPrompt?.Activate();
+        }
+
+        public virtual void Unfocus()
+        {
+            print("Unfocused from " + gameObject.name);
+
+            OnUnfocus?.Invoke();
+            WalkAway();
+
+            //PopupPrompt?.Deactivate();
+        }
+        #endregion
+        #region Dialogue
 
         public void SetDialogue(string[] text) {
             EndDialogue();
@@ -56,8 +98,11 @@ namespace NPC
 
             ResetToken();
 
-            DialogueLine line = dialogueController.GetNextDialogue(character.ToString());
-            
+            //DialogueLine line = dialogueController.GetNextDialogue(character.ToString());
+            DialogueLine line = new DialogueLine();
+            line.StageID="repeat";
+            line.Text = "E-Quail!";
+
             if (line == null) {
                 EndDialogue();
                 return;
@@ -140,9 +185,9 @@ namespace NPC
 
             CancelCurrentToken();
         }
-
+        #endregion
         // --- Helpers ---
-
+        #region Cancellation Tokens
         private void CancelCurrentToken() {
             if (textCtxSource != null && !textCtxSource.IsCancellationRequested) {
                 textCtxSource.Cancel();
@@ -154,5 +199,6 @@ namespace NPC
             CancelCurrentToken();
             textCtxSource = new CancellationTokenSource();
         }
+        #endregion
     }
 }

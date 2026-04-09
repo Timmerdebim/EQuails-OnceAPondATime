@@ -130,7 +130,7 @@ public class InGameHints : MonoBehaviour
         if (Player.Instance.playerInteract.GetCurrentFocus() is ItemController)
             currentHints.Add(pickupHint);
 
-        if (Player.Instance.playerInteract.GetCurrentFocus() is NpcTerminal)
+        if (Player.Instance.playerInteract.GetCurrentFocus() is NpcLocation)
             currentHints.Add(talkHint);
 
         if (!Player.Instance.playerData.hasUsedAttack)

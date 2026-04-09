@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8730177059491036073}
+  - {fileID: 2350312052423807851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2276571404441528345
@@ -45,8 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70774cf2e1455447d89a2e55330135b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueActionMap: []
---- !u!1001 &5256395103820173552
+  dialogueActionMap:
+  - dialogueAction: 
+    gadgetAction:
+      m_PersistentCalls:
+        m_Calls: []
+  NpcLocationMap: []
+--- !u!1001 &1245345229574092850
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -54,6 +59,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2920056586756819921}
     m_Modifications:
+    - target: {fileID: 379575534100156669, guid: 2a120b4f7e6664bfcaf7556d973c54f7, type: 3}
+      propertyPath: npcController
+      value: 
+      objectReference: {fileID: 2276571404441528345}
     - target: {fileID: 3590959589978794841, guid: 2a120b4f7e6664bfcaf7556d973c54f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -96,19 +105,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7685558507494031213, guid: 2a120b4f7e6664bfcaf7556d973c54f7, type: 3}
       propertyPath: m_Name
-      value: NpcTerminal
-      objectReference: {fileID: 0}
-    - target: {fileID: 7685558507494031213, guid: 2a120b4f7e6664bfcaf7556d973c54f7, type: 3}
-      propertyPath: m_Layer
-      value: 12
+      value: NpcLocation
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a120b4f7e6664bfcaf7556d973c54f7, type: 3}
---- !u!4 &8730177059491036073 stripped
+--- !u!4 &2350312052423807851 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3590959589978794841, guid: 2a120b4f7e6664bfcaf7556d973c54f7, type: 3}
-  m_PrefabInstance: {fileID: 5256395103820173552}
+  m_PrefabInstance: {fileID: 1245345229574092850}
   m_PrefabAsset: {fileID: 0}
