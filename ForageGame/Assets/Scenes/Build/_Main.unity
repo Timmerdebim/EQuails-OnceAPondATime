@@ -298,7 +298,6 @@ Transform:
   - {fileID: 1707436304}
   - {fileID: 3157719971562381913}
   - {fileID: 4051398011980313120}
-  - {fileID: 1598743007}
   - {fileID: 817644801}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1236,7 +1235,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 159087697}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 65674574531653933, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1279,23 +1278,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2970004708536037078, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
+      propertyPath: state
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2970004708536037078, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
       propertyPath: initialSceneGroup
       value: 
       objectReference: {fileID: 11400000, guid: f6bf29ecbbf348b4d8651ffca5f3e47d, type: 2}
     - target: {fileID: 4192456543505176384, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
       propertyPath: m_Name
-      value: Game Manager
+      value: ___App___
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
---- !u!4 &1598743007 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 65674574531653933, guid: 6fb200e61a15d4446b7d5fecd86c725d, type: 3}
-  m_PrefabInstance: {fileID: 1598743006}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1607730409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7082729277811073274, guid: 0a9ac8ff7b8b2004ba990f403a53e2b5, type: 3}
@@ -6847,5 +6845,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1598743006}
   - {fileID: 159087697}
   - {fileID: 19688663}

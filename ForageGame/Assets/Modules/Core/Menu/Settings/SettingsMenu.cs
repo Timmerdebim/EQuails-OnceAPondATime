@@ -44,9 +44,9 @@ namespace Project.Menus
 
         public override void Escape()
         {
-            if (GameManager.Instance.state == GameState.PauseMenu)
+            if (AppController.Instance.state == AppController.State.Gameplay)
                 MenuManager.Instance.ToMenu(pauseMenu, true);
-            else if (GameManager.Instance.state == GameState.MainMenu)
+            else if (AppController.Instance.state == AppController.State.MainMenu)
                 MenuManager.Instance.ToMenu(mainMenu, true);
             else
                 Debug.Log($"MENU: ERROR: Tried to escape the main menu when menu mode was none.");

@@ -34,7 +34,7 @@ namespace Project.Menus
 
         public void OnContinueClicked()
         {
-            GameManager.Instance.PlayGame();
+            AppController.Instance.ToWorld();
         }
 
         public void OnFileSelectClicked()
@@ -54,7 +54,7 @@ namespace Project.Menus
 
         public void OnQuitClicked()
         {
-            GameManager.Instance.QuitToDesktop();
+            AppController.Instance.Quit();
         }
 
         // ------------ Functions ------------

@@ -76,7 +76,7 @@ public class CutsceneManager : MonoBehaviour
         .Append(blackOverlay.DOFade(1, 1).SetEase(Ease.InOutCubic))
         .AppendCallback(() =>
         {
-            GameManager.Instance.sceneLoader.FullLoadSceneGroup(sceneGroup, () =>
+            AppController.Instance.sceneLoader.FullLoadSceneGroup(sceneGroup, () =>
             {
                 isLoadingDone = true;
                 CompleteCutscene();
