@@ -4,39 +4,49 @@ using System.Linq;
 
 namespace NPC
 {
+    /// <summary>
+    /// top-level container, might host some helper funcs later
+    /// </summary>
     [Serializable]
     public class DialogueDatabase
     {
-        public List<CharacterProfile> Characters = new List<CharacterProfile>();
-        public CharacterProfile GetCharacter(string name) =>
-            Characters.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        public List<StoryStage> StoryStages = new List<StoryStage>();
     }
 
+    /// <summary>
+    /// The stage of progression in the story at any one point.
+    /// Holds the dialogue of multiple active NpcLocations at once, though not all of them may progress the story (only main lines do).
+    /// Thus, can be viewed as an 'active state' as such.
+    /// </summary>
     [Serializable]
-    public class CharacterProfile
+    public class StoryStage
     {
-        public string Name;
-        public List<DialogueBlock> Blocks = new List<DialogueBlock>();
-    }
-
-    [Serializable]
-    public class DialogueBlock
-    {
-        public string BlockID => RequiredFlags.Count == 0 ? "default" : string.Join("+", RequiredFlags);
+        public string BlockID => RequiredFlags.Count == 0 ? "default" : string.Join("+", RequiredFlags); //TODO: no bueno
         public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
         public List<string> SetFlags = new List<string>();
-        public List<DialogueLine> Lines = new List<DialogueLine>();
+        public List<LocationDialogue> locationDialogues = new List<LocationDialogue>();
 
         // --- Helpers for specific line types ---
 
         // The numeric story lines (0, 1, 2...)
-        public List<DialogueLine> StandardLines => Lines.Where(l => l.IsStoryStage).ToList();
+        //public List<DialogueLine> StandardLines => Lines.Where(l => l.IsStoryStage).ToList();
 
         // Helper to check if this block contains a specific special stage
-        public DialogueLine GetSpecialLine(string stageID)
-        {
-            return Lines.FirstOrDefault(l => l.StageID.Equals(stageID, StringComparison.OrdinalIgnoreCase));
-        }
+        // public DialogueLine GetSpecialLine(string stageID)
+        // {
+        //     return Lines.FirstOrDefault(l => l.StageID.Equals(stageID, StringComparison.OrdinalIgnoreCase));
+        // }
+    }
+
+    /// <summary>
+    /// Holds the dialoge for a given NpcLocation
+    /// </summary>
+    [Serializable]
+    public class LocationDialogue
+    {
+        //Flavor dialogue does not progress StoryStage. Use for puzzle hints indeed flavor text
+        public bool isFlavorDialogue = false;
+        public List<DialogueLine> Lines = new List<DialogueLine>();
     }
 
     [Serializable]
@@ -77,13 +87,5 @@ namespace NPC
         public string CurrentBlockID;
         public int CurrentLineIndex;
         public HashSet<string> CompletedBlocks = new HashSet<string>();
-    }
-
-
-    enum MyStuff
-    {
-        Thing1,
-        Thing2,
-        Thing3
     }
 }
