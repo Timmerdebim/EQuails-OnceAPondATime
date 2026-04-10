@@ -4,23 +4,6 @@ using UnityEngine.Events;
 
 namespace NPC
 {
-    /// <summary>
-    /// Allows for a serializable dictionary in the inspector
-    /// </summary>
-    [System.Serializable]
-    public struct DialogueActionEntry
-    {
-        public string dialogueAction;
-        public UnityEvent gadgetAction;
-    }
-
-    [System.Serializable]
-    public struct NpcLocationEntry
-    {
-        public string location;
-        public NpcLocation gameObject;
-    }
-
     public enum Character { Bracken, Mosswick, Grimble, Lyria }; 
 
     public class NpcController : MonoBehaviour
@@ -34,21 +17,17 @@ namespace NPC
         private NPCDialogueState _state; 
 
         [Header("Dialogue References")]
-        [SerializeField] private List<DialogueActionEntry> dialogueActionMap; //serializable dict in inspector...
+        [SerializeField] private DialogueReferences dialogueReferences;
         private Dictionary<string, UnityEvent> dialogueActions; //...actual dict at runtime
 
-        [SerializeField] private List<NpcLocationEntry> NpcLocationMap; //serializable dict in inspector...
-        private Dictionary<string, NpcLocation> NpcLocations; //...actual dict at runtime
+        private Dictionary<string, NpcLocation> npcLocations; //...actual dict at runtime
 
         void Awake()
         {
-            dialogueActions = new Dictionary<string, UnityEvent>();
-            foreach (var entry in dialogueActionMap)
-                dialogueActions[entry. dialogueAction] = entry.gadgetAction;
+            dialogueActions = dialogueReferences.GetDialogueActionMap();
 
-            NpcLocations = new Dictionary<string, NpcLocation>();
-            foreach (var entry in NpcLocationMap)
-                NpcLocations[entry.location] = entry.gameObject;
+            npcLocations = dialogueReferences.GetNpcLocationsMap();
+            dialogueActions = new Dictionary<string, UnityEvent>();
         }
 
         public DialogueLine GetNextDialogue(NpcLocation location)
