@@ -2,12 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+using TDK.ItemSystem;
 
 namespace NPC
 {
     public static class DialogueParser
     {
-        public static DialogueDatabase Parse(List<string> fileContents)
+        public static DialogueDatabase Parse(List<string> fileContents, 
+                                            Dictionary<string, NpcLocation> locations, 
+                                            Dictionary<string, UnityEvent> dialogueActions, 
+                                            Dictionary<string, ItemData> items)
         {
             DialogueDatabase db = new DialogueDatabase();
             StoryStage currentStage = null;
@@ -59,7 +64,7 @@ namespace NPC
                         {
                             // Parse simply as strings to pass to the Manager later
                             var flagsToSet = val.Split(',').Select(s => s.Trim());
-                            currentStage.SetFlags.AddRange(flagsToSet);
+                            //currentStage.SetFlags.AddRange(flagsToSet); TODO: THIS DOES NOTHING BEWARE!!!
                         }
                     }
                     // 4. STAGE/LINE CONTENT

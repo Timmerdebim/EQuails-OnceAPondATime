@@ -18,7 +18,6 @@ namespace NPC
 
         [Header("References")]
         [SerializeField] private DialogueBox dialogueBox;
-        public DialogueController dialogueController; //TODO: replace
 
         [SerializeField] private NpcController npcController;
 
@@ -133,7 +132,7 @@ namespace NPC
         }
 
         public void WalkAway() {
-            if (dialogueController == null) return;
+            if (npcController == null) return;
 
             ResetToken();
 

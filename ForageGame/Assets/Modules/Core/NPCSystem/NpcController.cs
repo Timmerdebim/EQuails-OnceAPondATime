@@ -31,7 +31,7 @@ namespace NPC
         [SerializeField] private List<TextAsset> _sourceFiles;
         
         private DialogueDatabase _database;
-        private DialogueRuntimeState _state; 
+        private NPCDialogueState _state; 
 
         [Header("Dialogue References")]
         [SerializeField] private List<DialogueActionEntry> dialogueActionMap; //serializable dict in inspector...

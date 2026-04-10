@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
+using TDK.ItemSystem;
 
 namespace NPC
 {
@@ -23,11 +24,10 @@ namespace NPC
     public class StoryStage
     {
         public string BlockID => RequiredFlags.Count == 0 ? "default" : string.Join("+", RequiredFlags); //TODO: no bueno
-        //public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
-        public List<string> RequiredFlags = new List<string>(); //keep everything references, no hidden dependencies please
-        //public List<string> SetFlags = new List<string>(); //Setting flags is done as a Dialogue Action
-        public List<string> requiredItems = new List<string>(); //TODO:decide how to actually 'take' items, action I guess
-        public Dictionary<string, LocationDialogue> locationDialogues = new Dictionary<string, LocationDialogue>(); //not-so serializable anymore lolol
+        public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
+        //-> Setting flags is done as a Dialogue Action
+        public List<ItemData> requiredItems = new List<ItemData>(); //TODO:decide how to actually 'take' items, actions I guess?
+        public Dictionary<NpcLocation, LocationDialogue> locationDialogues = new Dictionary<NpcLocation, LocationDialogue>(); //not-so serializable anymore lolol
 
     }
 
@@ -58,7 +58,7 @@ namespace NPC
         public string StageID;
         public string emotion; //which sprite to use, can be left at null
         public string Text;
-        public List<string> dialogueActions; //also contains setting flags!
+        public List<UnityEvent> dialogueActions; //also contains setting flags!
 
         // Returns true if the stage is NOT one of our special keywords
         public bool IsStoryStage
@@ -73,24 +73,12 @@ namespace NPC
     }
 
     // --- RUNTIME STATE (Save Data) ---
-    [Serializable]
-    public class DialogueRuntimeState
-    {
-        public Dictionary<string, CharacterState> CharacterStates = new Dictionary<string, CharacterState>();
-
-        public CharacterState GetOrAddState(string charName)
-        {
-            if (!CharacterStates.ContainsKey(charName))
-                CharacterStates[charName] = new CharacterState();
-            return CharacterStates[charName];
-        }
-    }
 
     [Serializable]
-    public class CharacterState
+    public class NPCDialogueState
     {
-        public string CurrentBlockID;
-        public int CurrentLineIndex;
-        public HashSet<string> CompletedBlocks = new HashSet<string>();
+        public string ActiveStageID;
+        public Dictionary<string, int> LocationLineIndices = new(); //sooo not that serializable anymore
+        public HashSet<string> CompletedStageIDs = new();
     }
 }
