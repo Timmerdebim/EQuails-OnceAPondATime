@@ -360,7 +360,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isBusy
+    m_ConditionEvent: isMoving
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: run
@@ -468,9 +468,9 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 8842622940269056080}
-    second: []
   - first: {fileID: -7810479917281800267}
+    second: []
+  - first: {fileID: 8842622940269056080}
     second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 240, y: -200, z: 0}
@@ -614,7 +614,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isBusy
+    m_ConditionEvent: isMoving
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: run
