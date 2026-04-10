@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Events;
 
 namespace NPC
 {
@@ -22,9 +23,11 @@ namespace NPC
     public class StoryStage
     {
         public string BlockID => RequiredFlags.Count == 0 ? "default" : string.Join("+", RequiredFlags); //TODO: no bueno
-        public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
-        public List<string> SetFlags = new List<string>();
-        public List<LocationDialogue> locationDialogues = new List<LocationDialogue>();
+        //public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
+        public List<string> RequiredFlags = new List<string>(); //keep everything references, no hidden dependencies please
+        //public List<string> SetFlags = new List<string>(); //Setting flags is done as a Dialogue Action
+        public List<string> requiredItems = new List<string>(); //TODO:decide how to actually 'take' items, action I guess
+        public Dictionary<string, LocationDialogue> locationDialogues = new Dictionary<string, LocationDialogue>(); //not-so serializable anymore lolol
 
     }
 
@@ -35,7 +38,7 @@ namespace NPC
     public class LocationDialogue
     {
         //Flavor dialogue does not progress StoryStage. Use for puzzle hints indeed flavor text
-        public bool isFlavorDialogue = false;
+        public bool isMainDialogue = true;
         public List<DialogueLine> Lines = new List<DialogueLine>();
 
         // --- Helpers for specific line types ---
@@ -53,7 +56,9 @@ namespace NPC
     public class DialogueLine
     {
         public string StageID;
+        public string emotion; //which sprite to use, can be left at null
         public string Text;
+        public List<string> dialogueActions; //also contains setting flags!
 
         // Returns true if the stage is NOT one of our special keywords
         public bool IsStoryStage
