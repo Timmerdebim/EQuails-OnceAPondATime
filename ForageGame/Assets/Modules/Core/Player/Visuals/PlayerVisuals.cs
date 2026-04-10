@@ -81,10 +81,8 @@ namespace TDK.PlayerSystem
 
         private bool SetViewStateZ(Vector3 viewDir)
         {
-            bool isFacingFront = _isFacingFront;
-            if (viewDir.z < 0) isFacingFront = true;
-            else if (viewDir.z > 0) isFacingFront = false;
-            // We do snap the player to face forward if given the option
+            bool isFacingFront = viewDir.z <= 0;
+            // We snap the player to face forward if given the option
             if (_isFacingFront == isFacingFront) return false;
             _isFacingFront = isFacingFront;
             return true;
