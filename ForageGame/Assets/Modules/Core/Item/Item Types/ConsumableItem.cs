@@ -32,6 +32,7 @@ namespace TDK.ItemSystem.Types
                 return false;
 
             Player.Instance.energy.TakeDamage(-consumableEnergy); // a little botched but ok...
+            Player.Instance.Upgrade(PlayerUpgradeType.Sprint);
 
             if (returnItem != null)
             {

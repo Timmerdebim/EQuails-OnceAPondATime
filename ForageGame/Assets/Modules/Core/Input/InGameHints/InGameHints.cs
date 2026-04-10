@@ -137,7 +137,7 @@ public class InGameHints : MonoBehaviour
             if (Player.Instance.playerData.attackUnlocked)
                 currentHints.Add(attackHint);
 
-        if (!Player.Instance.playerData.hasUsedDash)
+        if (!Player.Instance.playerData.hasUsedSprint)
             if (Player.Instance.playerData.sprintUnlocked)
                 currentHints.Add(dashHint);
 

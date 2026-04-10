@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TDK.PlayerSystem
 {
-    public enum PlayerUpgradeType { Attack, Lantern, Pouch, Wing }
+    public enum PlayerUpgradeType { Attack, Lantern, Pouch, Wing, Sprint }
 
     [RequireComponent(typeof(Energy))]
     [RequireComponent(typeof(PlayerController))]
@@ -95,6 +95,9 @@ namespace TDK.PlayerSystem
                 case PlayerUpgradeType.Wing:
                     playerData.wingLevel += 1;
                     visuals.UpdateWingVisuals(playerData.wingLevel);
+                    break;
+                case PlayerUpgradeType.Sprint:
+                    playerData.sprintUnlocked = true;
                     break;
             }
         }
