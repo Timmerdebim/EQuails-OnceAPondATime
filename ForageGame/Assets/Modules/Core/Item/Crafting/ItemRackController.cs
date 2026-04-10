@@ -98,11 +98,7 @@ namespace TDK.ItemSystem.Inventory
             RefreshVisuals();
         }
 
-        public void RemoveItemVoid(ItemController controller)
-        {
-            RemoveItem(controller);
-            return;
-        }
+        public void RemoveItemVoid(ItemController controller) => RemoveItem(controller);
 
         public bool RemoveItem(ItemController controller)
         {

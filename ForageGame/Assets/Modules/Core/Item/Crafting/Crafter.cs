@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using TDK.ItemSystem.Types;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace TDK.ItemSystem.Inventory
         [SerializeField] private Animator _animator;
 
         bool craftInProgress = false;
+
+        public void TryCraftVoid() => TryCraft();
 
         public bool TryCraft()
         {
@@ -36,13 +39,21 @@ namespace TDK.ItemSystem.Inventory
         private void CraftRecipe(RecipeItem recipeItem)
         {
             craftInProgress = true;
-            // _itemRack.RemoveAll(); Animator Does This
+            if (!recipeItem.GetIsRepeatCraftable()) RecipeBookController.Instance?.TryRemoveRecipe(recipeItem);
             _itemSpawner.SetItem(recipeItem.GetCraftingResult());
             _animator.SetTrigger("Craft");
         }
 
-        public void OnFinishCrafting()
+        public void AnimatorOnLidClose()
         {
+            List<ItemController> itemControllers = new(_itemRack.GetItemControllers()); // Make a copy
+            foreach (ItemController item in itemControllers)
+                Destroy(item.gameObject);
+        }
+
+        public void AnimatorOnLidOpen()
+        {
+            _itemSpawner.SpawnLocal();
             craftInProgress = false;
         }
     }

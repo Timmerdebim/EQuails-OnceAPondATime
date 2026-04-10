@@ -40,11 +40,8 @@ namespace TDK.ItemSystem.Inventory
 
         public bool TryRemoveRecipe(RecipeItem recipeItem)
         {
-            if (CollectedRecipes.Contains(recipeItem))
-                return false;
             SetVisualization(false);
-            CollectedRecipes.Remove(recipeItem);
-            return true;
+            return CollectedRecipes.Remove(recipeItem);
         }
 
         #region Triggers
