@@ -5,64 +5,50 @@ using UnityEngine.Splines;
 // IMPORTANT: ItemRacks cannot overlap; this will result in breaking possibly everything!
 namespace TDK.ItemSystem.Inventory
 {
-    public enum ItemRackAlignment { Left, Right, Center, Justified }
-
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(SplineContainer))]
-    public class ItemRack : MonoBehaviour
+    public class ItemRackController : MonoBehaviour
     {
-        [SerializeField] private ItemRackAlignment alignment = ItemRackAlignment.Left;
+        public enum Alignment { Left, Right, Center, Justified }
+        [SerializeField] private Alignment _alignment = Alignment.Left;
         [SerializeField] private float suckDuration = 1f;
 
         [SerializeField] private List<ItemController> _itemControllers = new();
-        private SplineContainer splineContainer;
+        private SplineContainer _splineContainer;
 
-        void Awake()
+        void OnValidate()
         {
-            splineContainer = GetComponent<SplineContainer>();
-        }
-
-        void Update()
-        {
-            if (_itemControllers.Contains(null)) // i need to think of a better solution to this (on trigger exit wont work since it is not triggered by Destroy)
-                RefreshItems();
+            _splineContainer = GetComponent<SplineContainer>();
         }
 
         void OnTriggerEnter(Collider other)
         {
-            ItemController controller = other.gameObject.GetComponent<ItemController>();
-            if (controller)
+            if (other.TryGetComponent(out ItemController controller))
                 AddItem(controller);
-        }
-
-        public void RefreshItems()
-        {
-            _itemControllers.RemoveAll(item => item == null);
-            UpdateItemPositions();
         }
 
         #region Set Spline Position
 
-        public void UpdateItemPositions()
+        public void RefreshVisuals()
         {
             float dt = 1f / Mathf.Max(1, _itemControllers.Count);
 
             for (int i = 0; i < _itemControllers.Count; i++)
             {
                 Vector3 target = Vector3.zero;
-                switch (alignment)
+                switch (_alignment)
                 {
-                    case ItemRackAlignment.Left:
-                        target = splineContainer.EvaluatePosition(dt * i);
+                    case Alignment.Left:
+                        target = _splineContainer.EvaluatePosition(dt * i);
                         break;
-                    case ItemRackAlignment.Right:
-                        target = splineContainer.EvaluatePosition(dt * (i + 1));
+                    case Alignment.Right:
+                        target = _splineContainer.EvaluatePosition(dt * (i + 1));
                         break;
-                    case ItemRackAlignment.Center:
-                        target = splineContainer.EvaluatePosition(dt * i + dt / 2);
+                    case Alignment.Center:
+                        target = _splineContainer.EvaluatePosition(dt * i + dt / 2);
                         break;
-                    case ItemRackAlignment.Justified:
-                        target = splineContainer.EvaluatePosition(1 / (1 / dt - 1) * i);
+                    case Alignment.Justified:
+                        target = _splineContainer.EvaluatePosition(1 / (1 / dt - 1) * i);
                         break;
                 }
                 _itemControllers[i]?.MoveTo(target, suckDuration);
@@ -108,28 +94,36 @@ namespace TDK.ItemSystem.Inventory
             if (_itemControllers.Contains(controller))
                 return;
             _itemControllers.Add(controller);
-            RefreshItems();
+            controller.OnDestroyEvent += RemoveItemVoid;
+            RefreshVisuals();
         }
 
-        public void RemoveItem(ItemController controller)
+        public void RemoveItemVoid(ItemController controller)
         {
-            if (!_itemControllers.Contains(controller))
-                return;
-            _itemControllers.Remove(controller);
-            RefreshItems();
+            RemoveItem(controller);
+            return;
         }
 
-        public void RemoveItem(ItemData data)
+        public bool RemoveItem(ItemController controller)
         {
-            foreach (ItemController controller in _itemControllers)
-            {
-                if (controller.ItemData == data)
-                {
-                    RemoveItem(controller);
-                    return;
-                }
-            }
+            if (!_itemControllers.Remove(controller))
+                return false;
+            controller.OnDestroyEvent -= RemoveItemVoid;
+            RefreshVisuals();
+            return true;
         }
+
+        public bool RemoveItem(ItemData data)
+        {
+            ItemController controller = _itemControllers.Find(c => c.ItemData == data);
+            return RemoveItem(controller);
+        }
+
+        // public bool RemoveAllItem(ItemData data)
+        // {
+        //     List<ItemController> controllers = _itemControllers.FindAll(c => c.ItemData == data);
+        //     return RemoveItem(controller);
+        // }
 
         public void RemoveItems(List<ItemData> items)
         {
@@ -139,8 +133,16 @@ namespace TDK.ItemSystem.Inventory
 
         public void RemoveAll()
         {
-            _itemControllers = new();
-            RefreshItems();
+            foreach (ItemController controller in _itemControllers)
+                controller.OnDestroyEvent -= RemoveItemVoid;
+            _itemControllers.Clear();
+            RefreshVisuals();
+        }
+
+        void OnDestroy()
+        {
+            foreach (ItemController controller in _itemControllers)
+                controller.OnDestroyEvent -= RemoveItemVoid;
         }
 
         #endregion

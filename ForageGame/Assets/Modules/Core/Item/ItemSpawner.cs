@@ -8,12 +8,16 @@ namespace TDK.ItemSystem
         [SerializeField] private Vector3 _position;
         [SerializeField] private Transform _transform;
 
-        public void Spawn() => ItemServices.Instance?.SpawnItem(_item, _position);
+        public void SpawnGlobal() => ItemServices.Instance?.SpawnItem(_item, _position);
 
         public void SpawnLocal()
         {
-            if (_transform == null) _transform = this.transform;
-            ItemServices.Instance?.SpawnItem(_item, _position + _transform.position);
+            ItemServices.Instance?.SpawnItem(_item, _position + this.transform.position);
+        }
+
+        public void SetItem(ItemData item)
+        {
+            _item = item;
         }
     }
 }

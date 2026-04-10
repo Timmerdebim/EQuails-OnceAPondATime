@@ -3,6 +3,7 @@ using Assets.Modules.Interaction;
 using UnityEngine.Events;
 using DG.Tweening;
 using TDK.SaveSystem;
+using System;
 
 namespace TDK.ItemSystem
 {
@@ -12,6 +13,8 @@ namespace TDK.ItemSystem
         public ItemData ItemData;
         [SerializeField] private SpriteRenderer _spriteRenderer;
         private Rigidbody _rigidbody;
+
+        public event Action<ItemController> OnDestroyEvent;
 
         void Awake()
         {
@@ -70,6 +73,7 @@ namespace TDK.ItemSystem
 
         private void OnDestroy()
         {
+            OnDestroyEvent?.Invoke(this);
             doMove?.Kill();
         }
 

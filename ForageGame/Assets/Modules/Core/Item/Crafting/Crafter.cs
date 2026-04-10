@@ -6,16 +6,11 @@ namespace TDK.ItemSystem.Inventory
 {
     public class Crafter : MonoBehaviour
     {
-        [SerializeField] ItemRack itemRack;
-        private Sequence seq;
-        [SerializeField] Transform transformLid;
+        [SerializeField] private ItemRackController _itemRack;
+        [SerializeField] private SimpleItemSpawner _itemSpawner;
+        [SerializeField] private Animator _animator;
 
         bool craftInProgress = false;
-
-        void Awake()
-        {
-            transformLid.gameObject.SetActive(false);
-        }
 
         public bool TryCraft()
         {
@@ -30,7 +25,7 @@ namespace TDK.ItemSystem.Inventory
 
         private bool TryCraftRecipe(RecipeItem recipeItem)
         {
-            if (itemRack.ContainsItemsExactly(recipeItem.GetCraftingIngredients()))
+            if (_itemRack.ContainsItemsExactly(recipeItem.GetCraftingIngredients()))
             {
                 CraftRecipe(recipeItem);
                 return true;
@@ -41,64 +36,14 @@ namespace TDK.ItemSystem.Inventory
         private void CraftRecipe(RecipeItem recipeItem)
         {
             craftInProgress = true;
-            itemRack.gameObject.SetActive(false);
+            // _itemRack.RemoveAll(); Animator Does This
+            _itemSpawner.SetItem(recipeItem.GetCraftingResult());
+            _animator.SetTrigger("Craft");
+        }
 
-            seq?.Kill();
-            seq = DOTween.Sequence();
-
-            Vector3 initialLidPosition = transformLid.position;
-            Quaternion initialLidRotation = transformLid.rotation;
-            Vector3 initialPosition = transform.position;
-            Quaternion initialRotation = transform.rotation;
-
-            // Close the pot lid
-            transformLid.gameObject.SetActive(true);
-            seq.Append(transformLid.DOMove(transform.position + Vector3.up * 1, 0.5f).SetEase(Ease.InExpo));
-
-            foreach (ItemController itemController in itemRack.GetItemControllers())
-            {
-                seq.Join(itemController.transform
-                .DOScale(Vector3.zero, 0.5f)
-                .SetEase(Ease.InExpo)
-                .OnComplete(() => Destroy(itemController.gameObject)));
-            }
-
-            seq.AppendCallback(() => itemRack.RemoveAll())
-            .AppendInterval(0.5f)
-
-            // Hop left
-            .Append(transform.DOJump(initialPosition + Vector3.up * 1, 3, 1, 0.5f))
-            .Join(transform.DOBlendableRotateBy(-15 * Vector3.forward, 0.7f).SetEase(Ease.OutBack))
-            .AppendInterval(0.2f)
-
-            // Hop right
-            .Append(transform.DOJump(initialPosition + Vector3.up * 1, 3, 1, 0.5f))
-            .Join(transform.DOBlendableRotateBy(30 * Vector3.forward, 0.7f).SetEase(Ease.OutBack))
-            .AppendInterval(0.2f)
-
-            // Hop left
-            .Append(transform.DOJump(initialPosition + Vector3.up * 1, 3, 1, 0.5f))
-            .Join(transform.DOBlendableRotateBy(-30 * Vector3.forward, 0.7f).SetEase(Ease.OutBack))
-            .AppendInterval(0.2f)
-
-            // Return to initial
-            .Append(transform.DOJump(initialPosition, 3, 1, 0.5f))
-            .Join(transform.DORotateQuaternion(initialRotation, 0.7f).SetEase(Ease.OutBack))
-            .AppendInterval(0.5f)
-
-            // Open lid
-            .Append(transformLid.DOMove(initialLidPosition, 0.5f).SetEase(Ease.OutExpo));
-
-            // Spawn item
-            seq.AppendCallback(() =>
-            {
-                transformLid.SetPositionAndRotation(initialLidPosition, initialLidRotation);
-                transform.SetPositionAndRotation(initialPosition, initialRotation);
-                transformLid.gameObject.SetActive(false);
-                ItemServices.Instance.SpawnItem(recipeItem.GetCraftingResult(), transform.position + Vector3.up);
-                itemRack.gameObject.SetActive(true);
-                craftInProgress = false;
-            });
+        public void OnFinishCrafting()
+        {
+            craftInProgress = false;
         }
     }
 }
