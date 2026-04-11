@@ -62,7 +62,7 @@ namespace NPC
                     db.storyStages.Add(ParseStoryStage());
                 else //anything else is incorrect input
                 {
-                    Debug.LogError($"Unknown line skipped: {currentLine}");
+                    Debug.LogWarning($"[DialogueParser] Unexpected line in DialogueDatabase: '{currentLine}'");
                 }
             }
             return db;
@@ -88,9 +88,9 @@ namespace NPC
                     if(stage.requiredItems.Count > 0) Debug.LogError("Duplicate \"Required-Items:\" attribute in StoryStage!");
                     stage.requiredItems = ParseReferenceList(reader.Consume(), _items, "Items");
                 }
-                else if (line.StartsWith("Terminal:")) //LocationDialogue
+                else if (line.StartsWith("Location:")) //LocationDialogue
                 {
-                    var locations = ParseReferenceList(reader.Consume(), _locations, "Terminal");
+                    var locations = ParseReferenceList(reader.Consume(), _locations, "Locations");
                     if (locations.Count > 1) //safegaurd for multiple entered locations
                         Debug.LogError("[DialogueParser] NpcLocation: expects exactly one location ID, expect duplicate dialogue (or problems)");
                     foreach (NpcLocation loc in locations)
@@ -122,7 +122,7 @@ namespace NPC
                 string line = reader.Peek();
 
                 // exit conditions - do not consume, parent owns these
-                if (line.StartsWith("---") || line.StartsWith("Terminal:")) break;
+                if (line.StartsWith("---") || line.StartsWith("Location:")) break;
 
                 if (line.StartsWith("<")) //main or flavor text marker
                     ld.isMainDialogue = ParseValue(reader.Consume()).Equals("<Main>", StringComparison.OrdinalIgnoreCase);
@@ -151,7 +151,7 @@ namespace NPC
 
                 // exit conditions - parent owns these
                 if (line.StartsWith("Stage:")    ||
-                    line.StartsWith("Terminal:") ||
+                    line.StartsWith("Location:") ||
                     line.StartsWith("---")) break;
 
                 if (line.StartsWith("Emotion:"))
