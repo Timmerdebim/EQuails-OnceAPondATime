@@ -138,8 +138,40 @@ namespace NPC
 
         private DialogueLine ParseDialogueLine()
         {
+            Debug.Log($"Parsing DialogueLine!");
             var dl = new DialogueLine();
-            reader.Consume();
+            dl.StageID = ParseValue(reader.Consume()); // consume "Stage: x"
+
+            while (reader.HasLines)
+            {
+                reader.SkipEmpty();
+                if (!reader.HasLines) break; //end of file
+
+                string line = reader.Peek();
+
+                // exit conditions - parent owns these
+                if (line.StartsWith("Stage:")    ||
+                    line.StartsWith("Terminal:") ||
+                    line.StartsWith("---")) break;
+
+                if (line.StartsWith("Emotion:"))
+                    dl.emotion = ParseValue(reader.Consume()); //this stays a string
+
+                else if (line.StartsWith("Actions:"))
+                    dl.dialogueActions = ParseReferenceList(reader.Consume(), _actions, "Dialogue Actions");
+
+                else
+                {
+                    // plain text - accumulate multiline
+                    if (!string.IsNullOrEmpty(dl.Text)) dl.Text += "\n";
+                    dl.Text += reader.Consume();
+                }
+            }
+
+            if (string.IsNullOrEmpty(dl.Text))
+                Debug.LogWarning($"[DialogueParser] Stage '{dl.StageID}' has no text.");
+
+            Debug.Log($"DialogueLine Parsed: Stage: {dl.StageID}, Emotion: {dl.emotion}, Actions: {dl.dialogueActions}, text: {dl.Text}");
             return dl;
         }
 
