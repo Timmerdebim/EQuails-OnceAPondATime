@@ -36,7 +36,7 @@ namespace NPC
         //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
         private void Start()
         {
-            _database = parser.Parse(_sourceFile.text, npcLocations, dialogueActions, items);
+            _database = parser.Parse(_sourceFile.text, StoryFlagManager.Instance.flagDatabase, items, npcLocations, dialogueActions);
             _state = new NPCDialogueState();
         }
 

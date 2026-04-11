@@ -79,6 +79,6 @@ namespace NPC
     {
         public string ActiveStageID;
         public Dictionary<string, int> LocationLineIndices = new(); //sooo not that serializable anymore
-        public HashSet<string> CompletedStageIDs = new();
+        public HashSet<string> CompletedStageIDs = new(); //TODO: expose something that allows manual or auto 'completion' of a stage, which would allow for NPC's to disappear for a stage and come back
     }
 }

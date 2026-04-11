@@ -35,14 +35,17 @@ namespace NPC
         private Dictionary<string, NpcLocation> _locations;
         private Dictionary<string, UnityEvent> _actions;
         private Dictionary<string, ItemData> _items;
+        private Dictionary<string, StoryFlag> _flags;
         public DialogueDatabase Parse(string fileContents, 
+                                            Dictionary<string, StoryFlag> flags, 
+                                            Dictionary<string, ItemData> items,
                                             Dictionary<string, NpcLocation> locations, 
-                                            Dictionary<string, UnityEvent> dialogueActions, 
-                                            Dictionary<string, ItemData> items)
+                                            Dictionary<string, UnityEvent> dialogueActions)
         {
             _locations = locations;
             _actions = dialogueActions;
             _items = items;
+            _flags = flags;
 
             DialogueDatabase db = new DialogueDatabase();
 
@@ -50,41 +53,94 @@ namespace NPC
             while (reader.HasLines)
             {
                 reader.SkipEmpty();
+                if (!reader.HasLines) break; //end of file safegaurd
 
-                Debug.Log(reader.Peek());
+                var currentLine = reader.Consume();
+                Debug.Log(currentLine);
 
-                if (!reader.HasLines) break;
-                if (reader.Peek().StartsWith("---"))
-                    db.storyStages.Add(ParseStage());
-                else
+                if (currentLine.StartsWith("---")) //StoryStage marker
+                    db.storyStages.Add(ParseStoryStage());
+                else //anything else is incorrect input
                 {
-                    Debug.LogError($"Unknown line skipped: {reader.Consume()}");
+                    Debug.LogError($"Unknown line skipped: {currentLine}");
                 }
             }
-
-            
-
             return db;
         }
 
-        private StoryStage ParseStage()
+        private StoryStage ParseStoryStage()
         {
+            StoryStage stage = new StoryStage();
+
             Debug.Log("Parsing a StoryStage!");
-            reader.Consume(); //consume the '---' line
 
             while (reader.HasLines)
             {
                 reader.SkipEmpty();
                 string line = reader.Peek();
-                if (line.StartsWith("---")) break; // next stage or end of file
-                else
+                if (line.StartsWith("---")) break; // next stage
+                else if (line.StartsWith("Flags:", StringComparison.OrdinalIgnoreCase))
+                {
+                    stage.RequiredFlags = ParseReferenceList(reader.Consume(), _flags, "Flags");
+                }
+                else if (line.StartsWith("Required-Items:")) //Items
+                {
+                    if(stage.requiredItems.Count > 0) Debug.LogError("Duplicate \"Required-Items:\" attribute in StoryStage!");
+                    stage.requiredItems = ParseReferenceList(reader.Consume(), _items, "Items");
+                }
+                else if (line.StartsWith("Terminal:")) //LocationDialogue
+                {
+                    var locations = ParseReferenceList(reader.Consume(), _locations, "Terminal");
+                    if (locations.Count > 1) //safegaurd for multiple entered locations
+                        Debug.LogError("[DialogueParser] NpcLocation: expects exactly one location ID, expect duplicate dialogue (or problems)");
+                    foreach (NpcLocation loc in locations)
+                    {
+                        stage.locationDialogues[loc] = ParseLocationDialogue();
+                    }
+                }
+                else //everything else is WRONG
                 {
                     Debug.LogError($"Unknown line skipped: {reader.Consume()}");
                 }
             }
-            return new StoryStage();
+            return stage;
         }
 
+        private LocationDialogue ParseLocationDialogue()
+        {
+            //TODO: implement
+            return new LocationDialogue();
+        }
+
+
+        //trim off the pre-value stuffs
+        private string ParseValue(string line)
+        {
+            int idx = line.IndexOf(':');
+            return idx == -1 ? "" : line[(idx + 1)..].Trim();
+        }
+
+        private List<string> ParseValueList(string line)
+        {
+            string val = ParseValue(line);
+            if (string.IsNullOrEmpty(val)) return new List<string>();
+            return val.Split(',').Select(s => s.Trim())
+                    .Where(s => !string.IsNullOrEmpty(s))
+                    .ToList();
+        }
+
+        private List<T> ParseReferenceList<T>(string line, Dictionary<string, T> lookup, string context) //context is what we were trying to parse, i.e., StoryFlag
+        {
+            return ParseValueList(line).Select(key =>
+            {
+                if (lookup.TryGetValue(key, out var value)) return (true, value);
+                Debug.LogError($"[DialogueParser] Unknown key '{key}' in {context}"); //DOES NOT WORK!
+                return (false, default);
+            })
+            .Where(r => r.Item1)
+            .Select(r => r.Item2)
+            .ToList();
+        }
     }
 
 
