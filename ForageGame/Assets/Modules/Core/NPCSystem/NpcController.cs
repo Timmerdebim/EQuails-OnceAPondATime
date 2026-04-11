@@ -15,7 +15,7 @@ namespace NPC
         [SerializeField] private TextAsset _sourceFile;
         [SerializeField] private DialogueParser parser;
         
-        private DialogueDatabase _database;
+        [SerializeField] private DialogueDatabase _database;
         private NPCDialogueState _state; 
 
         [Header("Dialogue References")]

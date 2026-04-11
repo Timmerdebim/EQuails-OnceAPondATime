@@ -1,6 +1,5 @@
---- Block
+--- Stage
 Flags: <none> 
-Set-Flags: <none>
 Required-Item: <none> 
 
 Terminal: home 
@@ -36,4 +35,19 @@ Terminal: forest
     Stage: leave_polite 	
     See you around! 
 } 
----
+
+--- Stage
+
+Flags: <test1> 
+Required-Item: <none> 
+
+Terminal: home 
+<main>
+{ 
+    Stage: repeat 	
+    Emotion: happy 	
+    Yay! you progressed the story!
+    
+    Stage: leave_polite 	
+    Bye! 
+} 

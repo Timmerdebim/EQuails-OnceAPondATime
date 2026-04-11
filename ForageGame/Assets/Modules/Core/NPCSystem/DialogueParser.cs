@@ -31,7 +31,7 @@ namespace NPC
             }
         }
 
-        private LineReader _reader;
+        private LineReader reader;
         private Dictionary<string, NpcLocation> _locations;
         private Dictionary<string, UnityEvent> _actions;
         private Dictionary<string, ItemData> _items;
@@ -46,13 +46,43 @@ namespace NPC
 
             DialogueDatabase db = new DialogueDatabase();
 
-            _reader = new LineReader(fileContents.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None));
-            while (_reader.HasLines)
+            reader = new LineReader(fileContents.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None));
+            while (reader.HasLines)
             {
-                Debug.Log(_reader.Consume());
+                reader.SkipEmpty();
+
+                Debug.Log(reader.Peek());
+
+                if (!reader.HasLines) break;
+                if (reader.Peek().StartsWith("---"))
+                    db.storyStages.Add(ParseStage());
+                else
+                {
+                    Debug.LogError($"Unknown line skipped: {reader.Consume()}");
+                }
             }
 
+            
+
             return db;
+        }
+
+        private StoryStage ParseStage()
+        {
+            Debug.Log("Parsing a StoryStage!");
+            reader.Consume(); //consume the '---' line
+
+            while (reader.HasLines)
+            {
+                reader.SkipEmpty();
+                string line = reader.Peek();
+                if (line.StartsWith("---")) break; // next stage or end of file
+                else
+                {
+                    Debug.LogError($"Unknown line skipped: {reader.Consume()}");
+                }
+            }
+            return new StoryStage();
         }
 
     }
