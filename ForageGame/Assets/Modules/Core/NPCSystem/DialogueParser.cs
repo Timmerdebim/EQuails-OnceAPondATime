@@ -100,19 +100,50 @@ namespace NPC
                 }
                 else //everything else is WRONG
                 {
-                    Debug.LogError($"Unknown line skipped: {reader.Consume()}");
+                    Debug.LogWarning($"[DialogueParser] Unexpected line in StoryStage: '{reader.Consume()}'");
                 }
             }
             return stage;
         }
 
+        /// <summary>
+        /// This one is a mess
+        /// Don't feel like fixing it
+        /// </summary>
         private LocationDialogue ParseLocationDialogue()
         {
-            //TODO: implement
-            return new LocationDialogue();
+            var ld = new LocationDialogue();
+
+            while (reader.HasLines)
+            {
+                reader.SkipEmpty();
+                if (!reader.HasLines) break; //end of file
+
+                string line = reader.Peek();
+
+                // exit conditions - do not consume, parent owns these
+                if (line.StartsWith("---") || line.StartsWith("Terminal:")) break;
+
+                if (line.StartsWith("<")) //main or flavor text marker
+                    ld.isMainDialogue = ParseValue(reader.Consume()).Equals("<Main>", StringComparison.OrdinalIgnoreCase);
+
+                else if (line.StartsWith("Stage:"))
+                    ld.Lines.Add(ParseDialogueLine());
+
+                else
+                    Debug.LogWarning($"[DialogueParser] Unexpected line in LocationDialogue: '{reader.Consume()}'");
+            }
+            return ld;
         }
 
+        private DialogueLine ParseDialogueLine()
+        {
+            var dl = new DialogueLine();
+            reader.Consume();
+            return dl;
+        }
 
+        #region Utility
         //trim off the pre-value stuffs
         private string ParseValue(string line)
         {
@@ -141,6 +172,7 @@ namespace NPC
             .Select(r => r.Item2)
             .ToList();
         }
+        #endregion
     }
 
 

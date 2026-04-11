@@ -2,52 +2,47 @@
 Flags: 
 Required-Items:
 
-Terminal: Home 
-<main>
-{ 
-	Stage: 0	
-    Emotion: neutral 
-    Hi! I'm Bracken, give me some grass!
+    Terminal: Home 
+    <main>
+        Stage: 0	
+        Emotion: neutral 
+        Hi! I'm Bracken, give me some grass!
 
-    Stage: repeat 	
-    Emotion: sad 	
-    Where's my grass though? 	
-    
-    Stage: leave_polite 	
-    Don't forget the grass :3 
-} 
+        Stage: repeat 	
+        Emotion: sad 	
+        Where's my grass though? 	
+        
+        Stage: leave_polite 	
+        Don't forget the grass :3 
 
-Terminal: Forest 
-<flavor>
-{ 	
-    Stage: 0 	
-    Emotion: happy 	
-    Oh hey! Just eating some berries. Want some? 	
-    
-    Stage: 1 	
-    Actions: spawn_berry 	
-    Here you go! 	
-    
-    Stage: leave_rude 	
-    Emotion: neutral 	
-    I guess not?	
-    
-    Stage: leave_polite 	
-    See you around! 
-} 
+    Terminal: Forest 
+    <flavor>
+        Stage: 0 	
+        Emotion: happy 	
+        Oh hey! Just eating some berries. Want some? 	
+        
+        Stage: 1 	
+        Actions: spawn_berry 	
+        Here you go! 	
+        
+        Stage: leave_rude 	
+        Emotion: neutral 	
+        I guess not?	
+        
+        Stage: leave_polite 	
+        See you around! 
+
 
 --- Stage
 
 Flags: DebugFlag
 Required-Items: Snow Petal
 
-Terminal: Home 
-<main>
-{ 
-    Stage: repeat 	
-    Emotion: happy 	
-    Yay! you progressed the story!
-    
-    Stage: leave_polite 	
-    Bye! 
-} 
+    Terminal: Home 
+    <main>
+        Stage: repeat 	
+        Emotion: happy 	
+        Yay! you progressed the story!
+        
+        Stage: leave_polite 	
+        Bye! 

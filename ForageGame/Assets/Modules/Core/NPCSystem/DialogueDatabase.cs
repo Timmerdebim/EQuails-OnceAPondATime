@@ -38,7 +38,7 @@ namespace NPC
     public class LocationDialogue
     {
         //Flavor dialogue does not progress StoryStage. Use for puzzle hints or indeed flavor text
-        public bool isMainDialogue = true;
+        public bool isMainDialogue = false;
         public List<DialogueLine> Lines = new List<DialogueLine>();
 
         // --- Helpers for specific line types ---
