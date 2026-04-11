@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TDK.ItemSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +12,8 @@ namespace NPC
 
         [Header("Dialogue Data")]
         [SerializeField] private Character character;
-        [SerializeField] private List<TextAsset> _sourceFiles;
+        [SerializeField] private TextAsset _sourceFile;
+        [SerializeField] private DialogueParser parser;
         
         private DialogueDatabase _database;
         private NPCDialogueState _state; 
@@ -22,12 +24,20 @@ namespace NPC
 
         private Dictionary<string, NpcLocation> npcLocations; //...actual dict at runtime
 
+        private Dictionary<string, ItemData> items; //...actual dict at runtime
+
         void Awake()
         {
             dialogueActions = dialogueReferences.GetDialogueActionMap();
-
             npcLocations = dialogueReferences.GetNpcLocationsMap();
-            dialogueActions = new Dictionary<string, UnityEvent>();
+            items = dialogueReferences.GetItemDataMap();
+        }
+
+        //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
+        private void Start()
+        {
+            _database = parser.Parse(_sourceFile.text, npcLocations, dialogueActions, items);
+            _state = new NPCDialogueState();
         }
 
         public DialogueLine GetNextDialogue(NpcLocation location)

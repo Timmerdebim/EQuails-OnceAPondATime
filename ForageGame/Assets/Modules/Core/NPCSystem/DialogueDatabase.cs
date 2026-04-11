@@ -37,7 +37,7 @@ namespace NPC
     [Serializable]
     public class LocationDialogue
     {
-        //Flavor dialogue does not progress StoryStage. Use for puzzle hints indeed flavor text
+        //Flavor dialogue does not progress StoryStage. Use for puzzle hints or indeed flavor text
         public bool isMainDialogue = true;
         public List<DialogueLine> Lines = new List<DialogueLine>();
 

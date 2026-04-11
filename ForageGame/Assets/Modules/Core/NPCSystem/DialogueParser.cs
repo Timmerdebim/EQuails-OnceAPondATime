@@ -7,7 +7,62 @@ using TDK.ItemSystem;
 
 namespace NPC
 {
-    public static class DialogueParser
+    public class DialogueParser: MonoBehaviour
+    {
+        //Stateful reading of lines
+        private class LineReader
+        {
+            private readonly string[] _lines;
+            private int _index;
+
+            public LineReader(string[] lines) => _lines = lines;
+            public bool HasLines => _index < _lines.Length;
+            public string Peek() => _lines[_index].Trim();
+
+            public string Consume()
+            {
+                string line = _lines[_index].Trim();
+                _index++;
+                return line;
+            }
+            public void SkipEmpty()
+            {
+                while (HasLines && string.IsNullOrEmpty(Peek())) Consume();
+            }
+        }
+
+        private LineReader _reader;
+        private Dictionary<string, NpcLocation> _locations;
+        private Dictionary<string, UnityEvent> _actions;
+        private Dictionary<string, ItemData> _items;
+        public DialogueDatabase Parse(string fileContents, 
+                                            Dictionary<string, NpcLocation> locations, 
+                                            Dictionary<string, UnityEvent> dialogueActions, 
+                                            Dictionary<string, ItemData> items)
+        {
+            _locations = locations;
+            _actions = dialogueActions;
+            _items = items;
+
+            DialogueDatabase db = new DialogueDatabase();
+
+            _reader = new LineReader(fileContents.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None));
+            while (_reader.HasLines)
+            {
+                Debug.Log(_reader.Consume());
+            }
+
+            return db;
+        }
+
+    }
+
+
+
+
+
+
+    public static class OLDDialogueParser
     {
         public static DialogueDatabase Parse(List<string> fileContents, 
                                             Dictionary<string, NpcLocation> locations, 

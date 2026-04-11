@@ -1,0 +1,39 @@
+--- Block
+Flags: <none> 
+Set-Flags: <none>
+Required-Item: <none> 
+
+Terminal: home 
+<main>
+{ 
+	Stage: 0	
+    Emotion: neutral 
+    Hi! I'm Bracken, give me some grass!
+
+    Stage: repeat 	
+    Emotion: sad 	
+    Where's my grass though? 	
+    
+    Stage: leave_polite 	
+    Don't forget the grass :3 
+} 
+
+Terminal: forest 
+<flavor>
+{ 	
+    Stage: 0 	
+    Emotion: happy 	
+    Oh hey! Just eating some berries. Want some? 	
+    
+    Stage: 1 	
+    Actions: spawn_berry 	
+    Here you go! 	
+    
+    Stage: leave_rude 	
+    Emotion: neutral 	
+    I guess not?	
+    
+    Stage: leave_polite 	
+    See you around! 
+} 
+---
