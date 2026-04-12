@@ -18,13 +18,9 @@ namespace NPC
         
         [SerializeField] private DialogueDatabase _database;
 
-        [Header("Dialogue References")]
+        [Header("References")]
         [SerializeField] private DialogueReferences dialogueReferences;
-        private Dictionary<string, UnityEvent> dialogueActions; //...actual dict at runtime
-
-        private Dictionary<string, NpcLocation> npcLocations; //...actual dict at runtime
-
-        private Dictionary<string, ItemData> items; //...actual dict at runtime
+        [SerializeField] private List<NpcLocation> locations;
 
         [Header("Current State")]
         [SerializeField] private StoryStage _activeStage;
@@ -33,16 +29,18 @@ namespace NPC
 
         void Awake()
         {
-            dialogueActions = dialogueReferences.GetDialogueActionMap();
-            npcLocations = dialogueReferences.GetNpcLocationsMap();
-            items = dialogueReferences.GetItemDataMap();
+            locations = GetComponentsInChildren<NpcLocation>().ToList();
         }
 
         //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
         private void Start()
         {
             StoryFlagManager.onFlagAdded += OnNewStoryFlag;
-            _database = parser.Parse(_sourceFile.text, StoryFlagManager.Instance.flagDatabase, items, npcLocations, dialogueActions);
+            _database = parser.Parse(_sourceFile.text, 
+                                    StoryFlagManager.Instance.flagDatabase, 
+                                    dialogueReferences.GetItemDataMap(), 
+                                    dialogueReferences.GetNpcLocationsMap(), 
+                                    dialogueReferences.GetDialogueActionMap());
             EvaluateActiveStage();
         }
         #region State Management
@@ -71,7 +69,14 @@ namespace NPC
             _completedStageIndices.Add(GetActiveStageIndex());
 
             Debug.Log($"[NpcController: {character}] New active StoryStage set with index {GetActiveStageIndex()}");
-            //UpdateLocationActiveStates();
+            UpdateActiveLocations();
+        }
+
+        //turn off NpcLocations that have no dialogue set in the active StoryStage
+        private void UpdateActiveLocations()
+        {
+            foreach (var loc in locations)
+                loc.gameObject.SetActive(_activeStage != null && _activeStage.locationDialogues.ContainsKey(loc));
         }
         
         #endregion
