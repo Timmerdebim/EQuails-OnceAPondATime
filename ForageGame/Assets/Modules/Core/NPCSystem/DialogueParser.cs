@@ -56,7 +56,7 @@ namespace NPC
                 if (!reader.HasLines) break; //end of file safegaurd
 
                 var currentLine = reader.Consume();
-                Debug.Log(currentLine);
+                //Debug.Log(currentLine);
 
                 if (currentLine.StartsWith("---")) //StoryStage marker
                     db.storyStages.Add(ParseStoryStage());
@@ -72,7 +72,7 @@ namespace NPC
         {
             StoryStage stage = new StoryStage();
 
-            Debug.Log("Parsing a StoryStage!");
+            //Debug.Log("Parsing a StoryStage!");
 
             while (reader.HasLines)
             {
@@ -138,7 +138,7 @@ namespace NPC
 
         private DialogueLine ParseDialogueLine()
         {
-            Debug.Log($"Parsing DialogueLine!");
+            //Debug.Log($"Parsing DialogueLine!");
             var dl = new DialogueLine();
             dl.StageID = ParseValue(reader.Consume()); // consume "Stage: x"
 
@@ -171,7 +171,7 @@ namespace NPC
             if (string.IsNullOrEmpty(dl.Text))
                 Debug.LogWarning($"[DialogueParser] Stage '{dl.StageID}' has no text.");
 
-            Debug.Log($"DialogueLine Parsed: Stage: {dl.StageID}, Emotion: {dl.emotion}, Actions: {dl.dialogueActions}, text: {dl.Text}");
+            //Debug.Log($"DialogueLine Parsed: Stage: {dl.StageID}, Emotion: {dl.emotion}, Actions: {dl.dialogueActions}, text: {dl.Text}");
             return dl;
         }
 

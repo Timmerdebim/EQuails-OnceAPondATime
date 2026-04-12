@@ -23,7 +23,8 @@ namespace NPC
     [Serializable]
     public class StoryStage
     {
-        public string BlockID => RequiredFlags.Count == 0 ? "default" : string.Join("+", RequiredFlags); //TODO: no bueno
+        //Indices are now implicit, by the ordering in the input file!
+        //public string BlockID => RequiredFlags.Count == 0 ? "default" : string.Join("+", RequiredFlags); //TODO: no bueno
         public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
         //-> Setting flags is done as a Dialogue Action
         public List<ItemData> requiredItems = new List<ItemData>(); //TODO:decide how to actually 'take' items, actions I guess?
@@ -70,15 +71,5 @@ namespace NPC
                 return int.TryParse(StageID, out _);
             }
         }
-    }
-
-    // --- RUNTIME STATE (Save Data) ---
-
-    [Serializable]
-    public class NPCDialogueState
-    {
-        public string ActiveStageID;
-        public Dictionary<string, int> LocationLineIndices = new(); //sooo not that serializable anymore
-        public HashSet<string> CompletedStageIDs = new(); //TODO: expose something that allows manual or auto 'completion' of a stage, which would allow for NPC's to disappear for a stage and come back
     }
 }
