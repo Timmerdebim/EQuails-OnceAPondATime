@@ -49,7 +49,7 @@ namespace NPC
 
         private int GetActiveStageIndex() => _activeStage == null ? -1 : _database.storyStages.IndexOf(_activeStage);
 
-        private void OnNewStoryFlag(StoryFlag flag) => EvaluateActiveStage(); //TODO: only if current stage done!
+        private void OnNewStoryFlag(StoryFlag flag) => EvaluateActiveStage(); //TODO: only if current stage done!, add to completed stages if so!
 
         private void EvaluateActiveStage()
         {
