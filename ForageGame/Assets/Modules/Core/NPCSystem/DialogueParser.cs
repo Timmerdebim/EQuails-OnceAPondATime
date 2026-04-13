@@ -93,9 +93,10 @@ namespace NPC
                     var locations = ParseReferenceList(reader.Consume(), _locations, "Locations");
                     if (locations.Count > 1) //safegaurd for multiple entered locations
                         Debug.LogError("[DialogueParser] NpcLocation: expects exactly one location ID, expect duplicate dialogue (or problems)");
+                    var locDialog = ParseLocationDialogue();
                     foreach (NpcLocation loc in locations)
                     {
-                        stage.locationDialogues[loc] = ParseLocationDialogue();
+                        stage.locationDialogues.Add(loc, locDialog);
                     }
                 }
                 else //everything else is WRONG
@@ -103,6 +104,8 @@ namespace NPC
                     Debug.LogWarning($"[DialogueParser] Unexpected line in StoryStage: '{reader.Consume()}'");
                 }
             }
+
+            Debug.Log($"StoryStage Parsed: Flags: {stage.RequiredFlags}, Items: {stage.requiredItems}, LocDialogueCount: {stage.locationDialogues.Count}");
             return stage;
         }
 
@@ -125,7 +128,9 @@ namespace NPC
                 if (line.StartsWith("---") || line.StartsWith("Location:")) break;
 
                 if (line.StartsWith("<")) //main or flavor text marker
-                    ld.isMainDialogue = ParseValue(reader.Consume()).Equals("<Main>", StringComparison.OrdinalIgnoreCase);
+                {
+                    ld.isMainDialogue = reader.Consume().Equals("<main>", StringComparison.OrdinalIgnoreCase);
+                }
 
                 else if (line.StartsWith("Stage:"))
                     ld.Lines.Add(ParseDialogueLine());
@@ -133,6 +138,8 @@ namespace NPC
                 else
                     Debug.LogWarning($"[DialogueParser] Unexpected line in LocationDialogue: '{reader.Consume()}'");
             }
+
+            // Debug.Log($"LocationDialogue Parsed: isMain: {ld.isMainDialogue}, LineCount: {ld.Lines.Count()}, StandardLineCount: {ld.StandardLines.Count()}");
             return ld;
         }
 
