@@ -1,0 +1,83 @@
+--- Stage
+Flags: 
+Required-Items:
+
+    Location: Home 
+    <main>
+        Stage: 0	
+        Emotion: neutral 
+        Hey you there, can you help me quick?
+
+        Stage: repeat 	
+        Emotion: sad 	
+        Can you flick that lever for me please?
+
+        Stage: leave_rude 	
+        Emotion: sad 	
+        Hey, wait!
+
+
+--- Stage
+
+Flags: DebugFlag
+Required-Items:
+
+    Location: Home 
+    <main>
+        Stage: 0 	
+        Emotion: happy 	
+        Yay! you progressed the story!
+
+        Stage: repeat
+        Can you please get me a Snow Petal please?
+        
+        Stage: leave_polite 	
+        Don't forget the Snow Petal :3 
+
+    Location: Forest 
+    <flavor>
+        Stage: 0 	
+        Emotion: happy 	
+        Oh hey! Just eating some berries. Want some? 	
+        
+        Stage: 1 	
+        Actions: spawn_berry 	
+        Here you go! 	
+
+        Stage: repeat		
+        You want more? nuh-uh!
+        
+        Stage: leave_rude 	
+        Emotion: neutral 	
+        I guess not?	
+        
+        Stage: leave_polite 	
+        See you around! 
+
+--- Stage
+
+Flags: DebugFlag
+Required-Items: Snow Petal
+
+    Location: Home 
+    <main>
+        Stage: repeat
+        Emotion: neutral 
+        Actions: take_snow_petal
+        Do you have a Snow Petal for me?
+        
+        Stage: leave_polite 	
+        No?
+
+--- Stage
+
+Flags: SnowPetalGiven
+Required-Items: 
+
+    Location: Home 
+    <main>
+        Stage: repeat
+        Emotion: happy 
+        Thaanks :p
+                
+        

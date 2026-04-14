@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using System;
+using System.Collections.ObjectModel;
 
 [Serializable]
 public class StoryData
@@ -15,7 +16,7 @@ public class StoryFlagManager : MonoBehaviour
     public static StoryFlagManager Instance { get; private set; }
 
     // Database: ID → SO
-    private Dictionary<string, StoryFlag> flagDatabase;
+    public Dictionary<string, StoryFlag> flagDatabase; //I'm not bothering with a ReadOnlyDictionary it is a hassle ~Lars
 
     // Active flags: SO → active
     private HashSet<StoryFlag> activeFlags;
