@@ -13,11 +13,7 @@ namespace TDK.ItemSystem.Types
             if (!InventoryController.Instance.TryAddItemAtAny(this))
                 return false;
 
-            if (!InventoryController.Instance.seenItems.Contains(this))
-            {
-                InventoryController.Instance.seenItems.Add(this);
-                InventoryController.Instance.itemPickupUI.TriggerNewItemPopup(this);
-            }
+            InventoryController.Instance.TryAddUnseenItem(this);
             return true;
         }
 

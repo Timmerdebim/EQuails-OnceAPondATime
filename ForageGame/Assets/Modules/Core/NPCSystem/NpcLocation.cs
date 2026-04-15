@@ -50,7 +50,7 @@ namespace NPC
 
         public virtual void Interact()
         {
-            print("Interacting with " + gameObject.name);
+            // print("Interacting with " + gameObject.name);
 
             onInteract?.Invoke();
             GetComponentInChildren<Renderer>().material.color = Color.cyan;
@@ -59,7 +59,7 @@ namespace NPC
 
         public virtual void Focus()
         {
-            print("Focused on " + gameObject.name);
+            // print("Focused on " + gameObject.name);
             onFocus?.Invoke();
 
             //PopupPrompt?.Activate();
@@ -67,7 +67,7 @@ namespace NPC
 
         public virtual void Unfocus()
         {
-            print("Unfocused from " + gameObject.name);
+            // print("Unfocused from " + gameObject.name);
 
             OnUnfocus?.Invoke();
             WalkAway();

@@ -50,6 +50,7 @@ namespace NPC
         private void Start()
         {
             StoryFlagManager.onFlagAdded += OnNewStoryFlag;
+            InventoryController.onNewItemSeen += OnNewItemSeen;
             _database = parser.Parse(_sourceFile.text, 
                                     StoryFlagManager.Instance.flagDatabase, 
                                     dialogueReferences.GetItemDataMap(), 
@@ -62,6 +63,10 @@ namespace NPC
         private int GetActiveStageIndex() => _activeStage == null ? -1 : _database.storyStages.IndexOf(_activeStage);
 
         private void OnNewStoryFlag(StoryFlag flag)
+        {
+            if(_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(); //do this only if current stage is done
+        }
+        private void OnNewItemSeen(ItemData item)
         {
             if(_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(); //do this only if current stage is done
         }
