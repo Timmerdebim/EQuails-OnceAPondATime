@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TDK.ItemSystem;
+using TDK.ItemSystem.Inventory;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -76,8 +77,8 @@ namespace NPC
                 .Skip(startIndex)
                 .FirstOrDefault(s => 
                     !_completedStageIndices.Contains(_database.storyStages.IndexOf(s)) &&
-                    StoryFlagManager.Instance.FlagListActive(s.RequiredFlags));// &&
-                    //s.requiredItems.All(item => _inventory.HasItem(item))); //TODO: do
+                    StoryFlagManager.Instance.FlagListActive(s.RequiredFlags) &&
+                    s.requiredItems.All(item => InventoryController.Instance.seenItems.Contains(item)));
 
             if (next == _activeStage || next == null) 
             {
@@ -155,7 +156,7 @@ namespace NPC
             res.Line = dialogue.StandardLines[_lineIndices[location]];
             _lineIndices[location]++;
 
-            //check if LocationDialogue is complete TODO: no work???
+            //check if LocationDialogue is complete
             if(_lineIndices[location] >= dialogue.StandardLines.Count)
             {
                 Debug.Log($"[NpcController: {character}] Finished locationDialogue");
