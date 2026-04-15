@@ -8,6 +8,19 @@ namespace NPC
 {
     public enum Character { Bracken, Mosswick, Grimble, Lyria }; 
 
+    //What API calls return, to return this control to the NpcController instead
+    public struct DialogueResult
+    {
+        public DialogueLine Line;
+        public bool CloseAfter;
+
+        public DialogueResult(DialogueLine line, bool CloseAfter = false)
+        {
+            this.Line = line;
+            this.CloseAfter = CloseAfter;
+        }
+    }
+
     public class NpcController : MonoBehaviour
     {
 
@@ -106,39 +119,55 @@ namespace NPC
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        public DialogueLine GetNextDialogue(NpcLocation location)
+        public DialogueResult GetNextDialogue(NpcLocation location)
         {
+            //Error handling
             if(_activeStage == null) 
             {
                 Debug.LogError($"[NpcController: {character}] No active StoryStage");
-                return GetErrorLine();
+                return new DialogueResult(GetErrorLine());
             }
-            if(_activeStage.locationDialogues.TryGetValue(location, out var dialogue))
+            if (!_activeStage.locationDialogues.TryGetValue(location, out var dialogue))
             {
-                if (_lineIndices[location] >= dialogue.StandardLines.Count)
-                {
-                    Debug.Log($"[NpcController: {character}] Displaying repeat stage");
-                    var line = dialogue.GetSpecialLine("repeat");
-                    if (dialogue.isMainDialogue) //TODO: do this after the 'main' stages are displayed, keeping the repeat as repeat. THis must coincide with DialogueBox closing
-                    {
-                        Debug.Log($"[NpcController: {character}] Finished main locationDialogue");
-                        _completedStageIndices.Add(GetActiveStageIndex());
-                        EvaluateActiveStage();
-                    }
-                    return line;
-                }
-
-                //regular line
-                var l = dialogue.StandardLines[_lineIndices[location]];
-                _lineIndices[location] = _lineIndices[location] + 1;
-                return l;
-            }
-            else
-            {
-                //this REALLY should never happen
                 Debug.LogError($"[NpcController: {character}] Active StoryStage has no dialogue for location: {location}");
-                return GetErrorLine();
+                return new DialogueResult(GetErrorLine());
             }
+
+            //Repeat logic
+            if (_lineIndices[location] >= dialogue.StandardLines.Count)
+            {
+                Debug.Log($"[NpcController: {character}] Regular dialogue stages exhausted...");
+                var repeatLine = dialogue.GetSpecialLine("repeat");
+                if (repeatLine != null) 
+                {
+                    Debug.Log($"[NpcController: {character}] ...Displaying repeat stage");
+                    return  new DialogueResult(repeatLine, true);
+                }
+                else
+                {
+                    Debug.Log($"[NpcController: {character}] ...But no repeat stage assigned, restarting LocationDialogue");
+                    _lineIndices[location] = 0;
+                }
+            }
+
+            //regular line
+            var res = new DialogueResult();
+            res.Line = dialogue.StandardLines[_lineIndices[location]];
+            _lineIndices[location]++;
+
+            //check if LocationDialogue is complete TODO: no work???
+            if(_lineIndices[location] >= dialogue.StandardLines.Count)
+            {
+                Debug.Log($"[NpcController: {character}] Finished locationDialogue");
+                res.CloseAfter = true;
+                if(dialogue.isMainDialogue)
+                {
+                    Debug.Log($"[NpcController: {character}] Finished MAIN locationDialogue");
+                    _completedStageIndices.Add(GetActiveStageIndex());
+                    EvaluateActiveStage();
+                }
+            }
+            return res;
         }
 
         private DialogueLine GetErrorLine()

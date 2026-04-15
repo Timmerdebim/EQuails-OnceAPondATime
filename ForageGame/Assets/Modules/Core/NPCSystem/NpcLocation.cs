@@ -97,7 +97,10 @@ namespace NPC
 
             ResetToken();
 
-            DialogueLine line = npcController.GetNextDialogue(this);
+            //DialogueLine line = npcController.GetNextDialogue(this);
+            DialogueResult result = npcController.GetNextDialogue(this);
+            MessageRead = result.CloseAfter;
+            DialogueLine line = result.Line;
             Character character = Character.Bracken; //TODO: merge with DB
 
             if (line == null) {
@@ -105,9 +108,9 @@ namespace NPC
                 return;
             }
             
-            if (line.StageID == "repeat") {
-                MessageRead = true;
-            }
+            // if (line.StageID == "repeat") {
+            //     MessageRead = true;
+            // }
 
             // 5. Open Dialogue Box if it's currently closed
             if (!isDialogueActive) {
