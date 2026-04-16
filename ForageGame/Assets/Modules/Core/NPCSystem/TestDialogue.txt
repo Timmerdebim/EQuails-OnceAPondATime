@@ -5,16 +5,15 @@ Required-Items:
     Location: Home 
     <main>
         Stage: 0	
-        Emotion: neutral 
+        Emotion: happy 
         Hey you there, can you help me quick?
 
-        Stage: 1 	
-        Emotion: sad 	
+        Stage: 1 
         Can you flick that lever for me please?
 
 
         Stage: leave_rude 	
-        Emotion: sad 	
+        Emotion: neutral 	
         Hey, wait!
 
 
@@ -30,7 +29,7 @@ Required-Items:
         Yay! you progressed the story!
 
         Stage: 1
-        Can you please get me a Snow Petal please?
+        Can you get me a Snow Petal please?
 
         Stage: repeat
         Can you please go fetch me that Snow Petal?
@@ -48,10 +47,12 @@ Required-Items:
         Actions: spawn_berry 	
         Here you go! 	
 
-        Stage: repeat		
+        Stage: repeat	
+        Emotion: stressed	
         You want more? nuh-uh!
         
-        Stage: leave_polite 	
+        Stage: leave_polite 
+        Emotion: happy	
         See you around! 
 
 --- Stage

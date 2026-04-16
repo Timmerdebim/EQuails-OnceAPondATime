@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TDK.ItemSystem;
 using TDK.ItemSystem.Inventory;
+using UnityEngine.U2D.Animation;
 
 namespace NPC
 {
@@ -21,9 +22,11 @@ namespace NPC
         [Header("References")]
         [SerializeField] private DialogueBox dialogueBox;
 
-        [SerializeField] private NpcController npcController
-        ;
+        [SerializeField] private NpcController npcController;
+        
         [SerializeField] private Character character;
+        [SerializeField] private Animator animator;
+        [SerializeField] private SpriteResolver spriteResolver;
 
         [Header("Dialogue Display Settings")]
         [SerializeField] private float shortMessageDuration = 2000f;
@@ -102,6 +105,7 @@ namespace NPC
 
             ResetToken();
 
+
             //DialogueLine line = npcController.GetNextDialogue(this);
             DialogueResult result = npcController.GetNextDialogue(this);
             MessageRead = result.CloseAfter; //TODO: if take_item, do not close the box to make the dialogue seem continuous!
@@ -110,6 +114,13 @@ namespace NPC
             if (line == null) {
                 EndDialogue();
                 return;
+            }
+
+            //Visual stuffs
+            animator.Play("InteractBounce"); //Me no likey but me also no likey to make an entire state machine for this
+            if(!string.IsNullOrEmpty(line.emotion))
+            {
+                if(!spriteResolver.SetCategoryAndLabel("Emotions", line.emotion)) Debug.LogError($"[NpcLocation: {gameObject.name}] emotion not present in SpriteLibrary: {line.emotion}");
             }
             
             // if (line.StageID == "repeat") {
@@ -160,8 +171,15 @@ namespace NPC
                 textToDisplay = npcController.GetLeavePoliteDialogue(this);
             }
 
-            if (textToDisplay != null) {
-                _ = ShowShortMessage(textToDisplay.Text, character); //NULL???????????
+            if (textToDisplay != null) 
+            {
+                //Visual stuffs
+                animator.Play("InteractBounce"); //Me no likey but me also no likey to make an entire state machine for this
+                if(!string.IsNullOrEmpty(textToDisplay.emotion))
+                {
+                    if(!spriteResolver.SetCategoryAndLabel("Emotions", textToDisplay.emotion)) Debug.LogError($"[NpcLocation: {gameObject.name}] emotion not present in SpriteLibrary: {textToDisplay.emotion}");
+                }
+                _ = ShowShortMessage(textToDisplay.Text, character); 
             }
             else {
                 CancelCurrentToken();

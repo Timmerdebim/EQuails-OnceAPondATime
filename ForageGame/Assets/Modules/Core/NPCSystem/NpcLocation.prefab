@@ -377,6 +377,7 @@ GameObject:
   - component: {fileID: 3590959589978794841}
   - component: {fileID: 379575534100156669}
   - component: {fileID: 7925062023681750694}
+  - component: {fileID: 5038663991122330952}
   m_Layer: 12
   m_Name: NpcLocation
   m_TagString: Untagged
@@ -425,6 +426,8 @@ MonoBehaviour:
   dialogueBox: {fileID: 8082633391634263990}
   npcController: {fileID: 0}
   character: 0
+  animator: {fileID: 5038663991122330952}
+  spriteResolver: {fileID: 5610776755055293051}
   shortMessageDuration: 2000
 --- !u!135 &7925062023681750694
 SphereCollider:
@@ -447,6 +450,28 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &5038663991122330952
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7685558507494031213}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00992897dd895486a97f826b915a21e5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8612161549793860550
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +502,7 @@ Transform:
   m_LocalRotation: {x: 0.19936788, y: 0, z: 0, w: 0.97992474}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3590959589978794841}
   m_LocalEulerAnglesHint: {x: 23, y: 0, z: 0}
@@ -525,7 +550,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1a4e70d0fe3815f4d9b2a63b17615230, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f61e2768abc1c24b92fca69ed708e64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -562,10 +587,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 1.0932483e-12
-  m_labelHash: 4.7213944e-22
+  m_CategoryHash: 2.1826703e-12
+  m_labelHash: 0.46389607
   m_SpriteKey: 0
-  m_SpriteHash: 285536782
+  m_SpriteHash: 983392117
 --- !u!1 &9145343391350320358
 GameObject:
   m_ObjectHideFlags: 0
