@@ -114,6 +114,12 @@ namespace NPC
         {
             foreach (var loc in locations)
                 loc.gameObject.SetActive(_activeStage != null && _activeStage.locationDialogues.ContainsKey(loc));
+            
+            //set init emotion
+            foreach (var loc in _activeStage.locationDialogues.Keys)
+            {
+                if(!string.IsNullOrEmpty(_activeStage.locationDialogues[loc].initEmotion)) loc.SetEmotion(_activeStage.locationDialogues[loc].initEmotion);
+            }
         }
         
         #endregion

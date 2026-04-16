@@ -105,7 +105,7 @@ namespace NPC
                 }
             }
 
-            Debug.Log($"StoryStage Parsed: Flags: {stage.RequiredFlags}, Items: {stage.requiredItems}, LocDialogueCount: {stage.locationDialogues.Count}");
+            //Debug.Log($"StoryStage Parsed: Flags: {stage.RequiredFlags}, Items: {stage.requiredItems}, LocDialogueCount: {stage.locationDialogues.Count}");
             return stage;
         }
 
@@ -131,7 +131,8 @@ namespace NPC
                 {
                     ld.isMainDialogue = reader.Consume().Equals("<main>", StringComparison.OrdinalIgnoreCase);
                 }
-
+                else if (line.StartsWith("InitEmotion:"))
+                    ld.initEmotion = ParseValue(reader.Consume());
                 else if (line.StartsWith("Stage:"))
                     ld.Lines.Add(ParseDialogueLine());
 

@@ -90,6 +90,11 @@ namespace NPC
             MessageRead = false;
         }
 
+        public void SetEmotion(string emotion)
+        {
+            if(!spriteResolver.SetCategoryAndLabel("Emotions", emotion)) Debug.LogError($"[NpcLocation: {gameObject.name}] emotion not present in SpriteLibrary: {emotion}");
+        }
+
         [ContextMenu("Next Message")]
         public async void Next() {
             if (isTyping) {
@@ -118,10 +123,7 @@ namespace NPC
 
             //Visual stuffs
             animator.Play("InteractBounce"); //Me no likey but me also no likey to make an entire state machine for this
-            if(!string.IsNullOrEmpty(line.emotion))
-            {
-                if(!spriteResolver.SetCategoryAndLabel("Emotions", line.emotion)) Debug.LogError($"[NpcLocation: {gameObject.name}] emotion not present in SpriteLibrary: {line.emotion}");
-            }
+            if(!string.IsNullOrEmpty(line.emotion)) SetEmotion(line.emotion);
             
             // if (line.StageID == "repeat") {
             //     MessageRead = true;
@@ -177,7 +179,7 @@ namespace NPC
                 animator.Play("InteractBounce"); //Me no likey but me also no likey to make an entire state machine for this
                 if(!string.IsNullOrEmpty(textToDisplay.emotion))
                 {
-                    if(!spriteResolver.SetCategoryAndLabel("Emotions", textToDisplay.emotion)) Debug.LogError($"[NpcLocation: {gameObject.name}] emotion not present in SpriteLibrary: {textToDisplay.emotion}");
+                    SetEmotion(textToDisplay.emotion);
                 }
                 _ = ShowShortMessage(textToDisplay.Text, character); 
             }
