@@ -26,7 +26,7 @@ namespace NPC
     {
 
         [Header("Dialogue Data")]
-        [SerializeField] private Character character;
+        [SerializeField] public Character character;
         [SerializeField] private TextAsset _sourceFile;
         [SerializeField] private DialogueParser parser;
         

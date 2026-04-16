@@ -59,7 +59,7 @@ namespace NPC
         public string StageID;
         public string emotion; //which sprite to use, can be left at null
         public string Text;
-        public List<UnityEvent> dialogueActions; //also contains setting flags!
+        public List<UnityEvent> dialogueActions = new List<UnityEvent>(); //also contains setting flags!
 
         // Returns true if the stage is NOT one of our special keywords
         public bool IsStoryStage

@@ -103,6 +103,12 @@ namespace TDK.ItemSystem.Inventory
             return true;
         }
 
+        public bool TryTakeItemAtAny(ItemData item)
+        {
+            //TODO: TIM
+            return true;
+        }
+
         // public bool GiveItem(Item item)
         // {
         //     for (int i = 0; i < hotbarSize; i++)

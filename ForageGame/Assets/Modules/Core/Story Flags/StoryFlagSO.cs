@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(menuName = "Story/Flag")]
 public class StoryFlag : ScriptableObject
 {

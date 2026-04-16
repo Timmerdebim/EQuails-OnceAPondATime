@@ -4,6 +4,8 @@ using UnityEngine.Events;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TDK.ItemSystem;
+using TDK.ItemSystem.Inventory;
 
 namespace NPC
 {
@@ -19,7 +21,9 @@ namespace NPC
         [Header("References")]
         [SerializeField] private DialogueBox dialogueBox;
 
-        [SerializeField] private NpcController npcController;
+        [SerializeField] private NpcController npcController
+        ;
+        [SerializeField] private Character character;
 
         [Header("Dialogue Display Settings")]
         [SerializeField] private float shortMessageDuration = 2000f;
@@ -37,6 +41,7 @@ namespace NPC
         {
             //PopupPrompt = GetComponentInChildren<InteractablePrompt>(true);
             textCtxSource = new CancellationTokenSource();
+            character = npcController.character;
         }
 
         private void OnDestroy() {
@@ -99,9 +104,8 @@ namespace NPC
 
             //DialogueLine line = npcController.GetNextDialogue(this);
             DialogueResult result = npcController.GetNextDialogue(this);
-            MessageRead = result.CloseAfter;
+            MessageRead = result.CloseAfter; //TODO: if take_item, do not close the box to make the dialogue seem continuous!
             DialogueLine line = result.Line;
-            Character character = Character.Bracken; //TODO: merge with DB
 
             if (line == null) {
                 EndDialogue();
@@ -111,6 +115,12 @@ namespace NPC
             // if (line.StageID == "repeat") {
             //     MessageRead = true;
             // }
+
+            // Dialogue Actions
+            foreach (UnityEvent action in line.dialogueActions)
+            {
+                action.Invoke();
+            }
 
             // 5. Open Dialogue Box if it's currently closed
             if (!isDialogueActive) {
@@ -186,6 +196,20 @@ namespace NPC
 
             CancelCurrentToken();
         }
+        #endregion
+
+        #region DialogueActions
+
+        public void TryTakeItem(ItemTakeActionsArgs args)
+        {
+            Debug.Log($"[NpcLocation: {gameObject.name}] Trying to take item {args.item} from player inventory");
+            if(InventoryController.Instance.TryTakeItemAtAny(args.item)) 
+            {
+                StoryFlagManager.Instance.AddFlag(args.OnSuccess);
+                MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item taking instead of closing and re-opening
+            }
+        }
+
         #endregion
         // --- Helpers ---
         #region Cancellation Tokens
