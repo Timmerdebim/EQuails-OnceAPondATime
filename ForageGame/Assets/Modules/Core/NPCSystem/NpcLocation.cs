@@ -58,7 +58,7 @@ namespace NPC
             // print("Interacting with " + gameObject.name);
 
             onInteract?.Invoke();
-            GetComponentInChildren<Renderer>().material.color = Color.cyan;
+            //GetComponentInChildren<Renderer>().material.color = Color.cyan; //Yeah lets not
             Next();
         }
 
@@ -149,20 +149,19 @@ namespace NPC
 
             ResetToken();
 
-            string textToDisplay = null; //very useful assignment of null value to uninitialized local variable, this one is new to me ~Lars
-            Character character = Character.Bracken; //TODO: DEBUG
+            DialogueLine textToDisplay = null; //very useful assignment of null value to uninitialized local variable, this one is new to me ~Lars
 
             if (isDialogueActive) {
                 // Rude: Left while box was open
-                //textToDisplay = dialogueController.GetLeaveRudeDialogue(character.ToString())?.Text;
+                textToDisplay = npcController.GetLeaveRudeDialogue(this);
             } 
             else {
                 // Polite: Left after closing the box
-                //textToDisplay = dialogueController.GetLeavePoliteDialogue(character.ToString())?.Text;
+                textToDisplay = npcController.GetLeavePoliteDialogue(this);
             }
 
-            if (!string.IsNullOrEmpty(textToDisplay)) {
-                _ = ShowShortMessage(textToDisplay, character);
+            if (textToDisplay != null) {
+                _ = ShowShortMessage(textToDisplay.Text, character); //NULL???????????
             }
             else {
                 CancelCurrentToken();

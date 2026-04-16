@@ -176,17 +176,48 @@ namespace NPC
             return res;
         }
 
+        /// <summary>
+        /// Returns null if no line in active StoryStage
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        public DialogueLine GetLeaveRudeDialogue(NpcLocation location)
+        {
+            //Error handling
+            if(_activeStage == null) 
+            {
+                Debug.LogError($"[NpcController: {character}] No active StoryStage");
+                return null;
+            }
+            if (!_activeStage.locationDialogues.TryGetValue(location, out var dialogue))
+            {
+                Debug.LogError($"[NpcController: {character}] Active StoryStage has no dialogue for location: {location}");
+                return null;
+            } 
+            return dialogue.GetSpecialLine("leave_rude"); //will be null if none found
+        }
+        public DialogueLine GetLeavePoliteDialogue(NpcLocation location)
+        {
+            //Error handling
+            if(_activeStage == null) 
+            {
+                Debug.LogError($"[NpcController: {character}] No active StoryStage");
+                return null;
+            }
+            if (!_activeStage.locationDialogues.TryGetValue(location, out var dialogue))
+            {
+                Debug.LogError($"[NpcController: {character}] Active StoryStage has no dialogue for location: {location}");
+                return null;
+            } 
+            return dialogue.GetSpecialLine("leave_polite"); //will be null if none found
+        }
+
         private DialogueLine GetErrorLine()
         {
             DialogueLine line = new DialogueLine();
             line.StageID="repeat";
             line.Text = $"This text should not appear! Error!";
             return line;
-        }
-
-        public void DoesThisWorkPlease(ItemData item)
-        {
-            //please please please
         }
 
         #endregion
