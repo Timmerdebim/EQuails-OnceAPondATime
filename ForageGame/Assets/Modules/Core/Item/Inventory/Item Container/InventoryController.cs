@@ -18,7 +18,6 @@ namespace TDK.ItemSystem.Inventory
 
         public HashSet<ItemData> seenItems = new();
 
-
         public void TryAddUnseenItem(ItemData item)
         {
             if (!seenItems.Contains(item))
@@ -28,7 +27,6 @@ namespace TDK.ItemSystem.Inventory
                 onNewItemSeen?.Invoke(item);
             }
         }
-
 
         private void Awake()
         {
@@ -63,7 +61,6 @@ namespace TDK.ItemSystem.Inventory
             currentSlotIndex = 0;
             SelectSlot(currentSlotIndex);
         }
-
 
         public ItemSlot AddSlot()
         {
@@ -102,25 +99,6 @@ namespace TDK.ItemSystem.Inventory
             ItemServices.Instance.SpawnItem(item, Player.Instance.transform.position);
             return true;
         }
-
-        public bool TryTakeItemAtAny(ItemData item)
-        {
-            //TODO: TIM
-            return true;
-        }
-
-        // public bool GiveItem(Item item)
-        // {
-        //     for (int i = 0; i < hotbarSize; i++)
-        //     {
-        //         if (item == hotbarItems[i])
-        //         {
-        //             RemoveItem(i);
-        //             return true;
-        //         }
-        //     }
-        //     return false;
-        // }
 
         #endregion
 

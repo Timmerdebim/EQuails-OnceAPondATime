@@ -23,7 +23,7 @@ namespace NPC
         [SerializeField] private DialogueBox dialogueBox;
 
         [SerializeField] private NpcController npcController;
-        
+
         [SerializeField] private Character character;
         [SerializeField] private Animator animator;
         [SerializeField] private SpriteResolver spriteResolver;
@@ -47,7 +47,8 @@ namespace NPC
             character = npcController.character;
         }
 
-        private void OnDestroy() {
+        private void OnDestroy()
+        {
             CancelCurrentToken();
         }
 
@@ -85,25 +86,29 @@ namespace NPC
         #endregion
         #region Dialogue
 
-        public void SetDialogue(string[] text) {
+        public void SetDialogue(string[] text)
+        {
             EndDialogue();
             MessageRead = false;
         }
 
         public void SetEmotion(string emotion)
         {
-            if(!spriteResolver.SetCategoryAndLabel("Emotions", emotion)) Debug.LogError($"[NpcLocation: {gameObject.name}] emotion not present in SpriteLibrary: {emotion}");
+            if (!spriteResolver.SetCategoryAndLabel("Emotions", emotion)) Debug.LogError($"[NpcLocation: {gameObject.name}] emotion not present in SpriteLibrary: {emotion}");
         }
 
         [ContextMenu("Next Message")]
-        public async void Next() {
-            if (isTyping) {
-                CancelCurrentToken(); 
+        public async void Next()
+        {
+            if (isTyping)
+            {
+                CancelCurrentToken();
                 return;
             }
 
 
-            if (isDialogueActive && MessageRead) {
+            if (isDialogueActive && MessageRead)
+            {
                 EndDialogue();
                 return;
             }
@@ -116,15 +121,16 @@ namespace NPC
             MessageRead = result.CloseAfter; //TODO: if take_item, do not close the box to make the dialogue seem continuous!
             DialogueLine line = result.Line;
 
-            if (line == null) {
+            if (line == null)
+            {
                 EndDialogue();
                 return;
             }
 
             //Visual stuffs
             animator.Play("InteractBounce"); //Me no likey but me also no likey to make an entire state machine for this
-            if(!string.IsNullOrEmpty(line.emotion)) SetEmotion(line.emotion);
-            
+            if (!string.IsNullOrEmpty(line.emotion)) SetEmotion(line.emotion);
+
             // if (line.StageID == "repeat") {
             //     MessageRead = true;
             // }
@@ -136,62 +142,73 @@ namespace NPC
             }
 
             // 5. Open Dialogue Box if it's currently closed
-            if (!isDialogueActive) {
+            if (!isDialogueActive)
+            {
                 dialogueBox.OpenDialogue();
                 isDialogueActive = true;
             }
 
-            try {
+            try
+            {
                 isTyping = true;
-                
+
                 string[] messageLines = line.Text.Split('\n');
                 currentTypingTask = dialogueBox.SetText(messageLines, character, textCtxSource.Token);
-                
+
                 await currentTypingTask;
             }
-            catch (OperationCanceledException) {
+            catch (OperationCanceledException)
+            {
                 // Task cancelled
             }
-            finally {
+            finally
+            {
                 isTyping = false;
             }
         }
 
-        public void WalkAway() {
+        public void WalkAway()
+        {
             if (npcController == null) return;
 
             ResetToken();
 
             DialogueLine textToDisplay = null; //very useful assignment of null value to uninitialized local variable, this one is new to me ~Lars
 
-            if (isDialogueActive) {
+            if (isDialogueActive)
+            {
                 // Rude: Left while box was open
                 textToDisplay = npcController.GetLeaveRudeDialogue(this);
-            } 
-            else {
+            }
+            else
+            {
                 // Polite: Left after closing the box
                 textToDisplay = npcController.GetLeavePoliteDialogue(this);
             }
 
-            if (textToDisplay != null) 
+            if (textToDisplay != null)
             {
                 //Visual stuffs
                 animator.Play("InteractBounce"); //Me no likey but me also no likey to make an entire state machine for this
-                if(!string.IsNullOrEmpty(textToDisplay.emotion))
+                if (!string.IsNullOrEmpty(textToDisplay.emotion))
                 {
                     SetEmotion(textToDisplay.emotion);
                 }
-                _ = ShowShortMessage(textToDisplay.Text, character); 
+                _ = ShowShortMessage(textToDisplay.Text, character);
             }
-            else {
+            else
+            {
                 CancelCurrentToken();
                 EndDialogue();
             }
         }
 
-        private async Task ShowShortMessage(string message, Character character) {
-            try {
-                if (!isDialogueActive) {
+        private async Task ShowShortMessage(string message, Character character)
+        {
+            try
+            {
+                if (!isDialogueActive)
+                {
                     dialogueBox.OpenDialogue();
                     isDialogueActive = true;
                 }
@@ -203,12 +220,14 @@ namespace NPC
                 await Task.Delay((int)shortMessageDuration, textCtxSource.Token);
             }
             catch (OperationCanceledException) { }
-            finally {
+            finally
+            {
                 EndDialogue();
             }
         }
 
-        private void EndDialogue() {
+        private void EndDialogue()
+        {
             dialogueBox.CloseDialogue();
             isDialogueActive = false;
             isTyping = false;
@@ -222,7 +241,7 @@ namespace NPC
         public void TryTakeItem(ItemTakeActionsArgs args)
         {
             Debug.Log($"[NpcLocation: {gameObject.name}] Trying to take item {args.item} from player inventory");
-            if(InventoryController.Instance.TryTakeItemAtAny(args.item)) 
+            if (InventoryController.Instance.TryRemoveItemAtAny(args.item))
             {
                 StoryFlagManager.Instance.AddFlag(args.OnSuccess);
                 MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item taking instead of closing and re-opening
@@ -232,14 +251,17 @@ namespace NPC
         #endregion
         // --- Helpers ---
         #region Cancellation Tokens
-        private void CancelCurrentToken() {
-            if (textCtxSource != null && !textCtxSource.IsCancellationRequested) {
+        private void CancelCurrentToken()
+        {
+            if (textCtxSource != null && !textCtxSource.IsCancellationRequested)
+            {
                 textCtxSource.Cancel();
                 textCtxSource.Dispose();
             }
         }
 
-        private void ResetToken() {
+        private void ResetToken()
+        {
             CancelCurrentToken();
             textCtxSource = new CancellationTokenSource();
         }

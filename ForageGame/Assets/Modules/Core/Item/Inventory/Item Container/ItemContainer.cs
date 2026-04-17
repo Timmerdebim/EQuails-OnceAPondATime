@@ -57,6 +57,14 @@ namespace TDK.ItemSystem.Inventory
 
         public bool TryRemoveItemAtCurrent(ItemData item, int quantity = 1) => TryRemoveItemAtIndex(item, currentSlotIndex, quantity);
 
+        public bool TryRemoveItemAtAny(ItemData item, int quantity = 1)
+        {
+            for (int i = 0; i < Slots.Count; i++)
+                if (TryRemoveItemAtIndex(item, i, quantity))
+                    return true;
+            return false;
+        }
+
         public bool TryRemoveAnyAtIndex(int slotIndex, int quantity = 1)
         {
             if (!IsSlotValid(slotIndex))
