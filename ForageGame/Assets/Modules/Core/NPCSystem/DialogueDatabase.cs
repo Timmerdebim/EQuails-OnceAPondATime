@@ -40,6 +40,7 @@ namespace NPC
     {
         //Flavor dialogue does not progress StoryStage. Use for puzzle hints or indeed flavor text
         public bool isMainDialogue = false;
+        public string initEmotion;
         public List<DialogueLine> Lines = new List<DialogueLine>();
 
         // --- Helpers for specific line types ---
@@ -59,7 +60,7 @@ namespace NPC
         public string StageID;
         public string emotion; //which sprite to use, can be left at null
         public string Text;
-        public List<UnityEvent> dialogueActions; //also contains setting flags!
+        public List<UnityEvent> dialogueActions = new List<UnityEvent>(); //also contains setting flags!
 
         // Returns true if the stage is NOT one of our special keywords
         public bool IsStoryStage

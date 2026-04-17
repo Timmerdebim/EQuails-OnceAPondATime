@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TDK.SaveSystem;
 using TDK.PlayerSystem;
+using System;
 
 namespace TDK.ItemSystem.Inventory
 {
@@ -13,7 +14,20 @@ namespace TDK.ItemSystem.Inventory
         [SerializeField] private GameObject slotPrefab;
         [SerializeField] public ItemPickupUI itemPickupUI;
 
+        public static event Action<ItemData> onNewItemSeen;
+
         public HashSet<ItemData> seenItems = new();
+
+
+        public void TryAddUnseenItem(ItemData item)
+        {
+            if (!seenItems.Contains(item))
+            {
+                seenItems.Add(item);
+                itemPickupUI.TriggerNewItemPopup(item);
+                onNewItemSeen?.Invoke(item);
+            }
+        }
 
 
         private void Awake()
@@ -86,6 +100,12 @@ namespace TDK.ItemSystem.Inventory
                 return false;
 
             ItemServices.Instance.SpawnItem(item, Player.Instance.transform.position);
+            return true;
+        }
+
+        public bool TryTakeItemAtAny(ItemData item)
+        {
+            //TODO: TIM
             return true;
         }
 
