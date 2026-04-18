@@ -107,6 +107,15 @@ namespace NPC
             }
 
             UpdateActiveLocations();
+
+            //if the current stage has no main dialogue to display, auto-complete it
+            if(ActiveStageEmpty()) 
+            {
+                Debug.Log($"[NpcController: {character}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
+                _completedStageIndices.Add(GetActiveStageIndex());
+                //NOTE: I do not re-check for new active stage since an empty storystage is a deliberate choice, to have a break in the story.
+                //Thus, this will only be done when picking up a new flag or item.
+            }
         }
 
         //turn off NpcLocations that have no dialogue set in the active StoryStage
@@ -120,6 +129,25 @@ namespace NPC
             {
                 if(!string.IsNullOrEmpty(_activeStage.locationDialogues[loc].initEmotion)) loc.SetEmotion(_activeStage.locationDialogues[loc].initEmotion);
             }
+        }
+
+        /// <summary>
+        /// Checks if the current active stage has a <main> LocationDialogue with 'normal' stages
+        /// These are required for the StoryStage to be marked as 'completed' normally
+        /// </summary>
+        /// <returns></returns>
+        private bool ActiveStageEmpty()
+        {
+            var res = true;
+            foreach(LocationDialogue dialogue in _activeStage.locationDialogues.Values)
+            {
+                if(dialogue.isMainDialogue && dialogue.StandardLines.Count > 0) 
+                {
+                    res = false;
+                    break;
+                }
+            }
+            return res;
         }
         
         #endregion
