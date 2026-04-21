@@ -28,6 +28,7 @@ public class Energy : MonoBehaviour, IHitHandler
 
     private void Awake()
     {
+        _energyBarWidth = energyFill.rect.width;
         damage = 0f;
         UpdateMaxEnergy();
         energy = currentMaxEnergy;
@@ -110,24 +111,27 @@ public class Energy : MonoBehaviour, IHitHandler
     }
 
     // Updates the UI bars positions based on current energy and damage.
+
+    private float _energyBarWidth;
     private void UpdateEnergyBar()
     {
+        float energyGap = 0.005f;
         if (energyFill != null)
         {
             // Move energy bar left as energy decreases (anchored at right)
-            float energyGap = 0.005f;
-            if (damage < 0.1f) energyGap = 0f;
-            float energyX = Mathf.Max(0, energy / maxEnergy - energyGap);
-            energyFill.sizeDelta = new Vector2(energyX, 0.8f);
+            float energyX = energy / maxEnergy;
+            energyX -= (damage < 0.1f) ? 0 : energyGap;
+            energyX = Mathf.Clamp01(energyX);
+            energyFill.anchorMax = new(energyX, 1f);
         }
 
         if (damageFill != null)
         {
             // Move damage bar right as damage increases (anchored at left)
-            float energyGap = 0.005f;
-            if (currentMaxEnergy < 0.1f) energyGap = 0f;
-            float damageX = Mathf.Max(0, damage / maxEnergy - energyGap);
-            damageFill.sizeDelta = new Vector2(damageX, 0.8f);
+            float damageX = damage / maxEnergy;
+            damageX -= (currentMaxEnergy < 0.1f) ? 0 : energyGap;
+            damageX = Mathf.Max(0, damageX);
+            damageFill.anchorMin = new(1 - damageX, 0f);
         }
     }
 

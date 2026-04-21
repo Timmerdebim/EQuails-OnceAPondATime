@@ -110,15 +110,10 @@ public class DistanceMapGenerator : EditorWindow
         {
             int w = tex.width;
             int h = tex.height;
-
             Color[] pixels = tex.GetPixels();
 
             // Build boolean transparency mask:
-            //   true  = transparent (alpha == 0) → "edge" seeds
-            //   false = opaque
             bool[] isTransparent = GetIsTransparent(tex);
-            for (int i = 0; i < pixels.Length; i++)
-                pixels[i].a = isTransparent[i] ? 0f : 1f;
 
             // Compute squared distances from the nearest transparent pixel
             float[] dist = TwoPassDistances(isTransparent, w, h);
