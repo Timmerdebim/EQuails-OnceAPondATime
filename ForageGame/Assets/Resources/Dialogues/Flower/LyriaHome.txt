@@ -181,3 +181,126 @@ Required-Items:
         She'll be safe with my dear friend Waddles!
 
 
+
+
+
+
+
+
+
+
+
+
+--- Stage
+Flags: BrackenHome
+Required-Items:
+<RequireTimePassing>
+
+    Location: Campfire
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: HappyTalking
+        Waddles! Look! It's aunt Bracken!
+
+        Stage: 1
+        They know everything! Go and talk to them!
+
+        Stage: 2
+        Actions: face_left
+        Here, I'll introduce you!
+
+        Stage: 2
+        Emotion: Sad
+        Actions: face_left
+        ...
+
+        Stage: 3
+        Actions: face_left
+        Emotion: SadTalking
+        What do you mean you two already met?
+
+        Stage: repeat
+        Emotion: SadTalking
+        Have I been missing something?
+
+
+
+
+
+
+
+
+--- Stage
+Flags: BrackenHome
+Required-Items:
+<RequireTimePassing>
+
+    Location: Root
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: HappyTalking
+        Ah! There's my master florist!
+
+        Stage: 1
+        It's so nice being able to fly around again.
+
+        Stage: 2
+        ...Knowing Princess will be safe here when I get back.
+
+        Stage: 2
+        Emotion: Happy
+        Hmm...
+
+        Stage: 3
+        Emotion: HappyTalking
+        Maybe I should go see Mosswick again...
+
+        Stage: repeat
+        Emotion: HappyTalking
+        Maybe I should go see Mosswick again...
+
+
+
+
+
+--- Stage
+Flags: ObtainedSturdyWingfixRecipe, PrincessBuried
+Required-Items:
+<RequireTimePassing>
+
+
+--- Stage
+Flags: ObtainedSturdyWingfixRecipe, PrincessBuried
+Required-Items:
+<RequireTimePassing>
+Actions:give_flag_lyria_princess_closure_scene_started
+
+
+
+
+
+
+
+
+
+--- Stage
+Flags: LyriaPrincessClosureSceneDone
+Required-Items:
+<RequireTimePassing>
+
+    Location: Root
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: Eek
+        Waa! Waddles?
+
+        Stage: 1
+        Emotion: SadTalking
+        The developers haven't given me anything to say here yet...
+
+        Stage: 2
+        Emotion: Sad
+        ...

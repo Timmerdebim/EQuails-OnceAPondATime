@@ -479,3 +479,106 @@ Actions: give_flag_princess_in_grave, open_flower_graveyard_gate
 --- Stage
 Flags: LyriaGrieving
 Required-Items:
+
+
+
+
+
+
+
+
+
+
+
+--- Stage
+Flags: LyriaPrincessClosureSceneStarted
+Required-Items:
+
+    Location: FlowerGraveyard 
+    <main>
+    BaseEmotion: Kalimba
+
+        Stage: 0
+        Oh - Hey Waddles.
+
+        Stage: 1
+        Emotion: HappyTalking
+        ...Thank you.
+
+        Stage: 2
+        Actions: face_left
+        For burying my baby.
+
+        Stage: 3
+        Actions: face_left
+        Emotion: Happy
+        ...
+
+        Stage: 4
+        Actions: face_left
+        Emotion: SadTalking
+        The one at the tree...
+
+        Stage: 5
+        It's a different one, right?
+
+        Stage: 6
+        It looks a little different...
+
+        Stage: 7
+        Actions: face_left
+        Emotion: Sad
+        ...
+
+        Stage: 8
+        Emotion: HappyTalking
+        But that's okay.
+
+        Stage: 9
+        You just wanted to cheer me up.
+
+        Stage: 10
+        That's really nice of you.
+
+        Stage: 11
+        Actions: face_left
+        Emotion: Sad
+        ...
+
+--- Stage
+Flags: LyriaPrincessClosureSceneStarted
+Required-Items:
+
+    Location: FlowerGraveyard 
+    <main>
+    BaseEmotion: Sad
+
+        Stage: 0
+        Actions: face_left
+        Emotion: SadTalking
+        I'll be back soon.
+
+        Stage: 1
+        Actions: face_left
+        Just... give me a minute here"
+
+        Stage: 2
+        Actions: face_left
+        When I get back...
+
+        Stage: 3
+        Emotion: HappyTalking
+        We should give yours a name.
+
+
+
+
+
+
+
+
+--- Stage
+Flags: LyriaPrincessClosureSceneStarted
+Required-Items:
+<RequireTimePassing>
+Actions: give_flag_lyria_princess_closure_scene_done
