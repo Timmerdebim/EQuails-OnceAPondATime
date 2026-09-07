@@ -110,6 +110,11 @@ public class StoryFlagManager : MonoBehaviour, ISaveable, ILoadable
         return activeFlags.IsSupersetOf(required);
     }
 
+    public bool AnyFlagActive(IEnumerable<StoryFlag> required)
+    {
+        return activeFlags.Overlaps(required);
+    }
+
 
     // Save & Load
 

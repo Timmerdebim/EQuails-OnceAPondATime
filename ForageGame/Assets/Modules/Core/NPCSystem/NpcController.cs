@@ -42,7 +42,8 @@ namespace NPC
         [Header("Current State")]
         [SerializeField] private StoryStage _activeStage;
         [SerializeField] private Dictionary<NpcLocation, int> _lineIndices = new();
-        [SerializeField] private HashSet<int> _completedStageIndices = new();
+
+        [SerializeField] private int _lastCompletedStageIndex = -1; //replaces the hashset, which was redundant and clogs up the save file
 
         [SerializeField] private NpcLocation _lastActiveLocation;
 
@@ -90,16 +91,16 @@ namespace NPC
 
         private void OnNewStoryFlag(StoryFlag flag)
         {
-            if (_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(true); //do this only if current stage is done
+            if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(true); //do this only if current stage is done
         }
         private void OnTimePassing()
         {
-            if (_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(true); //do this only if current stage is done
+            if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(true); //do this only if current stage is done
         }
 
         private void OnNewItemSeen(ItemData item)
         {
-            if (_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(); //do this only if current stage is done
+            if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(); //do this only if current stage is done
         }
         public void OnDialogueFinished()
         {
@@ -109,21 +110,22 @@ namespace NPC
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);
                 FlagToSetAfterDialogue = null;
             }
-            else if (_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(); //do this only if current stage is done
+            else if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(); //do this only if current stage is done
         }
         private void EvaluateActiveStage(bool timePassed = false)
         {
             // Debug.Log($"[NpcController: {character}] Re-evaluating active stage, current stage index is {GetActiveStageIndex()}");
 
-            int startIndex = GetActiveStageIndex();
+            var flags = StoryFlagManager.Instance;
+            var inventory = InventoryController.Instance;
 
             //this gets a default value if no target is found which will be null
             var next = _database.storyStages
-                .Skip(startIndex)
+                .Skip(_lastCompletedStageIndex + 1)
                 .FirstOrDefault(s =>
-                    !_completedStageIndices.Contains(_database.storyStages.IndexOf(s)) &&
-                    StoryFlagManager.Instance.FlagListActive(s.RequiredFlags) &&
-                    s.requiredItems.All(item => InventoryController.Instance.seenItems.Contains(item)) &&
+                    flags.FlagListActive(s.RequiredFlags) &&
+                    !flags.AnyFlagActive(s.RequiredAbsentFlags) &&
+                    inventory.seenItems.IsSupersetOf(s.requiredItems) &&
                     (!s.requiresTimePassing || timePassed));
 
             if (next == _activeStage || next == null)
@@ -168,7 +170,7 @@ namespace NPC
             if (ActiveStageEmpty())
             {
                 Debug.Log($"[NpcController: {character}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
-                _completedStageIndices.Add(GetActiveStageIndex());
+                _lastCompletedStageIndex = GetActiveStageIndex();
                 //NOTE: I do not re-check for new active stage since an empty storystage is a deliberate choice, to have a break in the story.
                 //Thus, this will only be done when picking up a new flag or item.
             }
@@ -298,7 +300,7 @@ namespace NPC
                 if (dialogue.isMainDialogue)
                 {
                     Debug.Log($"[NpcController: {character}] Finished MAIN locationDialogue");
-                    _completedStageIndices.Add(GetActiveStageIndex());
+                    _lastCompletedStageIndex = GetActiveStageIndex();
                     //EvaluateActiveStage(); //TODO: only do after the box is closed
                 }
             }
@@ -338,7 +340,7 @@ namespace NPC
                 Debug.LogError($"[NpcController: {character}] Active StoryStage has no dialogue for location: {location}");
                 return null;
             }
-            if (!_completedStageIndices.Contains(GetActiveStageIndex()))
+            if (_lastCompletedStageIndex != GetActiveStageIndex())
             {
                 Debug.Log($"[NpcController]: Leave_polite dialogue requested for non-finished StoryStage, ignored!");
                 return null;
@@ -412,7 +414,7 @@ namespace NPC
             {
                 Guid = _guid,
                 currentStageIndex = GetActiveStageIndex(),
-                CompletedStageIndices = _completedStageIndices.ToList(),
+                LastCompletedStageIndex = _lastCompletedStageIndex,
             });
         }
 
@@ -422,7 +424,7 @@ namespace NPC
             {
                 if (npcSaveData.Guid == _guid)
                 {
-                    _completedStageIndices = npcSaveData.CompletedStageIndices.ToHashSet();
+                    _lastCompletedStageIndex = npcSaveData.LastCompletedStageIndex;
                     StartNewStoryStage(_database.storyStages[npcSaveData.currentStageIndex]);
                     break;
                 }
@@ -437,8 +439,8 @@ namespace NPC
     {
         public string Guid = "";
 
-        public int currentStageIndex = 0;
-        public List<int> CompletedStageIndices = new();
+        public int currentStageIndex = -1;
+        public int LastCompletedStageIndex = -1;
     }
 }
 
