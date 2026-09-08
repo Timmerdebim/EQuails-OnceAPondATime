@@ -91,7 +91,7 @@ namespace TDK.PlayerSystem
                     break;
                 case PlayerUpgradeType.Lantern:
                     playerData.lanternUnlocked = true;
-                    //TODO: activate light
+                    //light is activated automatically, lantern just polls
                     break;
                 case PlayerUpgradeType.Pouch:
                     playerData.pouchLevel += 1;
