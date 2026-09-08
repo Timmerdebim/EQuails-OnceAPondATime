@@ -41,7 +41,10 @@ public class PlayerLanternController : MonoBehaviour
 
     public void SetDeployment(bool isDeployed)
     {
-        _isDeployed = isDeployed;
+        var newVal = isDeployed && Player.Instance.playerData.lanternUnlocked; //easy way to only have it work when unlocked
+        if (newVal == _isDeployed) return; //WeatherManager will continuously set this during transitions, so only do something when we need to
+
+        _isDeployed = newVal;
         RefreshLanternPose();
     }
 

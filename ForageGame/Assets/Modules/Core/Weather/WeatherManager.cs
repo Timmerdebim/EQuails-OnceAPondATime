@@ -24,8 +24,9 @@ namespace Weather
         private Camera cam;
         [SerializeField] private Light sunLight;
 
-        //TODO: lantern just polls the intensity, so this is not blended smoothly
+        //value currently just used as a boolean
         public float lanternIntensity;
+        [SerializeField] private PlayerLanternController lanternController;
         
         //How fast the lighting data blends / lerps, should be pretty slow
         [SerializeField] private float blendSpeed = 0.03f;
@@ -115,6 +116,7 @@ namespace Weather
             profile.SetBlend(1f);
 
             lanternIntensity = profile.lanternIntensity;
+            lanternController.SetDeployment(lanternIntensity > 0f);
 
             //lighting
             targetSunIntensity = profile.sunIntensity;
@@ -203,6 +205,9 @@ namespace Weather
                 groundTint          += (Color)(profile.skyBox.GetColor("_GroundColor")) * weight;
                 exposure            += profile.skyBox.GetFloat("_Exposure") * weight;
             }
+
+            //deploy lantern immediately (does not need blending)
+            lanternController.SetDeployment(lanternIntensity > 0f);
 
             //TODO: Skyboxes are never really visible and are no longer used for ambient lighting, remove?
             Material skybox = RenderSettings.skybox;
