@@ -161,7 +161,7 @@ Required-Items:
 
 
 --- Stage
-Flags: LyriaFoundNewFlower
+Flags: LyriaHome
 Required-Items:
 
     Location: FlowerSpot
@@ -185,8 +185,38 @@ Required-Items:
 
 
 
+--- Stage
+Flags: LyriaHome
+Absent-Flags: BrackenHome
+Required-Items:
+<RequireTimePassing>
 
+    Location: Root
+    BaseEmotion: Happy
 
+        Stage: 0
+        Emotion: HappyTalking
+        Ah - hey Waddles.
+
+        Stage: 1
+        I'm wondering what Bracken is up to.
+
+        Stage: 2
+        Emotion: SadTalking
+        You've seen them right?
+
+        Stage: 3
+        Red squirrel? Very busy?
+
+        Stage: 4
+        Emotion: HappyTalking
+        Oh - you two would get along great!
+
+        Stage: 5
+        They love learning new things!
+
+        Stage: 6
+        You could teach them your flower magic!
 
 
 
@@ -216,7 +246,6 @@ Required-Items:
         ...
 
         Stage: 3
-        Actions: face_left
         Emotion: SadTalking
         What do you mean you two already met?
 
@@ -277,6 +306,14 @@ Required-Items:
 <RequireTimePassing>
 Actions:give_flag_lyria_princess_closure_scene_started
 
+
+
+--- Stage
+Flags: ObtainedSturdyWingfixRecipe
+Absent-Flags: PrincessBuried
+Required-Items:
+<RequireTimePassing>
+Actions:give_flag_lyria_princess_closure_scene_done
 
 
 
