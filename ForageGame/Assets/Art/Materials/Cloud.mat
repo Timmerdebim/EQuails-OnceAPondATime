@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Model Material
+  m_Name: Cloud
   m_Shader: {fileID: -6465566751694194690, guid: b70fa7af499c096488b191f1714eaa4e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -15,8 +15,8 @@ Material:
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2450
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2460
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -89,86 +89,71 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Ambient_Occlusion: 1
-    - _Animation_Cutoff: 100
+    - _Animation_Cutoff: 150
     - _Base_Emission: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
-    - _CastShadows: 1
-    - _Cell_Count: 6
     - _Cells: 6
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _CutoffDistance: 8
-    - _Cutout_CutoffDistance: 8
-    - _Cutout_Radius: 1.5
-    - _Cutout_Smoothness: 2
-    - _Cutout_Softness: 4
+    - _Cutout_Smoothness: 0.05
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _Diffuse: 1
-    - _Distance_Fade_End: 150
-    - _Distance_Fade_Start: 40
-    - _DstBlend: 0
-    - _DstBlendAlpha: 0
+    - _Distance_Fade_End: 200
+    - _Distance_Fade_Start: 100
+    - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _EnvironmentReflections: 1
-    - _Fade_Distance_End: 50
-    - _Fade_Distance_Start: 30
+    - _Fade_Distance_End: 150
+    - _Fade_Distance_Start: 100
     - _Far_Radius: 1
-    - _Flattening_Exponent: 2
-    - _Flattening_Object_Size_Effect_Modifier: 1
-    - _Flattening_Radius: 1.5
+    - _Flattening_Exponent: 1
+    - _Flattening_Radius: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Height_Based_Horizontal_Flattening: 1
-    - _Horizontal_Flattening_Strength: 0.5
-    - _Metallic: 0.1
-    - _Near_Radius: 5
+    - _Horizontal_Flattening_Strength: 1
+    - _Metallic: 0.356
+    - _Near_Radius: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
-    - _QueueOffset: 0
-    - _Radius: 1.5
+    - _QueueOffset: 10
     - _ReceiveShadows: 1
-    - _Reflectance: 0.05
-    - _Smoothness: 0.8
+    - _Reflectance: 0.43
+    - _Smoothness: 0.363
     - _SmoothnessTextureChannel: 0
-    - _Softness: 0.6
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _Surface: 0
-    - _Use_Cutout: 1
+    - _Surface: 1
+    - _Use_Cutout: 0
     - _Use_Foliage_Mode: 0
-    - _Use_Wind: 0
+    - _Use_Wind: 1
     - _Vertical_Flattening_Strength: 1
     - _Wind_Blast: 0
-    - _Wind_Intensity: 0.2
+    - _Wind_Intensity: 1
     - _Wind_Ripples: 0.1
-    - _Wind_Speed: 0.8
-    - _Wind_Turbulence: 1
-    - _Wind_Wavelength: 5
-    - _Wind_Yaw: 180
+    - _Wind_Speed: 1
+    - _Wind_Turbulence: 20
+    - _Wind_Wavelength: 20
+    - _Wind_Yaw: 135
     - _WorkflowMode: 1
-    - _ZTest: 4
-    - _ZWrite: 1
-    - _ZWriteControl: 1
+    - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.9, g: 0.9, b: 0.81, a: 0.6}
+    - _Color: {r: 0.9, g: 0.9, b: 0.81, a: 0.6}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Fade_Color: {r: 0, g: 0, b: 0, a: 0}
-    - _Player_Offset: {r: 0, g: 0.2, b: 0, a: 0}
+    - _EmissionColor: {r: 0.05, g: 0.05, b: 0.0475, a: 1}
+    - _Player_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &3972170746824396216
+--- !u!114 &6337731218295404447
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

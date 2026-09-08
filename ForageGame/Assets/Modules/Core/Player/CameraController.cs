@@ -33,7 +33,7 @@ namespace TDK.CameraSystem
             _targetRadius = targetRadius;
         }
 
-        public void SetTarget(Transform viewingTarget, Vector3 viewingTargetOffset, float targetRotation = 30, float targetRadius = 30, bool playerTrackingMode = false)
+        public void SetTarget(Transform viewingTarget, Vector3 viewingTargetOffset, float targetRotation = 32, float targetRadius = 12, bool playerTrackingMode = false)
         {
             _viewingTarget = viewingTarget;
             _viewingTargetOffset = viewingTargetOffset;

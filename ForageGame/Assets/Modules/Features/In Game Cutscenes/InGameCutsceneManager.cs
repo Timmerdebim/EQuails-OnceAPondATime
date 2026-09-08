@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using TDK.CameraSystem;
 using UnityEngine;
 
 public class InGameCutsceneManager : MonoBehaviour
@@ -14,8 +15,12 @@ public class InGameCutsceneManager : MonoBehaviour
         Instance = this;
     }
     [SerializeField] private Animator _animator;
+    [SerializeField] private Transform _cameraTarget;
+    [SerializeField] private CameraController _cameraController;
 
     private bool _isPlaying;
+
+    #region Cutscene controlls
 
     public void StartScriptedEvent(string cutsceneName, bool lockInputs)
     {
@@ -51,4 +56,21 @@ public class InGameCutsceneManager : MonoBehaviour
         _animator.ResetTrigger("Stop");
         _isPlaying = false;
     }
+
+    #endregion
+
+    #region Animation Controlls
+    // Should only be used by the animator!
+
+    public void ResetCamera()
+    {
+        _cameraController.SetPlayerTarget();
+    }
+
+    public void SetCameraTarget()
+    {
+        _cameraController.SetTarget(_cameraTarget, Vector3.zero);
+    }
+
+    #endregion
 }
