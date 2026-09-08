@@ -113,6 +113,10 @@ namespace NPC
                 {
                     stage.RequiredFlags = ParseReferenceList(reader.Consume(), _flags, "Flags");
                 }
+                else if (line.StartsWith("Absent-Flags:", StringComparison.OrdinalIgnoreCase))
+                {
+                    stage.RequiredAbsentFlags = ParseReferenceList(reader.Consume(), _flags, "Absent Flags");
+                }
                 else if (line.StartsWith("Required-Items:")) //Items
                 {
                     if(stage.requiredItems.Count > 0) Debug.LogError("Duplicate \"Required-Items:\" attribute in StoryStage!");
@@ -160,6 +164,10 @@ namespace NPC
                 else if (line.StartsWith("Flags:", StringComparison.OrdinalIgnoreCase))
                 {
                     stage.RequiredFlags = ParseReferenceList(reader.Consume(), _flags, "Flags");
+                }
+                else if (line.StartsWith("Absent-Flags:", StringComparison.OrdinalIgnoreCase))
+                {
+                    stage.RequiredAbsentFlags = ParseReferenceList(reader.Consume(), _flags, "Absent Flags");
                 }
                 else if (line.StartsWith("Required-Items:")) //Items
                 {

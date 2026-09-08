@@ -14,15 +14,25 @@ public class StoryFlagListener : MonoBehaviour
     void OnEnable()
     {
         StoryFlagManager.onFlagAdded += onStoryFlagAdded;
+        StoryFlagManager.onStoryFlagsLoaded += OnStoryFlagsChanged;
     }
     void OnDisable()
     {
         StoryFlagManager.onFlagAdded -= onStoryFlagAdded;
+        StoryFlagManager.onStoryFlagsLoaded -= OnStoryFlagsChanged;
     }
 
     private void onStoryFlagAdded(StoryFlag newFlag)
     {
         if (newFlag == flag)
+        {
+            onFlagAdded?.Invoke();
+        }
+    }
+
+    private void OnStoryFlagsChanged()
+    {
+        if (StoryFlagManager.Instance.FlagActive(flag))
         {
             onFlagAdded?.Invoke();
         }

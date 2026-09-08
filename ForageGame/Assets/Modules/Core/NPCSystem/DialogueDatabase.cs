@@ -32,6 +32,8 @@ namespace NPC
     {
         //Indices are now implicit, by the ordering in the input file!
         public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
+        //flags that must not be active in order to be eligible
+        public List<StoryFlag> RequiredAbsentFlags = new List<StoryFlag>();
         //-> Setting flags is done as a Dialogue Action
         public List<ItemData> requiredItems = new List<ItemData>(); //decide how to actually 'take' items, actions I guess?
         public bool requiresTimePassing = false; //for StoryStages that can't happen immediately after the last one to make sense story-wise.
@@ -46,6 +48,7 @@ namespace NPC
     {
         //Indices are now implicit, by the ordering in the input file!
         public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
+        public List<StoryFlag> RequiredAbsentFlags = new List<StoryFlag>();
         //-> Setting flags is done as a Dialogue Action
         public List<ItemData> requiredItems = new List<ItemData>(); //decide how to actually 'take' items, actions I guess?
         public bool requiresTimePassing = false; //for StoryStages that can't happen immediately after the last one to make sense story-wise.

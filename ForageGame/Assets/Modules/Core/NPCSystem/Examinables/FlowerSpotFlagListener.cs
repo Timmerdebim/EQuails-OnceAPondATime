@@ -6,6 +6,9 @@ using UnityEngine;
 /// But I have no idea how gadgets work
 /// Thus this is my epic hack to still have saving and loading work
 /// ~Lars
+/// 
+/// 
+/// TODO: THIS IS TO BE OVERHAULED FOR THE NEW PRINCESS VISUALS
 /// </summary>
 
 public class FlowerSpotFlagListener : MonoBehaviour
@@ -18,10 +21,12 @@ public class FlowerSpotFlagListener : MonoBehaviour
     void OnEnable()
     {
         StoryFlagManager.onFlagAdded += onStoryFlagAdded;
+        StoryFlagManager.onStoryFlagsLoaded += OnStoryFlagsChanged;
     }
     void OnDisable()
     {
         StoryFlagManager.onFlagAdded -= onStoryFlagAdded;
+        StoryFlagManager.onStoryFlagsLoaded -= OnStoryFlagsChanged;
     }
 
     private void onStoryFlagAdded(StoryFlag newFlag)
@@ -31,6 +36,18 @@ public class FlowerSpotFlagListener : MonoBehaviour
             animator.SetBool("FlowerPlanted", true);
         }
         else if (newFlag == SoilPlacedFlag)
+        {
+            animator.SetBool("SoilPlaced", true);
+        }
+    }
+
+    private void OnStoryFlagsChanged()
+    {
+        if (StoryFlagManager.Instance.FlagActive(FlowerPlantedFlag))
+        {
+            animator.SetBool("FlowerPlanted", true);
+        }
+        if (StoryFlagManager.Instance.FlagActive(FlowerPlantedFlag))
         {
             animator.SetBool("SoilPlaced", true);
         }

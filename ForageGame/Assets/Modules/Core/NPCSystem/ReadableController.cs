@@ -42,7 +42,7 @@ namespace NPC
         [SerializeField] private bool isEnabled = true;
         [SerializeField] private ReadableStage _activeStage;
         [SerializeField] private int _lineIndex = 0;
-        [SerializeField] private HashSet<int> _completedStageIndices = new();
+        [SerializeField] private int _lastCompletedStageIndex = -1; //replaces the hashset, which was redundant and clogs up the save file
 
         private bool isDialogueActive = false;
         private bool isTyping = false;
@@ -67,12 +67,14 @@ namespace NPC
             StoryFlagManager.onFlagAdded += OnNewStoryFlag;
             StoryFlagManager.onTimePassing += OnTimePassing;
             InventoryController.onNewItemSeen += OnNewItemSeen;
+            StoryFlagManager.onStoryFlagsLoaded += OnTimePassing;
         }
         void OnDisable()
         {
             StoryFlagManager.onFlagAdded -= OnNewStoryFlag;
             StoryFlagManager.onTimePassing -= OnTimePassing;
             InventoryController.onNewItemSeen -= OnNewItemSeen;
+            StoryFlagManager.onStoryFlagsLoaded -= OnTimePassing;
         }
         //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
         private void Start()
@@ -116,15 +118,15 @@ namespace NPC
 
         private void OnNewStoryFlag(StoryFlag flag)
         {
-            if (_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(true); //do this only if current stage is done
+            if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(true); //do this only if current stage is done
         }
         private void OnTimePassing()
         {
-            if (_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(true); //do this only if current stage is done
+            if (_lastCompletedStageIndex == GetActiveStageIndex())  EvaluateActiveStage(true); //do this only if current stage is done
         }
         private void OnNewItemSeen(ItemData item)
         {
-            if (_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(); //do this only if current stage is done
+            if (_lastCompletedStageIndex == GetActiveStageIndex())  EvaluateActiveStage(); //do this only if current stage is done
         }
 
         public void OnDialogueClosed()
@@ -135,25 +137,22 @@ namespace NPC
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);
                 FlagToSetAfterDialogue = null;
             }
-            else if (_completedStageIndices.Contains(GetActiveStageIndex())) EvaluateActiveStage(); //do this only if current stage is done
+            else if (_lastCompletedStageIndex == GetActiveStageIndex())  EvaluateActiveStage(); //do this only if current stage is done
         }
         private void EvaluateActiveStage(bool timePassed = false)
         {
             // Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Re-evaluating active stage, current stage index is {GetActiveStageIndex()}");
-            foreach (var i in _completedStageIndices)
-            {
-                // Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] ... accounting for completed stage index : {i}");
-            }
 
-            int startIndex = GetActiveStageIndex();
+            var flags = StoryFlagManager.Instance;
+            var inventory = InventoryController.Instance;
 
             //this gets a default value if no target is found which will be null
             var next = _database.storyStages
-                .Skip(startIndex)
+                .Skip(_lastCompletedStageIndex + 1)
                 .FirstOrDefault(s =>
-                    !_completedStageIndices.Contains(_database.storyStages.IndexOf(s)) &&
-                    StoryFlagManager.Instance.FlagListActive(s.RequiredFlags) &&
-                    s.requiredItems.All(item => InventoryController.Instance.seenItems.Contains(item)) &&
+                    flags.FlagListActive(s.RequiredFlags) &&
+                    !flags.AnyFlagActive(s.RequiredAbsentFlags) &&
+                    inventory.seenItems.IsSupersetOf(s.requiredItems) &&
                     (!s.requiresTimePassing || timePassed));
 
             if (next == _activeStage || next == null)
@@ -167,6 +166,17 @@ namespace NPC
 
         private void StartNewStoryStage(ReadableStage stage)
         {
+            //if the new stage has no locationDialogue, disable the readable before changing active stage
+            var ld = stage.locationDialogue;
+            if (ld == null || ld.StandardLines.Count == 0)
+            {
+                Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage has no locationDialogue, Readable will be disabled!");
+                isEnabled = false;
+                DisableInteractable();
+            }
+
+
+            //switch the stage
             _activeStage = stage;
             Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] New active StoryStage set with index {GetActiveStageIndex()}");
             if (_activeStage == null)
@@ -177,42 +187,23 @@ namespace NPC
 
             //update location indices
             _lineIndex = 0;
+            
 
             //check if the new stage has a location assigned
             //It should just be a single one
-            //IMPORTANT: if it has none, the readable will disable itself (use for tutorial stuff)
-            var ld = _activeStage.locationDialogue;
+            //(this is a double check, but readables as a whole are a mess secretly hehe)
             if (ld == null || ld.StandardLines.Count == 0)
             {
-                Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage has no locationDialogue, Readable will be disabled!");
-                isEnabled = false;
-                _completedStageIndices.Add(GetActiveStageIndex());
-                DisableInteractable();
-
-                // if(InteractableObj != null)
-                // {
-                //     Debug.LogWarning($"[ReadableController]: 'diableQueued' is set: {InteractableObj} will be disabled");
-                //     InteractableObj.DisableOutline();
-                //     InteractableObj.enabled = false;
-                //     // if(InteractableObj.TryGetComponent<OutlineObject>(out var outline)) Destroy(outline); //also disable outline if there is one, to prevent lingering outlines after disabling interactable
-                //     //InteractableObj = null;
-                // }
+                _lastCompletedStageIndex = GetActiveStageIndex();
             }
             else
             {
                 //re-enable if was disabled by previous empty stage, to allow for auto-re-enabling
                 EnableInteractable();
-                // if(InteractableObj != null)
-                // {
-                //     Debug.LogWarning($"[ReadableController]: 'diableQueued' was set: {InteractableObj} will be re-enabled");
-                //     InteractableObj.enabled = true;
-                //     InteractableObj.EnableOutline();
-                //     InteractableObj = null;
-                // }   
-                if (!ld.isMainDialogue)
+                if (!ld.isMainDialogue) 
                 {
                     Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
-                    _completedStageIndices.Add(GetActiveStageIndex());
+                    _lastCompletedStageIndex = GetActiveStageIndex();
                 }
             }
         }
@@ -289,7 +280,7 @@ namespace NPC
                 if (dialogue.isMainDialogue)
                 {
                     Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Finished MAIN locationDialogue");
-                    _completedStageIndices.Add(GetActiveStageIndex());
+                    _lastCompletedStageIndex = GetActiveStageIndex();
                 }
             }
             return res;
@@ -330,7 +321,7 @@ namespace NPC
                 Debug.LogError($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage has no dialogue for location");
                 return null;
             }
-            if (!_completedStageIndices.Contains(GetActiveStageIndex()))
+            if (_lastCompletedStageIndex != GetActiveStageIndex())
             {
                 Debug.Log($"[ReadableController]: Leave_polite dialogue requested for non-finished StoryStage, ignored!");
                 return null;
@@ -578,7 +569,7 @@ namespace NPC
             {
                 Guid = _guid,
                 currentStageIndex = GetActiveStageIndex(),
-                CompletedStageIndices = _completedStageIndices.ToList(),
+                LastCompletedStageIndex = _lastCompletedStageIndex,
             });
         }
 
@@ -588,7 +579,7 @@ namespace NPC
             {
                 if (npcSaveData.Guid == _guid)
                 {
-                    _completedStageIndices = npcSaveData.CompletedStageIndices.ToHashSet();
+                    _lastCompletedStageIndex = npcSaveData.LastCompletedStageIndex;
                     StartNewStoryStage(_database.storyStages[npcSaveData.currentStageIndex]);
                     break;
                 }

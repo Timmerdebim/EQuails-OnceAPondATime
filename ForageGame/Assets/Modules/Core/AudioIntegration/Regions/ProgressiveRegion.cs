@@ -30,10 +30,12 @@ public class ProgressiveRegion : MonoBehaviour
     void OnEnable()
     {
         StoryFlagManager.onFlagAdded += onStoryFlagAdded;
+        StoryFlagManager.onStoryFlagsLoaded += RefreshActiveRegion;
     }
     void OnDisable()
     {
         StoryFlagManager.onFlagAdded -= onStoryFlagAdded;
+        StoryFlagManager.onStoryFlagsLoaded -= RefreshActiveRegion;
     }
 
     private void onStoryFlagAdded(StoryFlag newFlag)

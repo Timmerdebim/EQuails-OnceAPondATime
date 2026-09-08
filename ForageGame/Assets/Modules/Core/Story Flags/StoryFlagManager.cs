@@ -19,6 +19,8 @@ public class StoryFlagManager : MonoBehaviour, ISaveable, ILoadable
     public static event Action<StoryFlag> onFlagRemoved;
     public static event Action onTimePassing; //for StoryStages that require time to have passed since the last one, to make sense story-wise.
 
+    public static event Action onStoryFlagsLoaded; //for Save / load to prevent having to add each flag individually
+
     private void Awake()
     {
         //Singleton management
@@ -110,6 +112,11 @@ public class StoryFlagManager : MonoBehaviour, ISaveable, ILoadable
         return activeFlags.IsSupersetOf(required);
     }
 
+    public bool AnyFlagActive(IEnumerable<StoryFlag> required)
+    {
+        return activeFlags.Overlaps(required);
+    }
+
 
     // Save & Load
 
@@ -125,6 +132,10 @@ public class StoryFlagManager : MonoBehaviour, ISaveable, ILoadable
     {
         activeFlags.Clear(); //Gameplay is not unloaded on sleep, so we need to clear them otherwise flags are not reactivated after sleeping (as they are still active)
         foreach (string storyFlagId in data.StoryFlagSaveData)
-            AddFlag(flagDatabase.GetAsset(storyFlagId));
+        {
+            activeFlags.Add(flagDatabase.GetAsset(storyFlagId));
+        }
+        Debug.Log($"[StoryFlagManager] Loaded {activeFlags.Count} active StoryFlags from save data.");
+        onStoryFlagsLoaded?.Invoke();
     }
 }
