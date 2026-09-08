@@ -67,12 +67,14 @@ namespace NPC
             StoryFlagManager.onFlagAdded += OnNewStoryFlag;
             StoryFlagManager.onTimePassing += OnTimePassing;
             InventoryController.onNewItemSeen += OnNewItemSeen;
+            StoryFlagManager.onStoryFlagsLoaded += OnTimePassing;
         }
         void OnDisable()
         {
             StoryFlagManager.onFlagAdded -= OnNewStoryFlag;
             StoryFlagManager.onTimePassing -= OnTimePassing;
             InventoryController.onNewItemSeen -= OnNewItemSeen;
+            StoryFlagManager.onStoryFlagsLoaded -= OnTimePassing;
         }
         //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
         private void Start()

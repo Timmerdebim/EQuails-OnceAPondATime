@@ -29,10 +29,12 @@ namespace AudioIntegration
         void OnEnable()
         {
             StoryFlagManager.onFlagAdded += OnFlagChanged;
+            StoryFlagManager.onStoryFlagsLoaded += UpdateCurrentStage;
         }
         void OnDisable()
         {
             StoryFlagManager.onFlagAdded -= OnFlagChanged;
+            StoryFlagManager.onStoryFlagsLoaded -= UpdateCurrentStage;
         }
 
 
