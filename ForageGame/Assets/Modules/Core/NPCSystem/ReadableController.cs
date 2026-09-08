@@ -166,6 +166,17 @@ namespace NPC
 
         private void StartNewStoryStage(ReadableStage stage)
         {
+            //if the new stage has no locationDialogue, disable the readable before changing active stage
+            var ld = stage.locationDialogue;
+            if (ld == null || ld.StandardLines.Count == 0)
+            {
+                Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage has no locationDialogue, Readable will be disabled!");
+                isEnabled = false;
+                DisableInteractable();
+            }
+
+
+            //switch the stage
             _activeStage = stage;
             Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] New active StoryStage set with index {GetActiveStageIndex()}");
             if (_activeStage == null)
@@ -176,39 +187,20 @@ namespace NPC
 
             //update location indices
             _lineIndex = 0;
+            
 
             //check if the new stage has a location assigned
             //It should just be a single one
-            //IMPORTANT: if it has none, the readable will disable itself (use for tutorial stuff)
-            var ld = _activeStage.locationDialogue;
+            //(this is a double check, but readables as a whole are a mess secretly hehe)
             if (ld == null || ld.StandardLines.Count == 0)
             {
-                Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage has no locationDialogue, Readable will be disabled!");
-                isEnabled = false;
                 _lastCompletedStageIndex = GetActiveStageIndex();
-                DisableInteractable();
-
-                // if(InteractableObj != null)
-                // {
-                //     Debug.LogWarning($"[ReadableController]: 'diableQueued' is set: {InteractableObj} will be disabled");
-                //     InteractableObj.DisableOutline();
-                //     InteractableObj.enabled = false;
-                //     // if(InteractableObj.TryGetComponent<OutlineObject>(out var outline)) Destroy(outline); //also disable outline if there is one, to prevent lingering outlines after disabling interactable
-                //     //InteractableObj = null;
-                // }
             }
             else
             {
                 //re-enable if was disabled by previous empty stage, to allow for auto-re-enabling
                 EnableInteractable();
-                // if(InteractableObj != null)
-                // {
-                //     Debug.LogWarning($"[ReadableController]: 'diableQueued' was set: {InteractableObj} will be re-enabled");
-                //     InteractableObj.enabled = true;
-                //     InteractableObj.EnableOutline();
-                //     InteractableObj = null;
-                // }   
-                if (!ld.isMainDialogue)
+                if (!ld.isMainDialogue) 
                 {
                     Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
                     _lastCompletedStageIndex = GetActiveStageIndex();
