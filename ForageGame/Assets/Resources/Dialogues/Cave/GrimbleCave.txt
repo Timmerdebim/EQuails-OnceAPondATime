@@ -1,3 +1,128 @@
 --- Stage
 Flags: 
 Required-Items:
+
+    Location: Wall 
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Hey you there!
+
+        Stage: 1
+        Yes, you!
+
+        Stage: 2
+        Do you mind?
+
+        Stage: 3
+        You're making an awful lot of noise out there!
+
+        Stage: 4
+        Do you have to walk like that?
+
+        Stage: 5
+        I'm trying to focus here!
+
+        Stage: 6
+        Actions: give_flag_grimble_first_wall_interaction_done
+        I have something important to finish.
+
+
+--- Stage
+Flags: 
+Required-Items:
+
+    Location: Wall 
+    BaseEmotion: Neutral
+
+        Stage: 0
+        ...
+
+        Stage: 1
+        Hey, I didn't tell you to stay here.
+
+        Stage: 2
+        Leave!
+
+        Stage: 3
+        ...Quietly.
+
+
+
+
+
+
+
+
+
+--- Stage
+Flags: 
+Absent-Flags: TemporaryWingfixCrafted
+Required-Items:
+<RequireTimePassing>
+
+
+--- Stage
+Flags: GrimbleSecondWallInteraction
+Absent-Flags: TemporaryWingfixCrafted
+Required-Items:
+
+    Location: Wall 
+    BaseEmotion: Neutral
+
+        Stage: 0
+        ...You're back again?
+
+        Stage: 1
+        What? Thought I didn't hear you coming?
+
+        Stage: 2
+        I could hear you from miles away.
+
+        Stage: 3
+        Honestly, how are you THIS loud?
+
+        Stage: 4
+        It's like you're doing it on purpose.
+
+        Stage: 5
+        ...
+
+        Stage: 5
+        *sigh*
+
+        Stage: 6
+        Whatever you need to do here...
+
+        Stage: 7
+        Just... keep it down, will you?
+
+        Stage: 8
+        Actions:give_flag_grimble_second_wall_interaction_done
+        ...
+
+
+--- Stage
+Flags: GrimbleSecondWallInteractionDone
+Absent-Flags: TemporaryWingfixCrafted
+Required-Items:
+
+
+
+
+
+
+
+
+--- Stage
+Flags: TemporaryWingfixCrafted
+<RequireTimePassing>
+Required-Items:
+
+    Location: Wall 
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Hmrgh - It's getting a bit stuffy in here.
