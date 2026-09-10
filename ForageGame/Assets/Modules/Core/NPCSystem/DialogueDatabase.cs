@@ -35,7 +35,9 @@ namespace NPC
         //flags that must not be active in order to be eligible
         public List<StoryFlag> RequiredAbsentFlags = new List<StoryFlag>();
         //-> Setting flags is done as a Dialogue Action
-        public List<ItemData> requiredItems = new List<ItemData>(); //decide how to actually 'take' items, actions I guess?
+        public List<ItemData> requiredItems = new List<ItemData>(); //items are taken via actions
+
+        public List<ItemData> requiredAbsentItems = new List<ItemData>();
         public bool requiresTimePassing = false; //for StoryStages that can't happen immediately after the last one to make sense story-wise.
         public List<UnityEvent> stageActions = new List<UnityEvent>(); //Some StoryStages need to have stuff happen on activation immediately (mostly Lyria regarding Princess' state) that can't be reacted to otherwise.
         public Dictionary<NpcLocation, LocationDialogue> locationDialogues = new Dictionary<NpcLocation, LocationDialogue>(); //not-so serializable anymore lolol
@@ -50,7 +52,8 @@ namespace NPC
         public List<StoryFlag> RequiredFlags = new List<StoryFlag>();
         public List<StoryFlag> RequiredAbsentFlags = new List<StoryFlag>();
         //-> Setting flags is done as a Dialogue Action
-        public List<ItemData> requiredItems = new List<ItemData>(); //decide how to actually 'take' items, actions I guess?
+        public List<ItemData> requiredItems = new List<ItemData>(); //items are taken via actions
+        public List<ItemData> requiredAbsentItems = new List<ItemData>();
         public bool requiresTimePassing = false; //for StoryStages that can't happen immediately after the last one to make sense story-wise.
         public LocationDialogue locationDialogue;
 
