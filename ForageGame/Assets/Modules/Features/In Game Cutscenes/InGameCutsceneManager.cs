@@ -22,37 +22,32 @@ public class InGameCutsceneManager : MonoBehaviour
 
     #region Cutscene controlls
 
-    public void StartScriptedEvent(string cutsceneName, bool lockInputs)
+    public void PlayCutscene(string cutsceneName, bool lockInputs, bool useTransitionScreen)
     {
         if (_isPlaying)
         {
-            Debug.LogWarning("Cannot start in game cutscene while an in game cutscene is playing.");
+            Debug.LogWarning("Cannot start cutscene while a cutscene is playing.");
             return;
         }
         AppController.Instance.SetInputsActive(lockInputs);
-        _animator.Play(cutsceneName);
+        _ = GameplayController.Instance.InGameCutsceneStart(_animator, cutsceneName, useTransitionScreen);
     }
 
-    public void StopScriptedEvent(string cutsceneName, bool lockInputs) // for looping events
+    public void StopCutscene(string cutsceneName) // for looping events
     {
-        _animator.SetTrigger("Stop");
-    }
-
-    public void PlayCutscene(string cutsceneName, bool useTransitionScreen)
-    {
-        if (_isPlaying)
+        if (!_isPlaying)
         {
-            Debug.LogWarning("Cannot start in game cutscene while an in game cutscene is playing.");
+            Debug.LogWarning("Cannot end cutscene while no cutscene is playing.");
             return;
         }
-        _ = GameplayController.Instance.InGameCutsceneStart(_animator, cutsceneName, useTransitionScreen);
+        _animator.SetTrigger("Stop");
     }
 
     public void OnStateExit()
     {
         if (GameplayController.Instance._state == GameplayController.State.Cutscene)
             _ = GameplayController.Instance.InGameCutsceneStop(false);
-        AppController.Instance.SetInputsActive(true); // safety
+        AppController.Instance.SetInputsActive(true);
         _animator.ResetTrigger("Stop");
         ResetCamera();
         _isPlaying = false;
