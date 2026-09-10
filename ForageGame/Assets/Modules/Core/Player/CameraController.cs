@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using TDK.PlayerSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace TDK.CameraSystem
 {
     public class CameraController : MonoBehaviour
     {
         [Header("Target Tracking (Orbital)")]
-        public Transform _viewingTarget { get; private set; }
+        public Transform _targetTransform { get; private set; }
         [SerializeField] private float _translationalSpeed = 1;
         [SerializeField] private float _orbitalSpeed = 1;
 
@@ -15,6 +17,15 @@ namespace TDK.CameraSystem
         private bool _playerTrackingMode = true;
         [SerializeField] private float playerVelocityWeight = 1; // how much should the camera care about your velocity 
         [SerializeField] private float playerDirectionWeight = 1; // how much should the camera care about the firection you are facing
+
+        [Header("Other")]
+        [SerializeField] private Volume _volume;
+        private DepthOfField _depthOfField;
+
+        void Awake()
+        {
+            _volume.profile.TryGet<DepthOfField>(out _depthOfField);
+        }
 
         void Start()
         {
@@ -26,7 +37,7 @@ namespace TDK.CameraSystem
 
         public void SetTarget(Transform viewingTarget, bool playerTrackingMode = false)
         {
-            _viewingTarget = viewingTarget;
+            _targetTransform = viewingTarget;
             // get position & rotation from transform; 
             // target radius == target transform.localscale.x
             _playerTrackingMode = playerTrackingMode;
@@ -37,9 +48,9 @@ namespace TDK.CameraSystem
         private float _targetRadius = 0;
         private void RefreshTargetInfo()
         {
-            if (_viewingTarget == null) return;
-            _viewingTarget.GetPositionAndRotation(out _targetPosition, out _targetRotation);
-            _targetRadius = _viewingTarget.localScale.x;
+            if (_targetTransform == null) return;
+            _targetTransform.GetPositionAndRotation(out _targetPosition, out _targetRotation);
+            _targetRadius = _targetTransform.localScale.x;
         }
 
 
@@ -81,6 +92,8 @@ namespace TDK.CameraSystem
                 _orbitalPosition + _translationPosition,
                 _orbitalRotation
                 );
+
+            _depthOfField.focusDistance.value = Vector3.Distance(transform.position, _targetTransform.position);
         }
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5885703968127090363}
   - component: {fileID: 2667638160035484548}
   - component: {fileID: 8573661208489413811}
+  - component: {fileID: 8430980231363302324}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -142,12 +143,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db19792377ac44898f8cd514abfd1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _viewingTarget: {fileID: 0}
   _translationalSpeed: 8
   _orbitalSpeed: 0.1
   _playerCameraTarget: {fileID: 0}
   playerVelocityWeight: 0.15
   playerDirectionWeight: 0.5
+  _volume: {fileID: 8430980231363302324}
 --- !u!114 &8573661208489413811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,3 +163,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
+--- !u!114 &8430980231363302324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931903700012109527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 99
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 223f21c057e0f7c48a44cd2f2a67cbd4, type: 2}

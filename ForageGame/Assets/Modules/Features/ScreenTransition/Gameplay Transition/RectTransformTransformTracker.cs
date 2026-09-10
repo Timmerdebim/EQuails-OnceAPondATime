@@ -26,7 +26,7 @@ namespace TDK.UISystem
         {
             if (!ValidateReferences()) return;
 
-            _target = _cameraController._viewingTarget;
+            _target = _cameraController._targetTransform;
 
             screenPosition = _camera.WorldToScreenPoint(_target.position);
 
