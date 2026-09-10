@@ -62,16 +62,8 @@ public class InGameCutsceneManager : MonoBehaviour
 
     #region Animation Controlls
     // Should only be used by the animator!
-
-    public void ResetCamera()
-    {
-        _cameraController.SetPlayerTarget();
-    }
-
-    public void SetCameraTarget()
-    {
-        _cameraController.SetTarget(_cameraTarget, Vector3.zero);
-    }
+    public void ResetCamera() => _cameraController.SetPlayerTarget();
+    public void SetCameraTarget() => _cameraController.SetTarget(_cameraTarget);
 
     #endregion
 }

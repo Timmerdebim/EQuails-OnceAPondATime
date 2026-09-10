@@ -6,17 +6,15 @@ namespace TDK.CameraSystem
     public class CameraController : MonoBehaviour
     {
         [Header("Target Tracking (Orbital)")]
-        public Transform _viewingTarget;
-        public Vector3 _viewingTargetOffset = Vector3.zero;
-        public float _translationalSpeed = 1;
-        public float _orbitalSpeed = 1;
-        public float _targetRotation = 30;
-        public float _targetRadius = 1;
+        [SerializeField] private Transform _viewingTarget;
+        [SerializeField] private float _translationalSpeed = 1;
+        [SerializeField] private float _orbitalSpeed = 1;
 
         [Header("Player Tracking Mode")]
+        [SerializeField] private Transform _playerCameraTarget;
         private bool _playerTrackingMode = true;
-        public float playerVelocityWeight = 1; // how much should the camera care about your velocity 
-        public float playerDirectionWeight = 1; // how much should the camera care about the firection you are facing
+        [SerializeField] private float playerVelocityWeight = 1; // how much should the camera care about your velocity 
+        [SerializeField] private float playerDirectionWeight = 1; // how much should the camera care about the firection you are facing
 
         void Start()
         {
@@ -24,29 +22,41 @@ namespace TDK.CameraSystem
             TeleportToTarget();
         }
 
-        public void SetPlayerTarget(float targetRadius = 12, float targetRotation = 32)
-        {
-            _viewingTarget = Player.Instance.transform;
-            _viewingTargetOffset = new(0, 0.5f, 0);
-            _playerTrackingMode = true;
-            _targetRotation = targetRotation;
-            _targetRadius = targetRadius;
-        }
+        public void SetPlayerTarget() => SetTarget(Player.Instance.transform, true);
 
-        public void SetTarget(Transform viewingTarget, Vector3 viewingTargetOffset, float targetRotation = 32, float targetRadius = 12, bool playerTrackingMode = false)
+        public void SetTarget(Transform viewingTarget, bool playerTrackingMode = false)
         {
             _viewingTarget = viewingTarget;
-            _viewingTargetOffset = viewingTargetOffset;
-            _targetRotation = targetRotation;
-            _targetRadius = targetRadius;
-            _playerTrackingMode = playerTrackingMode;
+            // get position & rotation from transform; 
+            // target radius == target transform.localscale.x
+            _playerTrackingMode = false;
         }
+
+
+
+        private Vector3 _targetPosition = Vector3.zero;
+        private Quaternion _targetRotation = Quaternion.identity;
+        private float _targetRadius = 0;
+        private void RefreshTargetInfo()
+        {
+            if (_viewingTarget == null) return;
+            _viewingTarget.GetPositionAndRotation(out _targetPosition, out _targetRotation);
+            _targetRadius = _viewingTarget.localScale.x;
+        }
+
+
+        private Vector3 _targetTranslationPosition = Vector3.zero;
+        private Vector3 _translationPosition = Vector3.zero;
+        private Vector3 _orbitalPosition = Vector3.zero;
+        private Quaternion _orbitalRotation = Quaternion.identity;
 
         public void TeleportToTarget()
         {
-            _orbitalRotation = Quaternion.Euler(_targetRotation, 0, 0);
+            RefreshTargetInfo();
+
+            _orbitalRotation = _targetRotation;
             _orbitalPosition = _orbitalRotation * Vector3.forward * _targetRadius * (-1); // prior translational position: this is the anchor from which we "orbit";
-            _translationPosition = _viewingTarget == null ? Vector3.zero : _viewingTarget.position;
+            _translationPosition = _targetPosition;
 
             transform.SetPositionAndRotation(
                 _orbitalPosition + _translationPosition,
@@ -54,17 +64,14 @@ namespace TDK.CameraSystem
                 );
         }
 
-        private Vector3 _targetTranslationPosition = Vector3.zero;
-        private Vector3 _translationPosition = Vector3.zero;
-        private Vector3 _orbitalPosition = Vector3.zero;
-        private Quaternion _orbitalRotation = Quaternion.identity;
         void LateUpdate()
         {
-            _orbitalRotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(_targetRotation, 0, 0), 1f - Mathf.Exp(-_orbitalSpeed * Time.unscaledDeltaTime));
+            RefreshTargetInfo();
+
+            _orbitalRotation = Quaternion.Slerp(transform.rotation, _targetRotation, 1f - Mathf.Exp(-_orbitalSpeed * Time.unscaledDeltaTime));
             _orbitalPosition = _orbitalRotation * Vector3.forward * Mathf.Lerp(Vector3.Distance(transform.position, _translationPosition), _targetRadius, 1f - Mathf.Exp(-_orbitalSpeed * Time.unscaledDeltaTime)) * (-1); // prior translational position: this is the anchor from which we "orbit";
 
-            _targetTranslationPosition = _viewingTarget == null ? Vector3.zero : _viewingTarget.position;
-            _targetTranslationPosition += _viewingTargetOffset;
+            _targetTranslationPosition = _targetPosition;
             if (_playerTrackingMode)
             {
                 _targetTranslationPosition += playerVelocityWeight * Player.Instance.playerController._rigidbody.linearVelocity;
