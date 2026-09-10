@@ -54,6 +54,7 @@ public class InGameCutsceneManager : MonoBehaviour
             _ = GameplayController.Instance.InGameCutsceneStop(false);
         AppController.Instance.SetInputsActive(true); // safety
         _animator.ResetTrigger("Stop");
+        ResetCamera();
         _isPlaying = false;
     }
 

@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c41fe17e5609a4c83e8c1b6ba4171a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _guid: 
   _animator: {fileID: 6460338935998657903}
   _initialState: 0
   _singleUse: 1
@@ -157,6 +158,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLock:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnlock:
     m_PersistentCalls:
       m_Calls: []
 --- !u!95 &6460338935998657903
@@ -15284,7 +15291,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c97c2e9c0ee64ce40800f7be9f4557f7, type: 2}
+  - {fileID: 2100000, guid: bab5abe045d9abd479626bbe25642585, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
