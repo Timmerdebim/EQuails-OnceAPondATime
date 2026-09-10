@@ -115,6 +115,9 @@ Required-Items:
 
 
 
+
+
+
 --- Stage
 Flags: TemporaryWingfixCrafted
 <RequireTimePassing>
@@ -126,3 +129,70 @@ Required-Items:
 
         Stage: 0
         Hmrgh - It's getting a bit stuffy in here.
+
+        Stage: 1
+        Even by my standards.
+
+        Stage: 2
+        Maybe I can -
+
+        Stage: 3
+        ...
+
+        Stage: 4
+        ...Is that loud one here again?
+
+        Stage: 5
+        How did I not hear - nevermind.
+
+        Stage: 6
+        Hey Thunderfoot!
+
+        Stage: 7
+        Since you insist on being here...
+
+        Stage: 8
+        You can make yourself useful.
+
+        Stage: 9
+        Move some of these rocks, will you?
+
+        Stage: 10
+        Actions: give_flag_grimble_requested_fresh_air
+        I want some air in here.
+
+
+--- Stage
+Flags: GrimbleRequestedFreshAir
+Required-Items:
+
+
+
+
+
+--- Stage
+Flags: GrimbleWallFreshAirInspected
+Required-Items:
+
+    Location: Wall 
+    BaseEmotion: Neutral
+
+        Stage: 0
+        I'm not hearing a lot of movement there.
+
+        Stage: 1
+        Come on, put your back into it!
+
+
+
+
+
+
+--- Stage
+Flags: GrimbleWallFreshAirInspected
+Required-Items: CrispDynamite
+
+
+
+--- Stage
+Flags: CrispDynamitePlaced
