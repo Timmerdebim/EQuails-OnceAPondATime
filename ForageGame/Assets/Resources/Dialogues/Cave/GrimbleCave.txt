@@ -58,15 +58,14 @@ Required-Items:
 
 --- Stage
 Flags: 
-Absent-Flags: TemporaryWingfixCrafted
 Required-Items:
+Absent-Items: TemporaryWingfix
 <RequireTimePassing>
 
 
 --- Stage
 Flags: GrimbleSecondWallInteraction
-Absent-Flags: TemporaryWingfixCrafted
-Required-Items:
+Absent-Items: TemporaryWingfix
 
     Location: Wall 
     BaseEmotion: Neutral
@@ -105,8 +104,7 @@ Required-Items:
 
 --- Stage
 Flags: GrimbleSecondWallInteractionDone
-Absent-Flags: TemporaryWingfixCrafted
-Required-Items:
+Absent-Items: TemporaryWingfix
 
 
 
@@ -119,9 +117,9 @@ Required-Items:
 
 
 --- Stage
-Flags: TemporaryWingfixCrafted
+Flags:
 <RequireTimePassing>
-Required-Items:
+Required-Items: TemporaryWingfix
 
     Location: Wall 
     <main>
@@ -172,7 +170,7 @@ Required-Items:
 
 --- Stage
 Flags: GrimbleWallFreshAirInspected
-Required-Items:
+Absent-Items: CrispDynamite
 
     Location: Wall 
     BaseEmotion: Neutral

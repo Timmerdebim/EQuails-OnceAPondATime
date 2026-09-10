@@ -122,6 +122,11 @@ namespace NPC
                     if(stage.requiredItems.Count > 0) Debug.LogError("Duplicate \"Required-Items:\" attribute in StoryStage!");
                     stage.requiredItems = ParseReferenceList(reader.Consume(), _items, "Items");
                 }
+                else if (line.StartsWith("Absent-Items:")) //absent Items
+                {
+                    if(stage.requiredAbsentItems.Count > 0) Debug.LogError("Duplicate \"Absent-Items:\" attribute in StoryStage!");
+                    stage.requiredAbsentItems = ParseReferenceList(reader.Consume(), _items, "Absent Items");
+                }
                 else if (line.StartsWith("<RequireTimePassing>")) //Time passing requirement
                 {
                     stage.requiresTimePassing = true;
@@ -173,6 +178,11 @@ namespace NPC
                 {
                     if(stage.requiredItems.Count > 0) Debug.LogError("Duplicate \"Required-Items:\" attribute in StoryStage!");
                     stage.requiredItems = ParseReferenceList(reader.Consume(), _items, "Items");
+                }
+                else if (line.StartsWith("Absent-Items:")) // absent Items
+                {
+                    if(stage.requiredAbsentItems.Count > 0) Debug.LogError("Duplicate \"Absent-Items:\" attribute in StoryStage!");
+                    stage.requiredAbsentItems = ParseReferenceList(reader.Consume(), _items, "Absent Items");
                 }
                 else if (line.StartsWith("<RequireTimePassing>")) //Time passing requirement
                 {

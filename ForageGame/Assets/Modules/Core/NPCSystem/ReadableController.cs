@@ -153,6 +153,7 @@ namespace NPC
                     flags.FlagListActive(s.RequiredFlags) &&
                     !flags.AnyFlagActive(s.RequiredAbsentFlags) &&
                     inventory.seenItems.IsSupersetOf(s.requiredItems) &&
+                    !inventory.seenItems.Overlaps(s.requiredAbsentItems) &&
                     (!s.requiresTimePassing || timePassed));
 
             if (next == _activeStage || next == null)
