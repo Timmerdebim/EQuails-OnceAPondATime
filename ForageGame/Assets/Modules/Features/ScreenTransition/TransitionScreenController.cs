@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Threading.Tasks;
 using AudioIntegration;
+using TDK.CameraSystem;
+using TDK.UISystem;
 
 [RequireComponent(typeof(Animator))]
 public class TransitionScreenController : MonoBehaviour

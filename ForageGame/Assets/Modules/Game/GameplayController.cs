@@ -177,11 +177,9 @@ public class GameplayController : MonoBehaviour
     {
         if (useTransitionScreen)
         {
-            SetGameState(State.Transitioning);
             await _tsc.FadeOutAsync();
             await AwaitPadding();
         }
-        SetGameState(State.Cutscene);
         cutsceneAnimator.Play(cutsceneName);
         if (useTransitionScreen)
         {
@@ -194,8 +192,8 @@ public class GameplayController : MonoBehaviour
     {
         if (useTransitionScreen)
         {
-            SetGameState(State.Transitioning);
             await _tsc.FadeOutAsync();
+            await AwaitPadding();
         }
         SetGameState(State.Playing);
         if (useTransitionScreen)

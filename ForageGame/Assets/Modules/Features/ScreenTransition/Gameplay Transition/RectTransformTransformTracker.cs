@@ -1,3 +1,4 @@
+using TDK.CameraSystem;
 using UnityEngine;
 
 namespace TDK.UISystem
@@ -10,6 +11,7 @@ namespace TDK.UISystem
         [SerializeField] private Canvas _canvas;
         [SerializeField] private RectTransform _rectTransform;
         [SerializeField] private Camera _camera; // leave as null to use Camera.main
+        [SerializeField] private CameraController _cameraController; // leave as null to use Camera.main
         // [Header("Settings")]
         // [SerializeField] private bool _clampToCanvas = false; // TODO
 
@@ -23,6 +25,8 @@ namespace TDK.UISystem
         public void UpdateRectTransform()
         {
             if (!ValidateReferences()) return;
+
+            _target = _cameraController._viewingTarget;
 
             screenPosition = _camera.WorldToScreenPoint(_target.position);
 
@@ -40,37 +44,11 @@ namespace TDK.UISystem
 
         private bool ValidateReferences()
         {
-            if (_camera == null)
+            if (_camera == null || _target == null || _canvas == null || _rectTransform == null || _cameraController == null)
             {
-                if (Camera.main == null)
-                {
-                    Debug.LogError("Target Camera is not assigned!", this);
-                    return false;
-                }
-                else
-                {
-                    _camera = Camera.main;
-                }
-            }
-
-            if (_target == null)
-            {
-                Debug.LogError("Target is not assigned!", this);
+                Debug.LogError("Missing Reference!", this);
                 return false;
             }
-
-            if (_canvas == null)
-            {
-                Debug.LogError("Canvas is not assigned!", this);
-                return false;
-            }
-
-            if (_rectTransform == null)
-            {
-                Debug.LogError("RectTransform is not assigned!", this);
-                return false;
-            }
-
             return true;
         }
     }

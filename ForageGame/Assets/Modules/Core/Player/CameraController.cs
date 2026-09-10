@@ -6,7 +6,7 @@ namespace TDK.CameraSystem
     public class CameraController : MonoBehaviour
     {
         [Header("Target Tracking (Orbital)")]
-        [SerializeField] private Transform _viewingTarget;
+        public Transform _viewingTarget { get; private set; }
         [SerializeField] private float _translationalSpeed = 1;
         [SerializeField] private float _orbitalSpeed = 1;
 
@@ -22,17 +22,15 @@ namespace TDK.CameraSystem
             TeleportToTarget();
         }
 
-        public void SetPlayerTarget() => SetTarget(Player.Instance.transform, true);
+        public void SetPlayerTarget() => SetTarget(_playerCameraTarget, true);
 
         public void SetTarget(Transform viewingTarget, bool playerTrackingMode = false)
         {
             _viewingTarget = viewingTarget;
             // get position & rotation from transform; 
             // target radius == target transform.localscale.x
-            _playerTrackingMode = false;
+            _playerTrackingMode = playerTrackingMode;
         }
-
-
 
         private Vector3 _targetPosition = Vector3.zero;
         private Quaternion _targetRotation = Quaternion.identity;
