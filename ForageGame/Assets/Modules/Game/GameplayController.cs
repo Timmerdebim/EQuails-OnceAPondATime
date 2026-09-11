@@ -10,7 +10,7 @@ public class GameplayController : MonoBehaviour
 {
     public static GameplayController Instance { get; private set; }
 
-    public enum State { Paused, Playing, Transitioning, Cutscene }
+    public enum State { Paused, Playing, Transitioning, Cutscene, InGameCutscene }
     public State _state { get; private set; } = State.Transitioning;
     [SerializeField] private TransitionScreenController _tsc;
     [SerializeField] public SaveManager _saveManager;
@@ -173,28 +173,21 @@ public class GameplayController : MonoBehaviour
         SetGameState(State.Playing);
     }
 
-    public async Task InGameCutsceneStart(Animator cutsceneAnimator, string cutsceneName, bool useTransitionScreen)
+    public async Task InGameCutsceneStart(Animator cutsceneAnimator, string cutsceneName, bool lockInputs, bool pauseTime, bool useTransitionScreen)
     {
+        SetGameState(State.InGameCutscene);
+        AppController.Instance.SetInputsActive(lockInputs);
+        Time.timeScale = pauseTime ? 0 : 1;
         if (useTransitionScreen)
         {
             await _tsc.FadeOutAsync();
             await AwaitPadding();
         }
         cutsceneAnimator.Play(cutsceneName);
-        if (useTransitionScreen)
-        {
-            await AwaitPadding();
-            _tsc.FadeIn();
-        }
     }
 
     public async Task InGameCutsceneStop(bool useTransitionScreen)
     {
-        if (useTransitionScreen)
-        {
-            await _tsc.FadeOutAsync();
-            await AwaitPadding();
-        }
         SetGameState(State.Playing);
         if (useTransitionScreen)
         {
@@ -237,6 +230,8 @@ public class GameplayController : MonoBehaviour
             case State.Cutscene:
                 AppController.Instance.SetInputsActive(false);
                 Time.timeScale = 0f;
+                break;
+            case State.InGameCutscene:
                 break;
         }
     }

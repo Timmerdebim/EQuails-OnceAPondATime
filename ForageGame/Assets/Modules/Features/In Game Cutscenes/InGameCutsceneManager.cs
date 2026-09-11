@@ -17,23 +17,26 @@ public class InGameCutsceneManager : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _cameraTarget;
     [SerializeField] private CameraController _cameraController;
+    [SerializeField] private TransitionScreenController _tsc;
 
     private bool _isPlaying;
+    private bool _useFadeOnStop = false; // for the call back
 
     #region Cutscene controlls
 
-    public void PlayCutscene(string cutsceneName, bool lockInputs, bool useTransitionScreen)
+    public void PlayCutscene(string cutsceneName, bool lockInputs, bool pauseTime, bool useFadeOnStart = false, bool useFadeOnStop = false)
     {
         if (_isPlaying)
         {
             Debug.LogWarning("Cannot start cutscene while a cutscene is playing.");
             return;
         }
-        AppController.Instance.SetInputsActive(lockInputs);
-        _ = GameplayController.Instance.InGameCutsceneStart(_animator, cutsceneName, useTransitionScreen);
+        _isPlaying = true;
+        _useFadeOnStop = useFadeOnStop;
+        _ = GameplayController.Instance?.InGameCutsceneStart(_animator, cutsceneName, lockInputs, pauseTime, useFadeOnStart);
     }
 
-    public void StopCutscene(string cutsceneName) // for looping events
+    public void StopCutscene() // for looping events
     {
         if (!_isPlaying)
         {
@@ -45,9 +48,7 @@ public class InGameCutsceneManager : MonoBehaviour
 
     public void OnStateExit()
     {
-        if (GameplayController.Instance._state == GameplayController.State.Cutscene)
-            _ = GameplayController.Instance.InGameCutsceneStop(false);
-        AppController.Instance.SetInputsActive(true);
+        _ = GameplayController.Instance?.InGameCutsceneStop(_useFadeOnStop);
         _animator.ResetTrigger("Stop");
         ResetCamera();
         _isPlaying = false;
@@ -59,6 +60,8 @@ public class InGameCutsceneManager : MonoBehaviour
     // Should only be used by the animator!
     public void ResetCamera() => _cameraController.SetPlayerTarget();
     public void SetCameraTarget() => _cameraController.SetTarget(_cameraTarget);
+    public void FadeToBlack() => _tsc.FadeOut();
+    public void FadeFromBlack() => _tsc.FadeIn();
 
     #endregion
 }
