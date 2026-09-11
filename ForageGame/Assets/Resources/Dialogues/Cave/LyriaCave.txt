@@ -1,0 +1,33 @@
+--- Stage
+Flags: 
+
+
+--- Stage
+Flags: PreGrimbleLyriaBowlOFoodScene
+Required-Items:
+
+    Location: GrimblesRoom
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: HappyTalking
+        Come on, give it to him!
+
+        Stage: 1
+        Emotion: SadTalking
+        Otherwise I might just eat it myself.
+
+--- Stage
+Flags: GrimbleLyriaBowlOFoodSceneStarted
+Actions: disable_interactable
+
+    Location: GrimblesRoom
+    BaseEmotion: Sad
+
+        Stage: 0
+        Emotion: Eek
+        Error! I should never say this line of dialogue!
+
+
+--- Stage
+Flags: GrimbleRejectedLyria
