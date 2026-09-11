@@ -390,6 +390,22 @@ namespace NPC
             }
         }
 
+        public void TryGiveItem(ItemData item)
+        {
+            Debug.Log($"[NpcLocation: {gameObject.name}] Trying to give item {item} from player inventory");
+            
+            //try to give the item directly to the inventory
+            if (InventoryController.Instance.TryAddItemAtAny(item))
+            {
+                InventoryController.Instance.TryAddUnseenItem(item);
+            }
+            else //player inventory full, spawn on ground instead (at last interacted NpcLocation)
+            {
+                Debug.Log($"[NpcLocation: {gameObject.name}] Player inventory full, spawning item {item} with itemspawner of NpcLocation {_lastActiveLocation.gameObject.name}");
+                _lastActiveLocation.GetComponent<SimpleItemSpawner>().SetAndSpawnItemLocal(item);
+            }
+        }
+
         public void GiveRecipe(RecipeItem item)
         {
             Debug.Log($"[NpcLocation: {gameObject.name}] Trying to give recipe {item} to player recipe book");

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5202161501044935352}
   - component: {fileID: 3256400985753603143}
   - component: {fileID: 4165233173356872626}
+  - component: {fileID: 8131746875913874286}
   m_Layer: 12
   m_Name: Readable
   m_TagString: Untagged
@@ -83,13 +84,16 @@ MonoBehaviour:
   isEnabled: 1
   _activeStage:
     RequiredFlags: []
+    RequiredAbsentFlags: []
     requiredItems: []
+    requiredAbsentItems: []
     requiresTimePassing: 0
     locationDialogue:
       isMainDialogue: 0
       baseEmotion: 
       Lines: []
   _lineIndex: 0
+  _lastCompletedStageIndex: -1
   syllableCountCurve:
     serializedVersion: 2
     m_Curve: []
@@ -100,6 +104,20 @@ MonoBehaviour:
   _interactable: {fileID: 9091056554763371518}
   FlagToSetAfterDialogue: {fileID: 0}
   _guid: 
+--- !u!114 &8131746875913874286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5450864339327676574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2de3d6967bd9e43994d2390eeef00b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _item: {fileID: 0}
+  _position: {x: 1, y: 0, z: 0}
 --- !u!1001 &4598386861473278787
 PrefabInstance:
   m_ObjectHideFlags: 0

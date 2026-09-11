@@ -497,13 +497,19 @@ namespace NPC
             }
         }
 
-        public void TryGiveItem(ItemTakeActionsArgs args)
+        public void TryGiveItem(ItemData item)
         {
-            Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to give item {args.item} to player inventory");
-            if (InventoryController.Instance.TryAddItemAtAny(args.item))
+            Debug.Log($"[ReadableController: {gameObject.name}] Trying to give item {item} from player inventory");
+            
+            //try to give the item directly to the inventory
+            if (InventoryController.Instance.TryAddItemAtAny(item))
             {
-                StoryFlagManager.Instance.AddFlag(args.OnSuccess);
-                MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item giving instead of closing and re-opening
+                InventoryController.Instance.TryAddUnseenItem(item);
+            }
+            else //player inventory full, spawn on ground instead (at last interacted NpcLocation)
+            {
+                Debug.Log($"[ReadableController: {gameObject.name}] Player inventory full, spawning item {item} with itemspawner.");
+                GetComponent<SimpleItemSpawner>().SetAndSpawnItemLocal(item);
             }
         }
 

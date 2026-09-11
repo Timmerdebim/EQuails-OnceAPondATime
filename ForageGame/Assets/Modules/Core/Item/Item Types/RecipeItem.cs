@@ -26,6 +26,7 @@ namespace TDK.ItemSystem.Types
                 return false;
 
             // first time seen recipe, show in recipe book managed in recipe book dont worry
+            InventoryController.Instance.TryAddUnseenItemNoPopup(this); //makes NPC's be able to react to it.
             return true;
         }
 
