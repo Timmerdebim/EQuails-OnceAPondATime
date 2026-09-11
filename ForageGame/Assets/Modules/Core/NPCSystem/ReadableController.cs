@@ -502,12 +502,9 @@ namespace NPC
             Debug.Log($"[ReadableController: {gameObject.name}] Trying to give item {item} from player inventory");
             
             //try to give the item directly to the inventory
-            if (InventoryController.Instance.TryAddItemAtAny(item))
+            if (!item.TryWorldItemInteract())
             {
-                InventoryController.Instance.TryAddUnseenItem(item);
-            }
-            else //player inventory full, spawn on ground instead (at last interacted NpcLocation)
-            {
+                //player inventory full, spawn on ground instead (at last interacted NpcLocation)
                 Debug.Log($"[ReadableController: {gameObject.name}] Player inventory full, spawning item {item} with itemspawner.");
                 GetComponent<SimpleItemSpawner>().SetAndSpawnItemLocal(item);
             }

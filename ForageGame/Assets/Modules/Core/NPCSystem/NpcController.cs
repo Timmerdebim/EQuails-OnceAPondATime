@@ -394,13 +394,10 @@ namespace NPC
         {
             Debug.Log($"[NpcLocation: {gameObject.name}] Trying to give item {item} from player inventory");
             
-            //try to give the item directly to the inventory
-            if (InventoryController.Instance.TryAddItemAtAny(item))
+            //try to give the item directly to the inventory (items handle this themselves)
+            if (!item.TryWorldItemInteract())
             {
-                InventoryController.Instance.TryAddUnseenItem(item);
-            }
-            else //player inventory full, spawn on ground instead (at last interacted NpcLocation)
-            {
+                //player inventory full, spawn on ground instead (at last interacted NpcLocation)
                 Debug.Log($"[NpcLocation: {gameObject.name}] Player inventory full, spawning item {item} with itemspawner of NpcLocation {_lastActiveLocation.gameObject.name}");
                 _lastActiveLocation.GetComponent<SimpleItemSpawner>().SetAndSpawnItemLocal(item);
             }
