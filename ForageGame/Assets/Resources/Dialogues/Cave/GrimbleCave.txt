@@ -144,7 +144,7 @@ Required-Items: TemporaryWingfix
         How did I not hear - nevermind.
 
         Stage: 6
-        Hey Thunderfoot!
+        Hey - Bigfoot!
 
         Stage: 7
         Since you insist on being here...
@@ -190,10 +190,6 @@ Absent-Items: CrispDynamite
 Flags: GrimbleWallFreshAirInspected
 Required-Items: CrispDynamite
 
-
-
---- Stage
-Flags: CrispDynamiteCutsceneStarted
 
 
 
@@ -258,4 +254,62 @@ Flags: GrimbleWallBlownUp
 
         Stage: repeat
         Emotion: TalkingAngry
-        Can you please leave me be for once?"
+        Can you please leave me be for once?
+
+
+
+    Location: GrimblesDomain 
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Actions: face_right
+        Emotion: Neutral
+        ...?
+
+        Stage: 1
+        Emotion: TalkingNeutral
+        Huh? What are you doing here?
+
+        Stage: 2
+        Emotion: TalkingAngry
+        This is MY domain.
+
+        Stage: 3
+        Emotion: Neutral
+        ...
+
+        Stage: 4
+        Emotion: TalkingNeutral
+        Can you even see down here?
+        
+        Stage: repeat
+        Emotion: TalkingNeutral
+        I'll be keeping an eye on you, then.
+
+
+
+
+
+
+
+
+--- Stage
+Flags: GrimblePunchingBagDestroyed
+Absent-Flags: GrimbleLyriaFruitBowlScene
+
+    Location: Room 
+    BaseEmotion: Neutral
+    
+        Stage: 0
+        Emotion: TalkingNeutral
+        Well, looks like someone likes snooping around.
+
+        Stage: 1
+        Emotion: TalkingAngry
+        How's my punching bag doing, hmm?
+
+        Stage: 2
+        You have a knack for destroying things, do you?
+
+        Stage: 3
+        Guess I'll just have to watch you extra carefully then.
