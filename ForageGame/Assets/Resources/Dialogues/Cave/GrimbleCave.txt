@@ -295,7 +295,7 @@ Flags: GrimbleWallBlownUp
 
 --- Stage
 Flags: GrimblePunchingBagDestroyed
-Absent-Flags: GrimbleLyriaFruitBowlScene
+Absent-Flags: PreGrimbleLyriaBowlOFoodScene
 
     Location: Room 
     BaseEmotion: Neutral
@@ -313,3 +313,152 @@ Absent-Flags: GrimbleLyriaFruitBowlScene
 
         Stage: 3
         Guess I'll just have to watch you extra carefully then.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- Stage
+Flags: PreGrimbleLyriaBowlOFoodScene
+
+    Location: Room
+    <main>
+    BaseEmotion: Angry
+
+        Stage: 0
+        Emotion: TalkingAngry
+        What do you two want?
+
+        Stage: 1
+        Actions: item_take_bowl_o_food
+        I told you two to leave me be!
+
+
+--- Stage
+Flags: GrimbleLyriaBowlOFoodSceneStarted
+Actions: start_cutscene_grimble_lyria_bowl_o_food
+
+    Location: Room
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        ...
+
+        Stage: 1
+        Actions: face_right
+        Emotion: TalkingNeutral
+        ...You still remember?
+
+        Stage: 2
+        Actions: face_right
+        Emotion: Neutral
+        ...
+
+        Stage: 3
+        Emotion: TalkingAngry
+        But why are THEY giving it to me?
+
+        Stage: 4
+        Actions: face_right
+        Emotion: TalkingNeutral
+        Why didn't you-
+
+        Stage: 5
+        Actions: face_right
+        Emotion: Neutral
+        ...
+
+        Stage: 6
+        Actions: face_left
+        Emotion: TalkingNeutral
+        No.
+
+        Stage: 7
+        Actions: face_left
+        I don't want it.
+
+        Stage: 8
+        Actions: face_right
+        Emotion: TalkingAngry
+        You can't just waltz in like nothing happened.
+
+        Stage: 9
+        Actions: face_right
+        I also haven't seen you in weeks!
+
+        Stage: 10
+        Actions: face_right
+        Emotion: Angry
+        ...
+
+        Stage: 11
+        Actions: face_right
+        Emotion: TalkingAngry
+        Nothing to say? Well leave then!
+
+        Stage: 12
+        Actions: face_right, give_flag_grimble_rejected_lyria
+        Go back to your little flower or something!
+
+
+--- Stage
+Flags: GrimbleRejectedLyria
+
+    Location: Room
+    <main>
+    BaseEmotion: Angry
+
+        Stage: 0
+        Actions: face_right
+        ...
+
+        Stage: 1
+        Emotion: TalkingNeutral
+        This is not about you.
+
+        Stage: 2
+        ...Thanks for the bowl.
+
+        Stage: 3
+        I guess you're alright... for now...
+        
+        Stage: 4
+        Cappy.
+
+        Stage: 5
+        Just...
+
+        Stage: 6
+        Don't break my stuff.
+
+        Stage: 7
+        Actions: give_flag_grimble_lyria_bowl_o_food_scene_done
+        And keep it down when I'm working, will you?
+
+
+--- Stage
+Flags: GrimbleLyriaBowlOFoodSceneDone
+
+    Location: Room
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: TalkingNeutral
+        I don't have anything to say.
+        
+        Stage: 1
+        Lars didn't feel like writing this flavor story stage.
+
+        Stage: 2
+        Go complain to him, or something.

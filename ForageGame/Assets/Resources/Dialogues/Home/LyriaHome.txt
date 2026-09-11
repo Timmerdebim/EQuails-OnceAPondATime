@@ -185,6 +185,27 @@ Required-Items:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --- Stage
 Flags: LyriaHome
 Absent-Flags: BrackenHome
@@ -318,13 +339,187 @@ Actions:give_flag_lyria_princess_closure_scene_done
 
 
 
+--- Stage
+Flags: LyriaPrincessClosureSceneDone
+<RequireTimePassing>
+
+    Location: Campfire
+    <main>
+    BaseEmotion: Sad
+
+        Stage: 0
+        Emotion: HappyTalking
+        Oh, hey Waddles.
+
+        Stage: 1
+        I just went to visit Grimble.
+
+        Stage: 2
+        Thought I'd check up on him.
+
+        Stage: 3
+        Emotion: SadTalking
+        But, he was being all grumpy again...
+
+        Stage: 4
+        Emotion: HappyTalking
+        But I know just the thing to cheer him up!
+
+        Stage: 5
+        We're gonna make him his favourite snack!
+
+        Stage: 6
+        Grimble absolutely loves it.
+
+        Stage: 7
+        Whenever he'd get frustrated with his songs...
+
+        Stage: 8
+        He'd ask me to make some for him.
+
+        Stage: 9
+        Oh - he has this really cute way of asking, too.
+
+        Stage: 10
+        ...Like he's trying to act all tough about it.
+
+        Stage: 11
+        I hope you'll get to see it once we get there!
+
+        Stage: 12
+        Actions: give_recipe_bowl_o_food
+        Here, you make this part, then I'll handle the rest.
+
+        Stage: 13
+        Let's meet up back here when we're done!
+
+--- Stage
+Flags: LyriaPrincessClosureSceneDone
+Absent-Items: BowlOFood
+
+    Location: Campfire
+    BaseEmotion: Happy
+        
+        Stage: 0
+        Emotion: HappyTalking
+        You'll manage making your part of Grimble's snack, yes?
+
+        Stage: 1
+        Let's meet up back here after we're done!
+
+        Stage: 2
+        And don't go snacking on it yourself!
+
 
 
 
 
 --- Stage
 Flags: LyriaPrincessClosureSceneDone
+Required-Items: BowlOFood
+
+    Location: Campfire
+    BaseEmotion: Happy
+    <main>
+        
+        Stage: 0
+        Emotion: HappyTalking
+        Look out - here comes Waddles!
+
+        Stage: 1
+        Actions: item_take_bowl_o_food
+        You got the Bowl o' Food ready?
+
+
+--- Stage
+Flags: LyriaFinishedBowlOFood
 Required-Items:
+
+    Location: Campfire
+    BaseEmotion: Happy
+    <main>
+        
+        Stage: 0
+        Emotion: HappyTalking
+        Alright! Go Waddles!
+
+        Stage: 1
+        Emotion: SadTalking
+        Let's just do... the finishing touches...
+
+        Stage: 2
+        Emotion: HappyTalking
+        There! Now let's do a quick taste test...
+
+        Stage: 3
+        Emotion: Eek
+        Wow! 
+        
+        Stage: 4
+        Emotion: HappyTalking
+        Waddles, you did a great job for your first go!
+
+        Stage: 5
+        You know, this is actually a hummingbird delicacy.
+
+        Stage: 6
+        Emotion: SadTalking
+        ...Maybe I shouldn't have just handed you the family recipe.
+
+        Stage: 7
+        Emotion: HappyTalking
+        But I can trust you though, right, Waddles?
+
+        Stage: 8
+        Actions: item_give_bowl_o_food, give_flag_grimble_lyria_bowl_o_food_scene
+        Here, let's get this to Grimble, he'll love it!
+
+        Stage: repeat
+        Emotion: HappyTalking
+        Come on! Let's get to Grimble asap!
+
+
+
+
+
+
+--- Stage
+Flags: GrimbleRejectedLyria
+
+    Location: Root
+    <main>
+    BaseEmotion: Sad
+
+        Stage: 0
+        Emotion: SadTalking
+        Oh - hey.
+
+        Stage: 1
+        I... don't get it.
+
+        Stage: 2
+        Why is Grimble still mad at me?
+
+        Stage: 3
+        That day...
+
+        Stage: 4
+        Emotion: Eek
+        I was just trying to help...
+
+        Stage: 5
+        Emotion: Sad
+        ...
+
+        Stage: repeat
+        Emotion: SadTalking
+        I'm sorry, Grimble...
+
+
+
+
+--- Stage
+Flags: GrimbleRejectedLyria
 <RequireTimePassing>
 
     Location: Root

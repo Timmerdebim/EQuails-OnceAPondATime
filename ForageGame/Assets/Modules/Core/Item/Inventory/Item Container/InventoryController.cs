@@ -34,6 +34,8 @@ namespace TDK.ItemSystem.Inventory
             }
         }
 
+        public void TryAddUnseenItemNoPopup(ItemData item) => seenItems.Add(item); //this is for recipes (and Npc's being able to react to it), which unfortunately will be double saved now (boo hoo) ~Lars
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
