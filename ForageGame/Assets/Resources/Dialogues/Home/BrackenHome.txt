@@ -404,4 +404,84 @@ Required-Items: BoatDamageReport
 
 --- Stage
 Flags: BrackenInspectingBoat
-Required-Items:
+
+
+
+--- Stage
+Flags: GrimbleMosswickSceneDone
+
+    Location: EastBeach
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Actions: face_right
+        ...
+
+        Stage: 1
+        Actions: face_right
+        Emotion: NeutralTalking
+        I think I get it now.
+
+        Stage: 2
+        Actions: face_right
+        Why all this happened.
+
+        Stage: 3
+        Emotion: Sad
+        ...It's me.
+
+        Stage: 4
+        I didn't realise...
+
+        Stage: 5
+        Emotion: Sitting
+        ...
+
+        Stage: 6
+        Emotion: SittingNeutralTalking
+        I wanted to know how he does it.
+
+        Stage: 7
+        His music - how it... works.
+
+        Stage: 8
+        I read books, analyzed his pieces...
+
+        Stage: 9
+        Tried writing my own...
+
+        Stage: 10
+        Emotion: Sitting
+        But whenever I'd ask Grimble about it...
+
+        Stage: 11
+        He'd... do this.
+
+        Stage: 12
+        Actions: face_right
+        Emotion: Neutral
+        ...
+
+        Stage: 13
+        Actions: face_right
+        Emotion: NeutralTalking
+        Why didn't he tell me?
+
+        Stage: 14
+        Actions: face_right
+        Emotion: Sad
+        Why didn't I notice?
+
+        Stage: 15
+        Actions: face_right
+        Emotion: Sad
+        ...
+
+        Stage: 16
+        Actions: face_right, give_flag_grimble_bracken_scene_pre
+        Emotion: NeutralTalking
+        I'm going over there.
+
+--- Stage
+Flags: GrimbleBrackenScenePre
