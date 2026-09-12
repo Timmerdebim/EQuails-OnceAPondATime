@@ -1,0 +1,60 @@
+--- Stage
+Flags: 
+
+
+--- Stage
+Flags: GrimbleRejectedMosswick
+
+    Location: Boat
+    <main>
+    BaseEmotion: Sad
+
+        Stage: 0
+        ...
+
+        Stage: 1
+        Emotion: SadTalking
+        ...Hello.
+
+        Stage: 2
+        Emotion: ExtraSad
+        I guess you can already tell...
+
+        Stage: 3
+        ...
+
+        Stage: 4
+        Emotion: SadTalking
+        He said he didn't believe me.
+
+        Stage: 5
+        That I didn't care...
+
+        Stage: 6
+        So I tried to show him.
+
+        Stage: 7
+        I played one of his pieces.
+
+        Stage: 8
+        Emotion: ExtraSad
+        ...The best I still could, anyway...
+
+        Stage: 9
+        ...
+
+        Stage: 10
+        Emotion: SadTalking
+        I don't understand.
+
+        Stage: 11
+        Actions: give_flag_grimble_mosswick_boat_interaction_done
+        He was never this upset about mistakes before...
+
+        Stage: repeat
+        Emotion: Sad
+        ...
+
+
+--- Stage
+Flags: GrimbleMosswickSceneDone

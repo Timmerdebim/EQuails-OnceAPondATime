@@ -81,44 +81,49 @@ Flags: MosswickHome, GrimbleLyriaBowlOFoodSceneDone
 
         Stage: 6
         Actions: face_left
-        Emotion: SadTalking
+        Emotion: Sad
+        <CloseAfter>
         But now... I can try to fix it.
 
 
 
 
---- Stage
-Flags: MosswickHome, GrimbleLyriaBowlOFoodSceneDone
 
-    Location: Boat
-    <main>
-    BaseEmotion: Sad
 
-        Stage: 0
+
+
+
+        Stage: 7
         Emotion: HappyTalking
         Oh - you want to come along?
 
-        Stage: 1
+        Stage: 8
         That's nice, but not this time friend.
 
-        Stage: 2
+        Stage: 9
         Actions: face_left
-        Emotion: SadTalking
+        Emotion: Sad
         I want this to be personal.
 
-        Stage: 3
+        Stage: 10
         Actions: face_left
         And... sincere.
 
-        Stage: 4
+        Stage: 11
         Actions: face_left
-        Emotion: Sad
         ...
 
-        Stage: 5
+        Stage: 12
         Emotion: HappyTalking
+        Well, I better get going.
+
+        Stage: 13
         Actions: give_flag_grimble_rejected_mosswick
         I'll see you when I get back, friend.
 
+
+
+
+
 --- Stage
-Flags: GrimbleRejectedLyria
+Flags: GrimbleRejectedMosswick
