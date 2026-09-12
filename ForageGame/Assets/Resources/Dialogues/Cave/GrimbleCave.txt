@@ -462,3 +462,41 @@ Flags: GrimbleLyriaBowlOFoodSceneDone
 
         Stage: 2
         Go complain to him, or something.
+
+
+
+
+
+
+--- Stage
+Flags: GrimbleLyriaBowlOFoodSceneDone
+<RequireTimePassing>
+Actions: start_animation_grimble_eating
+
+    Location: Room
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: Eating
+        Actions: face_left
+        ...So good...
+        
+        Stage: 1
+        Actions: face_left
+        ...
+
+        Stage: 2
+        ...!
+
+        Stage: 3
+        Emotion: Neutral
+        ...
+
+        Stage: 4
+        Emotion: TalkingNeutral
+        You saw nothing.
+
+
+        Stage: repeat
+        Emotion: TalkingNeutral
+        You saw nothing.
