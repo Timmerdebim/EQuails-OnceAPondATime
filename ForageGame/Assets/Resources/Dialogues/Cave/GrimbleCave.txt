@@ -491,6 +491,7 @@ Flags: GrimbleLyriaBowlOFoodSceneDone
 
 --- Stage
 Flags: GrimbleLyriaBowlOFoodSceneDone
+Absent-Flags: GrimbleRejectedMosswick, GrimbleMosswickBoatInteractionDone
 <RequireTimePassing>
 Actions: start_animation_grimble_eating
 
@@ -521,3 +522,74 @@ Actions: start_animation_grimble_eating
         Stage: repeat
         Emotion: TalkingNeutral
         You saw nothing.
+
+
+
+
+
+--- Stage
+Flags: GrimbleRejectedMosswick
+Absent-Flags: GrimbleMosswickBoatInteractionDone
+
+
+--- Stage
+Flags: GrimbleMosswickBoatInteractionDone
+
+    Location: RoomWall
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Actions: face_right
+        ...
+
+        Stage: 1
+        Actions: face_right
+        Emotion: TalkingNeutral
+        Cappy.
+
+        Stage: 2
+        You... talked to him, right?
+
+        Stage: 3
+        Emotion: Neutral
+        ...
+
+        Stage: 4
+        Emotion: TalkingNeutral
+        That was a different flute.
+
+        Stage: 5
+        ...He does still play, then?
+
+        Stage: 6
+        Emotion: Neutral
+        ...
+
+        Stage: 7
+        Actions: face_right
+        Emotion: TalkingAngry
+        I guess Bracken made him a new one.
+
+        Stage: 8
+        Actions: face_right
+        Emotion: Angry
+        ...
+
+        Stage: 9
+        Actions: face_right
+        Emotion: TalkingAngry
+        Figures.
+
+        Stage: 10
+        Actions: face_right
+        He knows that's not how I wrote it.
+
+        Stage: 11
+        Actions: face_right, give_flag_grimble_mosswick_scene_done
+        It must have been them again.
+
+        Stage: repeat
+        Actions: face_right
+        Emotion: Angry
+        ...
