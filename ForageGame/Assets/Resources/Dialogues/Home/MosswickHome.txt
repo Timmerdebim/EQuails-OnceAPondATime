@@ -1,11 +1,9 @@
 --- Stage
 Flags: 
-Required-Items:
 
 
 --- Stage
 Flags: MosswickHome
-Required-Items:
 
     Location: MosswickSpot 
     <main>
@@ -26,7 +24,7 @@ Required-Items:
         ...
 
         Stage: 4
-        Emotion: HapyTalking
+        Emotion: HappyTalking
         ...Remember when we met after the storm?
 
         Stage: 5
@@ -45,3 +43,82 @@ Required-Items:
 
         Stage: 9
         Thanks, friend.
+
+
+
+
+
+
+--- Stage
+Flags: MosswickHome, GrimbleLyriaBowlOFoodSceneDone
+<RequireTimePassing>
+
+    Location: Boat
+    <main>
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: HappyTalking
+        Oh, hello there friend.
+
+        Stage: 1
+        I... was just about to go see Grimble.
+
+        Stage: 2
+        Emotion: Happy
+        ...
+
+        Stage: 3
+        Emotion: SadTalking
+        I heard from Lyria what happened.
+
+        Stage: 4
+        I'm going to apologise.
+
+        Stage: 5
+        Emotion: ExtraSad
+        I started this...
+
+        Stage: 6
+        Actions: face_left
+        Emotion: SadTalking
+        But now... I can try to fix it.
+
+
+
+
+--- Stage
+Flags: MosswickHome, GrimbleLyriaBowlOFoodSceneDone
+
+    Location: Boat
+    <main>
+    BaseEmotion: Sad
+
+        Stage: 0
+        Emotion: HappyTalking
+        Oh - you want to come along?
+
+        Stage: 1
+        That's nice, but not this time friend.
+
+        Stage: 2
+        Actions: face_left
+        Emotion: SadTalking
+        I want this to be personal.
+
+        Stage: 3
+        Actions: face_left
+        And... sincere.
+
+        Stage: 4
+        Actions: face_left
+        Emotion: Sad
+        ...
+
+        Stage: 5
+        Emotion: HappyTalking
+        Actions: give_flag_grimble_rejected_mosswick
+        I'll see you when I get back, friend.
+
+--- Stage
+Flags: GrimbleRejectedLyria

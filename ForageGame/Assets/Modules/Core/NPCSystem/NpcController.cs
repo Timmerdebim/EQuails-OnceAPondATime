@@ -93,7 +93,7 @@ namespace NPC
 
         private void OnNewStoryFlag(StoryFlag flag)
         {
-            if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(true); //do this only if current stage is done
+            if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(flag.passesTime); //do this only if current stage is done
         }
         private void OnTimePassing()
         {
