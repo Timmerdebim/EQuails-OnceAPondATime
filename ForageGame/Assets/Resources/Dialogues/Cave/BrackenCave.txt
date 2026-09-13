@@ -4,7 +4,7 @@ Flags:
 
 --- Stage
 Flags: GrimbleBrackenScenePre
-Actions: disable_interactable
+Actions: disable_grimbles_room_interactable
 
     Location: GrimblesRoom
     BaseEmotion: Neutral
@@ -30,5 +30,128 @@ Flags: GrimbleBrackenSceneStarted
         Everyone wants you back, Grimble.
 
 
+
+
+        Stage: 2
+        Emotion: Neutral
+        ...
+
+        Stage: 3
+        Emotion: Sad
+        I promise it's not what it seems Grimble...
+
+        Stage: 4
+        If I really didn't care about you...
+
+        Stage: 5
+        Actions: multi_npc_switch_to_grimble
+        ...Why would I be here now?
+
+
+
+        Stage: 6
+        Actions: multi_npc_switch_to_grimble
+        Emotion: NeutralTalking
+        Grimble?
+
+
+
+
+        Stage: 7
+        Actions: multi_npc_switch_to_grimble
+        Emotion: NeutralTalking
+        No, that's not-
+
+
+
+        Stage: 8
+        Actions: multi_npc_switch_to_grimble
+        Emotion: Sad
+        No Grimble, nobody-
+
+
+        Stage: 9
+        Actions: multi_npc_switch_to_grimble
+        Emotion: Exploded
+        No wait, please-
+
+        
+
+
 --- Stage
 Flags: GrimbleBrackenSceneDone
+
+    Location: OutsideGrimblesRoom
+    BaseEmotion: Sad
+
+        Stage: 0
+        ...
+
+        Stage: 1
+        So... what now?
+
+--- Stage
+Flags: GrimbleBrackenSceneDone
+Required-Items: GrimblesComposition
+
+    Location: OutsideGrimblesRoom
+    <main>
+    BaseEmotion: Sad
+
+        Stage: 0
+        Hm?
+
+        Stage: 1
+        Emotion: NeutralTalking
+        Oh - I see.
+
+        Stage: 2
+        Emotion: Sad
+        You sure about this?
+
+        Stage: 3
+        Emotion: NeutralTalking
+        Actions: give_flag_finale_bracken_grabbing_guitar
+        ...I'll go grab my guitar.
+
+
+--- Stage
+Flags: FinaleBrackenGrabbingGuitar, FinaleMosswickPresent, FinaleLyriaPresent
+
+    Location: OutsideGrimblesRoom
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: NeutralTalking
+        Alright then...
+
+        Stage: 1
+        Actions: face_left
+        Everyone ready?
+
+        Stage: 2
+        Actions: face_right
+        Emotion: Neutral
+        ...
+
+        Stage: 3
+        Emotion: NeutralTalking
+        Actions: face_right
+        Five... Six... Seven...
+
+        Stage: 4
+        Actions: face_right, start_cutscene_grimble_finale
+        ...Eight.
+
+
+--- Stage
+Flags: GrimbleFinaleDone
+Actions: disable_grimbles_room_interactable
+
+    Location: GrimblesRoom
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: Exploded
+        Error! I should never say this line of dialogue!
