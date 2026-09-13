@@ -56,8 +56,8 @@ namespace NPC
             {
                 _currentSpeaker.WalkAway();
             }
+            _currentSpeaker = _nextSpeaker; //this must happen before calling Next(), otherwise the SwitchSpeaker action will be overwritten by this.
             _nextSpeaker.Next();
-            _currentSpeaker = _nextSpeaker;
         }
 
         // Called by player unfocusing
