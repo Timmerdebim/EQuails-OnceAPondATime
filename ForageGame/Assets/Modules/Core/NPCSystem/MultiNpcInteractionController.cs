@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using TDK.ItemSystem;
-using TDK.ItemSystem.Inventory;
 using UnityEngine;
 using UnityEngine.Events;
-using TDK.ItemSystem.Types;
-using TDK.SaveSystem;
 using System;
+using TDK.InteractionSystem;
 
 namespace NPC
 {
@@ -23,30 +20,58 @@ namespace NPC
     /// - The MultiNpcInteractionController then simply routes interactions to the next speaker, while making sure the previous one closes their dialogue accordingly.
     /// 
     /// </summary>
+    
+    [RequireComponent(typeof(Interactable))]
+    [RequireComponent(typeof(OutlineObject))]
+    [RequireComponent(typeof(Collider))]
     public class MultiNpcInteractionController : MonoBehaviour
     {
-        [SerializeField] private NpcLocation _defaultSpeaker;
+        [SerializeField] private NpcLocation _initialSpeaker;
         private NpcLocation _nextSpeaker;
         private NpcLocation _currentSpeaker;
 
-        private void OnEnable()
+        private void Awake()
         {
-            _nextSpeaker = _defaultSpeaker;
+            GetComponent<Interactable>().SetInteractibility(false); //disable by default
+        }
+
+        public void StartCutscene()
+        {
+            _currentSpeaker = _initialSpeaker;
+            _nextSpeaker = _initialSpeaker;
+            GetComponent<Interactable>().SetInteractibility(true);
+        }
+
+        public void EndCutscene()
+        {
+            _currentSpeaker.WalkAway();
+            GetComponent<Interactable>().SetInteractibility(false);
         }
 
         // Called by player interacting with the floor interactable
-        public void Next() => _nextSpeaker.Next();
+        public void Next()
+        {
+            //if the next speaker is a different one, close the old one's dialogue box
+            if (_currentSpeaker != _nextSpeaker)
+            {
+                _currentSpeaker.WalkAway();
+            }
+            _nextSpeaker.Next();
+            _currentSpeaker = _nextSpeaker;
+        }
 
-        // Called by player unfocusing - silently ignored during cutscene
-        public void OnUnfocus() { }
+        // Called by player unfocusing
+        public void WalkAway()
+        {
+            _currentSpeaker.WalkAway();
+        }
 
         // Called via DialogueAction when speaker switches
         public void SwitchSpeaker(NpcLocation next)
         {
-            if (next == _nextSpeaker) return;
-            _currentSpeaker = _nextSpeaker;
+            if (next == _currentSpeaker) return;
+            Debug.Log($"[MultiNpcInteractionController]: Switching speaker from {_currentSpeaker.name} to {next.name}");
             _nextSpeaker = next;
-            _currentSpeaker.WalkAway();
         }
     }
 }

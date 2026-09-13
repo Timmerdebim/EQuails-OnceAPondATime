@@ -593,3 +593,35 @@ Flags: GrimbleMosswickBoatInteractionDone
         Actions: face_right
         Emotion: Angry
         ...
+
+
+
+
+
+
+
+
+
+
+
+--- Stage
+Flags: GrimbleBrackenScenePre
+Actions: disable_bracken_scene_interactable
+
+    Location: BrackenScene
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: relieved
+        Error! I should never say this line of dialogue!
+
+
+--- Stage
+Flags: GrimbleBrackenSceneStarted
+
+    Location: BrackenScene
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        *bruh*

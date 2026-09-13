@@ -1,0 +1,34 @@
+--- Stage
+Flags: 
+
+
+--- Stage
+Flags: GrimbleBrackenScenePre
+Actions: disable_interactable
+
+    Location: GrimblesRoom
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: Exploded
+        Error! I should never say this line of dialogue!
+
+
+--- Stage
+Flags: GrimbleBrackenSceneStarted
+
+    Location: GrimblesRoom
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: NeutralTalking
+        ...and I really didn't mean it like that either.
+
+        Stage: 1
+        Emotion: Sad
+        Actions: multi_npc_switch_to_grimble
+        Everyone wants you back, Grimble.
+
+
+--- Stage
+Flags: GrimbleBrackenSceneDone
