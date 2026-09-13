@@ -38,6 +38,9 @@ namespace TDK.ItemSystem
 
         public void LoadData(WorldSaveData data)
         {
+            foreach (Transform child in transform)
+                GameObject.Destroy(child.gameObject);
+
             foreach (ItemSaveData dataEntry in data.Items)
                 SpawnItem(dataEntry);
         }
