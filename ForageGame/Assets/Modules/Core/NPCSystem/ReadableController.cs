@@ -188,6 +188,12 @@ namespace NPC
 
             //update location indices
             _lineIndex = 0;
+
+            //invoke any action that needs to be done immediately
+            foreach (UnityEvent action in stage.stageActions)
+            {
+                action.Invoke();
+            }
             
 
             //check if the new stage has a location assigned

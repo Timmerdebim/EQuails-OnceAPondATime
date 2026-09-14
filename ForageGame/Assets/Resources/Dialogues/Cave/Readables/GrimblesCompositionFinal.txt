@@ -9,17 +9,21 @@ Actions: show_self
     <main>
 
         Stage: 0
-        Grimble threw this balled up paper at us.
+        ...?
 
         Stage: 1
-        On closer inspection, this is one of his compositions.
+        The ball of paper Grimble threw at us...
 
         Stage: 2
+        It's actually one of his compositions.
+
+        Stage: 3
         ...It's written for three players.
 
         Stage: leave_polite
-        Actions: spawn_item_grimbles_composition, hide_self
-        Let's try one last thing.
+        Actions: give_item_grimbles_composition
+        ...
 
 --- Stage
 Flags: GrimbleBrackenSceneDone
+Actions: hide_self
