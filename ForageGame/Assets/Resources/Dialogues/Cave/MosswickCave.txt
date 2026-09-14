@@ -58,3 +58,90 @@ Flags: GrimbleRejectedMosswick
 
 --- Stage
 Flags: GrimbleMosswickSceneDone
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- Stage
+Flags: FinaleBrackenGrabbingGuitar, FinaleMosswickPresent
+Absent-Flags: FinaleLyriaPresent
+
+    Location: OutsideGrimblesRoom
+    BaseEmotion: Sad
+
+        Stage: 0
+        Emotion: SadTalking
+        Oh, hello.
+
+        Stage: 1    
+        The piece needs three players...     
+
+        Stage: 2
+        So I'm just waiting on the rest.
+
+
+--- Stage
+Flags: FinaleBrackenGrabbingGuitar, FinaleLyriaPresent, FinaleMosswickPresent
+Absent-Flags: GrimbleFinaleDone
+
+    Location: OutsideGrimblesRoom
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: Surprised
+        All of us are here!
+
+        Stage: 1
+        It's just like old times!
+
+        Stage: 2
+        Emotion: SadTalking
+        ...Except without Grimble.
+
+        Stage: 3
+        Emotion: ExtraSad
+        ...
+
+        Stage: 4
+        Emotion: SadTalking
+        Do you really think this will work, friend?
+
+
+
+
+
+
+--- Stage
+Flags: GrimbleFinaleStarted
+Actions: disable_outside_grimbles_room_interactable
+    
+    Location: OutsideGrimblesRoom
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: ExtraSad
+        Error! I should never say this line of dialogue!
+
+
+
+
+--- Stage
+Flags: GrimbleFinaleDone
+Actions: disable_grimbles_room_interactable
+    
+    Location: GrimblesRoom
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: ExtraSad
+        Error! I should never say this line of dialogue!

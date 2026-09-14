@@ -125,6 +125,7 @@ Required-Items: GrimblesComposition
 Flags: FinaleBrackenGrabbingGuitar
 Absent-flags: FinaleMosswickPresent, FinaleLyriaPresent
 
+
 --- Stage
 Flags: FinaleBrackenGrabbingGuitar, FinaleMosswickPresent, FinaleLyriaPresent
 
@@ -153,6 +154,23 @@ Flags: FinaleBrackenGrabbingGuitar, FinaleMosswickPresent, FinaleLyriaPresent
         Stage: 4
         Actions: face_right, start_cutscene_grimble_finale
         ...Eight.
+
+
+
+
+--- Stage
+Flags: GrimbleFinaleStarted
+Actions: disable_outside_grimbles_room_interactable
+    
+    Location: OutsideGrimblesRoom
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: ExtraSad
+        Error! I should never say this line of dialogue!
+
+
+
 
 
 --- Stage

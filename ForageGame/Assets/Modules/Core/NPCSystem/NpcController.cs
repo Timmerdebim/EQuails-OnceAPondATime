@@ -53,6 +53,8 @@ namespace NPC
 
         [SerializeField] private StoryFlag FlagToSetAfterDialogue = null;
 
+        [SerializeField] private UnityEvent actionToTriggerAfterDialogue = null;
+
         void Awake()
         {
             locations = GetComponentsInChildren<NpcLocation>().ToList();
@@ -106,6 +108,12 @@ namespace NPC
         }
         public void OnDialogueFinished()
         {
+            if (actionToTriggerAfterDialogue != null)
+            {
+                Debug.Log($"[NpcController: {character}] invoking action {actionToTriggerAfterDialogue} after dialogue as planned");
+                actionToTriggerAfterDialogue.Invoke();
+                actionToTriggerAfterDialogue = null;
+            }
             if (FlagToSetAfterDialogue != null)
             {
                 Debug.Log($"[NpcController: {character}] Setting storyflag {FlagToSetAfterDialogue.id} after dialogue as planned");
@@ -371,6 +379,19 @@ namespace NPC
         public void FaceLeft() => _lastActiveLocation.FaceLeft();
 
         public void FaceRight() => _lastActiveLocation.FaceRight();
+
+        public void InvokeActionOnClose(string actionName)
+        {
+            if (actionToTriggerAfterDialogue != null) Debug.LogWarning($"[NpcController: {character}] there is already an action set to be triggered after dialogue, overwriting! Previous flag: {actionToTriggerAfterDialogue}, new action: {actionName}");
+            if (dialogueReferences.GetDialogueActionMap().TryGetValue(actionName, out UnityEvent action)) //SUPER inefficient, we do not care
+            {
+                actionToTriggerAfterDialogue = action;
+            }
+            else
+            {
+                Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] Action {actionName} not found in DialogueReferences!");
+            }
+        }
 
         public void GiveStoryFlag(StoryFlag flag) => StoryFlagManager.Instance.AddFlag(flag); //required because StoryFlagManager is in a different scene
 

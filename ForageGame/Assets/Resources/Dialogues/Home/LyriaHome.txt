@@ -487,7 +487,6 @@ Required-Items:
 Flags: GrimbleRejectedLyria
 
     Location: Root
-    <main>
     BaseEmotion: Sad
 
         Stage: 0
@@ -518,21 +517,39 @@ Flags: GrimbleRejectedLyria
 
 
 
+
+
+
+
+
 --- Stage
-Flags: GrimbleRejectedLyria
-<RequireTimePassing>
+Flags: FinaleBrackenGrabbingGuitar
 
     Location: Root
+    <main>
     BaseEmotion: Happy
 
         Stage: 0
-        Emotion: Eek
-        Waa! Waddles?
+        Emotion: Happy
+        It's Waddles!
 
         Stage: 1
         Emotion: SadTalking
-        The developers haven't given me anything to say here yet...
+        What's that?
 
         Stage: 2
-        Emotion: Sad
-        ...
+        Emotion: HappyTalking
+        Oh! it's from Grimble!
+
+        Stage: 3
+        Emotion: Happy
+        He must want us to play for him!
+
+        Stage: 4
+        Actions: give_flag_finale_lyria_present
+        Coming right up!
+
+
+
+--- Stage
+Flags: FinaleLyriaPresent

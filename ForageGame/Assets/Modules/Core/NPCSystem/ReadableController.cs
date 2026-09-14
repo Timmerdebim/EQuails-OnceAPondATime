@@ -139,7 +139,7 @@ namespace NPC
                 actionToTriggerAfterDialogue.Invoke();
                 actionToTriggerAfterDialogue = null;
             }
-            else if (FlagToSetAfterDialogue != null)
+            if (FlagToSetAfterDialogue != null)
             {
                 Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Setting storyflag {FlagToSetAfterDialogue.id} after dialogue as planned");
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);

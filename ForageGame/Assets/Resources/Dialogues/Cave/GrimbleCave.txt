@@ -759,3 +759,144 @@ Flags: GrimbleBrackenSceneStarted
 
 --- Stage
 Flags: GrimbleBrackenSceneDone
+
+
+
+--- Stage
+Flags: GrimbleFinaleStarted
+
+    Location: Room
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        ...
+
+        Stage: 1
+        ...
+
+        Stage: 2
+        Emotion: TalkingNeutral
+        They'd still... play it?
+
+        Stage: 3
+        Actions: face_away_from_player
+        After this?
+
+        Stage: 4
+        Actions: face_away_from_player
+        Emotion: Neutral
+        ...
+
+        Stage: 5
+        Actions: face_away_from_player
+        *sniff sniff*
+
+        Stage: 6
+        Actions: face_away_from_player
+        Emotion: TalkingNeutral
+        I...
+
+        Stage: 7
+        Emotion: Relieved
+        ...
+
+        Stage: 8
+        Thank you.
+
+        Stage: 9
+        Cappy.
+
+        Stage: 10
+        I... don't know what to say to them.
+
+        Stage: 11
+        But maybe it should start with an apology.
+
+        Stage: 12
+        Actions: face_away_from_player, give_flag_grimble_finale_done
+        ... I hope they'll understand.
+
+
+
+--- Stage
+Flags: GrimbleFinaleDone
+    Location: Room
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Actions: face_right
+        ...
+
+        Stage: 1
+        Actions: face_right
+        Emotion: TalkingNeutral
+        I... Uhh...
+
+        Stage: 2
+        Actions: face_left
+        Emotion: Neutral
+        ...
+
+        Stage: 3
+        Actions: face_right
+        I'm sorry, everyone.
+
+        Stage: 4
+        Actions: face_right
+        Emotion: Neutral
+        I was just...
+
+        Stage: 5
+        Actions: face_right
+        So scared...
+
+        Stage: 6
+        Actions: face_left
+        Emotion: Neutral
+        So scared...
+
+        Stage: 7
+        Actions: face_left
+        Emotion: Relieved
+        B-but-
+
+        Stage: 8
+        Actions: face_left
+        Emotion: Relieved
+        You guys never really left.
+
+        Stage: 9
+        Actions: face_right
+        Emotion: Relieved
+        Did you?
+
+        Stage: 10
+        Actions: face_right
+        ...
+
+        Stage: 11
+        Actions: face_right
+        Emotion: Neutral
+        ...
+
+        Stage: 12
+        Actions: face_right
+        Emotion: Neutral
+        Can we go back?
+
+        Stage: 13
+        Actions: face_right
+        Emotion: Neutral
+        Please?
+
+        Stage: 14
+        Actions: face_left
+        Emotion: Relieved
+        I - uhm...
+
+        Stage: 15
+        Actions: face_right, start_cutscene_ending
+        Emotion: Relieved
+        Have some new things I want us to play.

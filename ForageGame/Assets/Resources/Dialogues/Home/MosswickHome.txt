@@ -158,3 +158,53 @@ Flags: GrimbleMosswickSceneDone
         Stage: repeat
         Emotion: SadTalking
         I hope Bracken can think of something...
+
+
+
+
+
+
+--- Stage
+Flags: FinaleBrackenGrabbingGuitar
+
+    Location: MosswickSpot
+    <main>
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: HappyTalking
+        Oh, you're back!
+
+        Stage: 1
+        Emotion: SadTalking
+        It's, just... you...
+
+        Stage: 2
+        Emotion: ExtraSad
+        I guess Bracken didn't manage either...
+
+        Stage: 3
+        Emotion: Surprised
+        ...Hmm?
+
+        Stage: 4
+        Oh I see... it's that one.
+
+        Stage: 5
+        Emotion: SadTalking
+        Would Grimble even want to hear us play now though?
+
+        Stage: 6
+        Emotion: Sad
+        ...
+
+        Stage: 7
+        Emotion: HappyTalking
+        I suppose it can never hurt to try.
+
+        Stage: 8
+        Actions: give_flag_finale_mosswick_present
+        I'll be there.
+
+--- Stage
+Flags: FinaleMosswickPresent
