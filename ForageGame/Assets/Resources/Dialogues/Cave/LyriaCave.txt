@@ -19,7 +19,7 @@ Required-Items:
 
 --- Stage
 Flags: GrimbleLyriaBowlOFoodSceneStarted
-Actions: disable_interactable
+Actions: disable_grimbles_room_interactable
 
     Location: GrimblesRoom
     BaseEmotion: Sad
@@ -31,3 +31,75 @@ Actions: disable_interactable
 
 --- Stage
 Flags: GrimbleRejectedLyria
+
+
+
+
+--- Stage
+Flags: FinaleBrackenGrabbingGuitar, FinaleLyriaPresent
+Absent-Flags: FinaleMosswickPresent
+
+    Location: OutsideGrimblesRoom
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: Happy
+        Oh, hey Waddles.
+
+        Stage: 1
+        Emotion: HappyTalking
+        We'll need to wait for Mosswick and Bracken.
+
+        Stage: 2
+        Emotion: SadTalking
+        The piece is meant for all three of us, remember?
+
+
+--- Stage
+Flags: FinaleBrackenGrabbingGuitar, FinaleLyriaPresent, FinaleMosswickPresent
+Absent-Flags: GrimbleFinaleDone
+
+    Location: OutsideGrimblesRoom
+    BaseEmotion: Sad
+
+        Stage: 0
+        Emotion: SadTalking
+        All of us are here.
+
+        Stage: 1
+        Emotion: HappyTalking
+        Just waiting on Bracken to count us in.
+
+        Stage: 2
+        Emotion: Happy
+        And then everything will be fixed, right?
+
+
+
+
+
+
+
+--- Stage
+Flags: GrimbleFinaleStarted
+Actions: disable_outside_grimbles_room_interactable
+    
+    Location: OutsideGrimblesRoom
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: ExtraSad
+        Error! I should never say this line of dialogue!
+
+
+
+--- Stage
+Flags: GrimbleFinaleDone
+Actions: disable_grimbles_room_interactable
+    
+    Location: GrimblesRoom
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: Eek
+        Error! I should never say this line of dialogue!
