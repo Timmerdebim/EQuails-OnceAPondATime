@@ -55,6 +55,7 @@ namespace NPC
         public List<ItemData> requiredItems = new List<ItemData>(); //items are taken via actions
         public List<ItemData> requiredAbsentItems = new List<ItemData>();
         public bool requiresTimePassing = false; //for StoryStages that can't happen immediately after the last one to make sense story-wise.
+        public List<UnityEvent> stageActions = new List<UnityEvent>(); //Some StoryStages need to have stuff happen on activation immediately (mostly Lyria regarding Princess' state) that can't be reacted to otherwise.
         public LocationDialogue locationDialogue;
 
     }

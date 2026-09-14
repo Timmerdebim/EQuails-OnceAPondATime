@@ -62,6 +62,8 @@ namespace NPC
 
         [SerializeField] private StoryFlag FlagToSetAfterDialogue = null;
 
+        [SerializeField] private UnityEvent actionToTriggerAfterDialogue = null;
+
         void OnEnable()
         {
             StoryFlagManager.onFlagAdded += OnNewStoryFlag;
@@ -131,7 +133,13 @@ namespace NPC
 
         public void OnDialogueClosed()
         {
-            if (FlagToSetAfterDialogue != null)
+            if (actionToTriggerAfterDialogue != null)
+            {
+                Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] invoking action {actionToTriggerAfterDialogue} after dialogue as planned");
+                actionToTriggerAfterDialogue.Invoke();
+                actionToTriggerAfterDialogue = null;
+            }
+            else if (FlagToSetAfterDialogue != null)
             {
                 Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Setting storyflag {FlagToSetAfterDialogue.id} after dialogue as planned");
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);
@@ -188,6 +196,12 @@ namespace NPC
 
             //update location indices
             _lineIndex = 0;
+
+            //invoke any action that needs to be done immediately
+            foreach (UnityEvent action in stage.stageActions)
+            {
+                action.Invoke();
+            }
             
 
             //check if the new stage has a location assigned
@@ -473,6 +487,19 @@ namespace NPC
         #endregion
 
         #region DialogueActionJargin
+
+        public void InvokeActionOnClose(string actionName)
+        {
+            if (actionToTriggerAfterDialogue != null) Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] there is already an action set to be triggered after dialogue, overwriting! Previous flag: {actionToTriggerAfterDialogue}, new action: {actionName}");
+            if (dialogueReferences.GetDialogueActionMap().TryGetValue(actionName, out UnityEvent action)) //SUPER inefficient, we do not care
+            {
+                actionToTriggerAfterDialogue = action;
+            }
+            else
+            {
+                Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] Action {actionName} not found in DialogueReferences!");
+            }
+        }
 
         public void TryTakeItem(ItemTakeActionsArgs args)
         {
