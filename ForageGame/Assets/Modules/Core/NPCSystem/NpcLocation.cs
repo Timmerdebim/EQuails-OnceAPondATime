@@ -35,6 +35,8 @@ namespace NPC
 
         [SerializeField] private PopupTextbox statusIndicator;
 
+        private bool isBeingDisabled = false; //insane stupid bullshit hack to not have the popup thing pop up when being disabled
+
         void Start()
         {
             textCtxSource = new CancellationTokenSource();
@@ -49,12 +51,18 @@ namespace NPC
         //THIS animation ALREADY DISABLES THE GAMEOBJECT
         public void ShrinkAway()
         {
+            isBeingDisabled = true;
             HideStatusIndicator();
             _interactable.DisableInteraction();
             visuals.OnShrinkAway();
+            isBeingDisabled = false; //yeah, you can see how much this SUCKS
         }
 
-        public void ShowStatusIndicator() => statusIndicator.ShowTextbox(true);
+        public void ShowStatusIndicator()
+        {
+            Debug.LogError($"[NpcLocation: {gameObject.name}] me when I lie");
+            statusIndicator.ShowTextbox(true);
+        } 
 
         public void SetStatusIndicatorText(bool isMainDialogue)
         {
@@ -142,7 +150,7 @@ namespace NPC
             if (!isDialogueActive)
             {
                 dialogueBox.OpenDialogue();
-                statusIndicator.ShowTextbox(false); //hide the indicator
+                HideStatusIndicator(); //hide the indicator
                 isDialogueActive = true;
             }
 
@@ -165,29 +173,46 @@ namespace NPC
             }
         }
 
+
+        //this fuck head is being called twice, which is why things even work in the first place
+
         //TODO: massive issue with leaving at the last line of a main dialogue. also showing status indicator afterward and making sure those don't clash
         public void WalkAway()
         {
-            if (npcController == null) return;
+            if (npcController == null || isBeingDisabled) return; //when the StoryStage changes and this location is no longer active, it will unfocus itself automatically. In this case prevent this function from running
 
             ResetToken();
 
             DialogueLine textToDisplay = null;
 
+            //edge case: left on last dialogue box opened.
+            //simply close the dialogue normally and evalutate the next stage.
+            if (isDialogueActive && MessageRead)
+            {
+                Debug.LogWarning($"[NpcLocation: {gameObject.name}]: Nice try playtester, but walkaway edge case triggered, ending dialogue normally!");
+                EndDialogue();
+                npcController.OnDialogueFinished();
+                lastTalkingEmotion = null; //so the NPC doesn't resume an emotion from a previous conversation
+                return;
+            }
+
+
             if (isDialogueActive)
             {
+                //dialogue is actually done, neither rude or leave p
                 // Rude: Left while box was open
                 textToDisplay = npcController.GetLeaveRudeDialogue(this);
             }
             else
             {
-                // Polite: Left after closing the box
+                // Polite: Left after closing the box (or starting to do so)
                 // now only actually gets a message if the regular stages are done ~Lars
                 textToDisplay = npcController.GetLeavePoliteDialogue(this);
             }
 
             //Visual stuffs, play regardless of there actually being text to display
             visuals.OnInteract();
+            ShowStatusIndicator(); //show it if we're not exiting stage 
 
             if (textToDisplay != null)
             {
