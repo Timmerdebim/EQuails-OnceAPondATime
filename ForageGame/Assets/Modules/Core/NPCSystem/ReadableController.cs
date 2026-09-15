@@ -66,6 +66,8 @@ namespace NPC
 
         [SerializeField] private PopupTextbox statusIndicator;
 
+        private bool isBeingDisabled = false; //insane stupid bullshit hack to not have the popup thing pop up when being disabled
+
         void OnEnable()
         {
             StoryFlagManager.onFlagAdded += OnNewStoryFlag;
@@ -97,8 +99,10 @@ namespace NPC
         {
             if (_interactable != null)
             {
+                isBeingDisabled = true;
                 _interactable.SetInteractibility(false);
                 HideStatusIndicator();
+                isBeingDisabled = false;
                 Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Interactable {_interactable.name} Disabled!");
             }
         }
@@ -152,7 +156,7 @@ namespace NPC
             if (_lastCompletedStageIndex == GetActiveStageIndex())  EvaluateActiveStage(); //do this only if current stage is done
         }
 
-        public void OnDialogueClosed()
+        public void OnDialogueFinished()
         {
             if (actionToTriggerAfterDialogue != null)
             {
@@ -393,6 +397,7 @@ namespace NPC
             if (isDialogueActive && MessageRead)
             {
                 EndDialogue();
+                OnDialogueFinished();
                 return;
             }
 
@@ -443,11 +448,23 @@ namespace NPC
 
         public void WalkAway()
         {
+            if (isBeingDisabled) return; //when the StoryStage changes and this readable is no longer active, it will unfocus itself automatically. In this case prevent this function from running
             // if (!isEnabled) return;
 
             ResetToken();
 
             DialogueLine textToDisplay = null;
+
+            //edge case: left on last dialogue box opened.
+            //simply close the dialogue normally and evalutate the next stage.
+            if (isDialogueActive && MessageRead)
+            {
+                Debug.LogWarning($"[ReadableController: {gameObject.name}]: Nice try playtester, but walkaway edge case triggered, ending dialogue normally!");
+                EndDialogue();
+                OnDialogueFinished();
+
+                return;
+            }
 
             if (isDialogueActive)
             {
@@ -506,7 +523,6 @@ namespace NPC
             isTyping = false;
             ShowStatusIndicator();
 
-            OnDialogueClosed();
             CancelCurrentToken();
         }
         #endregion
