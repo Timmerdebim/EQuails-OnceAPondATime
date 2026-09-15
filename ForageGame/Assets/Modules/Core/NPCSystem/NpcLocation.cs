@@ -54,7 +54,9 @@ namespace NPC
             visuals.OnShrinkAway();
         }
 
-        public void ShowStatusIndicator(bool isMainDialogue)
+        public void ShowStatusIndicator() => statusIndicator.ShowTextbox(true);
+
+        public void SetStatusIndicatorText(bool isMainDialogue)
         {
             if (isMainDialogue)
             {
@@ -66,7 +68,6 @@ namespace NPC
                 statusIndicator.SetTextColor(Color.white);
                 statusIndicator.SetText("...");
             }
-            statusIndicator.ShowTextbox(true);
         }
 
         public void HideStatusIndicator() => statusIndicator.ShowTextbox(false);
@@ -164,6 +165,7 @@ namespace NPC
             }
         }
 
+        //TODO: massive issue with leaving at the last line of a main dialogue. also showing status indicator afterward and making sure those don't clash
         public void WalkAway()
         {
             if (npcController == null) return;
@@ -234,7 +236,6 @@ namespace NPC
             dialogueBox.CloseDialogue();
             isDialogueActive = false;
             isTyping = false;
-            statusIndicator.ShowTextbox(true); //show the indicator again
 
             //reset emotion after ending dialogue (i.e., close mouth)
             visuals.OnInteract();

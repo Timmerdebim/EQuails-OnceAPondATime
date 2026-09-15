@@ -120,7 +120,7 @@ namespace NPC
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);
                 FlagToSetAfterDialogue = null;
             }
-            else if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(); //do this only if current stage is done
+            else if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(); //do this only if current stage is done, guard should actually be completely redundant
         }
         private void EvaluateActiveStage(bool timePassed = false)
         {
@@ -218,7 +218,8 @@ namespace NPC
             {
                 loc.gameObject.SetActive(true); //will play the popup animation if not already active
                 if (!string.IsNullOrEmpty(_activeStage.locationDialogues[loc].baseEmotion)) loc.SetEmotion(_activeStage.locationDialogues[loc].baseEmotion);
-                loc.ShowStatusIndicator(_activeStage.locationDialogues[loc].isMainDialogue); //shows the '!' or '...' indicator
+                loc.SetStatusIndicatorText(_activeStage.locationDialogues[loc].isMainDialogue); //shows the '!' or '...' indicator
+                loc.ShowStatusIndicator();
             }
         }
 
@@ -314,6 +315,7 @@ namespace NPC
                 {
                     Debug.Log($"[NpcController: {character}] Finished MAIN locationDialogue");
                     _lastCompletedStageIndex = GetActiveStageIndex();
+                    location.SetStatusIndicatorText(false); //set indicator text to '...' (main dialogue is done)
                     //EvaluateActiveStage(); //TODO: only do after the box is closed
                 }
             }
