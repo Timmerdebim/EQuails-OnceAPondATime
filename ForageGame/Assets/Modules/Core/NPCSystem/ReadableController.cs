@@ -112,7 +112,9 @@ namespace NPC
             }
         }
 
-        public void ShowStatusIndicator(bool isMainDialogue)
+        public void ShowStatusIndicator() => statusIndicator.ShowTextbox(true);
+
+        public void SetStatusIndicatorText(bool isMainDialogue)
         {
             if (isMainDialogue)
             {
@@ -124,7 +126,6 @@ namespace NPC
                 statusIndicator.SetTextColor(Color.white);
                 statusIndicator.SetText("...");
             }
-            statusIndicator.ShowTextbox(true);
         }
 
         public void HideStatusIndicator() => statusIndicator.ShowTextbox(false);
@@ -235,7 +236,8 @@ namespace NPC
             {
                 //re-enable if was disabled by previous empty stage, to allow for auto-re-enabling
                 EnableInteractable();
-                ShowStatusIndicator(ld.isMainDialogue); //shows the '!' or '...' indicator
+                SetStatusIndicatorText(ld.isMainDialogue); //shows the '!' or '...' indicator
+                ShowStatusIndicator();
                 if (!ld.isMainDialogue) 
                 {
                     Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
@@ -416,7 +418,7 @@ namespace NPC
             if (!isDialogueActive)
             {
                 Player.Instance.thinkingBox.OpenDialogue();
-                statusIndicator.ShowTextbox(false); //hide the indicator
+                HideStatusIndicator();
                 isDialogueActive = true;
             }
 
@@ -502,7 +504,7 @@ namespace NPC
             Player.Instance.thinkingBox.CloseDialogue();
             isDialogueActive = false;
             isTyping = false;
-            statusIndicator.ShowTextbox(true); //show the indicator again
+            ShowStatusIndicator();
 
             OnDialogueClosed();
             CancelCurrentToken();

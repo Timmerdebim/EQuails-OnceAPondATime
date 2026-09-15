@@ -58,11 +58,7 @@ namespace NPC
             isBeingDisabled = false; //yeah, you can see how much this SUCKS
         }
 
-        public void ShowStatusIndicator()
-        {
-            Debug.LogError($"[NpcLocation: {gameObject.name}] me when I lie");
-            statusIndicator.ShowTextbox(true);
-        } 
+        public void ShowStatusIndicator() => statusIndicator.ShowTextbox(true);
 
         public void SetStatusIndicatorText(bool isMainDialogue)
         {
@@ -174,9 +170,6 @@ namespace NPC
         }
 
 
-        //this fuck head is being called twice, which is why things even work in the first place
-
-        //TODO: massive issue with leaving at the last line of a main dialogue. also showing status indicator afterward and making sure those don't clash
         public void WalkAway()
         {
             if (npcController == null || isBeingDisabled) return; //when the StoryStage changes and this location is no longer active, it will unfocus itself automatically. In this case prevent this function from running
@@ -212,7 +205,7 @@ namespace NPC
 
             //Visual stuffs, play regardless of there actually being text to display
             visuals.OnInteract();
-            ShowStatusIndicator(); //show it if we're not exiting stage 
+            
 
             if (textToDisplay != null)
             {
@@ -261,6 +254,7 @@ namespace NPC
             dialogueBox.CloseDialogue();
             isDialogueActive = false;
             isTyping = false;
+            ShowStatusIndicator(); //show it if we're not exiting stage 
 
             //reset emotion after ending dialogue (i.e., close mouth)
             visuals.OnInteract();
