@@ -141,6 +141,7 @@ namespace NPC
             if (!isDialogueActive)
             {
                 dialogueBox.OpenDialogue();
+                statusIndicator.ShowTextbox(false); //hide the indicator
                 isDialogueActive = true;
             }
 
@@ -233,7 +234,7 @@ namespace NPC
             dialogueBox.CloseDialogue();
             isDialogueActive = false;
             isTyping = false;
-            if (MessageRead) statusIndicator.ShowTextbox(false);
+            statusIndicator.ShowTextbox(true); //show the indicator again
 
             //reset emotion after ending dialogue (i.e., close mouth)
             visuals.OnInteract();
