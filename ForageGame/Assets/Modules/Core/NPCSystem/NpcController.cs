@@ -218,6 +218,7 @@ namespace NPC
             {
                 loc.gameObject.SetActive(true); //will play the popup animation if not already active
                 if (!string.IsNullOrEmpty(_activeStage.locationDialogues[loc].baseEmotion)) loc.SetEmotion(_activeStage.locationDialogues[loc].baseEmotion);
+                loc.ShowStatusIndicator(_activeStage.locationDialogues[loc].isMainDialogue); //shows the '!' or '...' indicator
             }
         }
 

@@ -11,6 +11,11 @@ public class PopupTextbox : MonoBehaviour
         _textbox.text = text;
     }
 
+    public void SetTextColor(Color color)
+    {
+        _textbox.color = color;
+    }
+
     public void ShowTextbox(bool showTextbox)
     {
         _animator.SetBool("Show", showTextbox);

@@ -33,6 +33,8 @@ namespace NPC
         //Public getter, TODO: unused publicly?
         public bool MessageRead = false;
 
+        [SerializeField] private PopupTextbox statusIndicator;
+
         void Start()
         {
             textCtxSource = new CancellationTokenSource();
@@ -47,10 +49,27 @@ namespace NPC
         //THIS animation ALREADY DISABLES THE GAMEOBJECT
         public void ShrinkAway()
         {
+            HideStatusIndicator();
             _interactable.DisableInteraction();
             visuals.OnShrinkAway();
-
         }
+
+        public void ShowStatusIndicator(bool isMainDialogue)
+        {
+            if (isMainDialogue)
+            {
+                statusIndicator.SetTextColor(new Color(.75f, 0.1875f, 0.1875f));
+                statusIndicator.SetText("!");
+            }
+            else
+            {
+                statusIndicator.SetTextColor(Color.white);
+                statusIndicator.SetText("...");
+            }
+            statusIndicator.ShowTextbox(true);
+        }
+
+        public void HideStatusIndicator() => statusIndicator.ShowTextbox(false);
 
         private void OnDestroy()
         {
@@ -89,6 +108,7 @@ namespace NPC
 
             DialogueResult result = npcController.GetNextDialogue(this);
             MessageRead = result.CloseAfter;
+
             DialogueLine line = result.Line;
 
             if (line == null)
@@ -213,6 +233,7 @@ namespace NPC
             dialogueBox.CloseDialogue();
             isDialogueActive = false;
             isTyping = false;
+            if (MessageRead) statusIndicator.ShowTextbox(false);
 
             //reset emotion after ending dialogue (i.e., close mouth)
             visuals.OnInteract();
