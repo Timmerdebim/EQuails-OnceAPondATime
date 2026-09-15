@@ -64,6 +64,8 @@ namespace NPC
 
         [SerializeField] private UnityEvent actionToTriggerAfterDialogue = null;
 
+        [SerializeField] private PopupTextbox statusIndicator;
+
         void OnEnable()
         {
             StoryFlagManager.onFlagAdded += OnNewStoryFlag;
@@ -96,6 +98,7 @@ namespace NPC
             if (_interactable != null)
             {
                 _interactable.SetInteractibility(false);
+                HideStatusIndicator();
                 Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Interactable {_interactable.name} Disabled!");
             }
         }
@@ -108,6 +111,23 @@ namespace NPC
                 Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Interactable {_interactable.name} Enabled!");
             }
         }
+
+        public void ShowStatusIndicator(bool isMainDialogue)
+        {
+            if (isMainDialogue)
+            {
+                statusIndicator.SetTextColor(new Color(.75f, 0.1875f, 0.1875f));
+                statusIndicator.SetText("!");
+            }
+            else
+            {
+                statusIndicator.SetTextColor(Color.white);
+                statusIndicator.SetText("...");
+            }
+            statusIndicator.ShowTextbox(true);
+        }
+
+        public void HideStatusIndicator() => statusIndicator.ShowTextbox(false);
 
         private void OnDestroy()
         {
@@ -215,6 +235,7 @@ namespace NPC
             {
                 //re-enable if was disabled by previous empty stage, to allow for auto-re-enabling
                 EnableInteractable();
+                ShowStatusIndicator(ld.isMainDialogue); //shows the '!' or '...' indicator
                 if (!ld.isMainDialogue) 
                 {
                     Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
@@ -395,6 +416,7 @@ namespace NPC
             if (!isDialogueActive)
             {
                 Player.Instance.thinkingBox.OpenDialogue();
+                statusIndicator.ShowTextbox(false); //hide the indicator
                 isDialogueActive = true;
             }
 
@@ -480,6 +502,7 @@ namespace NPC
             Player.Instance.thinkingBox.CloseDialogue();
             isDialogueActive = false;
             isTyping = false;
+            statusIndicator.ShowTextbox(true); //show the indicator again
 
             OnDialogueClosed();
             CancelCurrentToken();
