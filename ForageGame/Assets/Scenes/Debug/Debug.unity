@@ -17454,6 +17454,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b9cb12e533f5f2469cb18fd3a5500a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -30660,7 +30664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].dialogueAction
-      value: give_flag_temporary_wingfix_crafted
+      value: give_item_temporary_wingfix
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[4].dialogueAction
@@ -30769,7 +30773,7 @@ PrefabInstance:
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 939598462}
+      objectReference: {fileID: 939598463}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[4].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -30856,7 +30860,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetFlag
+      value: TryGiveItem
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[4].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -30900,7 +30904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: StoryFlagSetter, Assembly-CSharp
+      value: NPC.ReadableController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[4].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -30945,7 +30949,7 @@ PrefabInstance:
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 11400000, guid: a3e4d511a657b41beb46a9a2647651c4, type: 2}
+      objectReference: {fileID: 11400000, guid: 32ef6ad911bff824f8a2af25c9b6e163, type: 2}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[4].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -30988,7 +30992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: StoryFlag, Assembly-CSharp
+      value: TDK.ItemSystem.ItemData, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[4].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -54682,7 +54686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[2].dialogueAction
-      value: give_flag_temporary_wingfix_crafted
+      value: give_item_temporary_wingfix
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].dialogueAction
@@ -54767,7 +54771,7 @@ PrefabInstance:
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[2].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1723331211}
+      objectReference: {fileID: 1723331210}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -54830,7 +54834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[2].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetFlag
+      value: TryGiveItem
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -54862,7 +54866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[2].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: StoryFlagSetter, Assembly-CSharp
+      value: NPC.ReadableController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -54895,7 +54899,7 @@ PrefabInstance:
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[2].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 11400000, guid: a3e4d511a657b41beb46a9a2647651c4, type: 2}
+      objectReference: {fileID: 11400000, guid: 32ef6ad911bff824f8a2af25c9b6e163, type: 2}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -54926,7 +54930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[2].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: StoryFlag, Assembly-CSharp
+      value: TDK.ItemSystem.ItemData, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5202161501044935352, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: dialogueActionMap.Array.data[3].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -54966,6 +54970,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5450864339327676574, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
   m_PrefabInstance: {fileID: 1723331207}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1723331210 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4165233173356872626, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
+  m_PrefabInstance: {fileID: 1723331207}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723331209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f0d2b3ca5e8409c83c694c926b8e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1723331211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65938,6 +65953,18 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 46481805}
+    - target: {fileID: 5515786873637643493, guid: 44b7b001a2f5142ff8ad90c08e9ce35e, type: 3}
+      propertyPath: ItemMap.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515786873637643493, guid: 44b7b001a2f5142ff8ad90c08e9ce35e, type: 3}
+      propertyPath: ItemMap.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 32ef6ad911bff824f8a2af25c9b6e163, type: 2}
+    - target: {fileID: 5515786873637643493, guid: 44b7b001a2f5142ff8ad90c08e9ce35e, type: 3}
+      propertyPath: ItemMap.Array.data[3].name
+      value: TemporaryWingfix
+      objectReference: {fileID: 0}
     - target: {fileID: 5699468735810133699, guid: 44b7b001a2f5142ff8ad90c08e9ce35e, type: 3}
       propertyPath: m_Name
       value: Bracken
@@ -66607,6 +66634,26 @@ PrefabInstance:
       value: Mosswick
       objectReference: {fileID: 0}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+      propertyPath: ItemMap.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+      propertyPath: ItemMap.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 32ef6ad911bff824f8a2af25c9b6e163, type: 2}
+    - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+      propertyPath: ItemMap.Array.data[2].name
+      value: TemporaryWingfix
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+      propertyPath: ItemMap.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 2729a29f36f594b4094b68851868747f, type: 2}
+    - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+      propertyPath: ItemMap.Array.data[3].name
+      value: SturdyWingfix
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[9].dialogueAction
       value: give_item_bog-root_fossil
       objectReference: {fileID: 0}
@@ -66861,8 +66908,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6054106175145715321, guid: 04f75d59ecd194155a98eef829253fc9, type: 3}
+      propertyPath: ItemMap.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054106175145715321, guid: 04f75d59ecd194155a98eef829253fc9, type: 3}
       propertyPath: NpcLocationMap.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054106175145715321, guid: 04f75d59ecd194155a98eef829253fc9, type: 3}
+      propertyPath: ItemMap.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 32ef6ad911bff824f8a2af25c9b6e163, type: 2}
+    - target: {fileID: 6054106175145715321, guid: 04f75d59ecd194155a98eef829253fc9, type: 3}
+      propertyPath: ItemMap.Array.data[1].name
+      value: TemporaryWingfix
       objectReference: {fileID: 0}
     - target: {fileID: 6054106175145715321, guid: 04f75d59ecd194155a98eef829253fc9, type: 3}
       propertyPath: dialogueActionMap.Array.size
