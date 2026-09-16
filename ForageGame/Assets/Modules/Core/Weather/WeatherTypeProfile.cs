@@ -98,7 +98,8 @@ namespace Weather
             //turn off the behaviors too
             foreach(var behavior in _behaviours)
             {
-               behavior.enabled = false; 
+                behavior.SetBlend(0f); //mostly for resuming purposes
+                behavior.enabled = false; 
             }
         }
 
