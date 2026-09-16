@@ -47,7 +47,7 @@ namespace Project.Menus.Audio
             get => PlayerPrefs.GetInt("MasterVolume", 100);
             set
             {
-                _masterBus.setVolume(value / 100);
+                _masterBus.setVolume(((float) value) / 100);
                 PlayerPrefs.SetInt("MasterVolume", value);
                 PlayerPrefs.Save();
             }
@@ -58,7 +58,7 @@ namespace Project.Menus.Audio
             get => PlayerPrefs.GetInt("MusicVolume", 100);
             set
             {
-                _musicBus.setVolume(value / 100);
+                _musicBus.setVolume(((float) value) / 100);
                 PlayerPrefs.SetInt("MusicVolume", value);
                 PlayerPrefs.Save();
             }
@@ -69,7 +69,7 @@ namespace Project.Menus.Audio
             get => PlayerPrefs.GetInt("SfxVolume", 100);
             set
             {
-                _sfxBus.setVolume(value / 100);
+                _sfxBus.setVolume(((float) value) / 100);
                 PlayerPrefs.SetInt("SfxVolume", value);
                 PlayerPrefs.Save();
             }
@@ -80,7 +80,7 @@ namespace Project.Menus.Audio
             get => PlayerPrefs.GetInt("AmbienceVolume", 100);
             set
             {
-                _ambienceBus.setVolume(value / 100);
+                _ambienceBus.setVolume(((float) value) / 100);
                 PlayerPrefs.SetInt("AmbienceVolume", value);
                 PlayerPrefs.Save();
             }
