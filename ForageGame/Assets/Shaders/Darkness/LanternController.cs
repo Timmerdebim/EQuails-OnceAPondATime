@@ -12,9 +12,10 @@ public class PlayerLanternController : MonoBehaviour
     }
 
     [Header("References")]
-    [SerializeField] private Transform _playerHand;
+    [SerializeField] private ConfigurableJoint _handJoint;
     [SerializeField] private Light _light;
     [SerializeField] private Material playerMat; //TODO: materialpropertyblock instead
+    [SerializeField] private Transform[] _visuals;
 
     [Header("Positioning")]
     [SerializeField] private LanternPose[] facingPoses = new LanternPose[5]; //front left, front right, back left, back right
@@ -24,55 +25,98 @@ public class PlayerLanternController : MonoBehaviour
     [SerializeField] private float _lerpRotSpeed = 1;
 
     [SerializeField] private int _currentFacingIndex = 0; //front left, front right, back left, back right
-    [SerializeField] private LanternPose _currentLanternPose = new() { localPosition = Vector3.zero, localRotation = Quaternion.identity };
-    [SerializeField] private bool _isDeployed = false;
+    private enum State { Depolyed, Retracting, Retracted, Deploying }
+    [SerializeField] private State _state = State.Retracted;
     [SerializeField] private float _deployProgress = 0f; // 0 = retracted, 1 = deployed
-
-    /// <summary>
-    /// For Tim:
-    /// Set player material using MaterialPropertyBlock
-    /// </summary>
 
     void Start()
     {
         Player.Instance.visuals.onFacingDirectionChanged.AddListener(OnFacingDirectionChanged);
-        SetDeployment(false);
+        SetState(State.Retracted);
+    }
+
+    void OnValidate()
+    {
+        SetState(_state);
     }
 
     public void SetDeployment(bool isDeployed)
     {
-        var newVal = isDeployed && Player.Instance.playerData.lanternUnlocked; //easy way to only have it work when unlocked
-        if (newVal == _isDeployed) return; //WeatherManager will continuously set this during transitions, so only do something when we need to
+        if (!Player.Instance.playerData.lanternUnlocked) return; //easy way to only have it work when unlocked
 
-        _isDeployed = newVal;
-        RefreshLanternPose();
+        if (isDeployed)//WeatherManager will continuously set this during transitions, so only do something when we need to
+        {
+            if (_state != State.Depolyed && _state != State.Deploying)
+                SetState(State.Deploying);
+        }
+        else
+        {
+            if (_state != State.Retracted && _state != State.Retracting)
+                SetState(State.Retracting);
+        }
     }
 
     private void OnFacingDirectionChanged(bool isFacingLeft, bool isFacingFront)
     {
         _currentFacingIndex = (isFacingLeft ? 0 : 1) + (isFacingFront ? 0 : 2);
-        RefreshLanternPose();
-    }
-
-    private void RefreshLanternPose()
-    {
-        if (_isDeployed)
-            _currentLanternPose = facingPoses[_currentFacingIndex];
-        else
-            _currentLanternPose = _retractedPose;
     }
 
     void FixedUpdate()
     {
-        // Advance deploy/retract progress.
-        _deployProgress = Mathf.MoveTowards(_deployProgress, _isDeployed ? 1 : 0, Time.fixedDeltaTime / deployDuration);
-        transform.localScale = Mathf.SmoothStep(0, 1, _deployProgress) * Vector3.one;
+        switch (_state)
+        {
+            case State.Depolyed:
+                DeltaHandJointRefresh(facingPoses[_currentFacingIndex], Time.fixedDeltaTime);
+                return;
+            case State.Retracting:
+                DeltaHandJointRefresh(_retractedPose, Time.fixedDeltaTime);
+                _deployProgress = Mathf.MoveTowards(_deployProgress, 0, Time.fixedDeltaTime / deployDuration);
+                DeltaDeploymentRefresh();
+                if (_deployProgress < 0.01f) SetState(State.Retracted);
+                return;
+            case State.Retracted:
+                return;
+            case State.Deploying:
+                DeltaHandJointRefresh(facingPoses[_currentFacingIndex], Time.fixedDeltaTime);
+                _deployProgress = Mathf.MoveTowards(_deployProgress, 1, Time.fixedDeltaTime / deployDuration);
+                DeltaDeploymentRefresh();
+                if (_deployProgress > 0.99f) SetState(State.Depolyed);
+                return;
+        }
+    }
 
-        // Move Lantern Base
-        _playerHand.SetLocalPositionAndRotation(
-            Vector3.MoveTowards(_playerHand.localPosition, _currentLanternPose.localPosition, _lerpPosSpeed * Time.fixedDeltaTime),
-            Quaternion.RotateTowards(_playerHand.localRotation, _currentLanternPose.localRotation, _lerpRotSpeed * Time.fixedDeltaTime)
-            );
+    private void DeltaHandJointRefresh(LanternPose lanternPose, float delta)
+    {
+        _handJoint.connectedAnchor = Vector3.MoveTowards(_handJoint.connectedAnchor, lanternPose.localPosition, _lerpPosSpeed * delta);
+        _handJoint.targetRotation = Quaternion.RotateTowards(_handJoint.targetRotation, lanternPose.localRotation, _lerpRotSpeed * delta);
+    }
+
+    private void DeltaDeploymentRefresh()
+    {
+        _handJoint.anchor = Mathf.SmoothStep(0, 1, _deployProgress) * Vector3.up;
+        foreach (Transform visual in _visuals)
+            visual.localScale = Mathf.SmoothStep(0, 1, _deployProgress) * Vector3.one;
+    }
+
+    private void SetState(State state)
+    {
+        _state = state;
+        switch (_state)
+        {
+            case State.Depolyed:
+                _deployProgress = 1;
+                DeltaDeploymentRefresh();
+                break;
+            case State.Retracting:
+                break;
+            case State.Retracted:
+                DeltaHandJointRefresh(_retractedPose, 999);
+                _deployProgress = 0;
+                DeltaDeploymentRefresh();
+                break;
+            case State.Deploying:
+                return;
+        }
     }
 
     #region Visuals
