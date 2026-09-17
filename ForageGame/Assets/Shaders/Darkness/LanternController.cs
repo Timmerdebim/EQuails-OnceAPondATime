@@ -18,16 +18,16 @@ public class PlayerLanternController : MonoBehaviour
     [SerializeField] private Transform[] _visuals;
 
     [Header("Positioning")]
-    [SerializeField] private LanternPose[] facingPoses = new LanternPose[5]; //front left, front right, back left, back right
+    [SerializeField] private LanternPose[] facingPoses = new LanternPose[4]; //front left, front right, back left, back right
     [SerializeField] private LanternPose _retractedPose = new() { localPosition = Vector3.zero, localRotation = Quaternion.identity };
     [SerializeField] private float deployDuration = 0.4f; // seconds to fully deploy/retract
     [SerializeField] private float _lerpPosSpeed = 1;
     [SerializeField] private float _lerpRotSpeed = 1;
 
-    [SerializeField] private int _currentFacingIndex = 0; //front left, front right, back left, back right
+    private int _currentFacingIndex = 0; //front left, front right, back left, back right
     private enum State { Depolyed, Retracting, Retracted, Deploying }
     [SerializeField] private State _state = State.Retracted;
-    [SerializeField] private float _deployProgress = 0f; // 0 = retracted, 1 = deployed
+    private float _deployProgress = 0f; // 0 = retracted, 1 = deployed
 
     void Start()
     {
