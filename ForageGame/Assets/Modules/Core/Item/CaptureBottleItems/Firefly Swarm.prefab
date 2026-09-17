@@ -32,7 +32,8 @@ Transform:
   m_LocalPosition: {x: 7, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8195505332744496467}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &6947660886865397735
@@ -3831,12 +3832,12 @@ ParticleSystem:
       emitProbability: 1
   LightsModule:
     enabled: 0
-    ratio: 1
-    light: {fileID: 0}
-    randomDistribution: 0
-    color: 1
-    range: 1
-    intensity: 1
+    ratio: 0.5
+    light: {fileID: 1409309684810712056, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+    randomDistribution: 1
+    color: 0
+    range: 0
+    intensity: 0
     rangeCurve:
       serializedVersion: 2
       minMaxState: 0
@@ -4880,3 +4881,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnItem: {fileID: 11400000, guid: 599a3fc2625b483409318dac7091d962, type: 2}
+--- !u!1001 &53907204548084376
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6156162530619081571}
+    m_Modifications:
+    - target: {fileID: 1550044917349959495, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_Name
+      value: Firefly Swarm Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+--- !u!4 &8195505332744496467 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8143577936350570443, guid: a507fde0dcf334d18a2fb1de22e8c4de, type: 3}
+  m_PrefabInstance: {fileID: 53907204548084376}
+  m_PrefabAsset: {fileID: 0}
