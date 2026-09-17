@@ -32,7 +32,7 @@ namespace TDK.ItemSystem.Types
                     if (!InventoryController.Instance.TryRemoveItemAtCurrent(this))
                         return false;
 
-                    if (!InventoryController.Instance.TryAddItemAtAny(handler.returnItem))
+                    if (!handler.returnItem.TryWorldItemInteract())
                         ItemServices.Instance?.SpawnItem(handler.returnItem, Player.Instance.transform.position);
 
                     return true;
