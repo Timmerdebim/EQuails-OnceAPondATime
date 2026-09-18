@@ -1,50 +1,119 @@
+using TDK.PlayerSystem;
+using TDK.SaveSystem;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace TDK.EnemySystem
 {
-    public class EnemyController : MonoBehaviour, IHitHandler
+    public class EnemyController : MonoBehaviour, IHitHandler   //, ISaveable, ILoadable
     {
         [Header("Components")]
-        public Animator animator;
-        public NavMeshAgent navMeshAgent;
-        public SpriteRenderer spriteRenderer;
+        [SerializeField] private Animator _animator;
+        [SerializeField] public NavMeshAgent navMeshAgent;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
-        [Header("Roam")]
-        public float roamSpeed = 5f;
-        public float roamRadius = 5f;
-        public bool freeRoam = false; // if false, will be confined to the radius, if true they can go anywhere
-        public Vector3 roamCenter; // Center of non-free roaming
-        [Header("Attack")]
-        public float attackSpeed = 5f;
-        public float attackRadius = 5f;
-        public float attackWindUpDuration = 0.7f;
-        public float attackLungeDuration = 0.3f;
-        public Hitbox hitBox;
-        [Header("Chase")]
-        public float chaseSpeed = 5f;
-        [Header("Search")]
-        public float searchSpeed = 5f;
+        [SerializeField] private EnemyAudioSensor _audioSensor;
+        [SerializeField] private EnemyVisionSensor _visionSensor;
+        [SerializeField] private HitEffect hurtEffect;
+        [SerializeField] private Hitbox _hitBox;
+        [SerializeField] public PopupTextbox _popupTextbox;
 
-        [Header("Misc")]
-        public Vector3 lastSeenPlayerPos;
+        private int _alertLevel = 0;
+        private int _sensorLevel = 0;
+        private bool _isDead = false;
+        public Vector3 _lastPlayerPos { get; private set; } = Vector3.zero;
+        private Transform _player;
 
         public UnityEvent<float> onHurt;
-        HitEffect hurtEffect;
 
         void Awake()
         {
             currentHealth = maxHealth;
-            
-            hurtEffect = GetComponentInChildren<HitEffect>();
-            if (hurtEffect)
-            {
-                hurtEffect.Initialize(onHurt, maxHealth);
-            }
-
-            ExitStateReset();
+            hurtEffect.Initialize(onHurt, maxHealth);
+            SetAlertLevel(0);
         }
+
+        void Start()
+        {
+            _player = Player.Instance.transform;
+        }
+
+        void Update()
+        {
+            if (_isDead) return;
+
+            // Update Sensor Level
+            if (_sensorLevel == 0)
+            {
+                if (_audioSensor._sensorTriggered) SetSensorLevel(1);
+            }
+            else if (_sensorLevel == 1)
+            {
+                _lastPlayerPos = _player.position;
+                if (!_audioSensor._sensorTriggered) SetSensorLevel(0);
+                else if (_visionSensor._sensorTriggered) SetSensorLevel(2);
+            }
+            else if (_sensorLevel == 2)
+            {
+                _lastPlayerPos = _player.position;
+                if (!_visionSensor._sensorTriggered) SetSensorLevel(1);
+            }
+        }
+
+        private void SetSensorLevel(int level)
+        {
+            // sensor level logic
+            // 0 - cant hear
+            // 1 - can hear
+            // 2 - can see
+
+            if (_sensorLevel == level) return;
+            _sensorLevel = level;
+            _visionSensor.gameObject.SetActive(_sensorLevel != 0);
+
+            if (_sensorLevel == 2) SetAlertLevel(2);
+            else if (_sensorLevel == 1) SetAlertLevel(1);
+            // alert level 0 is reached by decay via the searching state code
+        }
+
+        public void SetAlertLevel(int level)
+        {
+            // alert level logic
+            // 0 - all good
+            // 1 - persuing intrest (ie. last sighting / current audio)
+            // 2 - active persuit
+
+            if (_alertLevel == level) return;
+
+            _animator.ResetTrigger("AlertLevel0");
+            _animator.ResetTrigger("AlertLevel1");
+            _animator.ResetTrigger("AlertLevel2");
+
+            if (level < _sensorLevel) level = _sensorLevel; // to prevent issues (im not gonna explain - ur just gonna need to trust me on this one)
+
+            _alertLevel = level;
+
+            if (level == 0)
+            {
+                _popupTextbox.ShowTextbox(false);
+                _animator.SetTrigger("AlertLevel0");
+            }
+            else if (level == 1)
+            {
+                _popupTextbox.SetText("?");
+                _popupTextbox.ShowTextbox(true);
+                _animator.SetTrigger("AlertLevel1");
+
+            }
+            else if (level == 2)
+            {
+                _popupTextbox.SetText("!");
+                _popupTextbox.ShowTextbox(true);
+                _animator.SetTrigger("AlertLevel2");
+            }
+        }
+
 
         // A centralized utility function to set the NavMeshAgent's destination.
         // This ensures all properties are set correctly every time.
@@ -58,11 +127,7 @@ namespace TDK.EnemySystem
                 Debug.LogWarning("BigGoose cannot set destination - NavMeshAgent is disabled or not on a NavMesh.");
                 return;
             }
-
-            // --- Update Agent Properties ---
             navMeshAgent.speed = speed;
-
-            // --- Set Path ---
             navMeshAgent.SetDestination(destination);
 
             // --- Start Moving ---
@@ -82,14 +147,34 @@ namespace TDK.EnemySystem
 
         // ------------ STATES FUNCTIONS ------------
 
-        public void ExitStateReset()
+        public void LookAtPlayer()
         {
-            hitBox.gameObject.SetActive(false);
-            navMeshAgent.enabled = true;
-            StopNavMovement();
+            LookAtPoint(_player.position);
         }
 
+        public void LookAtPoint(Vector3 position)
+        {
+            _spriteRenderer.flipX = (position - transform.position).x < 0;
+        }
 
+        private void SetHitboxState(bool active)
+        {
+            if (active == _hitBox.gameObject.activeSelf) return;
+            _hitBox.Reset();
+            _hitBox.gameObject.SetActive(active);
+        }
+        public void SetHitboxActive() => SetHitboxState(true); // for the animator
+        public void SetHitboxInactive() => SetHitboxState(false);
+
+        public void SetHitboxDirection(Vector3 direction)
+        {
+            _hitBox.PivotTarget(direction.normalized);
+        }
+
+        public void GoToLastPlayerPos(float speed)
+        {
+            SetNavDestination(_lastPlayerPos, speed);
+        }
 
         // ------------ HEALTH ------------
 
@@ -103,7 +188,27 @@ namespace TDK.EnemySystem
             Debug.Log(gameObject.name + " took " + damage + " damage. Current health: " + currentHealth);
             onHurt.Invoke(damage);
             if (currentHealth <= 0)
-                animator.SetBool("isDead", true);
+            {
+                _isDead = true;
+                _animator.SetBool("isDead", true);
+                SetSensorLevel(0);
+                SetAlertLevel(0);
+            }
         }
+
+        // #region Save & Load
+        // // ------------ SAVE & LOAD ------------
+
+        // public void SaveData(ref WorldSaveData data)
+        // {
+        //     throw new System.NotImplementedException();
+        // }
+
+        // public void LoadData(WorldSaveData data)
+        // {
+        //     throw new System.NotImplementedException();
+        // }
+
+        // #endregion
     }
 }

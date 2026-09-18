@@ -5,41 +5,43 @@ namespace TDK.EnemySystem.States
 {
     public class EnemyChase : StateMachineBehaviour
     {
-        private EnemyController enemy;
-        private float updatePathTimer;
+        private EnemyController _enemy;
+        [SerializeField] private float _speed = 5f;
+        [SerializeField] private float _attackRadius = 5f;
+        private float _updatePathTimer = 0;
         private const float UPDATE_PATH_INTERVAL = 0.25f; // Update the path 4 times per second
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            enemy = animator.GetComponent<EnemyController>();
+            _enemy = animator.GetComponent<EnemyController>();
 
-            updatePathTimer = 0f;
+            _updatePathTimer = 0f;
+            _enemy._popupTextbox.ShowTextbox(false);
 
-            enemy.SetNavDestination(Player.Instance.transform.position, enemy.chaseSpeed);
+            _enemy.GoToLastPlayerPos(_speed);
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             // Only update the destination on a timer to save performance.
-            updatePathTimer += Time.deltaTime;
-            if (updatePathTimer >= UPDATE_PATH_INTERVAL)
+            _updatePathTimer += Time.deltaTime;
+            if (_updatePathTimer >= UPDATE_PATH_INTERVAL)
             {
-                updatePathTimer = 0f;
-                enemy.SetNavDestination(enemy.lastSeenPlayerPos, enemy.chaseSpeed);
+                _updatePathTimer = 0f;
+                _enemy.GoToLastPlayerPos(_speed);
             }
-            if ((enemy.lastSeenPlayerPos - enemy.transform.position).x < 0) enemy.spriteRenderer.flipX = true;
-            else enemy.spriteRenderer.flipX = false;
+            _enemy.LookAtPlayer();
 
             // Try attacking
-            if (Vector3.Distance(enemy.transform.position, Player.Instance.transform.position) < enemy.attackRadius)
+            if (Vector3.Distance(_enemy.transform.position, _enemy._lastPlayerPos) < _attackRadius)
                 animator.SetTrigger("attack");
         }
 
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            enemy.StopNavMovement();
+            _enemy.StopNavMovement();
         }
     }
 }
