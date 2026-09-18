@@ -15,13 +15,18 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] private ParticleSystem jumpParticles;
 
 
+    [System.Serializable]
+    private struct FootstepParticlesOffset
+    {
+        public float sideXoffset, viewXoffset, motionXoffset, motionZoffset;
+    }
+
     [Header("Footstep Particles")]
-    [SerializeField] private float footstepSideXoffset;
-    [SerializeField] private float footstepViewXoffset;
-    [SerializeField] private float footstepMotionXoffset;
-    [SerializeField] private float footstepMotionZoffset;
+    [SerializeField] private FootstepParticlesOffset walkFootstepOffsets;
+    [SerializeField] private FootstepParticlesOffset swimFootstepOffsets;
     [SerializeField] private ParticleSystem waterStepParticles;
     [SerializeField] private ParticleSystem dustParticles;
+    [SerializeField] private ParticleSystem swimStrokeParticles;
 
 
     [Header("Land Particles")]
@@ -52,6 +57,7 @@ public class PlayerEffects : MonoBehaviour
         pc.onLand.AddListener(LandEffect);
         en.onHit.AddListener(HitEffect);
         pc.onFootstep.AddListener(FootstepEffects);
+        pc.onSwimStroke.AddListener(SwimStrokeEffects);
     }
 
     private void OnDisable()
@@ -61,7 +67,10 @@ public class PlayerEffects : MonoBehaviour
         pc.onLand.RemoveListener(LandEffect);
         en.onHit.RemoveListener(HitEffect);
         pc.onFootstep.RemoveListener(FootstepEffects);
+        pc.onSwimStroke.RemoveListener(SwimStrokeEffects);
     }
+
+    #region Footstep Particles
 
     //Called from the player's walking animation directly
     public void FootstepEffects(bool isOuterFoot)
@@ -71,17 +80,7 @@ public class PlayerEffects : MonoBehaviour
         //TODO: early exit for non-dusty non-water case
 
         //Get footstep particle offset position
-        //No please Tim do not look at this I overcomplicated it again, just appreciate how fancy it looks :)
-        var position = new Vector3(//moving offset
-                                    (Mathf.Abs(pc.ViewDirection.x) > 0 ? Mathf.Sign(pc.ViewDirection.x) * footstepMotionXoffset : 0) + 
-                                    //facing direction offset
-                                    (pv.IsFacingLeft ? -footstepViewXoffset : footstepViewXoffset) + 
-                                    //foot offset
-                                    (isOuterFoot ^ pv.IsFacingLeft ? footstepSideXoffset : -footstepSideXoffset), 
-                    
-                                    0, 
-
-                                    (Mathf.Abs(pc.ViewDirection.z) > 0 ? Mathf.Sign(pc.ViewDirection.z) * footstepMotionZoffset : 0));
+        var position = GetParticlePositionOffset(walkFootstepOffsets, isOuterFoot);
                                         
         // Debug.Log($"[PlayerEffects]: Using footstep position {position} for moving input {pc.ViewDirection} and facing left {pv.IsFacingLeft}");
         if(surfaceTypeEntry.type == SurfaceType.Water)
@@ -104,6 +103,33 @@ public class PlayerEffects : MonoBehaviour
         //always play footstep audio regardless
         PlayerSounds.Instance.PlayFootstep(surfaceTypeEntry.type);
     }
+
+    //Called from the player's walking animation directly
+    public void SwimStrokeEffects(bool isOuterFoot)
+    {
+        swimStrokeParticles.transform.localPosition = GetParticlePositionOffset(swimFootstepOffsets, isOuterFoot);
+        swimStrokeParticles.Play();
+    }
+
+
+    //No please Tim do not look at this I overcomplicated it again, just appreciate how fancy it looks :)
+    private Vector3 GetParticlePositionOffset(FootstepParticlesOffset offsets, bool isOuterFoot)
+    {
+        return new Vector3(//moving offset
+                                    (Mathf.Abs(pc.ViewDirection.x) > 0 ? Mathf.Sign(pc.ViewDirection.x) * offsets.motionXoffset : 0) + 
+                                    //facing direction offset
+                                    (pv.IsFacingLeft ? -offsets.viewXoffset : offsets.viewXoffset) + 
+                                    //foot offset
+                                    (isOuterFoot ^ pv.IsFacingLeft ? offsets.sideXoffset : -offsets.sideXoffset), 
+                    
+                                    0, 
+
+                                    (Mathf.Abs(pc.ViewDirection.z) > 0 ? Mathf.Sign(pc.ViewDirection.z) * offsets.motionZoffset : 0));
+    }
+
+
+
+    #endregion
 
     private void AttackEffect()
     {
