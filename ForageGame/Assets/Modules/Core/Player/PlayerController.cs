@@ -27,6 +27,8 @@ namespace TDK.PlayerSystem
 
         public UnityEvent<bool> onFootstep; //it's a mess; Animator events can only 'see' root functions and can't look deeper so yeah here we have another event
 
+        public UnityEvent<bool> onSwimStroke;
+
         void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -79,6 +81,12 @@ namespace TDK.PlayerSystem
         public void OnFootstep(int isOuterFoot)
         {
             onFootstep?.Invoke(isOuterFoot > 0); //yes, AnimationEvents do not support booleans, makes sense right
+        }
+
+        //Called by animator, and just forwards it to the unity event
+        public void OnSwimStroke(int isOuterFoot)
+        {
+            onSwimStroke?.Invoke(isOuterFoot > 0); //yes, AnimationEvents do not support booleans, makes sense right
         }
 
         public void OnWaterEnter()
