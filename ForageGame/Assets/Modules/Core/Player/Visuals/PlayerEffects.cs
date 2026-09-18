@@ -109,6 +109,7 @@ public class PlayerEffects : MonoBehaviour
     {
         swimStrokeParticles.transform.localPosition = GetParticlePositionOffset(swimFootstepOffsets, isOuterFoot);
         swimStrokeParticles.Play();
+        PlayerSounds.Instance.PlaySwimStroke(); //only play these half of the time
     }
 
 
