@@ -87,8 +87,11 @@ public class PlayerLanternController : MonoBehaviour
 
     private void DeltaHandJointRefresh(LanternPose lanternPose, float delta)
     {
-        _handJoint.connectedAnchor = Vector3.MoveTowards(_handJoint.connectedAnchor, lanternPose.localPosition, _lerpPosSpeed * delta);
-        _handJoint.targetRotation = Quaternion.RotateTowards(_handJoint.targetRotation, lanternPose.localRotation, _lerpRotSpeed * delta);
+        if (_handJoint != null)
+        {
+            _handJoint.connectedAnchor = Vector3.MoveTowards(_handJoint.connectedAnchor, lanternPose.localPosition, _lerpPosSpeed * delta);
+            _handJoint.targetRotation = Quaternion.RotateTowards(_handJoint.targetRotation, lanternPose.localRotation, _lerpRotSpeed * delta);
+        }
     }
 
     private void DeltaDeploymentRefresh()
