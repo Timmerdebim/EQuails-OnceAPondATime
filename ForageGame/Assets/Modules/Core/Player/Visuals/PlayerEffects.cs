@@ -36,6 +36,7 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] private ParticleSystem waterEnterParticles;
     [SerializeField] private ParticleSystem waterSplashParticles;
     [SerializeField] private float minWaterSplashVelocity;
+    [SerializeField] private ParticleSystem waterLeaveParticles;
 
 
 
@@ -167,6 +168,8 @@ public class PlayerEffects : MonoBehaviour
     public void WaterLeaveEffects()
     {
         wakeTrail.SetSwimming(false);
+        waterLeaveParticles.Play();
+        waterEnterParticles.Play(); //yeah this looks weird in code but this looks beter in game trust
 
         PlayerSounds.Instance.PlayWaterLeave();
     }
