@@ -8,12 +8,27 @@ public class WakeTrailController : MonoBehaviour
     [SerializeField] Gradient baseGradient;
     [SerializeField] float stopFadeDuration = 0.15f;
 
+    [SerializeField] public Vector3 targetLocalPosition = Vector3.zero;
+    [SerializeField] public float positionSmoothSpeed = .1f;
+    public bool IsEmitting() => trail.emitting; //just a getter
+
     Coroutine fadeRoutine;
 
 
     void Awake()
     {
         trail.emitting = false;
+    }
+
+    void Update()
+    {
+        if(IsEmitting())
+        {
+            if (!Vector3.Equals(transform.localPosition, targetLocalPosition))
+            {
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetLocalPosition, positionSmoothSpeed);
+            }
+        }
     }
 
     public void SetSwimming(bool swimming)

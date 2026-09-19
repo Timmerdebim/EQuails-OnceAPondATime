@@ -16,14 +16,17 @@ public class PlayerEffects : MonoBehaviour
 
 
     [System.Serializable]
-    private struct FootstepParticlesOffset
+    private struct ParticleOffsets
     {
-        public float sideXoffset, viewXoffset, motionXoffset, motionZoffset;
+        public float stepSideXOffset, viewXoffset, motionXoffset, motionZoffset;
     }
 
+    [Header("Particle Offsets")]
+    [SerializeField] private ParticleOffsets walkFootstepOffsets;
+    [SerializeField] private ParticleOffsets swimFootstepOffsets;
+    [SerializeField] private ParticleOffsets waterWakeOffsets;
+
     [Header("Footstep Particles")]
-    [SerializeField] private FootstepParticlesOffset walkFootstepOffsets;
-    [SerializeField] private FootstepParticlesOffset swimFootstepOffsets;
     [SerializeField] private ParticleSystem waterStepParticles;
     [SerializeField] private ParticleSystem dustParticles;
     [SerializeField] private ParticleSystem swimStrokeParticles;
@@ -61,7 +64,7 @@ public class PlayerEffects : MonoBehaviour
         pc.onSwimStroke.AddListener(SwimStrokeEffects);
         pc.onWaterEnter.AddListener(WaterEnterEffects);
         pc.onWaterLeave.AddListener(WaterLeaveEffects);
-        pc.onMove.AddListener(WaterStopMovingEffects);
+        pc.onMove.AddListener(WaterChangeMovementEffects);
 
     }
 
@@ -75,7 +78,7 @@ public class PlayerEffects : MonoBehaviour
         pc.onSwimStroke.RemoveListener(SwimStrokeEffects);
         pc.onWaterEnter.RemoveListener(WaterEnterEffects);
         pc.onWaterLeave.RemoveListener(WaterLeaveEffects);
-        pc.onMove.RemoveListener(WaterStopMovingEffects);
+        pc.onMove.RemoveListener(WaterChangeMovementEffects);
     }
 
     #region Footstep Particles
@@ -122,14 +125,15 @@ public class PlayerEffects : MonoBehaviour
 
 
     //No please Tim do not look at this I overcomplicated it again, just appreciate how fancy it looks :)
-    private Vector3 GetParticlePositionOffset(FootstepParticlesOffset offsets, bool isOuterFoot)
+    //IsOuterFoot only used for footstep particles
+    private Vector3 GetParticlePositionOffset(ParticleOffsets offsets, bool isOuterFoot)
     {
         return new Vector3(//moving offset
                                     (Mathf.Abs(pc.ViewDirection.x) > 0 ? Mathf.Sign(pc.ViewDirection.x) * offsets.motionXoffset : 0) + 
                                     //facing direction offset
                                     (pv.IsFacingLeft ? -offsets.viewXoffset : offsets.viewXoffset) + 
                                     //foot offset
-                                    (isOuterFoot ^ pv.IsFacingLeft ? offsets.sideXoffset : -offsets.sideXoffset), 
+                                    (isOuterFoot ^ pv.IsFacingLeft ? offsets.stepSideXOffset : -offsets.stepSideXOffset), 
                     
                                     0, 
 
@@ -142,6 +146,7 @@ public class PlayerEffects : MonoBehaviour
 
     public void WaterEnterEffects(bool splash)
     {
+        wakeTrail.targetLocalPosition = GetParticlePositionOffset(waterWakeOffsets, false);
         wakeTrail.SetSwimming(true);
         if(splash) PlayerSounds.Instance.PlayWaterSplash();
         else PlayerSounds.Instance.PlayWaterEnter();
@@ -153,11 +158,16 @@ public class PlayerEffects : MonoBehaviour
         PlayerSounds.Instance.PlayWaterLeave();
     }
 
-    public void WaterStopMovingEffects(Vector3 inputVector)
+    //is hooked up to OnMove()
+    public void WaterChangeMovementEffects(Vector3 inputVector)
     {
-        if(Vector3.Magnitude(inputVector) == 0)
+        if(wakeTrail.IsEmitting()) //only when in water, yes is a bit of hack, nobody actually tracks this apart from the player's animator
         {
-            wakeTrail.FadeOutTail();
+            wakeTrail.targetLocalPosition = GetParticlePositionOffset(waterWakeOffsets, false);
+            if(Vector3.Magnitude(inputVector) == 0)
+            {
+                wakeTrail.FadeOutTail();
+            }
         }
     }
 

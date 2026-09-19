@@ -10061,15 +10061,20 @@ MonoBehaviour:
   attackParticles: {fileID: 6616778078789748292}
   jumpParticles: {fileID: 3031430127677122948}
   walkFootstepOffsets:
-    sideXoffset: 0.2
+    stepSideXOffset: 0.2
     viewXoffset: 0.1
     motionXoffset: 0.6
     motionZoffset: 0.8
   swimFootstepOffsets:
-    sideXoffset: 0.1
+    stepSideXOffset: 0.1
     viewXoffset: -0.3
     motionXoffset: 0.6
     motionZoffset: 0.5
+  waterWakeOffsets:
+    stepSideXOffset: 0
+    viewXoffset: -0.2
+    motionXoffset: 0.3
+    motionZoffset: 0.2
   waterStepParticles: {fileID: 3955942282665138852}
   dustParticles: {fileID: 932079581180609559}
   swimStrokeParticles: {fileID: 7021684228641540407}
@@ -46254,7 +46259,7 @@ MonoBehaviour:
   trail: {fileID: 8532798793694301677}
   baseGradient:
     serializedVersion: 2
-    key0: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+    key0: {r: 0.49019608, g: 0.49019608, b: 0.49019608, a: 0.78431374}
     key1: {r: 1, g: 1, b: 1, a: 0}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -46270,7 +46275,7 @@ MonoBehaviour:
     ctime5: 0
     ctime6: 0
     ctime7: 0
-    atime0: 0
+    atime0: 386
     atime1: 65535
     atime2: 0
     atime3: 0
@@ -46283,6 +46288,8 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   stopFadeDuration: 0.35
+  targetLocalPosition: {x: 0, y: 0, z: 0}
+  positionSmoothSpeed: 0.05
 --- !u!96 &8532798793694301677
 TrailRenderer:
   serializedVersion: 3
@@ -46359,7 +46366,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 0.78431374}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -46384,7 +46391,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
