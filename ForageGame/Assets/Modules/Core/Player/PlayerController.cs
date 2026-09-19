@@ -22,12 +22,17 @@ namespace TDK.PlayerSystem
         public UnityEvent onJump;
         public UnityEvent onSprint;
         public UnityEvent onAttack;
-        public UnityEvent onMove;
+        public UnityEvent<Vector3> onMove;
         public UnityEvent onLand;
 
         public UnityEvent<bool> onFootstep; //it's a mess; Animator events can only 'see' root functions and can't look deeper so yeah here we have another event
 
         public UnityEvent<bool> onSwimStroke;
+
+        public UnityEvent<bool> onWaterEnter;
+
+        public UnityEvent onWaterLeave;
+
 
         void Awake()
         {
@@ -91,17 +96,13 @@ namespace TDK.PlayerSystem
 
         public void OnWaterEnter()
         {
-            if (Mathf.Abs(_rigidbody.linearVelocity.y) > 0.1f)
-            {
-                PlayerSounds.Instance.OnWaterEnter(true);
-            }
-            else PlayerSounds.Instance.OnWaterEnter(false);
+            onWaterEnter?.Invoke(Mathf.Abs(_rigidbody.linearVelocity.y) > 0.1f);
             animator.SetBool("isSwimming", true);
         }
 
         public void OnWaterExit()
         {
-            PlayerSounds.Instance.OnWaterLeave();
+            onWaterLeave?.Invoke();
             animator.SetBool("isSwimming", false);
         }
 
@@ -118,7 +119,7 @@ namespace TDK.PlayerSystem
         {
             Vector2 moveInput = context.ReadValue<Vector2>();
             InputVector = new Vector3(moveInput.x, 0f, moveInput.y);
-            onMove?.Invoke();
+            onMove?.Invoke(InputVector);
         }
 
         public void IsSleeping(bool isSleeping) => _visuals.gameObject.SetActive(!isSleeping);
