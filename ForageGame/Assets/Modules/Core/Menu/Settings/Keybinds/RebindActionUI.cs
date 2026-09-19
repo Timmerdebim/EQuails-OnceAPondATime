@@ -238,10 +238,10 @@ namespace Project.Menus.Keybind
                 if (bindingIndex != -1)
                 {
                     displayString = action.GetBindingDisplayString(bindingIndex, out deviceLayoutName, out controlPath, displayStringOptions);
-                    if (controlPath == "" || controlPath == null)
-                    {
-                        Debug.Log($"{displayString} - {bindingIndex} - {deviceLayoutName} - {controlPath} - {action.ToString()}");
-                    }
+                    // if (controlPath == "" || controlPath == null)
+                    // {
+                    //     Debug.Log($"{displayString} - {bindingIndex} - {deviceLayoutName} - {controlPath} - {action.ToString()}");
+                    // }
                     displayIcon = KeybindSpritesDatabase.Instance?.GetKeybindSprite(displayString, deviceLayoutName, controlPath);
                 }
             }

@@ -13,10 +13,6 @@ namespace Project.Menus.Audio
         [SerializeField] private Slider _sfxVolume;
         [SerializeField] private Slider _ambienceVolume;
 
-        void Start()
-        {
-        }
-
         public override void OnEnteringMenu()
         {
             _masterVolume.value = AudioSettingsManager.Instance.MasterVolume;
