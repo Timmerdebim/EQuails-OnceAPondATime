@@ -34,6 +34,8 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] private ParticleSystem swimStrokeParticles;
     [SerializeField] private WakeTrailController wakeTrail;
     [SerializeField] private ParticleSystem waterEnterParticles;
+    [SerializeField] private ParticleSystem waterSplashParticles;
+    [SerializeField] private float minWaterSplashVelocity;
 
 
 
@@ -148,14 +150,18 @@ public class PlayerEffects : MonoBehaviour
 
     #region Water
 
-    public void WaterEnterEffects(bool splash)
+    public void WaterEnterEffects(float entrySpeed)
     {
         wakeTrail.targetLocalPosition = GetParticlePositionOffset(waterWakeOffsets, false);
         wakeTrail.SetSwimming(true);
 
 
         waterEnterParticles.Play();
-        if(splash) PlayerSounds.Instance.PlayWaterSplash();
+        if(entrySpeed >= minWaterSplashVelocity) 
+        {
+            waterSplashParticles.Play();
+            PlayerSounds.Instance.PlayWaterSplash();
+        }
         else PlayerSounds.Instance.PlayWaterEnter();
     }
     public void WaterLeaveEffects()

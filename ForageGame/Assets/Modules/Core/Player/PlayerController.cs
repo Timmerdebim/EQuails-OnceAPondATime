@@ -29,9 +29,15 @@ namespace TDK.PlayerSystem
 
         public UnityEvent<bool> onSwimStroke;
 
-        public UnityEvent<bool> onWaterEnter;
+        public UnityEvent<float> onWaterEnter;
 
         public UnityEvent onWaterLeave;
+
+        //these are just for the water splash event (hitting water hard enough triggers it)
+        private Vector3 _currentVelocity = Vector3.zero;
+        private Vector3 _priorVelocity = Vector3.zero;
+
+        
 
 
         void Awake()
@@ -96,8 +102,8 @@ namespace TDK.PlayerSystem
 
         public void OnWaterEnter()
         {
-            onWaterEnter?.Invoke(Mathf.Abs(_rigidbody.linearVelocity.y) > 0.2f); //nice hacky way of doing this, but no nice way for it :(
-            Debug.Log($"[PlayerController]: OnWaterEnter. isGrounded: {animator.GetBool("isGrounded")}, y linearvelocity: {Mathf.Abs(_rigidbody.linearVelocity.y)}");
+            onWaterEnter?.Invoke(Mathf.Abs(_priorVelocity.y)); //nice hacky way of doing this, but no nice way for it :(
+            //Debug.Log($"[PlayerController]: OnWaterEnter. isGrounded: {animator.GetBool("isGrounded")}, prev y linearvelocity: {Mathf.Abs(_priorVelocity.y)}");
             animator.SetBool("isSwimming", true);
         }
 
@@ -190,6 +196,9 @@ namespace TDK.PlayerSystem
         {
             _rigidbody.AddForce(_externalForce, ForceMode.Acceleration);
             UpdateGrounded();
+
+            _priorVelocity = _currentVelocity;
+            _currentVelocity = _rigidbody.linearVelocity;
         }
 
 
@@ -203,7 +212,6 @@ namespace TDK.PlayerSystem
                 if (!animator.GetBool("isGrounded"))
                 {
                     onLand?.Invoke();
-                    Debug.Log($"[PlayerController]: OnLand. y linearvelocity: {Mathf.Abs(_rigidbody.linearVelocity.y)}");
                 }
                 animator.SetBool("isGrounded", true);
                 LastGroundedHeight = transform.position.y;
