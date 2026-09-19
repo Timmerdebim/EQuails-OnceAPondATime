@@ -32,6 +32,16 @@ public class WakeTrailController : MonoBehaviour
         }
     }
 
+    //copy of above, used for when the player stops moving (trailrenderer looks odd without it)
+    public void FadeOutTail()
+    {
+        if(trail.emitting)
+        {
+            if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+            fadeRoutine = StartCoroutine(FadeOutTrail());
+        }
+    }
+
     IEnumerator FadeOutTrail()
     {
         float t = 0f;

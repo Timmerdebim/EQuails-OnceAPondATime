@@ -61,6 +61,8 @@ public class PlayerEffects : MonoBehaviour
         pc.onSwimStroke.AddListener(SwimStrokeEffects);
         pc.onWaterEnter.AddListener(WaterEnterEffects);
         pc.onWaterLeave.AddListener(WaterLeaveEffects);
+        pc.onMove.AddListener(WaterStopMovingEffects);
+
     }
 
     private void OnDisable()
@@ -73,6 +75,7 @@ public class PlayerEffects : MonoBehaviour
         pc.onSwimStroke.RemoveListener(SwimStrokeEffects);
         pc.onWaterEnter.RemoveListener(WaterEnterEffects);
         pc.onWaterLeave.RemoveListener(WaterLeaveEffects);
+        pc.onMove.RemoveListener(WaterStopMovingEffects);
     }
 
     #region Footstep Particles
@@ -148,6 +151,14 @@ public class PlayerEffects : MonoBehaviour
         wakeTrail.SetSwimming(false);
 
         PlayerSounds.Instance.PlayWaterLeave();
+    }
+
+    public void WaterStopMovingEffects(Vector3 inputVector)
+    {
+        if(Vector3.Magnitude(inputVector) == 0)
+        {
+            wakeTrail.FadeOutTail();
+        }
     }
 
 
