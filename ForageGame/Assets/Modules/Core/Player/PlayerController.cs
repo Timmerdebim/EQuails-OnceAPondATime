@@ -29,6 +29,11 @@ namespace TDK.PlayerSystem
 
         public UnityEvent<bool> onSwimStroke;
 
+        public UnityEvent<bool> onWaterEnter;
+
+        public UnityEvent onWaterLeave;
+
+
         void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -91,17 +96,13 @@ namespace TDK.PlayerSystem
 
         public void OnWaterEnter()
         {
-            if (Mathf.Abs(_rigidbody.linearVelocity.y) > 0.1f)
-            {
-                PlayerSounds.Instance.OnWaterEnter(true);
-            }
-            else PlayerSounds.Instance.OnWaterEnter(false);
+            onWaterEnter?.Invoke(Mathf.Abs(_rigidbody.linearVelocity.y) > 0.1f);
             animator.SetBool("isSwimming", true);
         }
 
         public void OnWaterExit()
         {
-            PlayerSounds.Instance.OnWaterLeave();
+            onWaterLeave?.Invoke();
             animator.SetBool("isSwimming", false);
         }
 

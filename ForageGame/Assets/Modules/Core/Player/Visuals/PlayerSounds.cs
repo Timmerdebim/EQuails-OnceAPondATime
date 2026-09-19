@@ -46,11 +46,9 @@ namespace TDK.PlayerSystem
 
         public void PlaySwimStroke() => FMODUnity.RuntimeManager.PlayOneShot(swimEvent, transform.position);
 
-        public void OnWaterEnter(bool splash)
-        {
-            if(splash) FMODUnity.RuntimeManager.PlayOneShot(waterSplashEvent, transform.position);
-            else FMODUnity.RuntimeManager.PlayOneShot(waterEnterEvent, transform.position);
-        }
-        public void OnWaterLeave() => FMODUnity.RuntimeManager.PlayOneShot(waterLeaveEvent, transform.position);
+        public void PlayWaterSplash() => FMODUnity.RuntimeManager.PlayOneShot(waterSplashEvent, transform.position);
+
+        public void PlayWaterEnter() => FMODUnity.RuntimeManager.PlayOneShot(waterEnterEvent, transform.position);
+        public void PlayWaterLeave() => FMODUnity.RuntimeManager.PlayOneShot(waterLeaveEvent, transform.position);
     }
 }

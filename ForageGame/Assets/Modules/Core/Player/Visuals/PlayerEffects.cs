@@ -27,6 +27,7 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] private ParticleSystem waterStepParticles;
     [SerializeField] private ParticleSystem dustParticles;
     [SerializeField] private ParticleSystem swimStrokeParticles;
+    [SerializeField] private WakeTrailController wakeTrail;
 
 
     [Header("Land Particles")]
@@ -58,6 +59,8 @@ public class PlayerEffects : MonoBehaviour
         en.onHit.AddListener(HitEffect);
         pc.onFootstep.AddListener(FootstepEffects);
         pc.onSwimStroke.AddListener(SwimStrokeEffects);
+        pc.onWaterEnter.AddListener(WaterEnterEffects);
+        pc.onWaterLeave.AddListener(WaterLeaveEffects);
     }
 
     private void OnDisable()
@@ -68,6 +71,8 @@ public class PlayerEffects : MonoBehaviour
         en.onHit.RemoveListener(HitEffect);
         pc.onFootstep.RemoveListener(FootstepEffects);
         pc.onSwimStroke.RemoveListener(SwimStrokeEffects);
+        pc.onWaterEnter.RemoveListener(WaterEnterEffects);
+        pc.onWaterLeave.RemoveListener(WaterLeaveEffects);
     }
 
     #region Footstep Particles
@@ -128,6 +133,22 @@ public class PlayerEffects : MonoBehaviour
                                     (Mathf.Abs(pc.ViewDirection.z) > 0 ? Mathf.Sign(pc.ViewDirection.z) * offsets.motionZoffset : 0));
     }
 
+    #endregion
+
+    #region Water
+
+    public void WaterEnterEffects(bool splash)
+    {
+        wakeTrail.SetSwimming(true);
+        if(splash) PlayerSounds.Instance.PlayWaterSplash();
+        else PlayerSounds.Instance.PlayWaterEnter();
+    }
+    public void WaterLeaveEffects()
+    {
+        wakeTrail.SetSwimming(false);
+
+        PlayerSounds.Instance.PlayWaterLeave();
+    }
 
 
     #endregion
