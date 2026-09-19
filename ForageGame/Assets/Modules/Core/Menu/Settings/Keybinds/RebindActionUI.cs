@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
 ////TODO: localization support
@@ -299,17 +300,27 @@ namespace Project.Menus.Keybind
             }
         }
 
+        private Action<InputEventPtr, InputDevice> m_OnAnyInputEvent;
+
         private void PerformInteractiveRebind(InputAction action, int bindingIndex, bool allCompositeParts = false)
         {
             m_RebindOperation?.Cancel(); // Will null out m_RebindOperation.
 
             void CleanUp()
             {
+                if (m_OnAnyInputEvent != null)
+                {
+                    InputSystem.onEvent -= m_OnAnyInputEvent;
+                    m_OnAnyInputEvent = null;
+                }
+
                 m_RebindOperation?.Dispose();
                 m_RebindOperation = null;
 
                 action.actionMap.Enable();
                 m_UIInputActionMap?.Enable();
+                m_DefaultInputActions?.Enable();
+                AppController.Instance.SetInputsActive(true);
             }
 
             // An "InvalidOperationException: Cannot rebind action x while it is enabled" will
@@ -322,8 +333,11 @@ namespace Project.Menus.Keybind
             //
             // In this example, we explicitly disable both the UI input action map and
             // the action map containing the target action.
+
             action.actionMap.Disable();
             m_UIInputActionMap?.Disable();
+            m_DefaultInputActions?.Disable();
+            AppController.Instance.SetInputsActive(false);
 
             // Configure the rebind.
             m_RebindOperation = action.PerformInteractiveRebinding(bindingIndex)
@@ -379,6 +393,36 @@ namespace Project.Menus.Keybind
             m_RebindStartEvent?.Invoke(this, m_RebindOperation);
 
             m_RebindOperation.Start();
+
+            // Cancel if a button is pressed on a different kind of device.
+            var expectedDevicePath = GetExpectedDevicePath(action, bindingIndex); // e.g. "<Gamepad>"
+            if (expectedDevicePath != null)
+            {
+                m_OnAnyInputEvent = (eventPtr, device) =>
+                {
+                    if (m_RebindOperation == null)
+                        return;
+
+                    // Only state events can represent a press.
+                    if (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>())
+                        return;
+
+                    // Ignore stick drift, sensors, etc.
+                    if (!eventPtr.HasButtonPress())
+                        return;
+
+                    if (!InputControlPath.MatchesPrefix(expectedDevicePath, device))
+                        m_RebindOperation.Cancel(); // Triggers OnCancel -> CleanUp
+                };
+                InputSystem.onEvent += m_OnAnyInputEvent;
+            }
+        }
+
+        private static string GetExpectedDevicePath(InputAction action, int bindingIndex)
+        {
+            // "<Gamepad>/buttonSouth" -> "<Gamepad>"
+            var layout = InputControlPath.TryGetDeviceLayout(action.bindings[bindingIndex].effectivePath);
+            return string.IsNullOrEmpty(layout) ? null : $"<{layout}>";
         }
 
         protected void OnEnable()

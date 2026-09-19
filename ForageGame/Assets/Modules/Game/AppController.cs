@@ -164,7 +164,7 @@ public class AppController : MonoBehaviour
     // Inputs
 
     [Header("Inputs")]
-    [SerializeField] private InputActionAsset _inputMap;
+    [SerializeField] private PlayerInput _playerInput; // InputActionAsset _inputMap;
     public bool IsInputsActive { get; private set; } = true; // this is for security checking:
     /// <summary>
     /// apparently; if you click the same button twice during the input collection loop, 
@@ -175,8 +175,8 @@ public class AppController : MonoBehaviour
 
     public void SetInputsActive(bool isActive)
     {
-        if (isActive) _inputMap.Enable();
-        else _inputMap.Disable();
+        if (isActive) _playerInput.ActivateInput();
+        else _playerInput.DeactivateInput();
         IsInputsActive = isActive;
     }
 }
