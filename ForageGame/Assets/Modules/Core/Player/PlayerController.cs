@@ -96,7 +96,8 @@ namespace TDK.PlayerSystem
 
         public void OnWaterEnter()
         {
-            onWaterEnter?.Invoke(Mathf.Abs(_rigidbody.linearVelocity.y) > 0.1f);
+            onWaterEnter?.Invoke(Mathf.Abs(_rigidbody.linearVelocity.y) > 0.2f); //nice hacky way of doing this, but no nice way for it :(
+            Debug.Log($"[PlayerController]: OnWaterEnter. isGrounded: {animator.GetBool("isGrounded")}, y linearvelocity: {Mathf.Abs(_rigidbody.linearVelocity.y)}");
             animator.SetBool("isSwimming", true);
         }
 
@@ -202,6 +203,7 @@ namespace TDK.PlayerSystem
                 if (!animator.GetBool("isGrounded"))
                 {
                     onLand?.Invoke();
+                    Debug.Log($"[PlayerController]: OnLand. y linearvelocity: {Mathf.Abs(_rigidbody.linearVelocity.y)}");
                 }
                 animator.SetBool("isGrounded", true);
                 LastGroundedHeight = transform.position.y;

@@ -19,8 +19,6 @@ namespace TDK.PlayerSystem
 
         public static PlayerSounds Instance { get; private set; } //yes, this sucks, but I HAVE to do it because FMOD SUCKS
 
-        private bool splash = false;
-
         private void Awake() 
         { 
             //May only be one instance ofc

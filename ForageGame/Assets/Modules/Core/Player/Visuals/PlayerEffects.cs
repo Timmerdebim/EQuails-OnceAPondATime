@@ -29,8 +29,12 @@ public class PlayerEffects : MonoBehaviour
     [Header("Footstep Particles")]
     [SerializeField] private ParticleSystem waterStepParticles;
     [SerializeField] private ParticleSystem dustParticles;
+
+    [Header("Water / Swimming Particles")]
     [SerializeField] private ParticleSystem swimStrokeParticles;
     [SerializeField] private WakeTrailController wakeTrail;
+    [SerializeField] private ParticleSystem waterEnterParticles;
+
 
 
     [Header("Land Particles")]
@@ -148,6 +152,9 @@ public class PlayerEffects : MonoBehaviour
     {
         wakeTrail.targetLocalPosition = GetParticlePositionOffset(waterWakeOffsets, false);
         wakeTrail.SetSwimming(true);
+
+
+        waterEnterParticles.Play();
         if(splash) PlayerSounds.Instance.PlayWaterSplash();
         else PlayerSounds.Instance.PlayWaterEnter();
     }
@@ -167,6 +174,7 @@ public class PlayerEffects : MonoBehaviour
             if(Vector3.Magnitude(inputVector) == 0)
             {
                 wakeTrail.FadeOutTail();
+                waterEnterParticles.Play(); //eliminates the awkward stopping of movement a bit
             }
         }
     }
