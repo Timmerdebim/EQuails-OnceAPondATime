@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using TDK.PlayerSystem;
 using UnityEngine;
 
 namespace Project.Menus
@@ -25,6 +26,11 @@ namespace Project.Menus
         public void OnSettingsClicked()
         {
             _ = _menuManager.ToMenu(settingsMenu);
+        }
+
+        public void OnRespawnClicked()
+        {
+            Player.Instance.energy.Hit(99999); // Kill the player
         }
 
         public void OnMainMenuClicked()
