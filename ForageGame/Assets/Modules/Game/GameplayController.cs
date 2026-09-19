@@ -88,19 +88,28 @@ public class GameplayController : MonoBehaviour
 
     public async Task Death()
     {
+        if (Player.Instance.animator.GetBool("isDead")) return; // you can't be double dead
+
         SetGameState(State.Transitioning);
 
-        await Task.Delay(Mathf.CeilToInt(1 * 1000)); //animation (1 sec.)
+        Player.Instance.animator.SetBool("isDead", true);
+        await Task.Delay(Mathf.CeilToInt(0.5f * 1000)); //animation (1 sec.) (cut at 0.5 sec.)
 
         await _tsc.FadeOutAsync();
         await AwaitPadding();
 
-        Player.Instance.gameObject.SetActive(false);
-        Player.Instance.transform.position = new(73, 11.5f, 75);
+        Player.Instance.energy.TakeDamage(-9999);
+        Player.Instance.energy.AddEnergy(9999);
 
+        Player.Instance.playerController.IsSleeping(true);
+        Player.Instance.transform.position = new(0, 10.5f, 0);
+
+        StoryFlagManager.Instance.OnTimePassing();
         SaveManager.Instance.SaveWorld();
         await SceneServices.UnloadScene(_worldScene);
 
+        Player.Instance.animator.SetBool("isDead", false);
+        Player.Instance.playerController.IsSleeping(false);
         await LoadWorld();
     }
 

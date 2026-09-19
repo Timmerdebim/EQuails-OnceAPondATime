@@ -15,12 +15,6 @@ namespace Project.Menus
             _ = GameplayController.Instance.ResumeGame();
         }
 
-        private async Task EscapeSequence()
-        {
-            await _menuManager.ToMenu(null);
-            await GameplayController.Instance.ResumeGame();
-        }
-
         // ------------ Buttons ------------
 
         public void OnSettingsClicked()
@@ -30,6 +24,7 @@ namespace Project.Menus
 
         public void OnRespawnClicked()
         {
+            Escape();
             Player.Instance.energy.Hit(99999); // Kill the player
         }
 
