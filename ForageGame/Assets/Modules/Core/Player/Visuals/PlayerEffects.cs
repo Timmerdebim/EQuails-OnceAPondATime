@@ -29,8 +29,15 @@ public class PlayerEffects : MonoBehaviour
     [Header("Footstep Particles")]
     [SerializeField] private ParticleSystem waterStepParticles;
     [SerializeField] private ParticleSystem dustParticles;
+
+    [Header("Water / Swimming Particles")]
     [SerializeField] private ParticleSystem swimStrokeParticles;
     [SerializeField] private WakeTrailController wakeTrail;
+    [SerializeField] private ParticleSystem waterEnterParticles;
+    [SerializeField] private ParticleSystem waterSplashParticles;
+    [SerializeField] private float minWaterSplashVelocity;
+    [SerializeField] private ParticleSystem waterLeaveParticles;
+
 
 
     [Header("Land Particles")]
@@ -144,16 +151,25 @@ public class PlayerEffects : MonoBehaviour
 
     #region Water
 
-    public void WaterEnterEffects(bool splash)
+    public void WaterEnterEffects(float entrySpeed)
     {
         wakeTrail.targetLocalPosition = GetParticlePositionOffset(waterWakeOffsets, false);
         wakeTrail.SetSwimming(true);
-        if(splash) PlayerSounds.Instance.PlayWaterSplash();
+
+
+        waterEnterParticles.Play();
+        if(entrySpeed >= minWaterSplashVelocity) 
+        {
+            waterSplashParticles.Play();
+            PlayerSounds.Instance.PlayWaterSplash();
+        }
         else PlayerSounds.Instance.PlayWaterEnter();
     }
     public void WaterLeaveEffects()
     {
         wakeTrail.SetSwimming(false);
+        waterLeaveParticles.Play();
+        waterEnterParticles.Play(); //yeah this looks weird in code but this looks beter in game trust
 
         PlayerSounds.Instance.PlayWaterLeave();
     }
@@ -167,6 +183,7 @@ public class PlayerEffects : MonoBehaviour
             if(Vector3.Magnitude(inputVector) == 0)
             {
                 wakeTrail.FadeOutTail();
+                waterEnterParticles.Play(); //eliminates the awkward stopping of movement a bit
             }
         }
     }
