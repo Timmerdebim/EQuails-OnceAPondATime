@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TDK.PlayerSystem;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ namespace TDK.RegionTitles
 
         void OnTriggerEnter(Collider other)
         {
-            RegionTitleManager.Instance?.TriggerRegionTitle(_regionText);
+            if (other.transform == Player.Instance.transform)
+                RegionTitleManager.Instance?.TriggerRegionTitle(_regionText);
         }
     }
 }
