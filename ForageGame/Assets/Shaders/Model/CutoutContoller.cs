@@ -1,20 +1,24 @@
+using System;
 using System.Collections;
+using TDK.CameraSystem;
 using UnityEngine;
 
 public class CutoutController : MonoBehaviour
 {
-    [SerializeField] private Transform _cameraTransform;
-    [SerializeField] private Transform _playerTransform;
+    [SerializeField] private CameraController _camera;
     [SerializeField] private LayerMask _cutoutLayers;
 
     [SerializeField] private Material baseMat;
     [SerializeField] private float _speed;
     [Header("Cutout Presets")]
-    [SerializeField] private Vector3 standardOff = new(0, 2, 2); // near radius, far radius, softness (near = camera, far = player)
-    [SerializeField] private Vector3 standardOn = new(1, 2, 2);
-    [SerializeField] private Vector3 caveOff = new(0, 2, 2);
-    [SerializeField] private Vector3 caveOn = new(1, 2, 2);
-
+    // CameraOuterRadius => Vector.x;
+    // CameraInnerRadius => Vector.y;
+    // PlayerOuterRadius => Vector.z;
+    // PlayerInnerRadius => Vector.w;
+    [SerializeField] private Vector4 standardOff;
+    [SerializeField] private Vector4 standardOn;
+    [SerializeField] private Vector4 caveOff;
+    [SerializeField] private Vector4 caveOn;
 
     private bool _isActive = false;
     public enum CutoutMode { Standard, Cave }
@@ -50,18 +54,15 @@ public class CutoutController : MonoBehaviour
 
     #region Obstruction detection
 
-    [SerializeField] private Vector3 _playerOffset = new(0, 0.2f, 0);
-
-
     // Matches the variable name in the Shader
-    private static readonly int PosID = Shader.PropertyToID("_GlobalPlayerPos");
+    private static readonly int PosID = Shader.PropertyToID("_CameraTarget");
 
     void LateUpdate()
     {
-        Shader.SetGlobalVector(PosID, _playerTransform.position); // Send the player's position to ALL shaders containing this variable
+        Shader.SetGlobalVector(PosID, _camera._targetTransform.position); // Send the player's position to ALL shaders containing this variable
 
-        Vector3 vector = _playerTransform.position + _playerOffset - _cameraTransform.position;
-        if (_isActive != Physics.Raycast(_cameraTransform.position, vector, vector.magnitude, _cutoutLayers))
+        Vector3 vector = _camera.transform.position - _camera._targetTransform.position;
+        if (_isActive != Physics.Raycast(_camera._targetTransform.position, vector, vector.magnitude, _cutoutLayers))
         {
             _isActive = !_isActive;
             UpdateCutout();
@@ -72,44 +73,46 @@ public class CutoutController : MonoBehaviour
 
     #region Material adjustments
 
-    public void SetCutout(Vector3 cutoutSize)
+    private void SetCutout(Vector4 cutoutProfile)
     {
         StopAllCoroutines();
-        StartCoroutine(SetCutoutCoroutine(cutoutSize));
+        StartCoroutine(SetCutoutCoroutine(cutoutProfile));
     }
 
-    private IEnumerator SetCutoutCoroutine(Vector3 targetCutoutSize)
+    private IEnumerator SetCutoutCoroutine(Vector4 targetCutoutProfile)
     {
-        Vector3 initialCutoutSize = GetMaterialProperties();
+        Vector4 initialCutoutProfile = GetMaterialProperties();
 
         float t = 0;
-        float relativeSpeed = _speed / (Vector3.Distance(initialCutoutSize, targetCutoutSize) + 0.01f); // +0.01f for div 0 protection
+        float relativeSpeed = _speed / (Vector4.Distance(initialCutoutProfile, targetCutoutProfile) + 0.01f); // +0.01f for div 0 protection
 
         while (t < 1)
         {
-            SetMaterialProperties(Vector3.Lerp(initialCutoutSize, targetCutoutSize, Mathf.SmoothStep(0, 1, t)));
+            SetMaterialProperties(Vector4.Lerp(initialCutoutProfile, targetCutoutProfile, Mathf.SmoothStep(0, 1, t)));
             t += Time.deltaTime * relativeSpeed;
             yield return 0;
         }
 
-        SetMaterialProperties(targetCutoutSize);
+        SetMaterialProperties(targetCutoutProfile);
     }
 
-    private Vector3 GetMaterialProperties() =>
-        new(baseMat.GetFloat("_Near_Radius"), baseMat.GetFloat("_Far_Radius"), baseMat.GetFloat("_Cutout_Smoothness"));
-
-    private void SetMaterialProperties(Vector3 cutoutSize)
+    private Vector4 GetMaterialProperties()
     {
-        baseMat.SetFloat("_Near_Radius", cutoutSize.x);
-        baseMat.SetFloat("_Far_Radius", cutoutSize.y);
-        baseMat.SetFloat("_Cutout_Smoothness", cutoutSize.z);
+        return new(baseMat.GetFloat("_Camera_Outer_Radius"),
+        baseMat.GetFloat("_Camera_Inner_Radius"),
+        baseMat.GetFloat("_Player_Outer_Radius"),
+        baseMat.GetFloat("_Player_Inner_Radius"));
+    }
+
+    private void SetMaterialProperties(Vector4 vector)
+    {
+        baseMat.SetFloat("_Camera_Outer_Radius", vector.x);
+        baseMat.SetFloat("_Camera_Inner_Radius", vector.y);
+        baseMat.SetFloat("_Player_Outer_Radius", vector.z);
+        baseMat.SetFloat("_Player_Inner_Radius", vector.w);
     }
 
     void OnDestroy() => StopAllCoroutines();
 
     #endregion
-
-
-
-
 }
