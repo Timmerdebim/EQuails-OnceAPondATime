@@ -37,7 +37,7 @@ namespace TDK.PlayerSystem
         private Vector3 _currentVelocity = Vector3.zero;
         private Vector3 _priorVelocity = Vector3.zero;
 
-        
+
 
 
         void Awake()
@@ -113,13 +113,35 @@ namespace TDK.PlayerSystem
             animator.SetBool("isSwimming", false);
         }
 
-        public void TeleportTo(Vector3 position, bool maintainMomentum)
+        public void TeleportTo(Vector3 position, bool maintainMomentum = false)
         {
-            Vector3 v = _rigidbody.linearVelocity;
-            _rigidbody.isKinematic = true;
-            _rigidbody.position = position;
-            _rigidbody.isKinematic = false;
-            _rigidbody.linearVelocity = v;
+            // Vector3 v = _rigidbody.linearVelocity;
+            // //_rigidbody.linearVelocity = Vector3.zero;
+            // _rigidbody.isKinematic = true;
+            // _rigidbody.position = position;
+            // _rigidbody.isKinematic = false;
+            // if (maintainMomentum) _rigidbody.linearVelocity = v;
+
+            RigidbodyInterpolation originalInterpolation = _rigidbody.interpolation;
+
+            // 2. Disable interpolation to prevent visual smearing across the map
+            _rigidbody.interpolation = RigidbodyInterpolation.None;
+
+            // 3. Directly assign physics position and rotation
+            _rigidbody.MovePosition(position);
+
+            // Optionally clear forces so it doesn't carry velocity over
+            if (!maintainMomentum)
+            {
+                _rigidbody.linearVelocity = Vector3.zero;
+                _rigidbody.angularVelocity = Vector3.zero;
+            }
+
+            // 4. Force Unity to immediately update the internal physics engine state
+            Physics.SyncTransforms();
+
+            // 5. Restore the original interpolation on the next physics step
+            _rigidbody.interpolation = originalInterpolation;
         }
 
         public void OnMove(InputAction.CallbackContext context)

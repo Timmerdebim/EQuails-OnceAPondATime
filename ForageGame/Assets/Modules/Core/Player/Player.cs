@@ -3,6 +3,7 @@ using UnityEngine;
 using NPC;
 using TDK.SaveSystem;
 using TDK.InteractionSystem;
+using UnityEngine.ProBuilder.MeshOperations;
 
 namespace TDK.PlayerSystem
 {
@@ -64,7 +65,8 @@ namespace TDK.PlayerSystem
 
         public void SaveData(ref WorldSaveData data)
         {
-            playerData.spawnPosition = transform.position;
+            if (animator.GetBool("isDead")) playerData.spawnPosition = new(0, 10.5f, 0);
+            else playerData.spawnPosition = transform.position;
             playerData.damageAmount = energy.damage;
             data.Player = playerData;
         }
@@ -123,6 +125,19 @@ namespace TDK.PlayerSystem
             trailRenderer.emitting = false;
 
             playerController.Reset();
+        }
+
+        public void ResetAnimator()
+        {
+            animator.SetBool("isGrounded", true);
+            animator.SetBool("isMoving", false);
+            animator.SetBool("isSwimming", false);
+            animator.SetBool("isDead", false);
+            animator.SetBool("attack", false);
+            animator.SetBool("fly", false);
+            animator.SetBool("jump", false);
+            animator.SetBool("run", false);
+            ExitStateReset();
         }
     }
 }

@@ -56,25 +56,21 @@ public class GameplayController : MonoBehaviour
         await AppController.Instance.ToCreditsSequence();
     }
 
+    private bool isSleeping_saftey = false;
     public async Task Sleep()
     {
+        if (isSleeping_saftey) return;
+        isSleeping_saftey = true;
+
         SetGameState(State.Transitioning);
+        Player.Instance.playerController.IsSleeping(true);
 
-        await _tsc.FadeOutAsync();
-        await AwaitPadding();
-        // healing process
-        Player.Instance.energy.TakeDamage(-9999);
-        Player.Instance.energy.AddEnergy(9999);
+        await UnloadWorld();
 
-        bool isFirstNight = !StoryFlagManager.Instance.FlagActive(firstNight); // have to get this before setting the flag
-        StoryFlagManager.Instance.AddFlag(this.firstNight);// it does not matter if we keep adding the flag after the first night, nothing will change: this is here 
-        StoryFlagManager.Instance.OnTimePassing();
-        SaveManager.Instance.SaveWorld();
-        await SceneServices.UnloadScene(_worldScene);
-
-        if (isFirstNight) // first night cutscene
+        if (!StoryFlagManager.Instance.FlagActive(firstNight)) // first night cutscene
         {
             await SceneServices.LoadScene(_cutscene);
+            await AwaitSaftey();
             SetGameState(State.Cutscene);
             await AwaitPadding();
             await ImageCutsceneController.Instance.PlayFirstNightSequence();
@@ -82,35 +78,32 @@ public class GameplayController : MonoBehaviour
             SetGameState(State.Transitioning);
             await SceneServices.UnloadScene(_cutscene);
         }
+
         Player.Instance.playerController.IsSleeping(false);
         await LoadWorld();
+        StoryFlagManager.Instance.AddFlag(this.firstNight);// it does not matter if we keep adding the flag after the first night, nothing will change: this is here
+        Player.Instance.energy.TakeDamage(-9999);
+        Player.Instance.energy.AddEnergy(9999);
+        isSleeping_saftey = false;
     }
 
+    private bool isDead_saftey = false;
     public async Task Death()
     {
-        if (Player.Instance.animator.GetBool("isDead")) return; // you can't be double dead
+        if (isDead_saftey) return; // you can't be double dead
+        isDead_saftey = true;
 
         SetGameState(State.Transitioning);
 
         Player.Instance.animator.SetBool("isDead", true);
         await Task.Delay(Mathf.CeilToInt(0.5f * 1000)); //animation (1 sec.) (cut at 0.5 sec.)
 
-        await _tsc.FadeOutAsync();
-        await AwaitPadding();
+        await UnloadWorld();
 
+        await LoadWorld();
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
-
-        Player.Instance.playerController.IsSleeping(true);
-        Player.Instance.transform.position = new(0, 10.5f, 0);
-
-        StoryFlagManager.Instance.OnTimePassing();
-        SaveManager.Instance.SaveWorld();
-        await SceneServices.UnloadScene(_worldScene);
-
-        Player.Instance.animator.SetBool("isDead", false);
-        Player.Instance.playerController.IsSleeping(false);
-        await LoadWorld();
+        isDead_saftey = false;
     }
 
     public void Escape()
@@ -123,6 +116,7 @@ public class GameplayController : MonoBehaviour
     {
         SetGameState(State.Transitioning);
         await SceneServices.LoadScene(_pauseScene);
+        await AwaitSaftey();
         SetGameState(State.Paused);
     }
 
@@ -144,19 +138,9 @@ public class GameplayController : MonoBehaviour
     {
         SetGameState(State.Transitioning);
         await SceneServices.LoadScene(_worldScene);
-        await Task.Yield(); // Current Frame (Load Scene Frame)
-        await Task.Yield(); // Awake Saftey
-        await Task.Yield(); // Start Saftey
-        await AwaitPadding();
+        await AwaitSaftey();
         SaveManager.Instance.LoadWorld();
-        ///IMPORTANT: scene loading isn't actually fully 'done' at this point
-        /// Awake() and OnEnable() have been run, but physics and terrain stuff come later
-        /// That's why padding is required, but we shouldn't have a time,
-        /// Rather frames (loading frames are slow rememba)
-        /// This should ensure terrains are actually loaded in time before we start
-        /// ~Lars
-        await Task.Yield(); // Current Frame (Load World Data Frame)
-        await Task.Yield(); // Physics Saftey
+        await AwaitSaftey();
 
         await AwaitPadding();
         _tsc.FadeIn();
@@ -168,8 +152,10 @@ public class GameplayController : MonoBehaviour
         SetGameState(State.Transitioning);
         await _tsc.FadeOutAsync();
         await AwaitPadding();
+        StoryFlagManager.Instance.OnTimePassing();
         SaveManager.Instance.SaveWorld();
         await SceneServices.UnloadScene(_worldScene);
+        Player.Instance.ResetAnimator();
     }
 
     public async Task LoadDebug()
@@ -209,9 +195,16 @@ public class GameplayController : MonoBehaviour
 
     private async Task AwaitPadding()
     {
-        await Task.Yield(); // (current)
-        await Task.Yield(); // frame padding (next)
         await Task.Delay(Mathf.CeilToInt(500)); // time padding
+        await AwaitSaftey();
+    }
+
+    private async Task AwaitSaftey()
+    {
+        await Task.Yield(); // Current Frame
+        await Task.Yield(); // Awake Saftey
+        await Task.Yield(); // Start Saftey
+        await Task.Yield(); // BONUS Saftey (you never know)
     }
 
     private void SetGameState(State gameState)
@@ -245,49 +238,3 @@ public class GameplayController : MonoBehaviour
         }
     }
 }
-
-// /// <summary>
-// /// Because scene loading being done does not mean scene loading is actually done
-// /// Now goes unused, but might be required later once loading times increase when cave is put in ther world too.
-// /// </summary>
-// /// <returns></returns>
-// private async Task WaitForTerrainsReady()
-// {
-//     // Give Unity's terrain system a frame to register colliders
-//     await Task.Yield();
-
-//     var terrains = GameObject.FindObjectsByType<Terrain>(FindObjectsSortMode.None);
-
-//     float timeout = 10f;
-//     float elapsed = 0f;
-
-//     while (elapsed < timeout)
-//     {
-//         bool allReady = true;
-
-//         foreach (var terrain in terrains)
-//         {
-//             var tc = terrain.GetComponent<TerrainCollider>();
-//             if (tc == null || !tc.enabled)
-//             {
-//                 allReady = false;
-//                 break;
-//             }
-
-//             // Check that terrain data is actually populated
-//             if (terrain.terrainData == null ||
-//                 terrain.terrainData.alphamapWidth == 0)
-//             {
-//                 allReady = false;
-//                 break;
-//             }
-//         }
-
-//         if (allReady) return;
-
-//         elapsed += Time.deltaTime;
-//         await Task.Yield();
-//     }
-
-//     Debug.LogWarning("WaitForTerrainsReady timed out after 10s — proceeding anyway.");
-// }
