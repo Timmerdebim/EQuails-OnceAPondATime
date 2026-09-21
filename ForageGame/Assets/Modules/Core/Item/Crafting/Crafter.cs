@@ -9,6 +9,7 @@ namespace TDK.ItemSystem.Inventory
         [SerializeField] private ItemRackController _itemRack;
         [SerializeField] private SimpleItemSpawner _itemSpawner;
         [SerializeField] private Animator _animator;
+        [SerializeField] private StoryFlag crafterUsedFlag;
 
         bool craftInProgress = false;
 
@@ -20,7 +21,10 @@ namespace TDK.ItemSystem.Inventory
             foreach (RecipeItem recipeItem in RecipeBookController.Instance.CollectedRecipes)
             {
                 if (TryCraftRecipe(recipeItem))
+                {
+                    StoryFlagManager.Instance.AddFlag(crafterUsedFlag); //used only for the tutorial, to make the pot's dialogue disappear
                     return true;
+                }
             }
             return false;
         }
