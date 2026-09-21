@@ -42,7 +42,9 @@ public class InputManager : MonoBehaviour
         if (!context.started) return;
         if (AppController.Instance._state != AppController.State.Gameplay) return;
         if (GameplayController.Instance._state != GameplayController.State.Playing) return;
-        Player.Instance?.playerInteract?.Interact();
+
+        if (RecipeBookController.Instance.IsVisualized) RecipeBookController.Instance?.SetVisualization(false);
+        else Player.Instance?.playerInteract?.Interact();
     }
 
     // ------------ Pausing ------------
