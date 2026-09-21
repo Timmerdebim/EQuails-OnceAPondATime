@@ -7,19 +7,34 @@ Required-Items:
         A crafting pot? What is that doing here?
 
         Stage: 1
-        Actions: give_bed_recipe
         ...Mama duck taught me how to make a simple bed with one of these.
 
+        Stage: 2
+        Actions: give_bed_recipe
+        ...
+
 --- Stage
 Flags: 
-Required-Items:
+Absent-Flags: CraftingPotUsed
+Absent-Items: MoonFungusSilk
+
+        Stage: 0
+        If I recall correctly...
+
+        Stage: 1
+        Moon-Fungus grows mostly on birch trees?
+
+--- Stage
+Flags: 
+Absent-Flags: CraftingPotUsed
+Required-Items: MoonFungusSilk
 
     Stage: 0
-    I think I just have to drop the items in...
+    I think I just have to drop the recipe's items in...
 
     Stage: 1
-    And then that button makes it go?
+    And then that button on the right makes it go?
 
 --- Stage
-Flags: 
-Required-Items: Bed
+Flags: CraftingPotUsed
+Required-Items:
