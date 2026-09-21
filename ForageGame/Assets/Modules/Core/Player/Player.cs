@@ -11,8 +11,8 @@ namespace TDK.PlayerSystem
 
     [RequireComponent(typeof(Energy))]
     [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(PlayerAnimator))]
     [RequireComponent(typeof(Interactor))]
-    [RequireComponent(typeof(Animator))]
     public class Player : MonoBehaviour, ISaveable, ILoadable
     {
         public static Player Instance { get; private set; }
@@ -21,7 +21,7 @@ namespace TDK.PlayerSystem
         public Energy energy { get; private set; }
         public Interactor playerInteract { get; private set; }
         public PlayerController playerController { get; private set; }
-        public Animator animator { get; private set; }
+        public PlayerAnimator _playerAnimator { get; private set; }
 
         [SerializeField] public Hitbox hitbox;
         [SerializeField] public TrailRenderer trailRenderer;
@@ -51,7 +51,7 @@ namespace TDK.PlayerSystem
             energy = GetComponent<Energy>();
             playerInteract = GetComponent<Interactor>();
             playerController = GetComponent<PlayerController>();
-            animator = GetComponent<Animator>();
+            _playerAnimator = GetComponent<PlayerAnimator>();
 
             ExitStateReset();
         }
@@ -65,7 +65,7 @@ namespace TDK.PlayerSystem
 
         public void SaveData(ref WorldSaveData data)
         {
-            if (animator.GetBool("isDead")) playerData.spawnPosition = new(0, 10.5f, 0);
+            if (_playerAnimator._animator.GetBool("isDead")) playerData.spawnPosition = new(0, 10.5f, 0);
             else playerData.spawnPosition = transform.position;
             playerData.damageAmount = energy.damage;
             data.Player = playerData;
@@ -129,14 +129,7 @@ namespace TDK.PlayerSystem
 
         public void ResetAnimator()
         {
-            animator.SetBool("isGrounded", true);
-            animator.SetBool("isMoving", false);
-            animator.SetBool("isSwimming", false);
-            animator.SetBool("isDead", false);
-            animator.SetBool("attack", false);
-            animator.SetBool("fly", false);
-            animator.SetBool("jump", false);
-            animator.SetBool("run", false);
+            _playerAnimator.Reset();
             ExitStateReset();
         }
     }

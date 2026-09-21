@@ -95,7 +95,7 @@ public class GameplayController : MonoBehaviour
 
         SetGameState(State.Transitioning);
 
-        Player.Instance.animator.SetBool("isDead", true);
+        Player.Instance._playerAnimator.IsDead(true);
         await Task.Delay(Mathf.CeilToInt(0.5f * 1000)); //animation (1 sec.) (cut at 0.5 sec.)
 
         await UnloadWorld();

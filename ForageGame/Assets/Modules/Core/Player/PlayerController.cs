@@ -10,12 +10,12 @@ namespace TDK.PlayerSystem
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(VelocityDriver))]
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(PlayerAnimator))]
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private LayerMask physicsColliders;
         public Rigidbody _rigidbody { get; private set; }
-        private Animator animator;
+        private PlayerAnimator _animator;
         [SerializeField] private PlayerVisuals _visuals;
         [SerializeField] private VelocityDriver _velocityDriver;
 
@@ -43,7 +43,7 @@ namespace TDK.PlayerSystem
         void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            animator = GetComponent<Animator>();
+            _animator = GetComponent<PlayerAnimator>();
         }
 
         #region Move & View
@@ -59,13 +59,13 @@ namespace TDK.PlayerSystem
                 if (value.magnitude > 0.1f)
                 {
                     ViewDirection = _inputVector;
-                    animator.SetBool("isMoving", true);
+                    _animator.IsMoving(true);
                     if (_vdTarget == VelocityDriverTarget.Input)
                         _velocityDriver.SetTargetDirection(InputVector);
                 }
                 else
                 {
-                    animator.SetBool("isMoving", false);
+                    _animator.IsMoving(false);
                     if (_vdTarget == VelocityDriverTarget.Input)
                         _velocityDriver.SetTargetDirection(new(0, 0, 0));
                 }
@@ -104,13 +104,13 @@ namespace TDK.PlayerSystem
         {
             onWaterEnter?.Invoke(Mathf.Abs(_priorVelocity.y)); //nice hacky way of doing this, but no nice way for it :(
             //Debug.Log($"[PlayerController]: OnWaterEnter. isGrounded: {animator.GetBool("isGrounded")}, prev y linearvelocity: {Mathf.Abs(_priorVelocity.y)}");
-            animator.SetBool("isSwimming", true);
+            _animator.IsSwimming(true);
         }
 
         public void OnWaterExit()
         {
             onWaterLeave?.Invoke();
-            animator.SetBool("isSwimming", false);
+            _animator.IsSwimming(false);
         }
 
         public void TeleportTo(Vector3 position, bool maintainMomentum = false)
@@ -159,12 +159,12 @@ namespace TDK.PlayerSystem
             && Player.Instance.playerData.sprintUnlocked
             && Player.Instance.energy.energy > 0.01f)
             {
-                animator.SetBool("run", true);
+                _animator.IsSprinting(true);
 
                 onSprint?.Invoke();
             }
             else if (context.canceled)
-                animator.SetBool("run", false);
+                _animator.IsSprinting(false);
 
         }
 
@@ -174,10 +174,10 @@ namespace TDK.PlayerSystem
             && Player.Instance.playerData.attackUnlocked
             && Player.Instance.energy.energy > Player.Instance.attackEnergy)
             {
-                animator.SetBool("attack", true);
+                _animator.IsAttacking(true);
                 onAttack?.Invoke();
             }
-            else if (context.canceled) animator.SetBool("attack", false);
+            else if (context.canceled) _animator.IsAttacking(false);
         }
 
         public void OnJump(InputAction.CallbackContext context)
@@ -188,19 +188,19 @@ namespace TDK.PlayerSystem
                 float energy = Player.Instance.energy.energy;
                 if (wingLevel == 1 && energy > Player.Instance.hopEnergy)
                 {
-                    animator.SetBool("jump", true);
+                    _animator.IsJumping(true);
                     onJump?.Invoke();
                 }
                 else if (wingLevel >= 2 && energy > 0.01f)
                 {
-                    animator.SetBool("fly", true);
+                    _animator.IsFlying(true);
                     onJump?.Invoke();
                 }
             }
             else if (context.canceled)
             {
-                animator.SetBool("jump", false);
-                animator.SetBool("fly", false);
+                _animator.IsJumping(false);
+                _animator.IsFlying(false);
             }
         }
 
@@ -231,15 +231,15 @@ namespace TDK.PlayerSystem
             groundColliders = Physics.OverlapBox(transform.position - _groundOffset, new(0.1f, 0.1f, 0.1f), Quaternion.identity, physicsColliders);
             if (0 < groundColliders.Length && groundColliders.Any(c => !c.isTrigger))
             {
-                if (!animator.GetBool("isGrounded"))
+                if (!_animator._animator.GetBool("isGrounded"))
                 {
                     onLand?.Invoke();
                 }
-                animator.SetBool("isGrounded", true);
+                _animator.IsGrounded(true);
                 LastGroundedHeight = transform.position.y;
             }
             else
-                animator.SetBool("isGrounded", false);
+                _animator.IsGrounded(false);
         }
 
         #endregion
