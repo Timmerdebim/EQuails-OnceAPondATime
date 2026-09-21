@@ -1429,6 +1429,40 @@ MonoBehaviour:
   OnEmptyExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1298955702609661208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7875385625640081428}
+  m_Layer: 7
+  m_Name: Lanterns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7875385625640081428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298955702609661208}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5263456832021281421}
+  - {fileID: 6673493298601745387}
+  - {fileID: 8645140993141651321}
+  m_Father: {fileID: 1901874242649451750}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1306454679839192961
 GameObject:
   m_ObjectHideFlags: 0
@@ -9251,7 +9285,7 @@ Transform:
   - {fileID: 6700718037496669908}
   - {fileID: 1274052989882959123}
   - {fileID: 5516395392175570795}
-  - {fileID: 5263456832021281421}
+  - {fileID: 7875385625640081428}
   m_Father: {fileID: 1618315638837410332}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7297030317454996541
@@ -10503,6 +10537,68 @@ MonoBehaviour:
   OnEmptyExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1001 &334821703258739213
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7875385625640081428}
+    m_Modifications:
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 95.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 70.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789330696166948314, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_Name
+      value: HangingLantern
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 624f600781f91462da513a59f3666260, type: 3}
+--- !u!4 &6673493298601745387 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+  m_PrefabInstance: {fileID: 334821703258739213}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &355794268420227585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13152,7 +13248,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1901874242649451750}
+    m_TransformParent: {fileID: 7875385625640081428}
     m_Modifications:
     - target: {fileID: 6198882956321123610, guid: ff8bca67ed9394e0caff49bb5fb60f8e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13196,7 +13292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8631050672252819750, guid: ff8bca67ed9394e0caff49bb5fb60f8e, type: 3}
       propertyPath: m_Name
-      value: Lantern
+      value: BedLantern
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15949,6 +16045,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8711584195596349346, guid: 4442cbeab69bf404ca09d4d0db5ae4a8, type: 3}
   m_PrefabInstance: {fileID: 3286757842991340855}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3441086228289519263
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7875385625640081428}
+    m_Modifications:
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 47.218
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 56.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789330696166948314, guid: 624f600781f91462da513a59f3666260, type: 3}
+      propertyPath: m_Name
+      value: HangingLantern (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 624f600781f91462da513a59f3666260, type: 3}
+--- !u!4 &8645140993141651321 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6356976407118039526, guid: 624f600781f91462da513a59f3666260, type: 3}
+  m_PrefabInstance: {fileID: 3441086228289519263}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3976830779743769231
 PrefabInstance:
