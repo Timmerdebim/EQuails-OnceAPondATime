@@ -19,7 +19,10 @@ namespace Project.Menus.Graphics
                 return;
             }
             Instance = this;
+        }
 
+        void Start()
+        {
             // Load & Apply All Settings
             FullScreen = FullScreen;
             Resolution = Resolution;
@@ -89,12 +92,12 @@ namespace Project.Menus.Graphics
         {
 
             // 0 = Terrible, 1 = Low, 2 = Medium, 3 = High, 4 = Ridiculous.
-            get => PlayerPrefs.GetInt("TextureQuality", 3);
+            get => PlayerPrefs.GetInt("LightingQuality", 3);
             set
             {
                 if (_urpAssets[value] != null)
                     QualitySettings.renderPipeline = _urpAssets[value];
-                PlayerPrefs.SetInt("TextureQuality", value);
+                PlayerPrefs.SetInt("LightingQuality", value);
                 PlayerPrefs.Save();
             }
         }
