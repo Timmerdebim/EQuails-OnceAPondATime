@@ -25,6 +25,7 @@ namespace TDK.ItemSystem
         void OnValidate()
         {
             UpdateVisuals();
+            if (ItemData != null) gameObject.name = ItemData.GetName();
         }
 
         public void Initialize(ItemSaveData data) => Initialize(data.GetItemData(), data.Position, new());
