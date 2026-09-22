@@ -14,48 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   injectionPoint: 550
---- !u!114 &-6403086869233234896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: Blackout Stencil 1
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  settings:
-    passTag: Blackout Stencil 1
-    Event: 300
-    filterSettings:
-      RenderQueueType: 0
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 128
-      PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 4067cb456bce36142a4586582dd4e4ff, type: 2}
-    overrideMaterialPassIndex: 1
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
 --- !u!114 &-4424393697478201247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,48 +67,6 @@ MonoBehaviour:
   _injectionPoint: 550
   _renderCamera: 3
   _shader: {fileID: -6465566751694194690, guid: a1b07ed697d67f145899e797afa7e6d3, type: 3}
---- !u!114 &-3244899092586713539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: Blackout Stencil 2
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  settings:
-    passTag: Blackout Stencil 2
-    Event: 300
-    filterSettings:
-      RenderQueueType: 0
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 128
-      PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 4067cb456bce36142a4586582dd4e4ff, type: 2}
-    overrideMaterialPassIndex: 2
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,10 +97,8 @@ MonoBehaviour:
   - {fileID: 7243409066270041373}
   - {fileID: 4086943063279982145}
   - {fileID: -3430732388768641631}
-  - {fileID: 2641255224624802320}
-  - {fileID: -6403086869233234896}
-  - {fileID: -3244899092586713539}
-  m_RendererFeatureMap: ad6b866f10d7b46c61b055a35f6599c21da5de252bc2856441d60c0010bdb738a18d04b8119763d010eae700a29fa724308c62dd6aaa23a73dae61ae77cdf7d2
+  - {fileID: 3385662341372807085}
+  m_RendererFeatureMap: ad6b866f10d7b46c61b055a35f6599c21da5de252bc2856441d60c0010bdb738a18d04b8119763d0ad87f122f649fc2e
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -210,7 +124,7 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
---- !u!114 &2641255224624802320
+--- !u!114 &3385662341372807085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,39 +133,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: Blackout Stencil 0
+  m_Script: {fileID: 11500000, guid: ff8b23825f8dd274fb88681db7b5fc1e, type: 3}
+  m_Name: ObstacleMaskFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  settings:
-    passTag: Blackout Stencil 0
-    Event: 300
-    filterSettings:
-      RenderQueueType: 0
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 128
-      PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 4067cb456bce36142a4586582dd4e4ff, type: 2}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
+  maskMaterial: {fileID: 2100000, guid: 4067cb456bce36142a4586582dd4e4ff, type: 2}
+  renderingLayerMask:
+    serializedVersion: 0
+    m_Bits: 1
 --- !u!114 &4086943063279982145
 MonoBehaviour:
   m_ObjectHideFlags: 0
