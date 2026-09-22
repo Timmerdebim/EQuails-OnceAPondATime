@@ -10,7 +10,6 @@ namespace TDK.RegionTitles
         [SerializeField] private TypewriterTextbox RegionNameText;
         [SerializeField] private float _triggerInterval = 15f;
         private float lastTriggerTime = 0f;
-        private string _currentRegionTitle = "";
 
         public static RegionTitleManager Instance { get; private set; }
         void Awake()

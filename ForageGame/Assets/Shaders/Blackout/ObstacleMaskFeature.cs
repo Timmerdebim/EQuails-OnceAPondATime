@@ -14,7 +14,7 @@ public class ObstacleMaskFeature : ScriptableRendererFeature
         Material material;
         uint mask;
         int passIndex;
-        string passName;
+        new string passName;
 
         static readonly List<ShaderTagId> tags = new List<ShaderTagId>
     {
