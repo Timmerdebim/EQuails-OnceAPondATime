@@ -112,6 +112,15 @@ public class CutoutController : MonoBehaviour
         baseMat.SetFloat("_Player_Inner_Radius", vector.w);
     }
 
+    void OnDisable()
+    {
+        Shader.SetGlobalVector(PosID, new(0, 0, 0));
+        baseMat.SetFloat("_Camera_Outer_Radius", 0);
+        baseMat.SetFloat("_Camera_Inner_Radius", 0);
+        baseMat.SetFloat("_Player_Outer_Radius", 0);
+        baseMat.SetFloat("_Player_Inner_Radius", 0);
+    }
+
     void OnDestroy() => StopAllCoroutines();
 
     #endregion
