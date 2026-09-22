@@ -24,7 +24,8 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: b70fa7af499c096488b191f1714eaa4e, type: 3}
   m_Parent: {fileID: 2100000, guid: b4d8ccc4e0815db48a2475569b488f39, type: 2}
   m_ModifiedSerializedProperties: 16
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _BACKFACE_MODE_SOLID
   m_InvalidKeywords:
   - _WIND_BRANCH1
   - _WIND_BRANCH2
@@ -56,6 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BACKFACE_MODE: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
