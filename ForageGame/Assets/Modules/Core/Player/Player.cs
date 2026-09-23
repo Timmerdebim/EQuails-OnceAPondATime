@@ -38,6 +38,10 @@ namespace TDK.PlayerSystem
         [SerializeField] public float flutterEnergy = 10f; // this is energy per second
         [SerializeField] public float attackEnergy = 10f;
 
+
+        [Header("Whoopsies")]
+        [SerializeField] public StoryFlag dummyCraftedFlag;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -89,7 +93,7 @@ namespace TDK.PlayerSystem
             {
                 case PlayerUpgradeType.Attack:
                     playerData.attackUnlocked = true;
-                    //TODO: spawn dummy
+                    StoryFlagManager.Instance.AddFlag(dummyCraftedFlag); //This is a hack, the dummy must spawn in immediately, but the only save/load safe way is to add a flag.
                     break;
                 case PlayerUpgradeType.Lantern:
                     playerData.lanternUnlocked = true;
