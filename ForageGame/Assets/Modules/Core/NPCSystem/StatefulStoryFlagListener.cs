@@ -54,10 +54,11 @@ public class StatefulStoryFlagListener : MonoBehaviour
         for (int i = storyFlagActionMap.Count - 1; i > storyFlagActionMap.IndexOf(activeEntry); i--)
         {
             var entry = storyFlagActionMap[i];
-            if (entry.flag != null && StoryFlagManager.Instance.FlagActive(entry.flag))
+            if (entry.flag == null || StoryFlagManager.Instance.FlagActive(entry.flag))
             {
                 activeEntry = entry;
-                Debug.Log($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: {entry.flag.id}");
+                if(entry.flag == null) Debug.Log($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: None flag");
+                else Debug.Log($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: {entry.flag.id}");
                 activeEntry.action?.Invoke();
                 return;
             }
