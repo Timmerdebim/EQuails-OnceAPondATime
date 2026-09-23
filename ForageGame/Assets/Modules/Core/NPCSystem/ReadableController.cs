@@ -323,6 +323,7 @@ namespace NPC
                 {
                     Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Finished MAIN locationDialogue");
                     _lastCompletedStageIndex = GetActiveStageIndex();
+                    SetStatusIndicatorText(false); //set indicator text to '...' (main dialogue is done)
                 }
             }
             return res;
