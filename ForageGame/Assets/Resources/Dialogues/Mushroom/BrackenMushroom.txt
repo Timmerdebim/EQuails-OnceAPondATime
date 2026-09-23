@@ -1,6 +1,7 @@
 --- Stage
 Flags: 
 Required-Items:
+Actions: start_animation_bracken_busy
 
     Location: Lab 
     <main>
@@ -8,38 +9,61 @@ Required-Items:
 
         Stage: 0
         Actions: face_right
-        ...
+        Emotion: NeutralTalking
+        ...Okay... now that that's in I just need...
 
         Stage: 1
         Actions: face_right
-        Emotion: NeutralTalking
-        ...Why doesn't it just...
+        Huh? Where did I put it again?
 
         Stage: 2
-        Actions: face_right
-        ...Work as it should?
-
+        Oh! Hello there.
 
         Stage: 3
-        Actions: face_right
-        ...What am I still missing?...
+        Sorry duck, but I'm really busy right - (!)
 
         Stage: 4
-        Oh - hey.
+        Emotion: Exploded
+        Oh no, your wing!
 
         Stage: 5
-        Sorry duck, but I can't right now, really busy here!
+        Emotion: SittingNeutralTalking
+        Are you alright?
 
         Stage: 6
-        I can help you later if you need something, just-
+        Emotion: Sitting
+        It's broken... badly.
 
         Stage: 7
         Actions: face_right
-        ...let me finish this.
+        Emotion: HappyTalking
+        I can think of something, you just -
+
+        Stage: 8
+        Actions: face_right
+        Emotion: NeutralTalking
+        Argh, but I must finish this thing right now!
+
+        Stage: 9
+        Actions: face_right
+        Emotion: Neutral
+        ...
+
+        Stage: 10
+        Emotion: HappyTalking
+        Duckie, I'll get to you in a sec, I promise.
+
+        Stage: 11
+        Actions: face_right
+        Emotion: NeutralTalking
+        Just... let me finish this first. I need-
+
+        Stage: 12
+        Actions: face_right, give_flag_bracken_introduced
+        Argh, where did I put those Singing Vine Thorns again?
 
 --- Stage
 Flags: 
-Required-Items:
 
     Location: Lab 
     BaseEmotion: Neutral
@@ -47,51 +71,21 @@ Required-Items:
         Stage: 0
         Actions: face_right
         Emotion: NeutralTalking
-        ...18% percent more water retention...
+        ...Where did I put those Singing Vine Thorns?
 
         Stage: 1
         Actions: face_right
-        That's still nowhere near enough...
+        I'm sure I had some spare ones somewhere.
 
         Stage: 2
-        Oh - you're still here?
+        Actions: face_right
+        Emotion: Neutral
+        ...
 
         Stage: 3
-        Can you please-
-
-        Stage: 4
-        Ah you know what, you can wait if you want.
-
-        Stage: 5
-        <CloseAfter>
-        Actions:face_right
-        Just - don't touch anything.
-
-
-        Stage: 6
         Actions: face_right
-        Emotion: NeutralTalking
-        ...Let's see... bind the silk with... the...
-
-        Stage: 7
-        Actions: face_right
-        Argh, I forgot the Lily Pods again!
-
-        Stage: 8
-        Emotion: NeutralTalking
-        ...I'll get to you in a sec, Duck, I promise.
-
-        Stage: 9
-        Actions: face_right
-        I just need to finish this... I need-
-
-        Stage: 10
-        Actions: face_right
-        Emotion: NeutralTalking
-        Argh, it's so close now...
-
-
-
+        Emotion: Sad
+        I should really organise this place when I'm done...
 
 
 
