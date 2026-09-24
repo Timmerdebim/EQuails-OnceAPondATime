@@ -10,8 +10,8 @@ public class GameplayController : MonoBehaviour
 {
     public static GameplayController Instance { get; private set; }
 
-    public enum State { Paused, Playing, Transitioning, Cutscene, InGameCutscene }
-    public State _state { get; private set; } = State.Transitioning;
+    public enum State { Paused, Playing, Busy, Initial }
+    public State _state { get; private set; } = State.Initial;
     [SerializeField] private TransitionScreenController _tsc;
     [SerializeField] public SaveManager _saveManager;
 
@@ -37,32 +37,32 @@ public class GameplayController : MonoBehaviour
 
     public void QuitToDesktop()
     {
-        SetGameState(State.Transitioning);
+        SetGameState(State.Busy);
         SaveManager.Instance.SaveWorld();
         AppController.Instance.Quit();
     }
 
     public async Task QuitToMainMenu()
     {
-        SetGameState(State.Transitioning);
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
         await UnloadWorld();
         await AppController.Instance.ToMainMenu();
     }
 
     public async Task FinishGame()
     {
-        SetGameState(State.Transitioning);
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
         await UnloadWorld();
         await AppController.Instance.ToCreditsSequence();
     }
 
-    private bool isSleeping_saftey = false;
     public async Task Sleep()
     {
-        if (isSleeping_saftey) return;
-        isSleeping_saftey = true;
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
 
-        SetGameState(State.Transitioning);
         Player.Instance.playerController.IsSleeping(true);
 
         await UnloadWorld();
@@ -70,12 +70,9 @@ public class GameplayController : MonoBehaviour
         if (!StoryFlagManager.Instance.FlagActive(firstNight)) // first night cutscene
         {
             await SceneServices.LoadScene(_cutscene);
-            await AwaitSaftey();
-            SetGameState(State.Cutscene);
             await AwaitPadding();
             await ImageCutsceneController.Instance.PlayFirstNightSequence();
             await AwaitPadding();
-            SetGameState(State.Transitioning);
             await SceneServices.UnloadScene(_cutscene);
         }
 
@@ -84,93 +81,32 @@ public class GameplayController : MonoBehaviour
         StoryFlagManager.Instance.AddFlag(this.firstNight);// it does not matter if we keep adding the flag after the first night, nothing will change: this is here
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
-        isSleeping_saftey = false;
+        SetGameState(State.Playing);
     }
 
-    private bool isDead_saftey = false;
     public async Task Death()
     {
-        if (isDead_saftey) return; // you can't be double dead
-        isDead_saftey = true;
-
-        SetGameState(State.Transitioning);
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
 
         Player.Instance._playerAnimator.IsDead(true);
         await Task.Delay(Mathf.CeilToInt(0.5f * 1000)); //animation (1 sec.) (cut at 0.5 sec.)
 
         await UnloadWorld();
-
         await LoadWorld();
+
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
-        isDead_saftey = false;
-    }
-
-    public void Escape()
-    {
-        if (_state == State.Paused) PauseMenuController.Instance.Escape();
-        else if (_state == State.Playing) _ = PauseGame();
-    }
-
-    public async Task PauseGame()
-    {
-        SetGameState(State.Transitioning);
-        await SceneServices.LoadScene(_pauseScene);
-        await AwaitSaftey();
-        SetGameState(State.Paused);
-    }
-
-    public async Task ResumeGame()
-    {
-        SetGameState(State.Transitioning);
-        await SceneServices.UnloadScene(_pauseScene);
         SetGameState(State.Playing);
     }
 
-    public async Task LoadWorld(string worldId)
-    {
-        SetGameState(State.Transitioning);
-        _saveManager.SelectWorld(worldId);
-        await LoadWorld();
-    }
-
-    public async Task LoadWorld()
-    {
-        SetGameState(State.Transitioning);
-        await SceneServices.LoadScene(_worldScene);
-        await AwaitSaftey();
-        SaveManager.Instance.LoadWorld();
-        await AwaitSaftey();
-
-        await AwaitPadding();
-        _tsc.FadeIn();
-        SetGameState(State.Playing);
-    }
-
-    public async Task UnloadWorld()
-    {
-        SetGameState(State.Transitioning);
-        await _tsc.FadeOutAsync();
-        await AwaitPadding();
-        StoryFlagManager.Instance.OnTimePassing();
-        SaveManager.Instance.SaveWorld();
-        await SceneServices.UnloadScene(_worldScene);
-        Player.Instance.ResetAnimator();
-    }
-
-    public async Task LoadDebug()
-    {
-        SetGameState(State.Transitioning);
-        _saveManager.SelectWorld("-1");
-
-        await AwaitPadding();
-        _tsc.FadeIn();
-        SetGameState(State.Playing);
-    }
+    private bool _isCutsceneActive = false;
 
     public async Task InGameCutsceneStart(Animator cutsceneAnimator, string cutsceneName, bool lockInputs, bool pauseTime, bool useTransitionScreen)
     {
-        SetGameState(State.InGameCutscene);
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
+        _isCutsceneActive = true;
         AppController.Instance.SetInputsActive(lockInputs);
         Time.timeScale = pauseTime ? 0 : 1;
         if (useTransitionScreen)
@@ -183,12 +119,79 @@ public class GameplayController : MonoBehaviour
 
     public async Task InGameCutsceneStop(bool useTransitionScreen)
     {
+        if (!_isCutsceneActive) return;
+        _isCutsceneActive = false;
         SetGameState(State.Playing);
         if (useTransitionScreen)
         {
             await AwaitPadding();
             _tsc.FadeIn();
         }
+    }
+
+    public void Escape()
+    {
+        if (_state == State.Paused) PauseMenuController.Instance.Escape();
+        else if (_state == State.Playing) _ = PauseGame();
+    }
+
+    public async Task PauseGame()
+    {
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
+        await SceneServices.LoadScene(_pauseScene);
+        await AwaitSaftey();
+        SetGameState(State.Paused);
+    }
+
+    public async Task ResumeGame()
+    {
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
+        await SceneServices.UnloadScene(_pauseScene);
+        SetGameState(State.Playing);
+    }
+
+    public async Task LoadWorld(string worldId = null)
+    {
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
+        if (worldId != null) _saveManager.SelectWorld(worldId);
+        await LoadWorld();
+        _tsc.FadeIn();
+        SetGameState(State.Playing);
+    }
+
+    public async Task LoadDebug()
+    {
+        if (_state == State.Busy) return;
+        SetGameState(State.Busy);
+        _saveManager.SelectWorld("-1");
+        await AwaitPadding();
+        _tsc.FadeIn();
+        SetGameState(State.Playing);
+    }
+
+    // PRIVATE TASKS
+
+    private async Task LoadWorld() // PRIVATE == skip saftey check
+    {
+        await SceneServices.LoadScene(_worldScene);
+        await AwaitSaftey();
+        SaveManager.Instance.LoadWorld();
+        await AwaitSaftey();
+        await AwaitPadding();
+        _tsc.FadeIn();
+    }
+
+    private async Task UnloadWorld() // PRIVATE == skip saftey check
+    {
+        await _tsc.FadeOutAsync();
+        await AwaitPadding();
+        StoryFlagManager.Instance.OnTimePassing();
+        SaveManager.Instance.SaveWorld();
+        await SceneServices.UnloadScene(_worldScene);
+        Player.Instance.ResetAnimator();
     }
 
     // ------------ Other Functions ------------
@@ -204,6 +207,7 @@ public class GameplayController : MonoBehaviour
         await Task.Yield(); // Current Frame
         await Task.Yield(); // Awake Saftey
         await Task.Yield(); // Start Saftey
+        await Task.Yield(); // Physics Saftey
         await Task.Yield(); // BONUS Saftey (you never know)
     }
 
@@ -225,15 +229,9 @@ public class GameplayController : MonoBehaviour
                 // Cursor.lockState = CursorLockMode.Locked;
                 // Cursor.visible = false;
                 break;
-            case State.Transitioning:
+            case State.Busy:
                 AppController.Instance.SetInputsActive(false);
                 Time.timeScale = 0f;
-                break;
-            case State.Cutscene:
-                AppController.Instance.SetInputsActive(false);
-                Time.timeScale = 0f;
-                break;
-            case State.InGameCutscene:
                 break;
         }
     }
