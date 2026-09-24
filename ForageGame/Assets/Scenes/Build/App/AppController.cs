@@ -33,6 +33,8 @@ public class AppController : MonoBehaviour
 
     void Start() // BOOT SEQUENCE
     {
+        // Cursor.visible = false;
+
         switch (_bootmode)
         {
             case Boot.BootMainMenu:
@@ -71,12 +73,14 @@ public class AppController : MonoBehaviour
 
     public async Task ToMainMenu()
     {
+        if (_state == State.Transitioning) return;
         await TransitionTo(State.MainMenu);
         await MainMenuController.Instance.Load();
     }
 
     public async Task ToCreditsSequence()
     {
+        if (_state == State.Transitioning) return;
         await TransitionTo(State.Cutscene);
         await ImageCutsceneController.Instance.PlayOutroSequence();
         await TransitionTo(State.MainMenu);
@@ -87,6 +91,7 @@ public class AppController : MonoBehaviour
 
     public async Task ToNewWorld(string worldId = null)
     {
+        if (_state == State.Transitioning) return;
         if (worldId == null || SaveServices.ExistsWorld(worldId))
             worldId = SaveServices.GetFreeWorldId(_worldIds);
 
@@ -103,6 +108,7 @@ public class AppController : MonoBehaviour
 
     public async Task ToWorld(string worldId = null)
     {
+        if (_state == State.Transitioning) return;
         worldId ??= PlayerPrefs.GetString("lastWorldUsed", null);
         if (worldId == null || !SaveServices.ExistsWorld(worldId))
         {
@@ -136,24 +142,18 @@ public class AppController : MonoBehaviour
             await MainMenuController.Instance.ExitMainMenu();
         }
         _state = State.Transitioning;
-        Time.timeScale = 0f;
         await SceneServices.UnloadAllScenes();
         switch (newState)
         {
             case State.MainMenu:
-                Time.timeScale = 0f;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
                 await SceneServices.LoadScene(_mainMenuScene);
                 SetInputsActive(true);
                 break;
             case State.Gameplay:
-                Time.timeScale = 1f;
                 await SceneServices.LoadScene(_gameplayScene);
                 SetInputsActive(true);
                 break;
             case State.Cutscene:
-                Time.timeScale = 1f;
                 await SceneServices.LoadScene(_cutsceneScene);
                 break;
         }
