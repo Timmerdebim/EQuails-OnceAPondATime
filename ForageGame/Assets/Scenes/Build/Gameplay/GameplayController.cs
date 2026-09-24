@@ -62,6 +62,7 @@ public class GameplayController : MonoBehaviour
     {
         if (_state == State.Busy) return;
         SetGameState(State.Busy);
+        Debug.Log("[Gameplay] Player sleeping.");
 
         Player.Instance.playerController.IsSleeping(true);
 
@@ -82,12 +83,16 @@ public class GameplayController : MonoBehaviour
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
         SetGameState(State.Playing);
+        Debug.Log("[Gameplay] Player slept.");
+
     }
 
     public async Task Death()
     {
         if (_state == State.Busy) return;
         SetGameState(State.Busy);
+        Debug.Log("[Gameplay] Player dying.");
+
 
         Player.Instance._playerAnimator.IsDead(true);
         await Task.Delay(Mathf.CeilToInt(0.5f * 1000)); //animation (1 sec.) (cut at 0.5 sec.)
@@ -98,6 +103,7 @@ public class GameplayController : MonoBehaviour
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
         SetGameState(State.Playing);
+        Debug.Log("[Gameplay] Player died.");
     }
 
     private bool _isCutsceneActive = false;
@@ -139,17 +145,21 @@ public class GameplayController : MonoBehaviour
     {
         if (_state == State.Busy) return;
         SetGameState(State.Busy);
+        Debug.Log("[Gameplay] Pausing game.");
         await SceneServices.LoadScene(_pauseScene);
         await AwaitSaftey();
         SetGameState(State.Paused);
+        Debug.Log("[Gameplay] Paused game.");
     }
 
     public async Task ResumeGame()
     {
         if (_state == State.Busy) return;
         SetGameState(State.Busy);
+        Debug.Log("[Gameplay] Resuming game.");
         await SceneServices.UnloadScene(_pauseScene);
         SetGameState(State.Playing);
+        Debug.Log("[Gameplay] Resumed game.");
     }
 
     public async Task LoadWorld(string worldId = null)
@@ -176,22 +186,26 @@ public class GameplayController : MonoBehaviour
 
     private async Task LoadWorld() // PRIVATE == skip saftey check
     {
+        Debug.Log("[Gameplay] Loading World.");
         await SceneServices.LoadScene(_worldScene);
         await AwaitSaftey();
         SaveManager.Instance.LoadWorld();
         await AwaitSaftey();
         await AwaitPadding();
         _tsc.FadeIn();
+        Debug.Log("[Gameplay] Loaded World.");
     }
 
     private async Task UnloadWorld() // PRIVATE == skip saftey check
     {
+        Debug.Log("[Gameplay] Unloading World.");
         await _tsc.FadeOutAsync();
         await AwaitPadding();
         StoryFlagManager.Instance.OnTimePassing();
         SaveManager.Instance.SaveWorld();
         await SceneServices.UnloadScene(_worldScene);
         Player.Instance.ResetAnimator();
+        Debug.Log("[Gameplay] Unloaded World.");
     }
 
     // ------------ Other Functions ------------
