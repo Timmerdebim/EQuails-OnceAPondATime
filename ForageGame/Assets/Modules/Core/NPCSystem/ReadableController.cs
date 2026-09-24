@@ -66,6 +66,9 @@ namespace NPC
 
         [SerializeField] private PopupTextbox statusIndicator;
 
+        [Tooltip("For readables that are one-time readables (i.e. use main dialogue) but are not mandatory")]
+        [SerializeField] private bool showsExclamationMark = true; 
+
         private bool isBeingDisabled = false; //insane stupid bullshit hack to not have the popup thing pop up when being disabled
 
         void OnEnable()
@@ -240,7 +243,7 @@ namespace NPC
             {
                 //re-enable if was disabled by previous empty stage, to allow for auto-re-enabling
                 EnableInteractable();
-                SetStatusIndicatorText(ld.isMainDialogue); //shows the '!' or '...' indicator
+                SetStatusIndicatorText(ld.isMainDialogue && showsExclamationMark); //shows the '!' or '...' indicator
                 ShowStatusIndicator();
                 if (!ld.isMainDialogue) 
                 {
