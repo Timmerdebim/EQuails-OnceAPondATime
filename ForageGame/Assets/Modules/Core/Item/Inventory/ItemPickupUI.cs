@@ -20,11 +20,11 @@ namespace TDK.ItemSystem.Inventory
 
         public void TriggerNewItemPopup(ItemData item)
         {
+            Time.timeScale = 0f;
             gameObject.SetActive(true);
 
             transform.DOScale(Vector3.one, 0.4f).From(Vector3.zero).SetEase(Ease.OutBack);
 
-            //Time.timeScale = 0f;
             itemIcon.sprite = item.GetSprite();
             itemName.text = item.GetName();
             itemDescription.text = item.GetDescription();
@@ -37,7 +37,6 @@ namespace TDK.ItemSystem.Inventory
 
         public IEnumerator ShowPopup(Sprite icon, string name, string description)
         {
-            // TODO: forcefully release all keys?
             // Optional small delay so player can't instantly skip
             yield return new WaitForSecondsRealtime(0.3f);
 
