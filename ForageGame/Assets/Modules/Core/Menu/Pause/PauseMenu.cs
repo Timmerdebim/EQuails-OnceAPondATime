@@ -24,7 +24,13 @@ namespace Project.Menus
 
         public void OnRespawnClicked()
         {
-            _ = GameplayController.Instance.Death();
+            _ = Respawn();
+        }
+
+        private async Task Respawn()
+        {
+            await GameplayController.Instance.ResumeGame();
+            await GameplayController.Instance.Death();
         }
 
         public void OnMainMenuClicked()
