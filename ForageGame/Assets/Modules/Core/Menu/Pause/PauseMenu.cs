@@ -24,8 +24,13 @@ namespace Project.Menus
 
         public void OnRespawnClicked()
         {
-            Escape();
-            Player.Instance.energy.Hit(99999); // Kill the player
+            _ = Respawn();
+        }
+
+        private async Task Respawn()
+        {
+            await GameplayController.Instance.ResumeGame();
+            await GameplayController.Instance.Death();
         }
 
         public void OnMainMenuClicked()
