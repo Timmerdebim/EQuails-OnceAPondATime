@@ -470,93 +470,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b5fd33cb7554d246ae1fcbcaee4aeea, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5625985167035272479}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b5fd33cb7554d246ae1fcbcaee4aeea, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1393805985765618167}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b5fd33cb7554d246ae1fcbcaee4aeea, type: 3}
 --- !u!4 &489035151553264435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b5fd33cb7554d246ae1fcbcaee4aeea, type: 3}
   m_PrefabInstance: {fileID: 91162280292490456}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &973540913470153097 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b5fd33cb7554d246ae1fcbcaee4aeea, type: 3}
-  m_PrefabInstance: {fileID: 91162280292490456}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5625985167035272479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973540913470153097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4987bce5442a4e843b56f23050c90731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onInteract:
-    m_PersistentCalls:
-      m_Calls: []
-  onFocus:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1393805985765618167}
-        m_TargetAssemblyTypeName: OutlineObject, Assembly-CSharp
-        m_MethodName: AnimateIn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnUnfocus:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1393805985765618167}
-        m_TargetAssemblyTypeName: OutlineObject, Assembly-CSharp
-        m_MethodName: AnimateOut
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  printInteractions: 0
---- !u!114 &1393805985765618167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973540913470153097}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eb8faeacfb83d043a6d38d38700dafe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _visuals: {fileID: 973540913470153097}
-  outlineInfo:
-    outlineWidth: 10
-    outlineColor: {r: 1, g: 1, b: 1, a: 1}
-    doWobble: 0
-    wobbleScale: 0.2
-    wobbleSpeed: 1
-    wobblePersistence: 0.5
-    wobbleLacunarity: 2
-    wobbleOctaves: 5
-    wobbleMaxIndentFactor: 0.5
 --- !u!1001 &1173333816427976706
 PrefabInstance:
   m_ObjectHideFlags: 0
