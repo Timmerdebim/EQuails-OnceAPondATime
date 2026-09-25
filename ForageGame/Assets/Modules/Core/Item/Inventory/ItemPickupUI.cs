@@ -20,6 +20,7 @@ namespace TDK.ItemSystem.Inventory
 
         public void TriggerNewItemPopup(ItemData item)
         {
+            // pause game
             Time.timeScale = 0f;
             gameObject.SetActive(true);
 
