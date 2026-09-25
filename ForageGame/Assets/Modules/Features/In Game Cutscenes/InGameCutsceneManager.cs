@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using NPC;
 using TDK.CameraSystem;
 using UnityEngine;
 
@@ -68,5 +69,23 @@ public class InGameCutsceneManager : MonoBehaviour
     #region StoryFlag Control
 
     public void AddFlag(StoryFlag flag) => StoryFlagManager.Instance.AddFlag(flag);
+
+    public void HideAllNPCs()
+    {
+        Debug.Log($"[InGameCutsceneManager]: hiding all npcs");
+        foreach (NpcController npc in FindObjectsByType<NpcController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+        {
+            npc.DisableAllLocations();
+        }
+    }
+
+    public void ShowAllNPCs()
+    {
+        Debug.Log($"[InGameCutsceneManager]: showing all npcs again");
+        foreach (NpcController npc in FindObjectsByType<NpcController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+        {
+            npc.ReEnableLocations();
+        }
+    }
     #endregion
 }

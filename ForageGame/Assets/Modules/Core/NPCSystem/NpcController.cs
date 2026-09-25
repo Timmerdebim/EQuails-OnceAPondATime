@@ -81,7 +81,7 @@ namespace NPC
                                     dialogueReferences.GetItemDataMap(),
                                     dialogueReferences.GetNpcLocationsMap(),
                                     dialogueReferences.GetDialogueActionMap());
-            EvaluateActiveStage();
+            //EvaluateActiveStage(); //taken care of by save manager
 
             //this sucks but I have to since only this object knows how long a given line is
             foreach (DialogueBox box in GetComponentsInChildren<DialogueBox>())
@@ -151,7 +151,7 @@ namespace NPC
 
         private void StartNewStoryStage(StoryStage stage)
         {
-            Debug.Log($"[NpcController: {character}] New StoryStage found with index {GetActiveStageIndex()}");
+            Debug.Log($"[NpcController: {character}] New StoryStage found with index {_database.storyStages.IndexOf(stage)}");
 
             //first, disable the old stage's locations that are no longer active
             //allow them to unfocus themselves and close any dialogue
@@ -222,6 +222,17 @@ namespace NPC
                 loc.ShowStatusIndicator();
             }
         }
+
+        //these two are for cutscenes
+        public void DisableAllLocations()
+        {
+            foreach (var loc in locations)
+            {
+                loc.ShrinkAway();
+            }
+        }
+
+        public void ReEnableLocations() => EnableNewLocations();
 
         //mostly used for returning to base emotion after dialogue is closed
         public string GetBaseEmotion(NpcLocation loc)
@@ -479,7 +490,7 @@ namespace NPC
                     break;
                 }
             }
-            EvaluateActiveStage(true);
+            //EvaluateActiveStage(true); //done at the end by time passing anyway!
         }
         #endregion
     }

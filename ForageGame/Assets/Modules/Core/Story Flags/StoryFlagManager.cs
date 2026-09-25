@@ -136,6 +136,9 @@ public class StoryFlagManager : MonoBehaviour, ISaveable, ILoadable
             activeFlags.Add(flagDatabase.GetAsset(storyFlagId));
         }
         Debug.Log($"[StoryFlagManager] Loaded {activeFlags.Count} active StoryFlags from save data.");
-        onStoryFlagsLoaded?.Invoke();
+        //onStoryFlagsLoaded?.Invoke();
     }
+
+    //called by save manager when loading is done (prevents race conditions)
+    public void NpcLoadingDone() => onStoryFlagsLoaded?.Invoke();
 }
