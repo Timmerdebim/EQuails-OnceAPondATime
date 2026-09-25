@@ -66,9 +66,19 @@ public class GameplayController : MonoBehaviour
 
         Player.Instance.playerController.IsSleeping(true);
 
-        await UnloadWorld();
+        // I hate my life fr chat
+        Debug.Log("[Gameplay] Unloading World.");
+        await _tsc.FadeOutAsync();
+        await AwaitPadding();
+        StoryFlagManager.Instance.OnTimePassing();
+        bool isfirstNight = !StoryFlagManager.Instance.FlagActive(firstNight);
+        StoryFlagManager.Instance.AddFlag(this.firstNight);// it does not matter if we keep adding the flag after the first night, nothing will change: this is here
+        SaveManager.Instance.SaveWorld();
+        await SceneServices.UnloadScene(_worldScene);
+        Player.Instance.ResetAnimator();
+        Debug.Log("[Gameplay] Unloaded World.");
 
-        if (!StoryFlagManager.Instance.FlagActive(firstNight)) // first night cutscene
+        if (isfirstNight) // first night cutscene
         {
             await AwaitSaftey();
             await SceneServices.LoadScene(_cutscene);
@@ -81,7 +91,6 @@ public class GameplayController : MonoBehaviour
 
         Player.Instance.playerController.IsSleeping(false);
         await LoadWorld();
-        StoryFlagManager.Instance.AddFlag(this.firstNight);// it does not matter if we keep adding the flag after the first night, nothing will change: this is here
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
         SetGameState(State.Playing);
