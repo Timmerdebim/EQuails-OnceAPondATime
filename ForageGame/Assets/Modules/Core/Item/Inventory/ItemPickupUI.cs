@@ -23,19 +23,15 @@ namespace TDK.ItemSystem.Inventory
             Time.timeScale = 0f;
             gameObject.SetActive(true);
 
-            transform.DOScale(Vector3.one, 0.4f).From(Vector3.zero).SetEase(Ease.OutBack);
+            transform.DOScale(Vector3.one, 0.4f).From(Vector3.zero).SetEase(Ease.OutBack).SetUpdate(true);
 
             itemIcon.sprite = item.GetSprite();
             itemName.text = item.GetName();
             itemDescription.text = item.GetDescription();
-            StartCoroutine(ShowPopup(
-            item.GetSprite(),
-            item.GetName(),
-            item.GetDescription()
-            ));
+            StartCoroutine(ShowPopup());
         }
 
-        public IEnumerator ShowPopup(Sprite icon, string name, string description)
+        public IEnumerator ShowPopup()
         {
             // Optional small delay so player can't instantly skip
             yield return new WaitForSecondsRealtime(0.3f);
@@ -46,7 +42,7 @@ namespace TDK.ItemSystem.Inventory
 
             // Resume game
             Time.timeScale = 1f;
-            transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).onComplete = () => gameObject.SetActive(false);
+            transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).SetUpdate(true).onComplete = () => gameObject.SetActive(false);
         }
     }
 }
