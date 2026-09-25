@@ -19,10 +19,14 @@ public class TypewriterTextbox : MonoBehaviour
         _message = message;
     }
 
-    private void Start()
+    private void Awake()
     {
         _message = textbox.text;
         textbox.text = "";
+    }
+
+    private void Start()
+    {
         if (playOnStart) _ = TypeText();
     }
 

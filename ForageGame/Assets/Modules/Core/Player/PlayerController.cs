@@ -219,7 +219,7 @@ namespace TDK.PlayerSystem
         private Vector3 _groundOffset = new(0, 0.5f, 0);
         private void UpdateGrounded()
         {
-            groundColliders = Physics.OverlapBox(transform.position - _groundOffset, new(0.1f, 0.1f, 0.1f), Quaternion.identity, physicsColliders);
+            groundColliders = Physics.OverlapSphere(transform.position - _groundOffset, 0.3f, physicsColliders);
             if (0 < groundColliders.Length && groundColliders.Any(c => !c.isTrigger))
             {
                 if (!_animator._animator.GetBool("isGrounded"))
