@@ -36,20 +36,9 @@ public class InGameCutsceneManager : MonoBehaviour
         _ = GameplayController.Instance?.InGameCutsceneStart(_animator, cutsceneName, lockInputs, pauseTime, useFadeOnStart);
     }
 
-    public void StopCutscene() // for looping events
-    {
-        if (!_isPlaying)
-        {
-            Debug.LogWarning("Cannot end cutscene while no cutscene is playing.");
-            return;
-        }
-        _animator.SetTrigger("Stop");
-    }
-
     public void OnStateExit()
     {
         _ = GameplayController.Instance?.InGameCutsceneStop(_useFadeOnStop);
-        _animator.ResetTrigger("Stop");
         ResetCamera();
         _isPlaying = false;
     }
