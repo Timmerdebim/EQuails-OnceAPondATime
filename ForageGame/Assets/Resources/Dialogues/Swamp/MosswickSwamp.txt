@@ -12,10 +12,10 @@ Required-Items:
 
         Stage: 1
         Emotion: HappyTalking
-        Oh! hey little duck, haven't seen you around here before.
+        Ah, a new face!
 
         Stage: 2
-        My name is Mosswick.
+        Nice to meet you little duck, my name is Mosswick.
 
         Stage: 3
         ...and you are?
@@ -27,30 +27,6 @@ Required-Items:
         Stage: 5
         That's fine... I don't talk much either.
 
---- Stage
-Flags: 
-Required-Items:
-
-    Location: Home 
-    <main>
-    BaseEmotion: Sad
-
-        Stage: 0
-        Emotion: SadTalking
-        Hey, your wing looks pretty bad, are you okay?
-
-        Stage: 1
-        I uhm... can't help you much, sorry.
-
-        Stage: 2
-        But my friends definitely could!
-
-        Stage: 3
-        Emotion: ExtraSad
-        Though, I haven't seen them in quite a while...
-
-        Stage: 4
-        I hope they're still around.
 
 --- Stage
 Flags: 
@@ -61,51 +37,29 @@ Required-Items:
     BaseEmotion: Sad
 
         Stage: 0
-        Emotion: SadTalking
-        You know, we were a pretty tight bunch.
-
-        Stage: 1
-        ...always meeting beneath the big tree.
-
-        Stage: 2
         Emotion: HappyTalking
-        It was beautiful back then...
+        N-now, what brings a lone duck to this marsh?
+
+        Stage: 1
+        Normally I only ever see you fly overhead in groups.
+
+        Stage: 2
+        Emotion: Surprised
+        Oh - your wing!
 
         Stage: 3
-        Full leaves... bark glowing in the sun...
+        Do you need help?
 
         Stage: 4
-        ...We'd play the music Grimble wrote for us...
+        Emotion: SadTalking
+        Oh but I uhm... can't help you much, sorry...
 
         Stage: 5
-        Emotion: SadTalking
-        But one day... the tree's trunk started to decay.
-
+        But Bracken definitely can!
+        
         Stage: 6
-        It started with a few dark patches...
-
-        Stage: 7
-        Then it's colour faded...
-
-        Stage: 8
         Emotion: ExtraSad
-        ...it started to rot.
-
-        Stage: 9
-        Actions: face_away_from_player
-        We had a big fight over why...
-
-        Stage: 10
-        Actions: face_away_from_player
-        ...It got pretty bad.
-
-        Stage: 11
-        Actions: face_away_from_player
-        I haven't seen them since.
-
-        Stage: 12
-        Actions: face_away_from_player
-        But I do still miss them...
+        If they're still around, that is...
 
 --- Stage
 Flags: 
@@ -113,27 +67,19 @@ Required-Items:
 
     Location: Home 
     <main>
-    BaseEmotion: ExtraSad
+    BaseEmotion: Sad
 
         Stage: 0
         Emotion: SadTalking
-        Oh right, your wing!
+        Ah- sorry. Bracken should be on the island south of here.
 
         Stage: 1
-        Bracken should be able to think of something...
+        It's the island with all the giant mushrooms.
 
         Stage: 2
-        ...granted they're not too busy to notice you.
-
-        Stage: 3
-        If they're not out looking for supplies, Bracken will be south of here.
-
-        Stage: 4
-        On the island with all the big mushrooms, can't miss it.
-
-        Stage: 5
         Emotion: HappyTalking
-        Good luck!
+        Actions: give_flag_mosswick_introduced
+        Good luck! And get well soon!
 
 --- Stage
 Flags: 
@@ -144,23 +90,18 @@ Required-Items:
 
         Stage: 0
         Emotion: SadTalking
-        Oh me? I'll... stay here for a bit.
+        Oh me? Sorry, but I can't come with you."
 
         Stage: 1
-        I don't want to leave my frog friends behind.
+        I... can't leave my frog friends behind here, you see?
 
         Stage: 2
-        Emotion: ExtraSad
-        ...And I uhm... don't think Bracken would want to see me right now...
+        Emotion: HappyTalking
+        B-but if there's anything else I'd be happy to help!
 
         Stage: 3
-        Emotion: SadTalking
-        But if you need me for anything...
-
-        Stage: 4
-        Emotion: HappyTalking
-        Actions: give_flag_mosswick_introduced
-        I'll be happy to help... if I can.
+        Emotion: ExtraSad
+        ...If I can, that is.
 
 --- Stage
 Flags:
@@ -171,19 +112,13 @@ Required-Items:
 
         Stage: 0
         Emotion: HappyTalking
-        Bracken should be south of here.
+        Bracken should be on the island south of here.
 
         Stage: 1
-        The island with all the big mushrooms.
+        On the island with all the big mushrooms, can't miss it.
 
         Stage: 2
-        Emotion: SadTalking
-        ...I wonder how they're doing...
-
-
-
-
-
+        Good luck!
 
 
 
