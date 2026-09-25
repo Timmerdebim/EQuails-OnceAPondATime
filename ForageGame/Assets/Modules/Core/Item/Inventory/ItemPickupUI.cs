@@ -20,11 +20,9 @@ namespace TDK.ItemSystem.Inventory
 
         public void TriggerNewItemPopup(ItemData item)
         {
-            // pause game
-            Time.timeScale = 0f;
             gameObject.SetActive(true);
 
-            transform.DOScale(Vector3.one, 0.4f).From(Vector3.zero).SetEase(Ease.OutBack).SetUpdate(true);
+            transform.DOScale(Vector3.one, 0.4f).From(Vector3.zero).SetEase(Ease.OutBack);
 
             itemIcon.sprite = item.GetSprite();
             itemName.text = item.GetName();
@@ -41,9 +39,7 @@ namespace TDK.ItemSystem.Inventory
             while (!Input.anyKeyDown)
                 yield return null;
 
-            // Resume game
-            Time.timeScale = 1f;
-            transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).SetUpdate(true).onComplete = () => gameObject.SetActive(false);
+            transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).onComplete = () => gameObject.SetActive(false);
         }
     }
 }
