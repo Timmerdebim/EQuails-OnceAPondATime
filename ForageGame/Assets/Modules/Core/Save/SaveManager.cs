@@ -54,7 +54,7 @@ namespace TDK.SaveSystem
             foreach (ISaveable saveable in saveables)
             {
                 try { saveable.SaveData(ref CurrentWorldSaveData); }
-                catch (Exception ex) { Debug.LogException(ex, this); }
+                catch (Exception ex) { Debug.LogError(ex, this); }
             }
 
             SaveServices.SetWorld(CurrentWorldId, CurrentWorldSaveData);
@@ -69,7 +69,11 @@ namespace TDK.SaveSystem
             PlayerPrefs.SetString("lastWorldUsed", CurrentWorldId);
             List<ILoadable> loadables = FindAllLoadables();
             foreach (ILoadable loadable in loadables)
-                loadable.LoadData(CurrentWorldSaveData);
+            {
+                try { loadable.LoadData(CurrentWorldSaveData);}
+                catch (Exception ex) { Debug.LogError(ex, this); }
+            }
+                
 
             if (CurrentWorldSaveData.playtimeSeconds > 1)
             {
