@@ -119,23 +119,32 @@ namespace NPC
             }
         }
 
-        public void ShowStatusIndicator() => statusIndicator.ShowTextbox(true);
+        public void ShowStatusIndicator()
+        {
+            if(statusIndicator) statusIndicator.ShowTextbox(true);
+        }
 
         public void SetStatusIndicatorText(bool isMainDialogue)
         {
-            if (isMainDialogue)
+            if(statusIndicator)
             {
-                statusIndicator.SetTextColor(new Color(.75f, 0.1875f, 0.1875f));
-                statusIndicator.SetText("!");
-            }
-            else
-            {
-                statusIndicator.SetTextColor(Color.white);
-                statusIndicator.SetText("...");
+                if (isMainDialogue)
+                {
+                    statusIndicator.SetTextColor(new Color(.75f, 0.1875f, 0.1875f));
+                    statusIndicator.SetText("!");
+                }
+                else
+                {
+                    statusIndicator.SetTextColor(Color.white);
+                    statusIndicator.SetText("...");
+                }
             }
         }
 
-        public void HideStatusIndicator() => statusIndicator.ShowTextbox(false);
+        public void HideStatusIndicator() 
+        {
+            if(statusIndicator) statusIndicator.ShowTextbox(false);
+        }
 
         private void OnDestroy()
         {
