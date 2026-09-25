@@ -56,6 +56,10 @@ public class CutoutController : MonoBehaviour
 
     // Matches the variable name in the Shader
     private static readonly int PosID = Shader.PropertyToID("_CameraTarget");
+    private static readonly int cam_R = Shader.PropertyToID("_Camera_Outer_Radius");
+    private static readonly int cam_r = Shader.PropertyToID("_Camera_Inner_Radius");
+    private static readonly int play_R = Shader.PropertyToID("_Player_Outer_Radius");
+    private static readonly int play_r = Shader.PropertyToID("_Player_Inner_Radius");
 
     void LateUpdate()
     {
@@ -84,12 +88,11 @@ public class CutoutController : MonoBehaviour
         Vector4 initialCutoutProfile = GetMaterialProperties();
 
         float t = 0;
-        float relativeSpeed = _speed / (Vector4.Distance(initialCutoutProfile, targetCutoutProfile) + 0.01f); // +0.01f for div 0 protection
 
         while (t < 1)
         {
             SetMaterialProperties(Vector4.Lerp(initialCutoutProfile, targetCutoutProfile, Mathf.SmoothStep(0, 1, t)));
-            t += Time.deltaTime * relativeSpeed;
+            t += Time.deltaTime * _speed;
             yield return 0;
         }
 
@@ -98,27 +101,27 @@ public class CutoutController : MonoBehaviour
 
     private Vector4 GetMaterialProperties()
     {
-        return new(baseMat.GetFloat("_Camera_Outer_Radius"),
-        baseMat.GetFloat("_Camera_Inner_Radius"),
-        baseMat.GetFloat("_Player_Outer_Radius"),
-        baseMat.GetFloat("_Player_Inner_Radius"));
+        return new(Shader.GetGlobalFloat(cam_R),
+        Shader.GetGlobalFloat(cam_r),
+        Shader.GetGlobalFloat(play_R),
+        Shader.GetGlobalFloat(play_r));
     }
 
     private void SetMaterialProperties(Vector4 vector)
     {
-        baseMat.SetFloat("_Camera_Outer_Radius", vector.x);
-        baseMat.SetFloat("_Camera_Inner_Radius", vector.y);
-        baseMat.SetFloat("_Player_Outer_Radius", vector.z);
-        baseMat.SetFloat("_Player_Inner_Radius", vector.w);
+        Shader.SetGlobalFloat(cam_R, vector.x);
+        Shader.SetGlobalFloat(cam_r, vector.y);
+        Shader.SetGlobalFloat(play_R, vector.z);
+        Shader.SetGlobalFloat(play_r, vector.w);
     }
 
     void OnDisable()
     {
         Shader.SetGlobalVector(PosID, new(0, 0, 0));
-        baseMat.SetFloat("_Camera_Outer_Radius", 0);
-        baseMat.SetFloat("_Camera_Inner_Radius", 0);
-        baseMat.SetFloat("_Player_Outer_Radius", 0);
-        baseMat.SetFloat("_Player_Inner_Radius", 0);
+        Shader.SetGlobalFloat(cam_R, 0);
+        Shader.SetGlobalFloat(cam_r, 0);
+        Shader.SetGlobalFloat(play_R, 0);
+        Shader.SetGlobalFloat(play_r, 0);
     }
 
     void OnDestroy() => StopAllCoroutines();
