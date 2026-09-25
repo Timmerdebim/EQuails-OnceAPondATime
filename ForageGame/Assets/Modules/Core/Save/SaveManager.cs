@@ -52,7 +52,10 @@ namespace TDK.SaveSystem
 
             List<ISaveable> saveables = FindAllSaveables();
             foreach (ISaveable saveable in saveables)
-                saveable.SaveData(ref CurrentWorldSaveData);
+            {
+                try { saveable.SaveData(ref CurrentWorldSaveData); }
+                catch (Exception ex) { Debug.LogException(ex, this); }
+            }
 
             SaveServices.SetWorld(CurrentWorldId, CurrentWorldSaveData);
         }

@@ -70,11 +70,13 @@ public class GameplayController : MonoBehaviour
 
         if (!StoryFlagManager.Instance.FlagActive(firstNight)) // first night cutscene
         {
+            await AwaitSaftey();
             await SceneServices.LoadScene(_cutscene);
             await AwaitPadding();
             await ImageCutsceneController.Instance.PlayFirstNightSequence();
             await AwaitPadding();
             await SceneServices.UnloadScene(_cutscene);
+            await AwaitSaftey();
         }
 
         Player.Instance.playerController.IsSleeping(false);
@@ -168,7 +170,6 @@ public class GameplayController : MonoBehaviour
         SetGameState(State.Busy);
         if (worldId != null) _saveManager.SelectWorld(worldId);
         await LoadWorld();
-        _tsc.FadeIn();
         SetGameState(State.Playing);
     }
 
