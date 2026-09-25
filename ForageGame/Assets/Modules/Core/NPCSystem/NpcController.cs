@@ -466,7 +466,7 @@ namespace NPC
                 if (npcSaveData.Guid == _guid)
                 {
                     var currentStageIndex = npcSaveData.currentStageIndex;
-                    if(_database.storyStages.Count <= currentStageIndex)
+                    if(_database.storyStages.Count <= currentStageIndex || currentStageIndex < 0)
                     {
                         Debug.LogError($"[NpcController: {character}] current stage index to load out of bounds:{currentStageIndex}. Check GUID clash. Restarting Npc!");
                         EvaluateActiveStage(true);
