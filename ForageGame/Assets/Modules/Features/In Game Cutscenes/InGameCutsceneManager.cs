@@ -64,4 +64,9 @@ public class InGameCutsceneManager : MonoBehaviour
     public void FadeFromBlack() => _tsc.FadeIn();
 
     #endregion
+
+    #region StoryFlag Control
+
+    public void AddFlag(StoryFlag flag) => StoryFlagManager.Instance.AddFlag(flag);
+    #endregion
 }

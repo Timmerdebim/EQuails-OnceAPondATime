@@ -227022,6 +227022,10 @@ PrefabInstance:
       value: Mosswick
       objectReference: {fileID: 0}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+      propertyPath: ItemMap.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e911600e918ca4483b1250e392031b, type: 2}
+    - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.size
       value: 14
       objectReference: {fileID: 0}
@@ -276537,6 +276541,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[6].dialogueAction
+      value: start_cutscene_boat_fix
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].dialogueAction
+      value: start_cutscene_boat_fix_on_close
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9215195513279669760}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartCutscene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InvokeActionOnClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: NPC.NpcController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: C_Boatfix
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: start_cutscene_boat_fix
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480784457759950254, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+      propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5736246733844053896, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
       propertyPath: m_Name
       value: Bracken
@@ -276551,6 +276611,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3222463802122601671, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
   m_PrefabInstance: {fileID: 7225058993989665039}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9215195513279669760 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1992389418655164175, guid: f455c5a26d41f46ec8e5cfa6d29872dc, type: 3}
+  m_PrefabInstance: {fileID: 7225058993989665039}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70774cf2e1455447d89a2e55330135b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7228684059206211789
 PrefabInstance:
   m_ObjectHideFlags: 0

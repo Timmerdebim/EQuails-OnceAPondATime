@@ -396,6 +396,8 @@ namespace NPC
             }
         }
 
+        public void StartCutscene(string sceneName) => InGameCutsceneManager.Instance.PlayCutscene(sceneName, true, false, true, true);
+
         public void GiveStoryFlag(StoryFlag flag) => StoryFlagManager.Instance.AddFlag(flag); //required because StoryFlagManager is in a different scene
 
         public void GiveStoryFlagOnClose(StoryFlag flag)
