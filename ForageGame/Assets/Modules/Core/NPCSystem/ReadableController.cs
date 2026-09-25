@@ -121,12 +121,12 @@ namespace NPC
 
         public void ShowStatusIndicator()
         {
-            if(statusIndicator) statusIndicator.ShowTextbox(true);
+            if(statusIndicator && statusIndicator.gameObject.activeSelf) statusIndicator.ShowTextbox(true);
         }
 
         public void SetStatusIndicatorText(bool isMainDialogue)
         {
-            if(statusIndicator)
+            if(statusIndicator && statusIndicator.gameObject.activeSelf)
             {
                 if (isMainDialogue)
                 {
@@ -143,7 +143,7 @@ namespace NPC
 
         public void HideStatusIndicator() 
         {
-            if(statusIndicator) statusIndicator.ShowTextbox(false);
+            if(statusIndicator && statusIndicator.gameObject.activeSelf) statusIndicator.ShowTextbox(false);
         }
 
         private void OnDestroy()
