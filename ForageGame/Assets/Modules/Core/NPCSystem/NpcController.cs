@@ -375,13 +375,13 @@ namespace NPC
 
         #region DialogueActionJargin
 
-        public void FaceTowardPlayer() => _lastActiveLocation.FaceTowardPlayer();
+        public void FaceTowardPlayer() => _lastActiveLocation?.FaceTowardPlayer();
 
-        public void FaceAwayFromPlayer() => _lastActiveLocation.FaceAwayFromPlayer();
+        public void FaceAwayFromPlayer() => _lastActiveLocation?.FaceAwayFromPlayer();
 
-        public void FaceLeft() => _lastActiveLocation.FaceLeft();
+        public void FaceLeft() => _lastActiveLocation?.FaceLeft();
 
-        public void FaceRight() => _lastActiveLocation.FaceRight();
+        public void FaceRight() => _lastActiveLocation?.FaceRight();
 
         public void InvokeActionOnClose(string actionName)
         {
