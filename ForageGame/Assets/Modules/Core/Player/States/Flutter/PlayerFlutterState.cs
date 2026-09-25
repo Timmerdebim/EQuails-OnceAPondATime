@@ -14,6 +14,7 @@ namespace TDK.PlayerSystem.States
         {
             Player.Instance.playerData.hasUsedFly = true;
 
+            Player.Instance.playerController.LastGroundedHeight = Mathf.Min(Player.Instance.playerController.LastGroundedHeight, Player.Instance.transform.position.y);
             targetHight = flutterHeight + Player.Instance.playerController.LastGroundedHeight;
 
             Player.Instance.playerController.Reset();

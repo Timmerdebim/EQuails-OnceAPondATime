@@ -209,7 +209,7 @@ namespace TDK.PlayerSystem
         #region  Physics 
 
         private Vector3 _externalForce = Vector3.zero;
-        public float LastGroundedHeight { get; private set; } = 0;
+        public float LastGroundedHeight = 0;
 
         private enum VelocityDriverTarget { Manual, Input, View }
         private VelocityDriverTarget _vdTarget = VelocityDriverTarget.Manual;
