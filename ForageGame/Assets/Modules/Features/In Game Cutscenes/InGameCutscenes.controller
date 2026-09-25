@@ -42,19 +42,19 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1541045304084816082}
-    m_Position: {x: 530, y: 150, z: 0}
+    m_Position: {x: 520, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8419676392617781427}
-    m_Position: {x: 530, y: 200, z: 0}
+    m_Position: {x: 520, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7044452021597876673}
-    m_Position: {x: 530, y: 250, z: 0}
+    m_Position: {x: 520, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7876984426180895406}
-    m_Position: {x: 530, y: 300, z: 0}
+    m_Position: {x: 520, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3047555367906889636}
-    m_Position: {x: 530, y: 350, z: 0}
+    m_Position: {x: 520, y: 330, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -175,7 +175,8 @@ AnimatorState:
   m_Name: CaveChuck
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions: []
+  m_Transitions:
+  - {fileID: 8845529357540730771}
   m_StateMachineBehaviours:
   - {fileID: -6413637293110789138}
   m_Position: {x: 50, y: 50, z: 0}
@@ -351,6 +352,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1101 &8778459528478802411
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -4930248005379036232}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 1
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &8845529357540730771
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
