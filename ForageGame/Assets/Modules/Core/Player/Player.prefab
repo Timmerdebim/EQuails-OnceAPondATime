@@ -50573,9 +50573,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b03cc9f321e29d64d83038e9e23302f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: {fileID: 5297287321932333479}
+  playerInteract: {fileID: 1595567495064576390}
+  playerController: {fileID: 5878197811852665640}
+  _playerAnimator: {fileID: 2009319616314926256}
   hitbox: {fileID: 3523305361774994790}
   trailRenderer: {fileID: 229097043921619139}
-  hitParticleRenderer: {fileID: 0}
   visuals: {fileID: 6941911297845455562}
   thinkingBox: {fileID: 5011962895074144791}
   playerData:
@@ -50612,6 +50615,8 @@ MonoBehaviour:
   physicsColliders:
     serializedVersion: 2
     m_Bits: 10369
+  _rigidbody: {fileID: 7154177637054964034}
+  _animator: {fileID: 2009319616314926256}
   _visuals: {fileID: 6941911297845455562}
   _velocityDriver: {fileID: 8239709590932451419}
   onJump:
@@ -50622,19 +50627,7 @@ MonoBehaviour:
       m_Calls: []
   onAttack:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6616778078789748292}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onMove:
     m_PersistentCalls:
       m_Calls: []
@@ -50653,6 +50646,7 @@ MonoBehaviour:
   onWaterLeave:
     m_PersistentCalls:
       m_Calls: []
+  LastGroundedHeight: 0
 --- !u!114 &1595567495064576390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50877,6 +50871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ba08eb936549c4683d3d0a0c336bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 7154177637054964034}
   _targetDirection: {x: 0, y: 0, z: 1}
   _targetSpeed: 1
   _acceleration: 0

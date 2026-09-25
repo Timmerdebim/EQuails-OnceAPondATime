@@ -14,8 +14,8 @@ namespace TDK.PlayerSystem
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private LayerMask physicsColliders;
-        public Rigidbody _rigidbody { get; private set; }
-        private PlayerAnimator _animator;
+        [SerializeField] public Rigidbody _rigidbody;
+        [SerializeField] private PlayerAnimator _animator;
         [SerializeField] private PlayerVisuals _visuals;
         [SerializeField] private VelocityDriver _velocityDriver;
 
@@ -36,15 +36,6 @@ namespace TDK.PlayerSystem
         //these are just for the water splash event (hitting water hard enough triggers it)
         private Vector3 _currentVelocity = Vector3.zero;
         private Vector3 _priorVelocity = Vector3.zero;
-
-
-
-
-        void Awake()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-            _animator = GetComponent<PlayerAnimator>();
-        }
 
         #region Move & View
 

@@ -18,14 +18,13 @@ namespace TDK.PlayerSystem
         public static Player Instance { get; private set; }
 
         [Header("Components")]
-        public Energy energy { get; private set; }
-        public Interactor playerInteract { get; private set; }
-        public PlayerController playerController { get; private set; }
-        public PlayerAnimator _playerAnimator { get; private set; }
+        [SerializeField] public Energy energy;
+        [SerializeField] public Interactor playerInteract;
+        [SerializeField] public PlayerController playerController;
+        [SerializeField] public PlayerAnimator _playerAnimator;
 
         [SerializeField] public Hitbox hitbox;
         [SerializeField] public TrailRenderer trailRenderer;
-        [SerializeField] private ParticleSystem hitParticleRenderer;
         [SerializeField] public PlayerVisuals visuals;
         [SerializeField] public DialogueBox thinkingBox;
 
@@ -50,13 +49,10 @@ namespace TDK.PlayerSystem
                 return;
             }
             Instance = this;
+        }
 
-            // Get components on this GameObject
-            energy = GetComponent<Energy>();
-            playerInteract = GetComponent<Interactor>();
-            playerController = GetComponent<PlayerController>();
-            _playerAnimator = GetComponent<PlayerAnimator>();
-
+        void Start()
+        {
             ExitStateReset();
         }
 
@@ -119,12 +115,6 @@ namespace TDK.PlayerSystem
 
         public void ExitStateReset()
         {
-            if (hitParticleRenderer != null)
-            {
-                hitParticleRenderer.Stop();
-                hitParticleRenderer.Clear();
-            }
-
             hitbox.gameObject.SetActive(false);
             trailRenderer.emitting = false;
 

@@ -22,11 +22,6 @@ public class StatefulStoryFlagListener : MonoBehaviour
 
     [SerializeField] private StoryFlagListenerEntry activeEntry;
 
-    void Awake()
-    {
-        //EvaluateLatestFlagAction(); //should not matter, but is a fallback
-    }
-
     void OnEnable()
     {
         StoryFlagManager.onFlagAdded += OnStoryFlagAdded;
@@ -57,7 +52,7 @@ public class StatefulStoryFlagListener : MonoBehaviour
             if (entry.flag == null || StoryFlagManager.Instance.FlagActive(entry.flag))
             {
                 activeEntry = entry;
-                if(entry.flag == null) Debug.Log($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: None flag");
+                if (entry.flag == null) Debug.Log($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: None flag");
                 else Debug.Log($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: {entry.flag.id}");
                 activeEntry.action?.Invoke();
                 return;
@@ -65,5 +60,5 @@ public class StatefulStoryFlagListener : MonoBehaviour
         }
     }
 
-    
+
 }

@@ -8,6 +8,7 @@ namespace TDK.Physics3DSystem
     [RequireComponent(typeof(Rigidbody))]
     public class VelocityDriver : MonoBehaviour
     {
+        [SerializeField] private Rigidbody _rigidbody;
         [Header("General Settings")]
         [SerializeField] private Vector3 _targetDirection = Vector3.forward;
         [SerializeField] private float _targetSpeed = 1;
@@ -18,14 +19,6 @@ namespace TDK.Physics3DSystem
         [SerializeField] private Vector3 _affectNormal = Vector3.forward;
         [SerializeField] private bool _normalTracksTarget = true;
         public enum AffectedAxesMode { All, NormalPlane, NormalProjection }
-
-
-        private Rigidbody _rigidbody;
-
-        void Awake()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-        }
 
         /// <summary>
         /// Vector3 currentV = Vector3.Project(_rigidbody.linearVelocity, _targetVelocity);
