@@ -5,11 +5,7 @@ namespace TDK.ItemSystem.Inventory
 {
     public class RecipePageUI : MonoBehaviour
     {
-        private Animator animator;
-        void Awake()
-        {
-            animator = GetComponent<Animator>();
-        }
+        [SerializeField] private Animator animator;
 
         public void PlayFlipLeftAnim()
         {

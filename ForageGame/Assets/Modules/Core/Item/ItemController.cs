@@ -11,16 +11,11 @@ namespace TDK.ItemSystem
     {
         public ItemData ItemData;
         [SerializeField] private SpriteRenderer _spriteRenderer;
-        private Rigidbody _rigidbody;
+        [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private bool _saveItem = true;
         [SerializeField] private GameObject _dropShadow;
 
         public event Action<ItemController> OnDestroyEvent;
-
-        void Awake()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-        }
 
         void OnValidate()
         {

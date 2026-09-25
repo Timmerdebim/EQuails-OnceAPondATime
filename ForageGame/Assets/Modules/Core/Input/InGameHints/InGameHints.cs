@@ -14,11 +14,6 @@ public class InGameHints : MonoBehaviour
     private enum State { Activated, Deactivating, Deactivated, Activating }
     private State currentState = State.Activated;
 
-    void Awake()
-    {
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
-
     void Start() => HidePrompts(direct: true);
 
     #region Update
@@ -41,7 +36,7 @@ public class InGameHints : MonoBehaviour
     #region Show & Hide Current Hints
 
     private Tween tween;
-    private CanvasGroup canvasGroup;
+    [SerializeField] private CanvasGroup canvasGroup;
 
     private void ShowPrompts(bool direct = false)
     {

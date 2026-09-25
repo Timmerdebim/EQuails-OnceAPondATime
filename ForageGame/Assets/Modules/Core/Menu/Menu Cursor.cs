@@ -11,15 +11,10 @@ public class UICursor : MonoBehaviour
     [Header("Padding")]
     [SerializeField] private Vector2 _padding = Vector2.zero;
 
-    private RectTransform _cursorRect;
+    [SerializeField] private RectTransform _cursorRect;
     private RectTransform _targetRect;
 
     private readonly Vector3[] _corners = new Vector3[4];
-
-    private void Awake()
-    {
-        _cursorRect = GetComponent<RectTransform>();
-    }
 
     private void Update()
     {

@@ -8,7 +8,7 @@ public class TMProOutline : MonoBehaviour
     TMP_Text _text;
     [SerializeField] float outlineWidth = 1.0f;
     [SerializeField] Color outlineColor = Color.white;
-    private void Awake()
+    private void Start()
     {
         SetOutline();
     }

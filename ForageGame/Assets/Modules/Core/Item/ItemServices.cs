@@ -9,7 +9,10 @@ namespace TDK.ItemSystem
         void Awake()
         {
             if (Instance != null && Instance != this)
+            {
                 Destroy(this);
+                return;
+            }
             Instance = this;
         }
 
