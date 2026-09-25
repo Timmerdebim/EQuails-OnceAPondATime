@@ -24,7 +24,7 @@ public class StatefulStoryFlagListener : MonoBehaviour
 
     void Awake()
     {
-        EvaluateLatestFlagAction(); //should not matter, but is a fallback
+        //EvaluateLatestFlagAction(); //should not matter, but is a fallback
     }
 
     void OnEnable()

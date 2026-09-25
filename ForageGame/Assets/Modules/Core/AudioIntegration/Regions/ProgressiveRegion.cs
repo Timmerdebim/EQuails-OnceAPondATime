@@ -24,7 +24,7 @@ public class ProgressiveRegion : MonoBehaviour
     void Awake()
     {
 
-        RefreshActiveRegion(); //should not matter, but is a fallback
+        //RefreshActiveRegion(); //should not matter, but is a fallback
     }
 
     void OnEnable()
