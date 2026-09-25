@@ -10,7 +10,7 @@ public class FBMVisualiser : MonoBehaviour
     [SerializeField] private float minX = 0f;
     [SerializeField] private float maxX = 100f;
 
-    [SerializeField] [Range(0, 10f)] private float scrollSpeed = 1f;
+    [SerializeField][Range(0, 10f)] private float scrollSpeed = 1f;
 
     private void Start()
     {
@@ -24,19 +24,18 @@ public class FBMVisualiser : MonoBehaviour
 
     private void DrawFBM(float minx, float maxx)
     {
-        float width = backgroundPlane.bounds.size.x;
-        float height = backgroundPlane.bounds.size.y;
-
-
         lineRenderer.positionCount = points;
         for (int i = 0; i < points; i++)
         {
-            float val = i / (float)(points - 1) * maxx + minx + Time.time * scrollSpeed;
-            float x = (i - points / 2) / (float)(points - 1) * width;
-            float y = fbmFunction.EvalMin11(val) * (height / 2f);
-            lineRenderer.SetPosition(i, backgroundPlane.transform.position + new Vector3(x, y, 0f));
+            lineRenderer.SetPosition(i, backgroundPlane.transform.position + new Vector3(
+                (i - points / 2) / (float)(points - 1) * backgroundPlane.bounds.size.x,
+                fbmFunction.EvalMin11(i / (float)(points - 1) * maxx + minx + Time.time * scrollSpeed) * (backgroundPlane.bounds.size.y / 2f),
+                0f));
         }
     }
+    // float val = i / (float)(points - 1) * maxx + minx + Time.time * scrollSpeed;
+    // float x = (i - points / 2) / (float)(points - 1) * _width;
+    // float y = fbmFunction.EvalMin11(val) * (_height / 2f);
 
 
 }

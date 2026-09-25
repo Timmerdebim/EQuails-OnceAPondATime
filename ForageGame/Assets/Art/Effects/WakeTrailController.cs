@@ -22,12 +22,9 @@ public class WakeTrailController : MonoBehaviour
 
     void Update()
     {
-        if(IsEmitting())
+        if (IsEmitting())
         {
-            if (!Vector3.Equals(transform.localPosition, targetLocalPosition))
-            {
-                transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetLocalPosition, positionSmoothSpeed);
-            }
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetLocalPosition, positionSmoothSpeed);
         }
     }
 
@@ -50,7 +47,7 @@ public class WakeTrailController : MonoBehaviour
     //copy of above, used for when the player stops moving (trailrenderer looks odd without it)
     public void FadeOutTail()
     {
-        if(trail.emitting)
+        if (trail.emitting)
         {
             if (fadeRoutine != null) StopCoroutine(fadeRoutine);
             fadeRoutine = StartCoroutine(FadeOutTrail());

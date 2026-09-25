@@ -61,12 +61,12 @@ public class CutoutController : MonoBehaviour
     private static readonly int play_R = Shader.PropertyToID("_Player_Outer_Radius");
     private static readonly int play_r = Shader.PropertyToID("_Player_Inner_Radius");
 
+    private Vector3 _rayCast = new();
     void LateUpdate()
     {
         Shader.SetGlobalVector(PosID, _camera._targetTransform.position); // Send the player's position to ALL shaders containing this variable
-
-        Vector3 vector = _camera.transform.position - _camera._targetTransform.position;
-        if (_isActive != Physics.Raycast(_camera._targetTransform.position, vector, vector.magnitude, _cutoutLayers))
+        _rayCast = _camera.transform.position - _camera._targetTransform.position;
+        if (_isActive != Physics.Raycast(_camera._targetTransform.position, _rayCast, _rayCast.magnitude, _cutoutLayers))
         {
             _isActive = !_isActive;
             UpdateCutout();
