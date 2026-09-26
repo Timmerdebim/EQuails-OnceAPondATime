@@ -74,8 +74,8 @@ namespace TDK.SaveSystem
                 catch (Exception ex) { Debug.LogError(ex, this); }
             }
 
-            StoryFlagManager.Instance.NpcLoadingDone(); //makes time progress and every Npc / story flag listener wake up and check state. MUST be done after everything is loaded.
-                
+            try {StoryFlagManager.Instance.NpcLoadingDone();} //makes time progress and every Npc / story flag listener wake up and check state. MUST be done after everything is loaded.
+            catch (Exception ex) { Debug.LogError(ex, this); }  
 
             if (CurrentWorldSaveData.playtimeSeconds > 1)
             {
