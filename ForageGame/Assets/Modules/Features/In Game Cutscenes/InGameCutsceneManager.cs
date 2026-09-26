@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using NPC;
 using TDK.CameraSystem;
+using TDK.PlayerSystem;
 using UnityEngine;
 
 public class InGameCutsceneManager : MonoBehaviour
@@ -19,6 +20,9 @@ public class InGameCutsceneManager : MonoBehaviour
     [SerializeField] private Transform _cameraTarget;
     [SerializeField] private CameraController _cameraController;
     [SerializeField] private TransitionScreenController _tsc;
+    
+    [Header("Animation action values")]
+    [SerializeField] private Vector3 caveChuckPosition;
 
     private bool _isPlaying;
     private bool _useFadeOnStop = false; // for the call back
@@ -55,7 +59,9 @@ public class InGameCutsceneManager : MonoBehaviour
 
     #endregion
 
-    #region StoryFlag Control
+    #region Animation Actions
+
+    public void TeleportPlayerCaveChuck() => Player.Instance.GetComponent<PlayerController>().TeleportTo(caveChuckPosition);
 
     public void AddFlag(StoryFlag flag) => StoryFlagManager.Instance.AddFlag(flag);
 

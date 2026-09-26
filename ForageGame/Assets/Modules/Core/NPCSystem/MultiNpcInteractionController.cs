@@ -40,6 +40,7 @@ namespace NPC
             _currentSpeaker = _initialSpeaker;
             _nextSpeaker = _initialSpeaker;
             GetComponent<Interactable>().SetInteractibility(true);
+            // Debug.LogError("Kan");
         }
 
         public void EndCutscene()
@@ -51,6 +52,7 @@ namespace NPC
         // Called by player interacting with the floor interactable
         public void Next()
         {
+            // Debug.LogError($"Ker: current: {_currentSpeaker}, next: {_nextSpeaker}");
             //if the next speaker is a different one, close the old one's dialogue box
             if (_currentSpeaker != _nextSpeaker)
             {
