@@ -23,6 +23,7 @@ public class InGameCutsceneManager : MonoBehaviour
     
     [Header("Animation action values")]
     [SerializeField] private Vector3 caveChuckPosition;
+    [SerializeField] private Vector3 finalePosition;
 
     private bool _isPlaying;
     private bool _useFadeOnStop = false; // for the call back
@@ -62,6 +63,9 @@ public class InGameCutsceneManager : MonoBehaviour
     #region Animation Actions
 
     public void TeleportPlayerCaveChuck() => Player.Instance.GetComponent<PlayerController>().TeleportTo(caveChuckPosition);
+
+    public void TeleportPlayerFinale() => Player.Instance.GetComponent<PlayerController>().TeleportTo(finalePosition);
+
 
     public void AddFlag(StoryFlag flag) => StoryFlagManager.Instance.AddFlag(flag);
 
