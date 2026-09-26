@@ -45,7 +45,7 @@ namespace NPC
 
         public void EndCutscene()
         {
-            _currentSpeaker.WalkAway();
+            _currentSpeaker?.WalkAway(); //nullable check for world loading, on restart the currentspeaker will be null.
             GetComponent<Interactable>().SetInteractibility(false);
         }
 
