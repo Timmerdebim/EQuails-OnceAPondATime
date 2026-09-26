@@ -190,6 +190,18 @@ Absent-Items: CrispDynamite
 Flags: GrimbleWallFreshAirInspected
 Required-Items: CrispDynamite
 
+--- Stage
+Flags: CrispDynamitePlaced
+    Location: Wall 
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Hey - what are those noises about?
+
+        Stage: 1
+        Actions: play_sound_fuse_hissing, start_cutscene_grimble_wall_explosion_on_close
+        What do you think you're doing-
 
 
 
