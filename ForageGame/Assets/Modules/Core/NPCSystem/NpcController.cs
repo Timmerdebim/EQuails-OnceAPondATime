@@ -223,17 +223,6 @@ namespace NPC
             }
         }
 
-        //these two are for cutscenes
-        public void DisableAllLocations()
-        {
-            foreach (var loc in locations)
-            {
-                loc.ShrinkAway();
-            }
-        }
-
-        public void ReEnableLocations() => EnableNewLocations();
-
         //mostly used for returning to base emotion after dialogue is closed
         public string GetBaseEmotion(NpcLocation loc)
         {

@@ -61,20 +61,16 @@ public class InGameCutsceneManager : MonoBehaviour
 
     public void HideAllNPCs()
     {
-        Debug.Log($"[InGameCutsceneManager]: hiding all npcs");
-        foreach (NpcController npc in FindObjectsByType<NpcController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
-        {
-            npc.DisableAllLocations();
-        }
+        Debug.Log($"[InGameCutsceneManager]: hiding all npcs via camera culling mask");
+        Camera.main.cullingMask &=  ~(1 << LayerMask.NameToLayer("NPC"));
+        Camera.main.cullingMask &=  ~(1 << LayerMask.NameToLayer("Player"));
     }
 
     public void ShowAllNPCs()
     {
-        Debug.Log($"[InGameCutsceneManager]: showing all npcs again");
-        foreach (NpcController npc in FindObjectsByType<NpcController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
-        {
-            npc.ReEnableLocations();
-        }
+        Debug.Log($"[InGameCutsceneManager]: showing all npcs again via camera culling mask");
+        Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("NPC");
+        Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("Player");
     }
     #endregion
 }
