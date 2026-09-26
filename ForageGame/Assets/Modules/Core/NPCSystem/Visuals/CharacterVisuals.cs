@@ -81,5 +81,11 @@ namespace NPC
         {
             spriteRenderer.flipX = false;
         }
+
+        public void SetStoryFlagAndDisable(StoryFlag flag) // ONLY USED FOR LYRIA'S FLY AWAY
+        {
+            StoryFlagManager.Instance.AddFlag(flag);
+            ShrinkAwayFinished(); //let's hope this works and prevents the animation from playing
+        }
     }
 }

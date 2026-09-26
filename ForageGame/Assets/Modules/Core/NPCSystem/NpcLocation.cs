@@ -49,12 +49,12 @@ namespace NPC
         }
 
         //THIS animation ALREADY DISABLES THE GAMEOBJECT
-        public void ShrinkAway()
+        public void ShrinkAway(bool playAnimation = true) //false only ever used for Lyria's flying off animation, which already disables the location itself
         {
             isBeingDisabled = true;
             HideStatusIndicator();
             _interactable.DisableInteraction();
-            visuals.OnShrinkAway();
+            if (playAnimation) visuals.OnShrinkAway();
             isBeingDisabled = false; //yeah, you can see how much this SUCKS
         }
 
