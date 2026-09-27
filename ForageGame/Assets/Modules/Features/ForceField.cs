@@ -8,11 +8,14 @@ public class ForceField : MonoBehaviour
     [SerializeField] private ForceMode _forceMode = ForceMode.Force;
     private enum ForceShape { Directional, Cylindrical, Sphereical }
     [SerializeField] private ForceShape _forceShape = ForceShape.Directional;
+    [SerializeField] private Vector3 _localForceAxis = Vector3.up;
 
+    private Vector3 _globalForceAxis;
     private Vector3 _finalForce;
 
     private void FixedUpdate()
     {
+        _globalForceAxis = transform.rotation * _localForceAxis.normalized;
         switch (_forceShape)
         {
             case ForceShape.Directional:
@@ -31,7 +34,7 @@ public class ForceField : MonoBehaviour
 
     private void ApplyDiectionalForces()
     {
-        _force = transform.forward * _forceStrength;
+        _force = _globalForceAxis * _forceStrength;
 
         for (int i = _rigidbodiesInField.Count - 1; i >= 0; i--)
         {
@@ -46,7 +49,7 @@ public class ForceField : MonoBehaviour
         {
             if (_rigidbodiesInField[i] != null)
             {
-                _force = Vector3.ProjectOnPlane(_rigidbodiesInField[i].position - transform.position, transform.up).normalized * _forceStrength;
+                _force = Vector3.ProjectOnPlane(_rigidbodiesInField[i].position - transform.position, _globalForceAxis).normalized * _forceStrength;
                 _rigidbodiesInField[i].AddForce(_force, _forceMode);
             }
         }

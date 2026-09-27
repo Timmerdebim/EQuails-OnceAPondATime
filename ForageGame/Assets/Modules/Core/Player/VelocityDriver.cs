@@ -10,6 +10,7 @@ namespace TDK.Physics3DSystem
     {
         [SerializeField] private Rigidbody _rigidbody;
         [Header("General Settings")]
+        [SerializeField] private Vector3 _driverVelocity = Vector3.zero;
         [SerializeField] private Vector3 _targetDirection = Vector3.forward;
         [SerializeField] private float _targetSpeed = 1;
         [SerializeField] private float _acceleration = 0;
