@@ -11,7 +11,7 @@ namespace TDK.ItemSystem.Inventory
         [SerializeField] private Animator _animator;
         [SerializeField] private StoryFlag crafterUsedFlag;
 
-        bool craftInProgress = false;
+        private bool craftInProgress = false;
 
         public void TryCraftVoid() => TryCraft();
 

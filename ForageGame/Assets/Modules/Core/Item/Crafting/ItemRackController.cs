@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Splines;
 
 // IMPORTANT: ItemRacks cannot overlap; this will result in breaking possibly everything!
@@ -16,6 +17,8 @@ namespace TDK.ItemSystem.Inventory
 
         [SerializeField] private List<ItemController> _itemControllers = new();
         [SerializeField] private SplineContainer _splineContainer;
+
+        public UnityEvent OnItemAdded;
 
         void OnTriggerEnter(Collider other)
         {
@@ -107,6 +110,7 @@ namespace TDK.ItemSystem.Inventory
             _itemControllers.Add(controller);
             controller.OnDestroyEvent += RemoveItemVoid;
             Refresh();
+            OnItemAdded.Invoke();
         }
 
         public void RemoveItemVoid(ItemController controller) => RemoveItem(controller);
