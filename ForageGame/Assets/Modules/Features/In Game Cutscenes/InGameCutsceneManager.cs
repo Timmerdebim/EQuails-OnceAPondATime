@@ -62,9 +62,9 @@ public class InGameCutsceneManager : MonoBehaviour
 
     #region Animation Actions
 
-    public void TeleportPlayerCaveChuck() => Player.Instance.GetComponent<PlayerController>().TeleportTo(caveChuckPosition);
+    public void TeleportPlayerCaveChuck() => Player.Instance.playerController.TeleportTo(caveChuckPosition);
 
-    public void TeleportPlayerFinale() => Player.Instance.GetComponent<PlayerController>().TeleportTo(finalePosition);
+    public void TeleportPlayerFinale() => Player.Instance.playerController.TeleportTo(finalePosition);
 
 
     public void AddFlag(StoryFlag flag) => StoryFlagManager.Instance.AddFlag(flag);
