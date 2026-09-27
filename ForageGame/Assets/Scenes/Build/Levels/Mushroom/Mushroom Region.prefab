@@ -79021,9 +79021,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
       propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5101309701115289083}
+    - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 796955309305543305}
+    - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetFlag
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: StoryFlagSetter, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a6bc7cd6496a4fffa0a6e66286b7c43, type: 2}
+    - target: {fileID: 6447656168539609473, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      propertyPath: OnActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: StoryFlag, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2316645587419378173, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
     m_RemovedGameObjects: []
@@ -79031,13 +79063,34 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6306623299206381181, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3275471598168853685}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 341638495912619592, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 796955309305543305}
   m_SourcePrefab: {fileID: 100100000, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
 --- !u!4 &2754002072942053112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6306623299206381181, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
   m_PrefabInstance: {fileID: 8195863239280785541}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8430791655534827213 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 341638495912619592, guid: f55ae40b19a7f02489150e1af09134e5, type: 3}
+  m_PrefabInstance: {fileID: 8195863239280785541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &796955309305543305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8430791655534827213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5711fa63beb9644538420652389ac252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flag: {fileID: 11400000, guid: 2a6bc7cd6496a4fffa0a6e66286b7c43, type: 2}
 --- !u!1001 &8223986904499657742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79088,8 +79141,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7046857653987219873, guid: 8a48389049e3e47eb855522b157139ea, type: 3}
       propertyPath: m_Name
-      value: WizardRock
+      value: WizardRock (Redwood)
       objectReference: {fileID: 0}
+    - target: {fileID: 7407993617228785410, guid: 8a48389049e3e47eb855522b157139ea, type: 3}
+      propertyPath: _sourceFile
+      value: 
+      objectReference: {fileID: 4900000, guid: e8a1e37290a3d49499bdffbd80d868ca, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
