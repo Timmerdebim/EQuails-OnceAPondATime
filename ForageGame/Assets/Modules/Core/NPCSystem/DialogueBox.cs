@@ -17,6 +17,10 @@ namespace NPC
         [SerializeField] AnimationCurve newMessageAnimation;
         [SerializeField] float openCloseDuration;
 
+        [Header("Positioning")]
+        [SerializeField] private Vector3 rightPos;
+        [SerializeField] private Vector3 leftPos;
+
         public AnimationCurve syllableCountCurve;
 
         //CancellationTokenSource textCtxSource;
