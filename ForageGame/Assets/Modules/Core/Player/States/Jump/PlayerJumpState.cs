@@ -15,6 +15,7 @@ namespace TDK.PlayerSystem.States
 
             Player.Instance.energy.UseEnergy(Player.Instance.hopEnergy);
             Player.Instance.playerData.hasUsedJump = true;
+            Player.Instance.energy.SetRegenEnabled(false);
 
             Player.Instance.playerController.Reset();
             Player.Instance.playerController.SetInputLocomotion(maxSpeed, acceleration);

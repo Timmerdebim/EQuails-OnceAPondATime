@@ -13,6 +13,7 @@ namespace TDK.PlayerSystem.States
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             Player.Instance.playerData.hasUsedFly = true;
+            Player.Instance.energy.SetRegenEnabled(false);
 
             Player.Instance.playerController.LastGroundedHeight = Mathf.Min(Player.Instance.playerController.LastGroundedHeight, Player.Instance.transform.position.y);
             targetHight = flutterHeight + Player.Instance.playerController.LastGroundedHeight;

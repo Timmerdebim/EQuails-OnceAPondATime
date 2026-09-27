@@ -55,8 +55,12 @@ public class Energy : MonoBehaviour, IHitHandler
         }
     }
 
+    [SerializeField] private bool _regenEnabled = true;
+    public void SetRegenEnabled(bool regenEnabled) => _regenEnabled = regenEnabled;
+
     private void RegenerateEnergy()
     {
+        if (!_regenEnabled) return;
         if (energy < currentMaxEnergy)
         {
             timeSinceEnergyUsed += Time.deltaTime;

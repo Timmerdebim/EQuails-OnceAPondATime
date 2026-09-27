@@ -117,7 +117,7 @@ namespace TDK.PlayerSystem
         {
             hitbox.gameObject.SetActive(false);
             trailRenderer.emitting = false;
-
+            energy.SetRegenEnabled(true);
             playerController.Reset();
         }
 

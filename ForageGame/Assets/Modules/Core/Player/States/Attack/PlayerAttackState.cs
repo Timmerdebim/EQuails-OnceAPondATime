@@ -14,6 +14,7 @@ namespace TDK.PlayerSystem.States
 
             Player.Instance.energy.UseEnergy(Player.Instance.attackEnergy);
             Player.Instance.playerData.hasUsedAttack = true;
+            Player.Instance.energy.SetRegenEnabled(false);
 
             Player.Instance.hitbox.Reset();
             Player.Instance.hitbox.PivotTarget(Player.Instance.playerController.ViewDirection);

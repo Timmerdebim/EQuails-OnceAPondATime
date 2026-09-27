@@ -12,6 +12,7 @@ namespace TDK.PlayerSystem.States
         {
             Player.Instance.playerController.Reset();
             Player.Instance.playerController.SetInputLocomotion(maxSpeed, acceleration);
+            Player.Instance.energy.SetRegenEnabled(false);
         }
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

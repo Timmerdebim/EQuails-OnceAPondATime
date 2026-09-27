@@ -247,7 +247,6 @@ namespace TDK.PlayerSystem
         public void SetImpulse(Vector3 vector) => _rigidbody.AddForce(vector, ForceMode.VelocityChange);
         public void SetExternalForce(Vector3 vector) => _externalForce = vector;
 
-
         #region Locomotion API
 
         public void SetManualLocomotion(Vector3 targetVelocity, float acceleration)
