@@ -50,6 +50,8 @@ namespace NPC
         private Task currentTypingTask;
 
         [Header("Dialogue display settings")]
+        [Tooltip("Mostly for Wizard Rock. Leave empty to use player's")]
+        [SerializeField] private DialogueBox thinkingBox;
         [SerializeField] private bool thinkingBoxFacesRight = true;
         [Tooltip("character count -> syllable count. Clamped between 1 and 10")]
         [SerializeField] private AnimationCurve syllableCountCurve;
@@ -89,6 +91,9 @@ namespace NPC
         //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
         private void Start()
         {
+            //if not set, use the player's box
+            if (thinkingBox == null) thinkingBox = Player.Instance.thinkingBox;
+
             _database = parser.ParseReadable(_sourceFile.text,
                                     StoryFlagManager.Instance.flagDatabase.AsDictionary(),
                                     dialogueReferences.GetItemDataMap(),
@@ -436,7 +441,7 @@ namespace NPC
             // 5. Open Dialogue Box if it's currently closed
             if (!isDialogueActive)
             {
-                Player.Instance.thinkingBox.OpenDialogue();
+                thinkingBox.OpenDialogue();
                 HideStatusIndicator();
                 isDialogueActive = true;
             }
@@ -446,8 +451,8 @@ namespace NPC
                 isTyping = true;
 
                 string[] messageLines = line.Text.Split('\n'); //Okay so I absolutely fucking hate this, this means speech HAS to be done by the dialogue box itself ~Lars
-                Player.Instance.visuals.SetThinkingBoxOrientation(thinkingBoxFacesRight);
-                currentTypingTask = Player.Instance.thinkingBox.SetText(messageLines, character, textCtxSource.Token);
+                thinkingBox.SetThinkingBoxOrientation(thinkingBoxFacesRight);
+                currentTypingTask = thinkingBox.SetText(messageLines, character, textCtxSource.Token);
 
                 await currentTypingTask;
             }
@@ -514,13 +519,13 @@ namespace NPC
             {
                 if (!isDialogueActive)
                 {
-                    Player.Instance.thinkingBox.OpenDialogue();
+                    thinkingBox.OpenDialogue();
                     isDialogueActive = true;
                 }
 
                 isTyping = true;
-                Player.Instance.visuals.SetThinkingBoxOrientation(thinkingBoxFacesRight);
-                await Player.Instance.thinkingBox.SetText(message, character, textCtxSource.Token);
+                thinkingBox.SetThinkingBoxOrientation(thinkingBoxFacesRight);
+                await thinkingBox.SetText(message, character, textCtxSource.Token);
                 isTyping = false;
 
                 await Task.Delay((int)shortMessageDuration, textCtxSource.Token);
@@ -534,7 +539,7 @@ namespace NPC
 
         private void EndDialogue()
         {
-            Player.Instance.thinkingBox.CloseDialogue();
+            thinkingBox.CloseDialogue();
             isDialogueActive = false;
             isTyping = false;
             ShowStatusIndicator();
