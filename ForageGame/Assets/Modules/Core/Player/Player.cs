@@ -7,7 +7,7 @@ using UnityEngine.ProBuilder.MeshOperations;
 
 namespace TDK.PlayerSystem
 {
-    public enum PlayerUpgradeType { Attack, Lantern, Pouch, Wing, Sprint }
+    public enum PlayerUpgradeType { Attack, Lantern, Pouch, Wing }
 
     [RequireComponent(typeof(Energy))]
     [RequireComponent(typeof(PlayerController))]
@@ -102,9 +102,6 @@ namespace TDK.PlayerSystem
                 case PlayerUpgradeType.Wing:
                     playerData.wingLevel += 1;
                     visuals.UpdateWingVisuals(playerData.wingLevel);
-                    break;
-                case PlayerUpgradeType.Sprint:
-                    playerData.sprintUnlocked = true;
                     break;
             }
         }

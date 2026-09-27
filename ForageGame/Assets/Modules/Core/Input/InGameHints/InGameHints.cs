@@ -123,25 +123,20 @@ public class InGameHints : MonoBehaviour
         if (Player.Instance.playerInteract._currentFocus != null && Player.Instance.playerInteract._currentFocus.GetComponent<NpcLocation>() != null)
             currentHints.Add(talkHint);
 
-        if (!Player.Instance.playerData.hasUsedAttack)
-            if (Player.Instance.playerData.attackUnlocked)
-                currentHints.Add(attackHint);
+        if (!Player.Instance.playerData.hasUsedAttack && Player.Instance.playerData.attackUnlocked)
+            currentHints.Add(attackHint);
 
-        if (!Player.Instance.playerData.hasUsedSprint)
-            if (Player.Instance.playerData.sprintUnlocked)
-                currentHints.Add(dashHint);
+        if (Player.Instance._playerAnimator._animator.GetBool("isMoving") && !Player.Instance._playerAnimator._animator.GetBool("run"))
+            currentHints.Add(dashHint);
 
-        if (!Player.Instance.playerData.hasUsedJump)
-            if (Player.Instance.playerData.wingLevel == 1)
-                currentHints.Add(jumpHint);
+        if (!Player.Instance.playerData.hasUsedJump && Player.Instance.playerData.wingLevel == 1)
+            currentHints.Add(jumpHint);
 
-        if (!Player.Instance.playerData.hasUsedFly)
-            if (Player.Instance.playerData.wingLevel == 2)
-                currentHints.Add(flyHint);
+        if (!Player.Instance.playerData.hasUsedFly && Player.Instance.playerData.wingLevel == 2)
+            currentHints.Add(flyHint);
 
-        if (!Player.Instance.playerData.hasOpenedRecipeBook)
-            if (RecipeBookController.Instance.CollectedRecipes.Count > 0)
-                currentHints.Add(recipeHint);
+        if (!Player.Instance.playerData.hasOpenedRecipeBook && RecipeBookController.Instance.CollectedRecipes.Count > 0)
+            currentHints.Add(recipeHint);
     }
 
     #endregion

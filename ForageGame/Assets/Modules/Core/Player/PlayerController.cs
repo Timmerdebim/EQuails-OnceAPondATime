@@ -147,7 +147,6 @@ namespace TDK.PlayerSystem
         public void OnSprint(InputAction.CallbackContext context)
         {
             if (context.started
-            && Player.Instance.playerData.sprintUnlocked
             && Player.Instance.energy.energy > 0.01f)
             {
                 _animator.IsSprinting(true);
