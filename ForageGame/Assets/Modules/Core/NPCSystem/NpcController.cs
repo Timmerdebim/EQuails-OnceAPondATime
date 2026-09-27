@@ -357,7 +357,7 @@ namespace NPC
             }
             if (_lastCompletedStageIndex != GetActiveStageIndex())
             {
-                Debug.Log($"[NpcController]: Leave_polite dialogue requested for non-finished StoryStage, ignored!");
+                Debug.Log($"[NpcController: {character}]: Leave_polite dialogue requested for non-finished StoryStage, ignored!");
                 return null;
             }
             return dialogue.GetSpecialLine("leave_polite"); //will be null anyway if none found
