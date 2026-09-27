@@ -12,7 +12,7 @@ namespace TDK.PlayerSystem.States
         {
             animator.SetBool("isBusy", true);
 
-            Player.Instance.energy.UseEnergy(Player.Instance.attackEnergy);
+            Player.Instance.energy.AddEnergy(-Player.Instance.attackEnergy);
             Player.Instance.playerData.hasUsedAttack = true;
             Player.Instance.energy.SetRegenEnabled(false);
 

@@ -13,7 +13,7 @@ namespace TDK.PlayerSystem.States
         {
             animator.SetBool("isBusy", true);
 
-            Player.Instance.energy.UseEnergy(Player.Instance.hopEnergy);
+            Player.Instance.energy.AddEnergy(-Player.Instance.hopEnergy);
             Player.Instance.playerData.hasUsedJump = true;
             Player.Instance.energy.SetRegenEnabled(false);
 

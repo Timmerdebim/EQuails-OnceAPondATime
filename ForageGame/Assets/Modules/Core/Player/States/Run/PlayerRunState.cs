@@ -11,11 +11,12 @@ namespace TDK.PlayerSystem.States
         {
             Player.Instance.playerController.Reset();
             Player.Instance.playerController.SetInputLocomotion(maxSpeed, acceleration);
+            Player.Instance.energy.SetRegenEnabled(false);
         }
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            Player.Instance.energy.UseEnergy(Player.Instance.runEnergy * Time.deltaTime);
+            Player.Instance.energy.AddEnergy(-Player.Instance.runEnergy * Time.deltaTime);
             // Check if still can run
             if (Player.Instance.energy.energy < 0.01f)
                 animator.SetBool("run", false);

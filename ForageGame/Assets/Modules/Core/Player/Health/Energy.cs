@@ -1,9 +1,5 @@
-using System;
-using TDK.PlayerSystem;
-using TDK.SaveSystem;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class Energy : MonoBehaviour, IHitHandler
 {
@@ -36,7 +32,6 @@ public class Energy : MonoBehaviour, IHitHandler
 
     private void Awake()
     {
-        _energyBarWidth = energyFill.rect.width;
         UpdateMaxEnergy();
         energy = currentMaxEnergy;
     }
@@ -65,39 +60,15 @@ public class Energy : MonoBehaviour, IHitHandler
         {
             timeSinceEnergyUsed += Time.deltaTime;
             if (timeSinceEnergyUsed >= energyRegenDelay)
-            {
-                energy += energyRegenRate * Time.deltaTime;
-                energy = Mathf.Min(energy, currentMaxEnergy);
-            }
+                AddEnergy(energyRegenRate * Time.deltaTime);
         }
-    }
-
-    // Attempts to use energy. Returns true if successful.
-    // Resets the regen timer if energy is used.
-    public bool UseEnergy(float amount)
-    {
-        if (amount <= 0)
-            return true;
-
-        if (energy < amount)
-        {
-            energy = 0f;
-            return false;
-        }
-
-        energy -= amount;
-        if (energy < 0f)
-            energy = 0f;
-
-        timeSinceEnergyUsed = 0f;
-        return true;
     }
 
     // Adds energy up to the current max.
     public void AddEnergy(float amount)
     {
-        if (amount <= 0) return;
-        energy = Mathf.Min(energy + amount, currentMaxEnergy);
+        if (amount < 0) timeSinceEnergyUsed = 0f;
+        energy = Mathf.Clamp(energy + amount, 0, currentMaxEnergy);
     }
 
     // Takes damage and updates max energy accordingly.
@@ -124,8 +95,6 @@ public class Energy : MonoBehaviour, IHitHandler
     }
 
     // Updates the UI bars positions based on current energy and damage.
-
-    private float _energyBarWidth;
     private void UpdateEnergyBar()
     {
         float energyGap = 0.005f;
