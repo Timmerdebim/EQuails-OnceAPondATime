@@ -50,6 +50,7 @@ namespace NPC
         private Task currentTypingTask;
 
         [Header("Dialogue display settings")]
+        [SerializeField] private bool thinkingBoxFacesRight = true;
         [Tooltip("character count -> syllable count. Clamped between 1 and 10")]
         [SerializeField] private AnimationCurve syllableCountCurve;
 
@@ -445,6 +446,7 @@ namespace NPC
                 isTyping = true;
 
                 string[] messageLines = line.Text.Split('\n'); //Okay so I absolutely fucking hate this, this means speech HAS to be done by the dialogue box itself ~Lars
+                Player.Instance.visuals.SetThinkingBoxOrientation(thinkingBoxFacesRight);
                 currentTypingTask = Player.Instance.thinkingBox.SetText(messageLines, character, textCtxSource.Token);
 
                 await currentTypingTask;
@@ -517,6 +519,7 @@ namespace NPC
                 }
 
                 isTyping = true;
+                Player.Instance.visuals.SetThinkingBoxOrientation(thinkingBoxFacesRight);
                 await Player.Instance.thinkingBox.SetText(message, character, textCtxSource.Token);
                 isTyping = false;
 
