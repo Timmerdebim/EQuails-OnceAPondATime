@@ -14,6 +14,7 @@ public class GameplayController : MonoBehaviour
     public State _state { get; private set; } = State.Initial;
     [SerializeField] private TransitionScreenController _tsc;
     [SerializeField] public SaveManager _saveManager;
+    [SerializeField] private CutoutController _cutoutController;
 
     [Header("Scenes")]
     [SerializeField] private SceneReference _worldScene;
@@ -132,6 +133,7 @@ public class GameplayController : MonoBehaviour
             await AwaitPadding();
         }
         cutsceneAnimator.Play(cutsceneName);
+        _cutoutController.UseCutout(false, true);
     }
 
     public async Task InGameCutsceneStop(bool useTransitionScreen)

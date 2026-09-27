@@ -20,35 +20,49 @@ public class CutoutController : MonoBehaviour
     [SerializeField] private Vector4 caveOff;
     [SerializeField] private Vector4 caveOn;
 
+    private bool _useCutout = true;
     private bool _isActive = false;
-    public enum CutoutMode { Standard, Cave }
-    private CutoutMode _mode = CutoutMode.Standard;
+    private bool _useCaveMode = false;
 
-    public void SetCutoutMode(CutoutMode cutoutMode)
+    public void UseCutout(bool useCutout, bool instant)
     {
-        if (_mode != cutoutMode)
+        if (_useCutout != useCutout)
         {
-            _mode = cutoutMode;
-            UpdateCutout();
+            _useCutout = useCutout;
+            UpdateCutout(instant);
         }
     }
 
-    private void UpdateCutout()
+    public void UseCaveMode(bool useCaveMode, bool instant)
     {
-        if (_isActive)
+        if (_useCaveMode != useCaveMode)
         {
-            if (_mode == CutoutMode.Cave)
-                SetCutout(caveOn);
+            _useCaveMode = useCaveMode;
+            UpdateCutout(instant);
+        }
+    }
+
+    private void UpdateCutout(bool instant)
+    {
+        if (_useCutout)
+        {
+            if (_isActive)
+            {
+                if (_useCaveMode)
+                    SetCutout(caveOn, instant);
+                else
+                    SetCutout(standardOn, instant);
+            }
             else
-                SetCutout(standardOn);
+            {
+                if (_useCaveMode)
+                    SetCutout(caveOff, instant);
+                else
+                    SetCutout(standardOff, instant);
+            }
         }
         else
-        {
-            if (_mode == CutoutMode.Cave)
-                SetCutout(caveOff);
-            else
-                SetCutout(standardOff);
-        }
+            SetCutout(Vector4.zero, instant);
     }
 
 
@@ -69,7 +83,7 @@ public class CutoutController : MonoBehaviour
         if (_isActive != Physics.Raycast(_camera._targetTransform.position, _rayCast, _rayCast.magnitude, _cutoutLayers))
         {
             _isActive = !_isActive;
-            UpdateCutout();
+            UpdateCutout(false);
         }
     }
 
@@ -77,10 +91,13 @@ public class CutoutController : MonoBehaviour
 
     #region Material adjustments
 
-    private void SetCutout(Vector4 cutoutProfile)
+    private void SetCutout(Vector4 cutoutProfile, bool instant)
     {
         StopAllCoroutines();
-        StartCoroutine(SetCutoutCoroutine(cutoutProfile));
+        if (instant)
+            SetMaterialProperties(cutoutProfile);
+        else
+            StartCoroutine(SetCutoutCoroutine(cutoutProfile));
     }
 
     private IEnumerator SetCutoutCoroutine(Vector4 targetCutoutProfile)

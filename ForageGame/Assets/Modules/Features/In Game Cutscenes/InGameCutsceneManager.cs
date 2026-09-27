@@ -17,10 +17,11 @@ public class InGameCutsceneManager : MonoBehaviour
         Instance = this;
     }
     [SerializeField] private Animator _animator;
+    [SerializeField] private CutoutController _cutoutController;
     [SerializeField] private Transform _cameraTarget;
     [SerializeField] private CameraController _cameraController;
     [SerializeField] private TransitionScreenController _tsc;
-    
+
     [Header("Animation action values")]
     [SerializeField] private Vector3 caveChuckPosition;
     [SerializeField] private Vector3 finalePosition;
@@ -45,6 +46,7 @@ public class InGameCutsceneManager : MonoBehaviour
     public void OnStateExit()
     {
         _ = GameplayController.Instance?.InGameCutsceneStop(_useFadeOnStop);
+        _cutoutController.UseCutout(true, true);
         ResetCamera();
         _isPlaying = false;
     }
@@ -53,29 +55,28 @@ public class InGameCutsceneManager : MonoBehaviour
 
     #region Animation Controlls
     // Should only be used by the animator!
-    public void ResetCamera() => _cameraController.SetPlayerTarget();
-    public void SetCameraTarget() => _cameraController.SetTarget(_cameraTarget);
+    public void ResetCamera()
+    {
+        _cameraController.SetPlayerTarget();
+        _cameraController.TeleportToTarget();
+    }
+    public void SetCameraTarget()
+    {
+        _cameraController.SetTarget(_cameraTarget);
+        _cameraController.TeleportToTarget();
+    }
     public void FadeToBlack() => _tsc.FadeOut();
     public void FadeFromBlack() => _tsc.FadeIn();
 
-    #endregion
-
-    #region Animation Actions
-
     public void TeleportPlayerCaveChuck() => Player.Instance.playerController.TeleportTo(caveChuckPosition);
-
     public void TeleportPlayerFinale() => Player.Instance.playerController.TeleportTo(finalePosition);
-
-
     public void AddFlag(StoryFlag flag) => StoryFlagManager.Instance.AddFlag(flag);
-
     public void HideAllNPCs()
     {
         Debug.Log($"[InGameCutsceneManager]: hiding all npcs via camera culling mask");
-        Camera.main.cullingMask &=  ~(1 << LayerMask.NameToLayer("NPC"));
-        Camera.main.cullingMask &=  ~(1 << LayerMask.NameToLayer("Player"));
+        Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("NPC"));
+        Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("Player"));
     }
-
     public void ShowAllNPCs()
     {
         Debug.Log($"[InGameCutsceneManager]: showing all npcs again via camera culling mask");
