@@ -37,7 +37,6 @@ namespace TDK.PlayerSystem
         [SerializeField] private DuckOrientationGroup[] _duckOrientationGroup = new DuckOrientationGroup[4];
         [SerializeField] private SpriteLibrary spriteLibrary;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private DialogueBox thinkingBox;
         private bool _isFacingLeft = true;
         public bool IsFacingLeft => _isFacingLeft;
         private bool _isFacingFront = true;
@@ -119,18 +118,6 @@ namespace TDK.PlayerSystem
             spriteRenderer.flipX = !_isFacingLeft;
             //var scale = transform.parent.localScale;
             //transform.parent.localScale = new Vector3(_isFacingLeft ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x), scale.y, scale.z);
-        }
-
-
-        //Readables might be positioned in a way where the thinking box would clip into them if it is displayed on the right
-        //this function is there to address it (keep in mind thinking boxes are symmetrical, unlike speaking boxes)
-        //yeah yeah, not pretty I know, this stuff just awkwark
-        public void SetThinkingBoxOrientation(bool faceRight)
-        {
-            var basePos = thinkingBox.transform.localPosition;
-            var newXpos = faceRight ? Mathf.Abs(basePos.x): -Mathf.Abs(basePos.x);
-            
-            thinkingBox.transform.localPosition = new Vector3(newXpos, basePos.y, basePos.z);
         }
     }
 }

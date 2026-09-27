@@ -162,5 +162,16 @@ namespace NPC
 
             await typewriting;
         }
+
+        //Readables might be positioned in a way where the thinking box would clip into them if it is displayed on the right
+        //this function is there to address it (keep in mind thinking box art is symmetrical, unlike speaking boxes)
+        //yeah yeah, not pretty I know, this stuff just awkwark
+        public void SetThinkingBoxOrientation(bool faceRight)
+        {
+            var basePos = transform.localPosition;
+            var newXpos = faceRight ? Mathf.Abs(basePos.x): -Mathf.Abs(basePos.x);
+            
+            transform.localPosition = new Vector3(newXpos, basePos.y, basePos.z);
+        }
     }
 }
