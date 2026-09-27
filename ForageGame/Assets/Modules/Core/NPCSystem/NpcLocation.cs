@@ -17,7 +17,7 @@ namespace NPC
         [SerializeField] private NpcLocationVisuals visuals;
 
         [Header("Dialogue Display Settings")]
-        [SerializeField] private float shortMessageDuration = 2000f;
+        [SerializeField] private float shortMessageDuration = 1000f;
 
         // State Tracking
         private bool isDialogueActive = false;
@@ -36,6 +36,7 @@ namespace NPC
         [SerializeField] private PopupTextbox statusIndicator;
 
         private bool isBeingDisabled = false; //insane stupid bullshit hack to not have the popup thing pop up when being disabled
+        private bool hasBeenInteractedWith = false; //hack for the 'leave_rude' thing for newly enabled npclocations
 
         void Start()
         {
@@ -46,6 +47,12 @@ namespace NPC
         {
             _interactable.EnableInteraction();
             visuals.OnPopUp();
+            ///IMPORTANT: this is what prevents leave_rude dialogue to be displayed upon not talking to fresh locations and leaving 
+            ///(i.e.,did not have dialogue last stage, i.e. multi stage convo)
+            /// 
+            /// WHILE still displaying the leave_rude for said multi-stage convos when leaving in between box closing 
+            /// (i.e., Mosswick at the start)
+            hasBeenInteractedWith = false; 
         }
 
         //THIS animation ALREADY DISABLES THE GAMEOBJECT
@@ -94,6 +101,8 @@ namespace NPC
         [ContextMenu("Next Message")]
         public async void Next()
         {
+            hasBeenInteractedWith = true;
+            
             if (isTyping)
             {
                 CancelCurrentToken();
@@ -190,16 +199,18 @@ namespace NPC
             }
 
 
-            if (isDialogueActive)
+            if (isDialogueActive || hasBeenInteractedWith) //edge case upon edge case upon edge case
             {
                 //dialogue is actually done, neither rude or leave p
                 // Rude: Left while box was open
+                // Debug.Log($"[NpcLocation: {gameObject.name}]: leave_rude requested: isDialogueActive: {isDialogueActive}, MessageRead: {MessageRead}, hasBeenInteractedWith: {hasBeenInteractedWith}");
                 textToDisplay = npcController.GetLeaveRudeDialogue(this);
             }
             else
             {
                 // Polite: Left after closing the box (or starting to do so), OR if box never opened
                 // now only actually gets a message if the regular stages are done (to prevent last esge case of just never opening dialogue) ~Lars
+                // Debug.Log($"[NpcLocation: {gameObject.name}]: leave_polite requested: isDialogueActive: {isDialogueActive}, MessageRead: {MessageRead}, hasBeenInteractedWith: {hasBeenInteractedWith}");
                 textToDisplay = npcController.GetLeavePoliteDialogue(this);
             }
 
@@ -259,6 +270,9 @@ namespace NPC
             //reset emotion after ending dialogue (i.e., close mouth)
             visuals.OnInteract();
             if (!string.IsNullOrEmpty(npcController.GetBaseEmotion(this))) SetEmotion(npcController.GetBaseEmotion(this));
+
+            MessageRead = false; //IMPORTANT: this is the hack of 'old location still displays leave_rude' thing
+
             CancelCurrentToken();
         }
         #endregion
