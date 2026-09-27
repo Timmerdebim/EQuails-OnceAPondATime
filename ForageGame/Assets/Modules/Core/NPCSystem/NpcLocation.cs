@@ -198,8 +198,8 @@ namespace NPC
             }
             else
             {
-                // Polite: Left after closing the box (or starting to do so)
-                // now only actually gets a message if the regular stages are done ~Lars
+                // Polite: Left after closing the box (or starting to do so), OR if box never opened
+                // now only actually gets a message if the regular stages are done (to prevent last esge case of just never opening dialogue) ~Lars
                 textToDisplay = npcController.GetLeavePoliteDialogue(this);
             }
 
