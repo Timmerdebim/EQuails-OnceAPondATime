@@ -24,6 +24,17 @@ public class CutoutController : MonoBehaviour
     private bool _isActive = false;
     private bool _useCaveMode = false;
 
+    public static CutoutController Instance { get; private set; }
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     public void UseCutout(bool useCutout, bool instant)
     {
         if (_useCutout != useCutout)
