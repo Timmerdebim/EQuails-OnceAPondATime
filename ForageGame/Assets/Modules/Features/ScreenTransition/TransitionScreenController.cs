@@ -32,7 +32,7 @@ public class TransitionScreenController : MonoBehaviour
     public async Task FadeInAsync()
     {
         _animator.SetTrigger("Exit");
-        await Task.Delay(Mathf.CeilToInt(_exitDuration * 100));
+        await Task.Delay(Mathf.CeilToInt(_exitDuration * 1000));
     }
 
     public void FadeIn()
