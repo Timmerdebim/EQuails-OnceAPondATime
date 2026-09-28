@@ -39973,7 +39973,6 @@ MonoBehaviour:
     BackRight: {fileID: 7108339969198208228, guid: 1621c68337b8fdd42a9f260baae38589, type: 3}
   spriteLibrary: {fileID: 8918300606451863951}
   spriteRenderer: {fileID: 5192637091550732600}
-  thinkingBox: {fileID: 5011962895074144791}
   onFacingDirectionChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -50582,16 +50581,15 @@ MonoBehaviour:
   trailRenderer: {fileID: 229097043921619139}
   visuals: {fileID: 6941911297845455562}
   thinkingBox: {fileID: 5011962895074144791}
+  _cameraTarget: {fileID: 6819977638391381568}
   playerData:
     spawnPosition: {x: 0, y: 100, z: 0}
     damageAmount: 90
     wingLevel: 0
     pouchLevel: 0
     attackUnlocked: 0
-    sprintUnlocked: 0
     lanternUnlocked: 0
     hasUsedJump: 0
-    hasUsedSprint: 0
     hasUsedFly: 0
     hasUsedAttack: 0
     hasOpenedRecipeBook: 0
@@ -50874,6 +50872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 7154177637054964034}
+  _driverVelocity: {x: 0, y: 0, z: 0}
   _targetDirection: {x: 0, y: 0, z: 1}
   _targetSpeed: 1
   _acceleration: 0
