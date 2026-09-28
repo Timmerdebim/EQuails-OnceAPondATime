@@ -12,7 +12,7 @@ public class PlayerEffects : MonoBehaviour
     Energy en;
 
     [SerializeField] private ParticleSystem attackParticles;
-    [SerializeField] private ParticleSystem jumpParticles;
+    [SerializeField] private ParticleSystem wingFlapParticles;
 
 
     [System.Serializable]
@@ -72,6 +72,7 @@ public class PlayerEffects : MonoBehaviour
         pc.onWaterEnter.AddListener(WaterEnterEffects);
         pc.onWaterLeave.AddListener(WaterLeaveEffects);
         pc.onMove.AddListener(WaterChangeMovementEffects);
+        pc.onWingFlap.AddListener(WingFlapEffects);
 
     }
 
@@ -86,6 +87,7 @@ public class PlayerEffects : MonoBehaviour
         pc.onWaterEnter.RemoveListener(WaterEnterEffects);
         pc.onWaterLeave.RemoveListener(WaterLeaveEffects);
         pc.onMove.RemoveListener(WaterChangeMovementEffects);
+        pc.onWingFlap.RemoveListener(WingFlapEffects);
     }
 
     #region Footstep Particles
@@ -199,7 +201,14 @@ public class PlayerEffects : MonoBehaviour
 
     private void JumpEffect()
     {
-        jumpParticles.Play();
+       // wingFlapParticles.Play(); //nothing
+    }
+
+    public void WingFlapEffects()
+    {
+        Debug.Log("double pranked!");
+        wingFlapParticles.Play();
+        PlayerSounds.Instance.PlayWingFlap();
     }
 
     private void HitEffect(float damage)

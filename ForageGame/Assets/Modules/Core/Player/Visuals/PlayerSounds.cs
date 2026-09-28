@@ -17,6 +17,8 @@ namespace TDK.PlayerSystem
 
         [SerializeField] private FMODUnity.EventReference swimEvent;
 
+         [SerializeField] private FMODUnity.EventReference wingFlapEvent;
+
         public static PlayerSounds Instance { get; private set; } //yes, this sucks, but I HAVE to do it because FMOD SUCKS
 
         private void Awake() 
@@ -48,5 +50,7 @@ namespace TDK.PlayerSystem
 
         public void PlayWaterEnter() => FMODUnity.RuntimeManager.PlayOneShot(waterEnterEvent, transform.position);
         public void PlayWaterLeave() => FMODUnity.RuntimeManager.PlayOneShot(waterLeaveEvent, transform.position);
+
+        public void PlayWingFlap() => FMODUnity.RuntimeManager.PlayOneShot(wingFlapEvent, transform.position);
     }
 }

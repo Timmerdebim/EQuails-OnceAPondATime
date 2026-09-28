@@ -10002,7 +10002,7 @@ GameObject:
   - component: {fileID: 3031430127677122948}
   - component: {fileID: 1667029596330873804}
   m_Layer: 9
-  m_Name: JumpParticles
+  m_Name: WingFlapParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19851,7 +19851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pv: {fileID: 6941911297845455562}
   attackParticles: {fileID: 6616778078789748292}
-  jumpParticles: {fileID: 3031430127677122948}
+  wingFlapParticles: {fileID: 3031430127677122948}
   walkFootstepOffsets:
     stepSideXOffset: 0.2
     viewXoffset: 0.1
@@ -50621,6 +50621,9 @@ MonoBehaviour:
   onJump:
     m_PersistentCalls:
       m_Calls: []
+  onWingFlap:
+    m_PersistentCalls:
+      m_Calls: []
   onSprint:
     m_PersistentCalls:
       m_Calls: []
@@ -50779,6 +50782,13 @@ MonoBehaviour:
       Data3: -1543226209
       Data4: 1814359381
     Path: event:/Sfx/Player/Water/Swim
+  wingFlapEvent:
+    Guid:
+      Data1: -2143561105
+      Data2: 1176016520
+      Data3: -1041000008
+      Data4: -1729446341
+    Path: event:/Sfx/Player/WingFlap
 --- !u!54 &7154177637054964034
 Rigidbody:
   m_ObjectHideFlags: 0
