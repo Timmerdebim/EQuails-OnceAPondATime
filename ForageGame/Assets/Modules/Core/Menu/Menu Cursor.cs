@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,23 +14,23 @@ public class UICursor : MonoBehaviour
 
     [SerializeField] private RectTransform _cursorRect;
     private RectTransform _targetRect;
+    private RectTransform _parent;
 
     private readonly Vector3[] _corners = new Vector3[4];
 
     private void Update()
     {
-        _targetRect = EventSystem.current.currentSelectedGameObject?.GetComponent<RectTransform>();
-
-        if (_targetRect == null)
-            return;
+        _targetRect = null;
+        if (EventSystem.current == null) return;
+        if (EventSystem.current.currentSelectedGameObject == null) return;
+        EventSystem.current.currentSelectedGameObject.TryGetComponent(out _targetRect);
+        if (_targetRect == null) return;
 
         // Get the selected UI element's world-space corners.
         _targetRect.GetWorldCorners(_corners);
 
-        RectTransform parent = _cursorRect.parent as RectTransform;
-
-        if (parent == null)
-            return;
+        _parent = _cursorRect.parent as RectTransform;
+        if (_parent == null) return;
 
         // Convert corners into the cursor parent's local space.
         Vector2 min = new Vector2(float.MaxValue, float.MaxValue);
@@ -37,7 +38,7 @@ public class UICursor : MonoBehaviour
 
         for (int i = 0; i < _corners.Length; i++)
         {
-            Vector2 localCorner = parent.InverseTransformPoint(_corners[i]);
+            Vector2 localCorner = _parent.InverseTransformPoint(_corners[i]);
 
             min = Vector2.Min(min, localCorner);
             max = Vector2.Max(max, localCorner);

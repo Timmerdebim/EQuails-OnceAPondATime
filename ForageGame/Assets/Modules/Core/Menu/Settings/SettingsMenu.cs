@@ -27,7 +27,7 @@ namespace Project.Menus
 
         public override void OnEnteringMenu()
         {
-            OnGraphicsClicked();
+            OnKeybindsClicked();
         }
 
         public override void OnExitingMenu()

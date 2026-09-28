@@ -13,13 +13,14 @@ public class AppController : MonoBehaviour
 
     private enum Boot { BootMainMenu, BootGameplay, MainMenu, Gameplay }
     [SerializeField] private Boot _bootmode = Boot.Gameplay;
-    public enum State { Boot, MainMenu, Gameplay, Cutscene, Transitioning }
+    public enum State { Boot, MainMenu, Gameplay, Cutscene, Transitioning, ConfirmSettings }
     public State _state { get; private set; } = State.Boot;
 
     [Header("Scenes")]
     [SerializeField] private SceneReference _mainMenuScene;
     [SerializeField] private SceneReference _gameplayScene;
     [SerializeField] private SceneReference _cutsceneScene;
+    [SerializeField] private SceneReference _confirmSettings;
 
     void Awake()
     {
@@ -102,8 +103,16 @@ public class AppController : MonoBehaviour
         }
         await TransitionTo(State.Cutscene);
         await ImageCutsceneController.Instance.PlayIntroSequence();
+
+        _newWorldIdBuffer = worldId;
+        await TransitionTo(State.ConfirmSettings);
+        await ConfirmSettingsController.Instance.Load();
+    }
+    private string _newWorldIdBuffer = null;
+    public async Task ContinueToNewWorld()
+    {
         await TransitionTo(State.Gameplay);
-        await GameplayController.Instance.LoadWorld(worldId);
+        await GameplayController.Instance.LoadWorld(_newWorldIdBuffer);
     }
 
     public async Task ToWorld(string worldId = null)
@@ -155,6 +164,11 @@ public class AppController : MonoBehaviour
                 break;
             case State.Cutscene:
                 await SceneServices.LoadScene(_cutsceneScene);
+                SetInputsActive(false);
+                break;
+            case State.ConfirmSettings:
+                await SceneServices.LoadScene(_confirmSettings);
+                SetInputsActive(true);
                 break;
         }
         _state = newState;
