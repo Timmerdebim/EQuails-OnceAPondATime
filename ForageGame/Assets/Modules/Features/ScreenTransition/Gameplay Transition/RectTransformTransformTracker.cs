@@ -15,7 +15,7 @@ namespace TDK.UISystem
         // [Header("Settings")]
         // [SerializeField] private bool _clampToCanvas = false; // TODO
 
-        public void Update()
+        public void LateUpdate()
         {
             UpdateRectTransform();
         }
