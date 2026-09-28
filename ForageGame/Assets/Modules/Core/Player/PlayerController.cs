@@ -20,6 +20,7 @@ namespace TDK.PlayerSystem
         [SerializeField] private VelocityDriver _velocityDriver;
 
         public UnityEvent onJump;
+        public UnityEvent onWingFlap; //yes, something DIFFERENT from onJump, this plays on every wing flap animation
         public UnityEvent onSprint;
         public UnityEvent onAttack;
         public UnityEvent<Vector3> onMove;
@@ -85,6 +86,7 @@ namespace TDK.PlayerSystem
             onFootstep?.Invoke(isOuterFoot > 0); //yes, AnimationEvents do not support booleans, makes sense right
         }
 
+
         //Called by animator, and just forwards it to the unity event
         public void OnSwimStroke(int isOuterFoot)
         {
@@ -102,6 +104,13 @@ namespace TDK.PlayerSystem
         {
             onWaterLeave?.Invoke();
             _animator.IsSwimming(false);
+        }
+
+        //Called by animator, and just forwards it to the unity event
+        public void OnWingFlap()
+        {
+            Debug.Log("pranked!");
+            onWingFlap?.Invoke();
         }
 
         public void TeleportTo(Vector3 position, bool maintainMomentum = false)
