@@ -25,6 +25,8 @@ namespace TDK.PlayerSystem.States
             Player.Instance.playerController.Reset();
             Player.Instance.playerController.SetInputLocomotion(moveSpeed, moveAcceleration);
             Player.Instance.playerController.SetGravity(false);
+
+            PlayerSounds.Instance.PlayTakeOff();
         }
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
