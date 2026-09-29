@@ -155,18 +155,22 @@ public class AppController : MonoBehaviour
         switch (newState)
         {
             case State.MainMenu:
+                Cursor.visible = true;
                 await SceneServices.LoadScene(_mainMenuScene);
                 SetInputsActive(true);
                 break;
             case State.Gameplay:
+                Cursor.visible = false;
                 await SceneServices.LoadScene(_gameplayScene);
                 SetInputsActive(true);
                 break;
             case State.Cutscene:
+                Cursor.visible = false;
                 await SceneServices.LoadScene(_cutsceneScene);
                 SetInputsActive(false);
                 break;
             case State.ConfirmSettings:
+                Cursor.visible = true;
                 await SceneServices.LoadScene(_confirmSettings);
                 SetInputsActive(true);
                 break;

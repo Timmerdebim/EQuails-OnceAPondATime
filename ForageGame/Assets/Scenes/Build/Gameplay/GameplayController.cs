@@ -246,18 +246,17 @@ public class GameplayController : MonoBehaviour
             case State.Paused:
                 Time.timeScale = 0f;
                 AppController.Instance.SetInputsActive(true);
-                // Cursor.lockState = CursorLockMode.None;
-                // Cursor.visible = true;
+                Cursor.visible = true;
                 break;
             case State.Playing:
                 AppController.Instance.SetInputsActive(true);
                 Time.timeScale = 1f;
-                // Cursor.lockState = CursorLockMode.Locked;
-                // Cursor.visible = false;
+                Cursor.visible = false;
                 break;
             case State.Busy:
                 AppController.Instance.SetInputsActive(false);
                 Time.timeScale = 0f;
+                Cursor.visible = false;
                 break;
         }
     }
