@@ -25,6 +25,14 @@ namespace TDK.Gadgets
         public UnityEvent OnLock;
         public UnityEvent OnUnlock;
 
+        //yes yes coupling bla bla all Gadgets use the same stuff
+        //(release is also meant to be tmr oops)
+        //~Lars
+        [Header("Sound Options")]
+        [SerializeField] private FMODUnity.EventReference activateEvent;
+        [SerializeField] private FMODUnity.EventReference deactivateEvent;
+
+
         void OnValidate()
         {
             _animator = GetComponent<Animator>();
@@ -50,8 +58,18 @@ namespace TDK.Gadgets
                 if (_locked) return;
                 if (_singleUse) _locked = true;
                 _state = value;
-                if (value) OnActivate.Invoke();
-                else OnDeactivate.Invoke();
+                if (value) 
+                {
+                    //yes, this is indeed what FMOD null references look like
+                    if (activateEvent.Path.Length > 0) FMODUnity.RuntimeManager.PlayOneShot(activateEvent, transform.position);
+                    OnActivate.Invoke();
+                }
+                else 
+                {
+                    //yes, this is indeed what FMOD null references look like
+                    if (deactivateEvent.Path.Length > 0) FMODUnity.RuntimeManager.PlayOneShot(deactivateEvent, transform.position);
+                    OnDeactivate.Invoke();
+                }
                 UpdateVisuals();
             }
         }
