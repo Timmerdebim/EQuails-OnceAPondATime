@@ -20,6 +20,8 @@ namespace TDK.PlayerSystem.States
             Player.Instance.playerController.Reset();
             Player.Instance.playerController.SetInputLocomotion(maxSpeed, acceleration);
             Player.Instance.playerController.SetImpulse(-Physics.gravity.normalized * Mathf.Sqrt(2 * Physics.gravity.magnitude * hopHeight));
+
+            PlayerSounds.Instance.PlayTakeOff();
         }
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
