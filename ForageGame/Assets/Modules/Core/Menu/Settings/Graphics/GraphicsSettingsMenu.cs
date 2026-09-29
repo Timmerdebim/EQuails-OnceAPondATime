@@ -31,12 +31,12 @@ namespace Project.Menus.Graphics
             }
             _resolution.SetOptions(resolutionOptions.ToArray());
 
-            _fullscreen.SetOptions(new string[] { "Off", "On" });
-            _textureQuality.SetOptions(new string[] { "Terrible", "Low", "Medium", "High" });
-            _lightingQuality.SetOptions(new string[] { "Unplayable", "Low", "Medium", "High", "Ridiculous" });
-            _terrainQuality.SetOptions(new string[] { "Too Low", "Low", "Medium", "High" });
-            _vSync.SetOptions(new string[] { "Off", "On" });
-            _anisotropicTextures.SetOptions(new string[] { "Off", "On" });
+            _fullscreen.SetOptions(GraphicsSettingsManager.Instance.FullScreenOptions);
+            _textureQuality.SetOptions(GraphicsSettingsManager.Instance.TextureQualityOptions);
+            _lightingQuality.SetOptions(GraphicsSettingsManager.Instance.LightingQualityOptions);
+            _terrainQuality.SetOptions(GraphicsSettingsManager.Instance.TerrainQualityOptions);
+            _vSync.SetOptions(GraphicsSettingsManager.Instance.VSyncOptions);
+            _anisotropicTextures.SetOptions(GraphicsSettingsManager.Instance.AnisotropicTexturesOptions);
 
             RefreshVisuals();
         }

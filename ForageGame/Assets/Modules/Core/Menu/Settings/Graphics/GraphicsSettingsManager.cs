@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -36,6 +37,7 @@ namespace Project.Menus.Graphics
 
         // ------------ Settings ------------
 
+        public readonly string[] FullScreenOptions = new string[] { "Off", "On" };
         public int FullScreen
         {
             // 0 = off, 1 = on.
@@ -48,6 +50,17 @@ namespace Project.Menus.Graphics
             }
         }
 
+        public string[] ResolutionOptions { get => GetResolutionOptions(); }
+        private string[] GetResolutionOptions()
+        {
+            List<string> resolutionOptions = new();
+            for (int i = 0; i < Screen.resolutions.Length; i++)
+            {
+                string resolutionOption = $"{Screen.resolutions[i].width}x{Screen.resolutions[i].height} : {Screen.resolutions[i].refreshRateRatio}";
+                resolutionOptions.Add(resolutionOption);
+            }
+            return resolutionOptions.ToArray();
+        }
         public int Resolution
         {
             get => PlayerPrefs.GetInt("Resolution",
@@ -57,7 +70,7 @@ namespace Project.Menus.Graphics
             set
             {
                 if (-1 < value && value < Screen.resolutions.Length)
-                    Screen.SetResolution(Screen.resolutions[value].width, Screen.resolutions[value].height, Screen.fullScreen);
+                    Screen.SetResolution(Screen.resolutions[value].width, Screen.resolutions[value].height, Screen.fullScreenMode, Screen.resolutions[value].refreshRateRatio);
 
                 PlayerPrefs.SetInt("Resolution", value);
                 PlayerPrefs.Save();
@@ -75,6 +88,7 @@ namespace Project.Menus.Graphics
             }
         }
 
+        public readonly string[] TextureQualityOptions = new string[] { "Terrible", "Low", "Medium", "High" };
         public int TextureQuality
         {
             // 0 = full resolution, 1 = half, 2 = quarter, 3 = eighths. [FLIP THE LIST]
@@ -88,6 +102,7 @@ namespace Project.Menus.Graphics
             }
         }
 
+        public readonly string[] LightingQualityOptions = new string[] { "Unplayable", "Low", "Medium", "High", "Ridiculous" };
         public int LightingQuality
         {
 
@@ -102,6 +117,7 @@ namespace Project.Menus.Graphics
             }
         }
 
+        public readonly string[] TerrainQualityOptions = new string[] { "Too Low", "Low", "Medium", "High" };
         public int TerrainQuality
         {
             // 0 = Terrible, 1 = Low, 2 = Medium, 3 = High.
@@ -117,6 +133,7 @@ namespace Project.Menus.Graphics
             }
         }
 
+        public readonly string[] VSyncOptions = new string[] { "Off", "On" };
         public int VSync
         {
             // 0 = off, 1 = on.
@@ -129,6 +146,7 @@ namespace Project.Menus.Graphics
             }
         }
 
+        public readonly string[] AnisotropicTexturesOptions = new string[] { "Off", "On" };
         public int AnisotropicTextures
         {
             // 0 = Off, 1 = On.
