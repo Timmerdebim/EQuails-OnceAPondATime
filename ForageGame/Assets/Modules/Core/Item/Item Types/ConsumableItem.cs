@@ -34,6 +34,7 @@ namespace TDK.ItemSystem.Types
                 if (!InventoryController.Instance.TryAddItemAtAny(returnItem))
                     ItemServices.Instance?.SpawnItem(returnItem, Player.Instance.transform.position);
             }
+            Player.Instance.playerData.hasConsumedItem = true;
             return true;
         }
     }

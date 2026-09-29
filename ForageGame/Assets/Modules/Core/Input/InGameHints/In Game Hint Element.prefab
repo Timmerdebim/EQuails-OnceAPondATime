@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2328692503846386345}
   - component: {fileID: 4316918912724265164}
+  - component: {fileID: 4819229389027061937}
   m_Layer: 9
   m_Name: In Game Hint Element
   m_TagString: Untagged
@@ -125,8 +126,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2071d330e6c7bfc418a9a20752a690a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActionReference: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  image: {fileID: 2381483393282746846}
+  _canvasGroup: {fileID: 4819229389027061937}
+  _inputActionReference: {fileID: 0}
+  _image: {fileID: 2381483393282746846}
+--- !u!225 &4819229389027061937
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6545683218874913668}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &7447516276717732228
 GameObject:
   m_ObjectHideFlags: 0

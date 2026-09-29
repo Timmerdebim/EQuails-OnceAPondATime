@@ -1,6 +1,4 @@
 using UnityEngine;
-using DG.Tweening;
-using System.Collections.Generic;
 using TDK.ItemSystem.Inventory;
 using TDK.ItemSystem.Types;
 using TDK.ItemSystem;
@@ -10,93 +8,19 @@ using NPC;
 [RequireComponent(typeof(CanvasGroup))]
 public class InGameHints : MonoBehaviour
 {
-    private HashSet<InGameHintElement> currentHints = new();
-    private enum State { Activated, Deactivating, Deactivated, Activating }
-    private State currentState = State.Activated;
-
-    void Start() => HidePrompts(direct: true);
-
-    #region Update
-
+    private static readonly int RunHash = Animator.StringToHash("run");
+    private static readonly int IsMovingHash = Animator.StringToHash("isMoving");
     private float idleTime = 0;
-    private readonly float activationTime = 2;
+    private readonly float activationTime = 1.5f;
 
     void Update()
     {
         if (Input.anyKey)
-            HidePrompts();
+            idleTime = 0;
         else if (idleTime < activationTime)
             idleTime += Time.deltaTime;
-        else
-            ShowPrompts();
-    }
-
-    #endregion
-
-    #region Show & Hide Current Hints
-
-    private Tween tween;
-    [SerializeField] private CanvasGroup canvasGroup;
-
-    private void ShowPrompts(bool direct = false)
-    {
-        if (currentState == State.Activated || currentState == State.Activating) return;
-        currentState = State.Activating;
 
         RefreshCurrentHints();
-        RefreshVisuals();
-
-        foreach (InGameHintElement hint in currentHints)
-            hint.gameObject.SetActive(true);
-
-        tween?.Kill();
-        if (direct)
-        {
-            canvasGroup.alpha = 1;
-            currentState = State.Activated;
-        }
-        else
-        {
-            tween = canvasGroup.DOFade(1, 1).SetEase(Ease.InOutQuad)
-        .OnComplete(() => currentState = State.Activated);
-        }
-
-    }
-
-    private void HidePrompts(bool direct = false)
-    {
-        idleTime = 0;
-        if (currentState == State.Deactivated || currentState == State.Deactivating) return;
-        currentState = State.Deactivating;
-
-        tween?.Kill();
-        if (direct)
-        {
-            canvasGroup.alpha = 0;
-            foreach (Transform child in transform)
-                child.gameObject.SetActive(false);
-            currentState = State.Deactivated;
-        }
-        else
-        {
-            tween = canvasGroup.DOFade(0, 0.2f).SetEase(Ease.InOutQuad)
-            .OnComplete(() =>
-            {
-                foreach (Transform child in transform)
-                    child.gameObject.SetActive(false);
-                currentState = State.Deactivated;
-            });
-        }
-    }
-
-    #endregion
-
-    #region Refresh
-
-    public void RefreshVisuals()
-    {
-        foreach (InGameHintElement hint in currentHints)
-            hint.RefreshVisuals();
     }
 
     [Header("Built In Help Prompts")]
@@ -108,36 +32,28 @@ public class InGameHints : MonoBehaviour
     [SerializeField] private InGameHintElement jumpHint;
     [SerializeField] private InGameHintElement flyHint;
     [SerializeField] private InGameHintElement recipeHint;
-
+    [SerializeField] private InGameHintElement nextHint;
+    [SerializeField] private InGameHintElement previousHint;
+    [SerializeField] private InGameHintElement dropHint;
 
     public void RefreshCurrentHints()
     {
-        currentHints = new();
+        pickupHint.SetActive(!IsBookOpen && Player.Instance.playerInteract._currentFocus != null && Player.Instance.playerInteract._currentFocus.GetComponent<ItemController>() != null);
+        talkHint.SetActive(!IsBookOpen && Player.Instance.playerInteract._currentFocus != null && Player.Instance.playerInteract._currentFocus.GetComponent<NpcLocation>() != null);
+        dropHint.SetActive(!IsBookOpen && InventoryController.Instance.GetItemAtCurrent() != null && HasTimePassed);
 
-        if (InventoryController.Instance.GetItemAtCurrent() is ConsumableItem)
-            currentHints.Add(consumeHint);
+        dashHint.SetActive(!IsBookOpen && Player.Instance._playerAnimator._animator.GetBool(IsMovingHash) && !Player.Instance._playerAnimator._animator.GetBool(RunHash));
 
-        if (Player.Instance.playerInteract._currentFocus != null && Player.Instance.playerInteract._currentFocus.GetComponent<ItemController>() != null)
-            currentHints.Add(pickupHint);
+        consumeHint.SetActive(!IsBookOpen && InventoryController.Instance.GetItemAtCurrent() is ConsumableItem && (HasTimePassed || !Player.Instance.playerData.hasConsumedItem));
+        attackHint.SetActive(!IsBookOpen && Player.Instance.playerData.attackUnlocked && (HasTimePassed || !Player.Instance.playerData.hasUsedAttack));
+        jumpHint.SetActive(!IsBookOpen && Player.Instance.playerData.wingLevel == 1 && (HasTimePassed || !Player.Instance.playerData.hasUsedJump));
+        flyHint.SetActive(!IsBookOpen && Player.Instance.playerData.wingLevel == 2 && (HasTimePassed || !Player.Instance.playerData.hasUsedFly));
+        recipeHint.SetActive(!IsBookOpen && RecipeBookController.Instance.CollectedRecipes.Count > 0 && (HasTimePassed || !Player.Instance.playerData.hasOpenedRecipeBook));
 
-        if (Player.Instance.playerInteract._currentFocus != null && Player.Instance.playerInteract._currentFocus.GetComponent<NpcLocation>() != null)
-            currentHints.Add(talkHint);
-
-        if (!Player.Instance.playerData.hasUsedAttack && Player.Instance.playerData.attackUnlocked)
-            currentHints.Add(attackHint);
-
-        if (Player.Instance._playerAnimator._animator.GetBool("isMoving") && !Player.Instance._playerAnimator._animator.GetBool("run"))
-            currentHints.Add(dashHint);
-
-        if (!Player.Instance.playerData.hasUsedJump && Player.Instance.playerData.wingLevel == 1)
-            currentHints.Add(jumpHint);
-
-        if (!Player.Instance.playerData.hasUsedFly && Player.Instance.playerData.wingLevel == 2)
-            currentHints.Add(flyHint);
-
-        if (!Player.Instance.playerData.hasOpenedRecipeBook && RecipeBookController.Instance.CollectedRecipes.Count > 0)
-            currentHints.Add(recipeHint);
+        nextHint.SetActive(IsBookOpen);
+        previousHint.SetActive(IsBookOpen);
     }
 
-    #endregion
+    private bool HasTimePassed { get => idleTime > activationTime; }
+    private bool IsBookOpen { get => RecipeBookController.Instance.IsVisualized; }
 }
