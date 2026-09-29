@@ -35,11 +35,8 @@ namespace TDK.ItemSystem.Inventory
             CollectedRecipes.Add(recipeItem);
 
             // first time indicator stuff
+            currentPageIndex = -1;
             SetVisualization(true);
-            int pageFlips = CollectedRecipes.Count - currentPageIndex;
-            if (pageFlips > 0)
-                for (int i = 1; i <= pageFlips; i++)
-                    NextPage();
 
             return true;
         }
@@ -127,42 +124,6 @@ namespace TDK.ItemSystem.Inventory
         [SerializeField] private Image _rightPage;
         // [SerializeField] private int xStackOffset = 1;
         public bool IsVisualized { get; private set; } = false;
-
-        // private void BuildStack()
-        // {
-        //     for (int i = 0; i < CollectedRecipes.Count; i++)
-        //     {
-        //         GameObject obj = Instantiate(pagePrefab, transform, false);
-
-        //         //set the image sprite (its in the children because of shitty ui reasons)
-        //         var image = obj.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>();
-        //         image.sprite = CollectedRecipes[i].GetRecipeVisualizationSprite();
-
-        //         //position page UI (stacking offset)
-        //         RectTransform imgRect = obj.transform.GetChild(0).GetComponent<RectTransform>();
-        //         imgRect.anchoredPosition = new Vector2(xStackOffset * i, 0);
-
-        //         pageObjects.Add(obj);
-        //     }
-
-        //     //Now set the draw order, because this is *of course* managed by hierarchy order
-        //     //yes we must reverse it
-        //     for (int i = 0; i < pageObjects.Count; i++)
-        //     {
-        //         pageObjects[i].transform.SetSiblingIndex(pageObjects.Count - 1 - i);
-        //     }
-        // }
-
-        // private void DestroyStack()
-        // {
-        //     currentPageIndex = 0;
-        //     foreach (var page in pageObjects)
-        //     {
-        //         Destroy(page.gameObject);
-        //     }
-        //     pageObjects.Clear();
-        // }
-
 
         #endregion
 
