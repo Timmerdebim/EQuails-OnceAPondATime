@@ -83,6 +83,7 @@ namespace TDK.ItemSystem.Inventory
 
         public void SelectSlot(int index)
         {
+            index = (index % Slots.Count + Slots.Count) % Slots.Count;
             if (IsSlotValid(index))
             {
                 if (IsSlotValid(currentSlotIndex))
