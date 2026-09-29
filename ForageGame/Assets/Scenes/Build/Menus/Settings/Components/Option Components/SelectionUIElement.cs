@@ -1,9 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class SelectionUIElement : MonoBehaviour
 {
+    [SerializeField] private bool _canLoop = true;
     [SerializeField] private string[] _options;
     [SerializeField] private TMP_Text _textBox;
     public UnityEvent OnChange;
@@ -13,9 +15,13 @@ public class SelectionUIElement : MonoBehaviour
 
     public void SetCurrentOption(int option)
     {
-        if (_options.Length > 0) // saftey
-            _currentOption = (option % _options.Length + _options.Length) % _options.Length;
-        else Debug.LogWarning("Options list length is 0: this means you have not assigned any options!");
+        if (_options.Length < 1)
+        {
+            Debug.LogWarning("Options list length is 0: this means you have not assigned any options!");
+            return;
+        }
+        if (_canLoop) _currentOption = (option % _options.Length + _options.Length) % _options.Length;
+        else _currentOption = Math.Clamp(0, _options.Length - 1, option);
         RefreshVisuals();
         OnChange.Invoke();
     }
