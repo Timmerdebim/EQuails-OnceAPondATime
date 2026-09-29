@@ -5,7 +5,6 @@ using TDK.ItemSystem;
 using TDK.PlayerSystem;
 using NPC;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class InGameHints : MonoBehaviour
 {
     private static readonly int RunHash = Animator.StringToHash("run");
@@ -15,10 +14,8 @@ public class InGameHints : MonoBehaviour
 
     void Update()
     {
-        if (Input.anyKey)
-            idleTime = 0;
-        else if (idleTime < activationTime)
-            idleTime += Time.deltaTime;
+        if (Input.anyKey) idleTime = 0;
+        else idleTime += Time.deltaTime;
 
         RefreshCurrentHints();
     }

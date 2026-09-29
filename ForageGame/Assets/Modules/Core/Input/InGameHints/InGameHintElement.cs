@@ -11,7 +11,11 @@ public class InGameHintElement : MonoBehaviour
     private Tween tween;
     private bool _isShown = false;
 
-    void Start() => Hide(true);
+    void Start()
+    {
+        _canvasGroup.alpha = 0;
+        gameObject.SetActive(false);
+    }
 
     public void SetActive(bool show, bool instant = false)
     {
