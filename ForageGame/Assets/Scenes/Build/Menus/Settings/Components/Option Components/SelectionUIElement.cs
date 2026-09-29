@@ -21,7 +21,7 @@ public class SelectionUIElement : MonoBehaviour
             return;
         }
         if (_canLoop) _currentOption = (option % _options.Length + _options.Length) % _options.Length;
-        else _currentOption = Math.Clamp(0, _options.Length - 1, option);
+        else _currentOption = Math.Clamp(option, 0, _options.Length - 1);
         RefreshVisuals();
         OnChange.Invoke();
     }

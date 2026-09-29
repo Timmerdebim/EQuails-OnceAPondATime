@@ -56,7 +56,7 @@ namespace Project.Menus.Graphics
             List<string> resolutionOptions = new();
             for (int i = 0; i < Screen.resolutions.Length; i++)
             {
-                string resolutionOption = $"{Screen.resolutions[i].width}x{Screen.resolutions[i].height} : {Screen.resolutions[i].refreshRateRatio}";
+                string resolutionOption = $"{Screen.resolutions[i].width}x{Screen.resolutions[i].height} : {(int)Screen.resolutions[i].refreshRateRatio.value}hz";
                 resolutionOptions.Add(resolutionOption);
             }
             return resolutionOptions.ToArray();

@@ -22,16 +22,8 @@ namespace Project.Menus.Graphics
 
         public override void OnEnteringMenu()
         {
-            // Resolution
-            List<string> resolutionOptions = new();
-            for (int i = 0; i < Screen.resolutions.Length; i++)
-            {
-                string resolutionOption = $"{Screen.resolutions[i].width}x{Screen.resolutions[i].height}";
-                resolutionOptions.Add(resolutionOption);
-            }
-            _resolution.SetOptions(resolutionOptions.ToArray());
-
             _fullscreen.SetOptions(GraphicsSettingsManager.Instance.FullScreenOptions);
+            _resolution.SetOptions(GraphicsSettingsManager.Instance.ResolutionOptions);
             _textureQuality.SetOptions(GraphicsSettingsManager.Instance.TextureQualityOptions);
             _lightingQuality.SetOptions(GraphicsSettingsManager.Instance.LightingQualityOptions);
             _terrainQuality.SetOptions(GraphicsSettingsManager.Instance.TerrainQualityOptions);
