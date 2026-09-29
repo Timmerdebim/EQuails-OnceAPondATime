@@ -137,7 +137,7 @@ namespace Project.Menus.Graphics
         public int VSync
         {
             // 0 = off, 1 = on.
-            get => PlayerPrefs.GetInt("VSync", 0);
+            get => PlayerPrefs.GetInt("VSync", 1);
             set
             {
                 QualitySettings.vSyncCount = value;
