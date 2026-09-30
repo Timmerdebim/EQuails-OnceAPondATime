@@ -48,7 +48,7 @@ namespace TDK.PlayerSystem
 
         public void PlayFootstep(SurfaceType surfaceType) =>  PlayOneShotWithParameter(footstepEvent, "SurfaceType", (float)surfaceType);
 
-        
+        public void PlayCustomEvent(FMODUnity.EventReference eventReference) => FMODUnity.RuntimeManager.PlayOneShot(eventReference, transform.position);
 
 
         public void PlaySwimStroke() => FMODUnity.RuntimeManager.PlayOneShot(swimEvent, transform.position);
