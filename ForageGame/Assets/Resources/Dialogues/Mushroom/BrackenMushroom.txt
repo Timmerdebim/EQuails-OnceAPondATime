@@ -49,43 +49,70 @@ Actions: start_animation_bracken_busy
         Emotion: Neutral
         ...
 
-        Stage: 10
-        Emotion: HappyTalking
-        Duckie, I'll get to you in a sec, I promise.
-
-        Stage: 11
-        Actions: face_right
-        Emotion: NeutralTalking
-        Just... let me finish this first. I need-
-
-        Stage: 12
-        Actions: face_right, give_flag_bracken_introduced
-        Argh, where did I put those Singing Vine Thorns again?
-
 --- Stage
 Flags: 
+
+    Location: Lab 
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: SittingNeutralTalking
+        Look Duckie, I have something very important to do first.
+
+        Stage: 1
+        See that giant tree on that island north-east of here?
+
+        Stage: 2
+        It's not doing great. We think it's very sick.
+
+        Stage: 3
+        Actions: face_right
+        Emotion: NeutralTalking
+        ...And it's up to me to find a solution.
+
+        Stage: 4
+        Actions: face_right
+        Emotion: Neutral
+        ...
+
+        Stage: 5
+        Emotion: NeutralTalking
+        ...You can still swim just fine, right?
+
+        Stage: 6
+        Emotion: NeutralTalking
+        Then can you please help me out with my work?
+
+        Stage: 6
+        I just need you to make this potion for me.
+
+        Stage: 7
+        The ingredients can be found all across these islands.
+
+        Stage: 8
+        Actions: give_recipe_greenthumb_potion_on_close
+        Once that's done, I promise I'll help you with your wing.
+
+
+
+--- Stage
+Flags: ObtainedGreenthumbPotionRecipe
 
     Location: Lab 
     BaseEmotion: Neutral
 
         Stage: 0
-        Actions: face_right
-        Emotion: NeutralTalking
-        ...Where did I put those Singing Vine Thorns?
+        Emotion: HappyTalking
+        ...Hmm? Do you need help on finding something?
 
         Stage: 1
-        Actions: face_right
-        I'm sure I had some spare ones somewhere.
+        You'll find everything for the potion if you just explore these 5 islands.
 
         Stage: 2
-        Actions: face_right
-        Emotion: Neutral
-        ...
+        Emotion: NeutralTalking
+        You can manage that, right?
 
-        Stage: 3
-        Actions: face_right
-        Emotion: Sad
-        I should really organise this place when I'm done...
 
 
 
