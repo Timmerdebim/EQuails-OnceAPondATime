@@ -197,6 +197,7 @@ public class PlayerEffects : MonoBehaviour
     {
         attackParticles.transform.rotation = Quaternion.LookRotation(pc.ViewDirection, Vector3.up);
         attackParticles.Play();
+        PlayerSounds.Instance.PlayWingSlap();
     }
 
     private void JumpEffect()

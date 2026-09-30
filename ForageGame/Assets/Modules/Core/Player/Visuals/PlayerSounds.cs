@@ -22,6 +22,9 @@ namespace TDK.PlayerSystem
         [SerializeField] private FMODUnity.EventReference takeOffEvent;
         [SerializeField] private FMODUnity.EventReference wingFlapEvent;
 
+        [Header("Combat")]
+        [SerializeField] private FMODUnity.EventReference wingSlapEvent;
+
         public static PlayerSounds Instance { get; private set; } //yes, this sucks, but I HAVE to do it because FMOD SUCKS
 
         private void Awake() 
@@ -48,9 +51,6 @@ namespace TDK.PlayerSystem
 
         public void PlayFootstep(SurfaceType surfaceType) =>  PlayOneShotWithParameter(footstepEvent, "SurfaceType", (float)surfaceType);
 
-        public void PlayCustomEvent(FMODUnity.EventReference eventReference) => FMODUnity.RuntimeManager.PlayOneShot(eventReference, transform.position);
-
-
         public void PlaySwimStroke() => FMODUnity.RuntimeManager.PlayOneShot(swimEvent, transform.position);
 
         public void PlayWaterSplash() => FMODUnity.RuntimeManager.PlayOneShot(waterSplashEvent, transform.position);
@@ -58,8 +58,10 @@ namespace TDK.PlayerSystem
         public void PlayWaterEnter() => FMODUnity.RuntimeManager.PlayOneShot(waterEnterEvent, transform.position);
         public void PlayWaterLeave() => FMODUnity.RuntimeManager.PlayOneShot(waterLeaveEvent, transform.position);
 
-        //this one is called by state enter of jump and flutter rather than via animation event and PlayerEffects
+        //this specific one is called by state enter of jump and flutter rather than via animation event and PlayerEffects
         public void PlayTakeOff() => FMODUnity.RuntimeManager.PlayOneShot(takeOffEvent, transform.position);
         public void PlayWingFlap() => FMODUnity.RuntimeManager.PlayOneShot(wingFlapEvent, transform.position);
+
+        public void PlayWingSlap() => FMODUnity.RuntimeManager.PlayOneShot(wingSlapEvent, transform.position);
     }
 }
