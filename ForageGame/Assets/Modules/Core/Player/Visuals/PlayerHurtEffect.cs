@@ -84,8 +84,7 @@ public class PlayerHurtEffect : MonoBehaviour
         en.onMaxEnergyChanged.RemoveListener(SetMaxHealthNormalized);
     }
 
-    // Call this from your health/energy script whenever health changes.
-    // healthNormalized: 0 = dead/critical, 1 = full health
+    // Called from onMaxEnergyChanged (listener)
     public void SetMaxHealthNormalized(float healthNormalized)
     {
         Debug.Log($"[PlayerHurtEffect]: new normalized max health value: {healthNormalized}");

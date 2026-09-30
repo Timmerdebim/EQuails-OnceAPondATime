@@ -22,7 +22,7 @@ namespace TDK.PlayerSystem
         public UnityEvent onJump;
         public UnityEvent onWingFlap; //yes, something DIFFERENT from onJump, this plays on every wing flap animation
         public UnityEvent onSprint;
-        public UnityEvent onAttack;
+        public UnityEvent onWingSlap;
         public UnityEvent<Vector3> onMove;
         public UnityEvent onLand;
 
@@ -113,6 +113,11 @@ namespace TDK.PlayerSystem
             onWingFlap?.Invoke();
         }
 
+        public void OnWingSlap()
+        {
+            onWingSlap?.Invoke(); //yes, AnimationEvents do not support booleans, makes sense right
+        }
+
         public void TeleportTo(Vector3 position, bool maintainMomentum = false)
         {
             // Vector3 v = _rigidbody.linearVelocity;
@@ -174,7 +179,6 @@ namespace TDK.PlayerSystem
             && Player.Instance.energy.energy > Player.Instance.attackEnergy)
             {
                 _animator.IsAttacking(true);
-                onAttack?.Invoke();
             }
             else if (context.canceled) _animator.IsAttacking(false);
         }

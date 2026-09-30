@@ -34963,7 +34963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3916a6cfd85eb84a904d272bd7947d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  en: {fileID: 0}
+  en: {fileID: 5297287321932333479}
   hurtVolume: {fileID: 8259728786386800478}
   healthToSeverity:
     serializedVersion: 2
@@ -35002,7 +35002,7 @@ MonoBehaviour:
   dofFocusDistanceVariance: 2
   chromAberrationVariance: 0.2
   filmGrainVariance: 0.1
-  feathers: {fileID: 0}
+  feathers: {fileID: 7426453871906454642}
   featherRateOverDistanceVariance: 0.02
   _sinePhase: 0
 --- !u!114 &8259728786386800478
@@ -40383,7 +40383,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 20
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -40501,7 +40501,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -50628,7 +50628,7 @@ MonoBehaviour:
   onSprint:
     m_PersistentCalls:
       m_Calls: []
-  onAttack:
+  onWingSlap:
     m_PersistentCalls:
       m_Calls: []
   onMove:
@@ -50799,11 +50799,11 @@ MonoBehaviour:
     Path: event:/Sfx/Player/WingFlap
   wingSlapEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1463089820
+      Data2: 1322623850
+      Data3: 1057608343
+      Data4: -345273729
+    Path: event:/Sfx/Player/WingSlap
 --- !u!54 &7154177637054964034
 Rigidbody:
   m_ObjectHideFlags: 0

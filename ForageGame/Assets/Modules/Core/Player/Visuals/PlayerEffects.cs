@@ -63,7 +63,7 @@ public class PlayerEffects : MonoBehaviour
 
     private void OnEnable()
     {
-        pc.onAttack.AddListener(AttackEffect);
+        pc.onWingSlap.AddListener(AttackEffect);
         pc.onJump.AddListener(JumpEffect);
         pc.onLand.AddListener(LandEffect);
         en.onHit.AddListener(HitEffect);
@@ -78,7 +78,7 @@ public class PlayerEffects : MonoBehaviour
 
     private void OnDisable()
     {
-        pc.onAttack.RemoveListener(AttackEffect);
+        pc.onWingSlap.RemoveListener(AttackEffect);
         pc.onJump.RemoveListener(JumpEffect);
         pc.onLand.RemoveListener(LandEffect);
         en.onHit.RemoveListener(HitEffect);
