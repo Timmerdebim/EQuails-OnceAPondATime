@@ -107,118 +107,14 @@ Flags: ObtainedGreenthumbPotionRecipe
         ...Hmm? Do you need help on finding something?
 
         Stage: 1
-        You'll find everything for the potion if you just explore these 5 islands.
-
-        Stage: 2
-        Emotion: NeutralTalking
-        You can manage that, right?
-
-
-
-
-
-
-
-
---- Stage
-Flags: LyriaFreedFromCage
-Required-Items:
-<RequireTimePassing>
-
-    Location: Lab 
-    <main>
-    BaseEmotion: Neutral
-
-        Stage: 0
-        Actions: face_right
-        Emotion: NeutralTalking
-        ... And that should finally-
-
-
-        Stage: 1
-        Actions: face_right
-        Argh no! why does it keep doing that?
-
-
-        Stage: 2
-        Oh- uh, you're back already?
-
-        Stage: 3
-        I'm still... not quite there... apparently.
-
-        Stage: 4
-        Emotion: Neutral
-        ...
-
-        Stage: 5
-        Emotion: HappyTalking
-        Actually-
-
-        Stage: 6
-        You could help me with something.
-
-        Stage: 7
-        I've been - I'm trying to cure that big tree over there.
-
-        Stage: 8
-        Emotion: NeutralTalking
-        ...for quite a while now.
-
-        Stage: 9
-        But I think...
-
-        Stage: 10
-        Emotion: HappyTalking
-        That I should have it this time.
-
-        Stage: 11
-        Could you try make me this part of it?
-
-        Stage: 12
-        Actions: give_recipe_greenthumb_potion_on_close
-        ...It would help me out a ton.
-
-
---- Stage
-Flags: LyriaFreedFromCage
-Required-Items: StarLilyPod
-
-    Location: Lab 
-    BaseEmotion: Neutral
-
-        Stage: 0
-        Emotion: NeutralTalking
-        Wait, you already have a star lily pod?
-
-        Stage: 1
-        That's what I needed those-
-
-        Stage: 2
-        Hey!
-
-        Stage: 3
-        You've been looking through my notes, haven't you?
-
---- Stage
-Flags: LyriaFreedFromCage
-Required-Items: StarLilyPod
-
-    Location: Lab 
-    BaseEmotion: Neutral
-
-        Stage: 0
-        Emotion: NeutralTalking
-        Everything you need should be around these islands somewhere.
-
-        Stage: 1
-        You should have no trouble swimming over right?
+        Everything you need for the potion is found on these 5 islands.
 
         Stage: 2
         Emotion: NeutralTalking
         It's not complicated, just-
 
         Stage: 3
-        Emotion: NeutralTalking
+        Actions: face_right
         Take a look around, you'll figure it out.
 
 
@@ -231,9 +127,11 @@ Required-Items: StarLilyPod
 
 
 
+
 --- Stage
-Flags:
+Flags: ObtainedGreenthumbPotionRecipe
 Required-Items: GreenthumbPotion
+Actions: start_animation_bracken_busy
 
     Location: Lab
     <main>
@@ -270,6 +168,10 @@ Required-Items: GreenthumbPotion
         Actions: item_take_greenthumb_potion
         The potion I mean?
 
+        Stage: repeat
+        Actions: item_take_greenthumb_potion
+        Do you have the potion ready?
+
 
 --- Stage
 Flags: GreenthumbPotionGiven
@@ -286,61 +188,108 @@ Required-Items:
         Stage: 1
         Actions: face_right
         Emotion: NeutralTalking
-        But I do need to wait on this to finish...
+        I'll put this over here for now, but first...
 
         Stage: 2
         Emotion: HappyTalking
-        So - what did you need me for again?
+        I'm a rodent of my word!
 
---- Stage
-Flags: GreenthumbPotionGiven
-Required-Items:
+        Stage: 3
+        Emotion: SittingHappyTalking
+        Can you please show me that wing?
 
-    Location: Lab
-    <main>
-    BaseEmotion: Happy
+        Stage: 4
+        Emotion: SittingNeutralTalking
+        Don't worry, I'll be gentle.
 
-        Stage: 0
-        Emotion: NeutralTalking
-        Oh, your wing - of course!
-
-        Stage: 1
-        How could I've missed that?
-
-        Stage: 2
+        Stage: 5
         Emotion: Sitting
         ...
 
-        Stage: 3
+        Stage: 6
+        Emotion: SittingNeutralTalking
         That looks... not great...
 
-        Stage: 4
+        Stage: 7
         Emotion: SittingHappyTalking
         But nothing we can't fix!
 
-        Stage: 5
+        Stage: 8
+        Actions: face_right
         Emotion: SittingNeutralTalking
         We'll need to make you a brace...
 
-        Stage: 6
+    
+
+
+
+
+
+--- Stage
+Flags: GreenthumbPotionGiven
+Absent-Flags: LyriaFreedFromCage
+Actions: start_animation_bracken_busy
+
+    Location: Lab
+    BaseEmotion: Neutral
+
+        Stage: 0
+        Emotion: NeutralTalking
+        Oh uhm, Duckie...
+
+        Stage: 1
+        Can you give me some time to work out the design please?
+
+        Stage: 2
+        Can't have you brace snapping on you, right?"
+
+        Stage: 3
+        Come back a bit later.
+
+        Stage: 4
+        Emotion: SittingHappyTalking
+        ...Maybe explore some of the other islands a bit more in the meantime?
+
+
+
+--- Stage
+Flags: GreenthumbPotionGiven, LyriaFreedFromCage
+Actions: start_animation_bracken_busy
+
+    Location: Lab
+    <main>
+    BaseEmotion: Neutral
+
+        Stage: 0
         Actions: face_right
-        Emotion: NeutralTalking
-        Let's see let's see...
-
-        Stage: 7
-        Here - This should do for now.
-
-        Stage: 8
-        Emotion: NeutralTalking
-        Sorry, I can't make it for you...
-
-        Stage: 9
-        Really need to get this potion finished.
-
-        Stage: 10
         Emotion: HappyTalking
+        There! It's done!
+
+        Stage: 1
+        Here - This should help a lot.
+
+        Stage: 2
+        Emotion: NeutralTalking
+        Oh - uh, sorry, I can't make it for you...
+
+        Stage: 3
+        Really need to get this potion finished, you know?
+
+        Stage: 4
+        Emotion: HappyTalking
+        But no worries! I made it a simple recipe.
+        
+        Stage: 5
         Actions: give_recipe_temporary_wingfix_on_close
-        But thank you for the help! I hope it gets better soon!
+        Now good luck Duckie! I Hope you recover quickly!
+
+        Stage: repeat
+        Emotion: HappyTalking
+        Good luck crafting the brace! I hope it helps you a lot!
+
+
+
+
 
 --- Stage
 Flags: ObtainedTemporaryWingfixRecipe
