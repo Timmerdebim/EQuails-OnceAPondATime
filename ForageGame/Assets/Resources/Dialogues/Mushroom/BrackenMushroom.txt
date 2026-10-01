@@ -312,86 +312,61 @@ Flags: ObtainedTemporaryWingfixRecipe
 Required-Items: TemporaryWingfix
 Actions: give_flag_bracken_mess_stage_1
 
-    Location: Lab
+    Location: LabShelves
     <main>
-    BaseEmotion: Neutral
+    BaseEmotion: Sad
 
         Stage: 0
         Actions: face_right
+        ...Hm?
+
+        Stage: 1
+        Emotion: NeutralTalking
+        Oh, you're back!
+
+        Stage: 2
+        Emotion: HappyTalking
+        And you've got your brace!
+
+        Stage: 3
+        Does it feel better now?
+
+        Stage: 4
         Emotion: Neutral
         ...
 
-        Stage: 1
-        Emotion: NeutralTalking
-        Huh? Oh, It's you.
-
-        Stage: 2
-        I...
-
-        Stage: 3
-        Emotion: Sad
-        I don't think it worked.
-
-        Stage: 4
-        It made no difference on the tree...
-
         Stage: 5
-        ...Again...
-
---- Stage
-Flags: ObtainedTemporaryWingfixRecipe
-Required-Items: TemporaryWingfix
-
-    Location: Lab
-    <main>
-    BaseEmotion: Sad
-
-        Stage: 0
-        Emotion: NeutralTalking
-        Oh wait - your wing!
-
-        Stage: 1
-        Emotion: HappyTalking
-        You got your brace!
-
-        Stage: 2
-        Does it feel better now?
-
-        Stage: 3
         Emotion: NeutralTalking
         Oh right, you don't... speak.
 
-        Stage: 4
+        Stage: 6
+        Emotion: Neutral
         ...
 
-        Stage: 4
+        Stage: 7
         Emotion: Sad
-        You'd lemme if it hurts though, right?
+        The potion... didn't work.
 
---- Stage
-Flags: ObtainedTemporaryWingfixRecipe
-Required-Items: TemporaryWingfix
+        Stage: 8
+        It made no difference... again...
 
-    Location: Lab
-    <main>
-    BaseEmotion: Sad
+        Stage: 9
+        Actions: face_right
+        "I... don't have any more ideas."
 
-        Stage: 0
+        Stage: 10
+        This should've been it...
+
+        Stage: 11
         ...
 
-        Stage: 1
-        Emotion: Sad
-        I... really don't know what to do now.
+        Stage: 12
+        I... really don't know what to do now, I-
 
-        Stage: 2
-        I just can't figure it out, I-"
-
-        Stage: 3
-        Actions: face_away_from_player, start_cutscene_bracken_guitar_on_close
-        I need to clear my head...
-
-
-
+        Stage: 13
+        Emotion: NeutralTalking
+        Actions: start_cutscene_bracken_guitar_on_close
+        ...Need to clear my head...
 
 
 
