@@ -406,18 +406,17 @@ Required-Items: TemporaryWingfix
 
 
 --- Stage
-Flags: BrackenPlaysGuitar
+Flags: BrackenPlaysGuitar, LyriaGrieving
 Required-Items: TemporaryWingfix
 <RequireTimePassing>
 
-    Location: Lab
+    Location: Machine
     <main>
     BaseEmotion: Neutral
 
         Stage: 0
-        Actions: face_right
         Emotion: HappyTalking
-        Ah - good timing.
+        Ah - good timing Duckie.
 
         Stage: 1
         Emotion: NeutralTalking
@@ -441,41 +440,41 @@ Required-Items: TemporaryWingfix
         Then I'll need to finish it here - with this machine.
 
         Stage: 7
-        Actions: face_right
+        Actions: face_left
         ...It's gonna be tough getting it working on THAT tree though...
 
         Stage: 8
-        Actions: face_right
+        Actions: face_left
         Emotion: Sad
         ...What would the steps even be?
 
         Stage: 7
         Emotion: NeutralTalking
-        Actions: face_right
+        Actions: face_left
         ...I'll figure it out...
 
         Stage: 7
-        Actions: face_right, give_recipe_blooming_soil_on_close
+        Actions: face_left, give_recipe_blooming_soil_on_close
         ...I have to.
 
 --- Stage
 Flags: ObtainedBloomingSoilRecipe
 Required-Items:
 
-    Location: Lab
+    Location: Machine
     BaseEmotion: Neutral
 
         Stage: 0
-        Actions: face_right
+        Actions: face_left
         Emotion: NeutralTalking
         ...I'll make it up to them.
 
         Stage: 1
-        Actions: face_right
+        Actions: face_left
         ...I just need a little more time.
 
         Stage: 2
-        Actions: face_right
+        Actions: face_left
         ...They’ll understand... right?
 
 
@@ -497,7 +496,7 @@ Required-Items:
 Flags: ObtainedBloomingSoilRecipe
 Required-Items: BloomingSoil
 
-    Location: Lab
+    Location: Machine
     <main>
     BaseEmotion: Happy
 
@@ -507,13 +506,13 @@ Required-Items: BloomingSoil
 
         Stage: 1
         Actions: item_take_blooming_soil
-        You have the blooming soil?
+        You got the blooming soil?
 
 --- Stage
 Flags: BloomingSoilGiven
 Required-Items:
 
-    Location: Lab
+    Location: Machine
     <main>
     BaseEmotion: Happy
 
@@ -525,21 +524,21 @@ Required-Items:
         ...Alright then.
 
         Stage: 2
-        Actions: face_right
+        Actions: face_left
         Emotion: NeutralTalking
         Don't mess this up.
 
         Stage: 3
-        Actions: face_right
+        Actions: face_left
         Emotion: Neutral
         ...
 
         Stage: 4
-        Actions: face_right
+        Actions: face_left
         ...
 
         Stage: 5
-        Actions: face_right
+        Actions: face_left
         Emotion: NeutralTalking
         ...And... that should do it.
 
@@ -556,14 +555,26 @@ Required-Items:
         Emotion: HappyTalking
         Let's go - no time to waste!
 
+
+
+
+
+
 --- Stage
 Flags: BloomingSoilGiven
 Required-Items:
 
+
+
+
+
+
+
+
 --- Stage
 Flags: BrackenExaminingBloomingSoil
 Required-Items:
-    Location: Lab
+    Location: Machine
     <main>
     BaseEmotion: Neutral
 
@@ -628,7 +639,7 @@ Required-Items:
 --- Stage
 Flags: BrackenExaminingBloomingSoil
 Required-Items:
-    Location: Lab
+    Location: Machine
     <main>
     BaseEmotion: Sad
 
