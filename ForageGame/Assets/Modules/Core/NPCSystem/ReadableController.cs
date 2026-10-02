@@ -575,6 +575,7 @@ namespace NPC
 
         //Variant of TryTakeItem that does not keep the dialogue box open and only sets the success flag on dialogue closed
         //Used for readables that take an item but then are immediately disabled afterward
+        //IMPORTANT: this does not actually take the item on close, but just sets the flag on close. Use regular InvokeActionOnClose for the former
         public void TryTakeItemOnClose(ItemTakeActionsArgs args)
         {
             Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to take item {args.item} from player inventory");
@@ -583,6 +584,21 @@ namespace NPC
                 FlagToSetAfterDialogue = args.OnSuccess;
                 //StoryFlagManager.Instance.AddFlag(args.OnSuccess);
                 //MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item taking instead of closing and re-opening
+            }
+        }
+
+        public void TryUseConsumableItem(ItemTakeActionsArgs args)
+        {
+            if(args.item.GetType() != typeof(ConsumableItem)) 
+            {
+                Debug.LogError($"[ReadableController: {transform.parent.gameObject.name}] Can't use item {args.item} because it is not a Consumable!");
+                return;
+            }
+            Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to use consumable item {args.item} from player inventory");
+            if (args.item.TryUse())
+            {
+                StoryFlagManager.Instance.AddFlag(args.OnSuccess);
+                MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item taking instead of closing and re-opening
             }
         }
 

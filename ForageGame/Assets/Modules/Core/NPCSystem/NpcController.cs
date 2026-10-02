@@ -408,8 +408,23 @@ namespace NPC
 
         public void TryTakeItem(ItemTakeActionsArgs args)
         {
-            Debug.Log($"[NpcLocation: {gameObject.name}] Trying to take item {args.item} from player inventory");
+            Debug.Log($"[NpcController: {gameObject.name}] Trying to take item {args.item} from player inventory");
             if (InventoryController.Instance.TryRemoveItemAtAny(args.item))
+            {
+                StoryFlagManager.Instance.AddFlag(args.OnSuccess);
+                _lastActiveLocation.MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item taking instead of closing and re-opening
+            }
+        }
+
+        public void TryUseConsumableItem(ItemTakeActionsArgs args)
+        {
+            if(args.item.GetType() != typeof(ConsumableItem)) 
+            {
+                Debug.LogError($"[NpcController: {gameObject.name}] Can't use item {args.item} because it is not a Consumable!");
+                return;
+            }
+            Debug.Log($"[NpcController: {gameObject.name}] Trying to use consumable item {args.item} from player inventory");
+            if (args.item.TryUse())
             {
                 StoryFlagManager.Instance.AddFlag(args.OnSuccess);
                 _lastActiveLocation.MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item taking instead of closing and re-opening
