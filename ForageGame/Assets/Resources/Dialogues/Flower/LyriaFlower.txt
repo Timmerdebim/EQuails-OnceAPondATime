@@ -417,14 +417,14 @@ Actions: face_left
 Flags: PrincessDrownedInspected
 <RequireTimePassing>
 Required-Items:
-Actions: give_flag_princess_in_grave, open_flower_graveyard_gate
+Actions: give_flag_princess_in_grave
 
     Location: FlowerGraveyard 
     <main>
     BaseEmotion: Sad
 
         Stage: 0
-        Actions: face_left
+        Actions: face_right
         ...?
 
         Stage: 1
@@ -457,12 +457,12 @@ Actions: give_flag_princess_in_grave, open_flower_graveyard_gate
         I thought...
 
         Stage: 9
-        Actions: face_left
+        Actions: face_right
         Princess...
 
         Stage: 10
         Emotion: Eek
-        Actions: face_left, lyria_fly_away_on_close
+        Actions: face_right, lyria_fly_away_on_close
         I'm sorry!
 
 
