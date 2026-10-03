@@ -41,6 +41,7 @@ namespace TDK.PlayerSystem
 
         [Header("Whoopsies")]
         [SerializeField] public StoryFlag dummyCraftedFlag;
+        [SerializeField] public StoryFlag lanternCraftedFlag;
 
         private void Awake()
         {
@@ -94,6 +95,7 @@ namespace TDK.PlayerSystem
                     break;
                 case PlayerUpgradeType.Lantern:
                     playerData.lanternUnlocked = true;
+                    StoryFlagManager.Instance.AddFlag(lanternCraftedFlag); //so the invisible wall at deep dark can disappear
                     //light is activated automatically, lantern just polls
                     break;
                 case PlayerUpgradeType.Pouch:
