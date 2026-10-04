@@ -5,7 +5,7 @@ Flags:
 --- Stage
 Flags: MosswickHome
 
-    Location: MosswickSpot 
+    Location: Campfire 
     <main>
     BaseEmotion: Happy
 
@@ -39,10 +39,12 @@ Flags: MosswickHome
         I guess that wasn't very true after all, haha.
 
         Stage: 8
-        Or maybe I just needed a good listener to open up
+        Or maybe I just needed a good listener to open up.
 
         Stage: 9
         Thanks, friend.
+
+
 
 
 
@@ -53,73 +55,75 @@ Flags: MosswickHome
 Flags: MosswickHome, GrimbleLyriaBowlOFoodSceneDone
 <RequireTimePassing>
 
-    Location: Boat
+    Location: TreeBase
     <main>
     BaseEmotion: Happy
 
         Stage: 0
         Emotion: HappyTalking
-        Oh, hello there friend.
+        Oh, you're awake!
 
         Stage: 1
-        I... was just about to go see Grimble.
+        Did you get some good rest, friend?
 
         Stage: 2
-        Emotion: Happy
-        ...
+        ...I wanted to tell you I'll be gone for a little bit.
 
         Stage: 3
         Emotion: SadTalking
-        I heard from Lyria what happened.
+        I heard from Lyria.
 
         Stage: 4
-        I'm going to apologise.
+        What happened with Grimble, I mean.
 
         Stage: 5
-        Emotion: ExtraSad
-        I started this...
+        I'm... going to apologise.
 
         Stage: 6
-        Actions: face_left
-        Emotion: Sad
-        <CloseAfter>
-        But now... I can try to fix it.
-
-
-
-
-
-
-
-
+        Emotion: ExtraSad
+        For starting this...
 
         Stage: 7
+        Actions: face_left
         Emotion: HappyTalking
-        Oh - you want to come along?
+        <CloseAfter>
+        But now... I can try to fix it!
+
+
+
+
+
+
+
+
 
         Stage: 8
-        That's nice, but not this time friend.
+        Emotion: SadTalking
+        Oh - you want to come along?
 
         Stage: 9
-        Actions: face_left
-        Emotion: Sad
-        I want this to be personal.
+        That's nice, but not this time friend.
 
         Stage: 10
-        Actions: face_left
-        And... sincere.
+        I want this to be personal.
 
         Stage: 11
+        Emotion: ExtraSad
+        And... sincere.
+
+        Stage: 12
         Actions: face_left
         ...
 
-        Stage: 12
+        Stage: 13
         Emotion: HappyTalking
         Well, I better get going.
 
-        Stage: 13
+        Stage: 14
         Actions: give_flag_grimble_rejected_mosswick
         I'll see you when I get back, friend.
+
+
 
 
 
@@ -133,6 +137,7 @@ Flags: GrimbleRejectedMosswick
 Flags: GrimbleMosswickSceneDone
 
     Location: MosswickSpot 
+    <main>
     BaseEmotion: Sad
 
         Stage: 0
@@ -154,6 +159,10 @@ Flags: GrimbleMosswickSceneDone
 
         Stage: 5
         ...Right?
+
+        Stage: 6
+        Actions: give_flag_finale_bracken_on_beach
+        Maybe Bracken can think of something...
 
         Stage: repeat
         Emotion: SadTalking
