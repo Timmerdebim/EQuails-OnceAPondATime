@@ -6,6 +6,7 @@ public class CornerHeadController : MonoBehaviour
 {
     private bool _state = false;
     private bool _black = true;
+    private bool _revealed = false; //if npc is not mentioned yet in story do not show indicator (i.e., start only Mosswick is revealed)
 
     [SerializeField] private Image _image;
     [SerializeField] private CanvasGroup _canvasGroup;
@@ -21,8 +22,21 @@ public class CornerHeadController : MonoBehaviour
     {
         if (_state == state) return;
         _state = state;
+        UpdateVisuals(instant);
+    }
+    public void MakeNotBlack() => _black = false;
+
+    public void RevealNpc()
+    {
+        _revealed = true;
+        UpdateVisuals();
+    }
+
+
+    private void UpdateVisuals(bool instant = false)
+    {
         _tween?.Kill();
-        if (_state)
+        if (_state && _revealed)
         {
             if (_black) _image.color = Color.black;
             else _image.color = Color.white;
@@ -51,5 +65,4 @@ public class CornerHeadController : MonoBehaviour
             }
         }
     }
-    public void MakeNotBlack() => _black = false;
 }

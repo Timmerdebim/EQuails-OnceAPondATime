@@ -62,5 +62,17 @@ public class CornerHeadManager : MonoBehaviour
             Debug.LogError($"[CornerHeadManager]: npc type {npc} has no cornerHeadController");
         }
     }
+
+    public void RevealNpc(DialogueSpeakerType npc)
+    {
+        if (cornerHeads.TryGetValue(npc, out var cornerHeadController))
+        {
+            cornerHeadController.RevealNpc();
+        }
+        else
+        {
+            Debug.LogError($"[CornerHeadManager]: npc type {npc} has no cornerHeadController");
+        }
+    }
 }
  

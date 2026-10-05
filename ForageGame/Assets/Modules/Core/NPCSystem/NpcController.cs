@@ -107,7 +107,10 @@ namespace NPC
             if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(); //do this only if current stage is done
         }
         public void OnDialogueFinished()
-        {
+        { 
+            bool stageComplete = _lastCompletedStageIndex == GetActiveStageIndex();
+            if(stageComplete) CornerHeadManager.Instance.SetState(character, false); //this has to always happen
+
             if (actionToTriggerAfterDialogue != null)
             {
                 Debug.Log($"[NpcController: {character}] invoking action {actionToTriggerAfterDialogue} after dialogue as planned");
@@ -120,10 +123,10 @@ namespace NPC
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);
                 FlagToSetAfterDialogue = null;
             }
-            else if (_lastCompletedStageIndex == GetActiveStageIndex()) 
+            else if (stageComplete) 
             {
                 //set corner head indicator (we're done with main dialogue), will do redundant calls if for a different character but will have no effect
-                CornerHeadManager.Instance.SetState(character, false);
+                //CornerHeadManager.Instance.SetState(character, false);
                 EvaluateActiveStage(); //do this only if current stage is done, guard should actually be completely redundant
             }
         }
@@ -399,6 +402,7 @@ namespace NPC
 
         //corner heads
         public void MakeCornerHeadNotBlack() => CornerHeadManager.Instance.MakeNotBlack(character);
+        public void RevealNpcHead(int npc) => CornerHeadManager.Instance.RevealNpc((DialogueSpeakerType)npc); //Ah yes, more jank. Thanks Unity!
 
         public void InvokeActionOnClose(string actionName)
         {
