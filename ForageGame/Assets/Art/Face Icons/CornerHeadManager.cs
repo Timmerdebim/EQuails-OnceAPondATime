@@ -13,6 +13,7 @@ public class CornerHeadManager : MonoBehaviour
 {
     public static CornerHeadManager Instance;
 
+    [System.Serializable]
     public struct cornerHeadEntry
     {
         public DialogueSpeakerType npc;
@@ -55,17 +56,6 @@ public class CornerHeadManager : MonoBehaviour
         if (cornerHeads.TryGetValue(npc, out var cornerHeadController))
         {
             cornerHeadController.MakeNotBlack();
-        }
-        else
-        {
-            Debug.LogError($"[CornerHeadManager]: npc type {npc} has no cornerHeadController");
-        }
-    }
-     public void DiscoverNpc(DialogueSpeakerType npc)
-    {
-        if (cornerHeads.TryGetValue(npc, out var cornerHeadController))
-        {
-            cornerHeadController.DiscoverNpc();
         }
         else
         {

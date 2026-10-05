@@ -1,6 +1,8 @@
 --- Stage
 Flags:
-Required-Items:
+
+--- Stage
+Flags: TutorialComplete
 Actions: start_animation_bracken_busy
 
     Location: Lab 
@@ -45,12 +47,12 @@ Actions: start_animation_bracken_busy
         Argh, but I must finish this thing right now!
 
         Stage: 9
-        Actions: face_right
+        Actions: face_right, make_corner_head_not_black
         Emotion: Neutral
         ...
 
 --- Stage
-Flags: 
+Flags: TutorialComplete
 
     Location: Lab 
     <main>

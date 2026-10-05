@@ -393,8 +393,7 @@ namespace NPC
         public void FaceRight() => _lastActiveLocation?.FaceRight();
 
         //corner heads
-        public void MakeNotBlack(DialogueSpeakerType npc) => CornerHeadManager.Instance.MakeNotBlack(npc);
-        public void DiscoverNpc(DialogueSpeakerType npc) => CornerHeadManager.Instance.DiscoverNpc(npc);
+        public void MakeCornerHeadNotBlack() => CornerHeadManager.Instance.MakeNotBlack(character);
 
         public void InvokeActionOnClose(string actionName)
         {

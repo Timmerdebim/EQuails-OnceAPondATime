@@ -1,6 +1,8 @@
 --- Stage
-Flags: 
-Required-Items:
+Flags:
+
+--- Stage
+Flags: TutorialComplete
 
     Location: CageSide
     BaseEmotion: Sad
@@ -39,7 +41,7 @@ Required-Items:
         So, would you mind maybe open the lock for us?
 
         Stage: 9
-        Actions: give_flag_lyria_requested_help
+        Actions: give_flag_lyria_requested_help, make_corner_head_not_black
         Pretty please?
 
         Stage: repeat
@@ -114,7 +116,7 @@ Required-Items:
 
         Stage: 1
         Emotion: SadTalking
-        Do you always just smash someones door in like that?
+        Do you always just smash someone's door in like that?
 
         Stage: 2
         Actions: face_right
@@ -142,6 +144,7 @@ Required-Items:
 
         Stage: 8
         Emotion: HappyTalking
+        Actions: make_corner_head_not_black
         It's a pleasure to meet you!
 
 
