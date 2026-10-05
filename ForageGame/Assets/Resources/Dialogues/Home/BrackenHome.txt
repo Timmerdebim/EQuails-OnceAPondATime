@@ -282,7 +282,7 @@ Required-Items:
         With this new brace, you should be able to practice flying again!
 
         Stage: 6
-        And soon, your wing will have healed completely!
+        It should give your wing enough support while it fully heals up.
 
         Stage: 7
         Oh - and it also has a built-in lantern holder!
@@ -295,7 +295,7 @@ Required-Items:
 
         Stage: 10
         Actions: give_recipe_sturdy_wingfix_on_close
-        W-well anyway, good luck with it! And may that wing heal up soon!
+        W-well anyway, good luck! And may that wing heal up soon!
 
 
 --- Stage
@@ -306,14 +306,18 @@ Required-Items:
     BaseEmotion: Happy
 
         Stage: 0
-        Emotion: HappyTalking
-        Hm? Oh, I gave the lantern recipe to Mosswick.
+        Emotion: NeutralTalking
+        Hm? Oh, I don't have the lantern recipe with me.
 
         Stage: 1
-        He likes the look of them when the rain gets heavy.
+        I... think I lent it to someone a while back?
 
         Stage: 2
-        He might have a smaller one you can just take.
+        It'll turn up eventually, I guess.
+
+        Stage: 3
+        Emotion: HappyTalking
+        Besides, if it's truly lost I can just reinvent it!
 
 
 
@@ -361,7 +365,10 @@ Required-Items:
         Does get dreary after hearing it for a while though.
 
         Stage: 2
-        What? You hear it too, right?
+        What? 
+        
+        Stage: 3
+        You hear it too, right?
 
         Stage: repeat
         Emotion: NeutralTalking

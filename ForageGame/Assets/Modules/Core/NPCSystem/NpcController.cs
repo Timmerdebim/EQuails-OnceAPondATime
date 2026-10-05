@@ -186,6 +186,12 @@ namespace NPC
                 //NOTE: I do not re-check for new active stage since an empty storystage is a deliberate choice, to have a break in the story.
                 //Thus, this will only be done when picking up a new flag or item.
             }
+            else
+            {
+                //only do if this stage is NOT empty and has main dialogue
+                //REMEMBER: there are multiple npc instances. So make sure we only set things when we are sure it's fine
+                CornerHeadManager.Instance.SetState(character, true);
+            }  
         }
 
         private void DisableOldLocations(StoryStage newStage)
@@ -317,6 +323,9 @@ namespace NPC
                     _lastCompletedStageIndex = GetActiveStageIndex();
                     location.SetStatusIndicatorText(false); //set indicator text to '...' (main dialogue is done)
                     //EvaluateActiveStage(); //TODO: only do after the box is closed
+
+                    //set corner head indicator (we're done with main dialogue)
+                    CornerHeadManager.Instance.SetState(character, false);
                 }
             }
             return res;
@@ -382,6 +391,10 @@ namespace NPC
         public void FaceLeft() => _lastActiveLocation?.FaceLeft();
 
         public void FaceRight() => _lastActiveLocation?.FaceRight();
+
+        //corner heads
+        public void MakeNotBlack(DialogueSpeakerType npc) => CornerHeadManager.Instance.MakeNotBlack(npc);
+        public void DiscoverNpc(DialogueSpeakerType npc) => CornerHeadManager.Instance.DiscoverNpc(npc);
 
         public void InvokeActionOnClose(string actionName)
         {

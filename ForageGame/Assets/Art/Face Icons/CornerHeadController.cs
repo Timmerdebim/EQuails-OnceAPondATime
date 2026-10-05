@@ -6,6 +6,8 @@ public class CornerHeadController : MonoBehaviour
 {
     private bool _state = false;
     private bool _black = true;
+    private bool _discovered = false; //has this NPC been seen/mentioned in the story so far. Prevents the popup from even showing
+
     [SerializeField] private Image _image;
     [SerializeField] private CanvasGroup _canvasGroup;
     private Tween _tween;
@@ -16,13 +18,12 @@ public class CornerHeadController : MonoBehaviour
         transform.SetAsFirstSibling();
     }
 
-    public void SetState(bool state, bool black, bool instant = false)
+    public void SetState(bool state, bool instant = false)
     {
-        _black = black;
         if (_state == state) return;
         _state = state;
         _tween?.Kill();
-        if (_state)
+        if (_state && _discovered)
         {
             if (_black) _image.color = Color.black;
             else _image.color = Color.white;
@@ -51,8 +52,6 @@ public class CornerHeadController : MonoBehaviour
             }
         }
     }
-
-    void MakeNotBlack() => _black = false;
-    void ShowFace() => SetState(true, _black);
-    void HideFace() => SetState(false, _black);
+    public void MakeNotBlack() => _black = false;
+    public void DiscoverNpc() => _discovered = true;
 }
