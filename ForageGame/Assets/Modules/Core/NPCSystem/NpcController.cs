@@ -120,7 +120,12 @@ namespace NPC
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);
                 FlagToSetAfterDialogue = null;
             }
-            else if (_lastCompletedStageIndex == GetActiveStageIndex()) EvaluateActiveStage(); //do this only if current stage is done, guard should actually be completely redundant
+            else if (_lastCompletedStageIndex == GetActiveStageIndex()) 
+            {
+                //set corner head indicator (we're done with main dialogue), will do redundant calls if for a different character but will have no effect
+                CornerHeadManager.Instance.SetState(character, false);
+                EvaluateActiveStage(); //do this only if current stage is done, guard should actually be completely redundant
+            }
         }
         private void EvaluateActiveStage(bool timePassed = false)
         {
@@ -325,7 +330,7 @@ namespace NPC
                     //EvaluateActiveStage(); //TODO: only do after the box is closed
 
                     //set corner head indicator (we're done with main dialogue)
-                    CornerHeadManager.Instance.SetState(character, false);
+                   // CornerHeadManager.Instance.SetState(character, false);
                 }
             }
             return res;
