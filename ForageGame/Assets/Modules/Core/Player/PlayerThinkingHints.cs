@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using TDK.ItemSystem;
 using TDK.ItemSystem.Inventory;
+using System.Collections;
 
 [RequireComponent(typeof(DialogueBox))]
 public class PlayerThinkingHints : MonoBehaviour
@@ -34,7 +35,7 @@ public class PlayerThinkingHints : MonoBehaviour
         StoryFlagManager.onStoryFlagsLoaded += ShowSleepingHint;
     }
 
-    void OnDisEnable()
+    void OnDisable()
     {
         StoryFlagManager.onStoryFlagsLoaded -= ShowSleepingHint;
     }
@@ -80,11 +81,18 @@ public class PlayerThinkingHints : MonoBehaviour
 
     public void ShowSleepingHint()
     {
+        StartCoroutine(ShowSleepingHintDelayed());
+    }
+
+    IEnumerator ShowSleepingHintDelayed()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+
         var eligibleHints = GetEligibleHints();
         if(!eligibleHints.Any())
         {
             Debug.LogWarning($"[PlayerThinkingHints] No eligible hints to display?");
-            return;
+            yield break; //stop routine
         }
         int hintindex = UnityEngine.Random.Range(0, eligibleHints.Count);
         ShowThought(eligibleHints[hintindex].hint, sleepingHintDuration);

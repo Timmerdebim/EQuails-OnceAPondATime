@@ -61,13 +61,13 @@ namespace TDK.Gadgets
                 if (value) 
                 {
                     //yes, this is indeed what FMOD null references look like
-                    if (activateEvent.Path.Length > 0) FMODUnity.RuntimeManager.PlayOneShot(activateEvent, transform.position);
+                    if (activateEvent.ToString().Length > 0) FMODUnity.RuntimeManager.PlayOneShot(activateEvent, transform.position);
                     OnActivate.Invoke();
                 }
                 else 
                 {
                     //yes, this is indeed what FMOD null references look like
-                    if (deactivateEvent.Path.Length > 0) FMODUnity.RuntimeManager.PlayOneShot(deactivateEvent, transform.position);
+                    if (deactivateEvent.ToString().Length > 0) FMODUnity.RuntimeManager.PlayOneShot(deactivateEvent, transform.position);
                     OnDeactivate.Invoke();
                 }
                 UpdateVisuals();
