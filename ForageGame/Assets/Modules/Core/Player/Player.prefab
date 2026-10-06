@@ -50581,6 +50581,7 @@ MonoBehaviour:
   trailRenderer: {fileID: 229097043921619139}
   visuals: {fileID: 6941911297845455562}
   thinkingBox: {fileID: 5011962895074144791}
+  thinkingBoxController: {fileID: 2893636195359740743}
   _cameraTarget: {fileID: 6819977638391381568}
   playerData:
     spawnPosition: {x: 0, y: 100, z: 0}
@@ -61689,7 +61690,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 538503904355750503, guid: 32cbdcb03bce942c88f1c7a3076d967d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2893636195359740743}
   m_SourcePrefab: {fileID: 100100000, guid: 32cbdcb03bce942c88f1c7a3076d967d, type: 3}
 --- !u!4 &4545276225013932976 stripped
 Transform:
@@ -61701,9 +61705,28 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3243660896502442770, guid: 32cbdcb03bce942c88f1c7a3076d967d, type: 3}
   m_PrefabInstance: {fileID: 7533921656537831685}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8067349523695291234}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48e28cfa22b608b4e87637479b4953b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8067349523695291234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 538503904355750503, guid: 32cbdcb03bce942c88f1c7a3076d967d, type: 3}
+  m_PrefabInstance: {fileID: 7533921656537831685}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2893636195359740743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8067349523695291234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0e815f1736c49e69cf7ff1861f2bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thinkingBox: {fileID: 5011962895074144791}
+  thoughtDuration: 750

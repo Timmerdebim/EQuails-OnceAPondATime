@@ -17,6 +17,8 @@ namespace NPC
         [SerializeField] AnimationCurve newMessageAnimation;
         [SerializeField] float openCloseDuration;
 
+        [SerializeField] public bool dialogueOpen = false;
+
         [Header("Positioning")]
         [SerializeField] private Vector3 rightPos;
         [SerializeField] private Vector3 leftPos;
@@ -50,6 +52,7 @@ namespace NPC
             await CancelAnimations();
             DuckAllForDialogue.start(); //Duck any playing ambience or theme - focus is on the dialogue
             animateIn = AnimateIn(animationCtxSource.Token);
+            dialogueOpen = true;
         }
 
         public async void CloseDialogue()
@@ -57,6 +60,7 @@ namespace NPC
             await CancelAnimations();
             animateOut = AnimateOut(animationCtxSource.Token);
             DuckAllForDialogue.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
+            dialogueOpen = false;
         }
 
         private async Task AnimateIn(CancellationToken ctx)

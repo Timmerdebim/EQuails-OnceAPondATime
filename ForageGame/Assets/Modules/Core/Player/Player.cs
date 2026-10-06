@@ -27,6 +27,7 @@ namespace TDK.PlayerSystem
         [SerializeField] public TrailRenderer trailRenderer;
         [SerializeField] public PlayerVisuals visuals;
         [SerializeField] public DialogueBox thinkingBox;
+        [SerializeField] public PlayerThinkingBoxController thinkingBoxController;
         [SerializeField] public Transform _cameraTarget;
 
         [Header("Player Data")]

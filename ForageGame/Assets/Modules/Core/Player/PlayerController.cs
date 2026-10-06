@@ -189,7 +189,11 @@ namespace TDK.PlayerSystem
             {
                 int wingLevel = Player.Instance.playerData.wingLevel;
                 float energy = Player.Instance.energy.energy;
-                if (wingLevel == 1 && energy > Player.Instance.hopEnergy)
+                if(wingLevel == 0)
+                {
+                    Player.Instance.thinkingBoxController.ShowThought("I can't fly with this broken wing...");
+                }
+                else if (wingLevel == 1 && energy > Player.Instance.hopEnergy)
                 {
                     _animator.IsJumping(true);
                     onJump?.Invoke();
