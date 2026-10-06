@@ -229,6 +229,7 @@ Required-Items:
 Actions: give_flag_princess_wilted
 
     Location: Cage 
+    <main>
     BaseEmotion: Sad
 
         Stage: 0
@@ -239,7 +240,7 @@ Actions: give_flag_princess_wilted
         My baby...
 
         Stage: 2
-        Actions: face_right
+        Actions: face_right, give_flag_princess_wilted_inspected
         Please don't tell me...
 
         Stage: repeat
