@@ -18,16 +18,8 @@ public class PlayerThinkingHints : MonoBehaviour
 
     [SerializeField] private List<String> wingBrokenHints;
     [SerializeField] private int wingbrokenHintDuration = 1500;
-    [System.Serializable]
-    public struct SleepingHint
-    {
-        public List<StoryFlag> requiredFlags;
-        public List<ItemData> requiredItems;
-        public List<StoryFlag> absentFlags;
-        public List<ItemData> absentItems;
-        public string hint;
-    }
-    [SerializeField] private List<SleepingHint> sleepingHints;
+
+    public SleepingHintDatabase sleepingHintDatabase;
     [SerializeField] private int sleepingHintDuration = 3000;
     
     void OnEnable()
@@ -71,12 +63,12 @@ public class PlayerThinkingHints : MonoBehaviour
         var flags = StoryFlagManager.Instance;
         var inventory = InventoryController.Instance;
 
-        return sleepingHints
+        return sleepingHintDatabase.GetAllAssets()
                 .Where(s =>
                     flags.FlagListActive(s.requiredFlags) &&
                     !flags.AnyFlagActive(s.absentFlags) &&
                     inventory.seenItems.IsSupersetOf(s.requiredItems) &&
-                    !inventory.seenItems.Overlaps(s.absentItems)).ToList();;
+                    !inventory.seenItems.Overlaps(s.absentItems)).ToList();
     }
 
     public void ShowSleepingHint()
