@@ -1,20 +1,43 @@
 using NPC;
 using UnityEngine;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using TDK.ItemSystem;
+using TDK.ItemSystem.Inventory;
 
 [RequireComponent(typeof(DialogueBox))]
 public class PlayerThinkingHints : MonoBehaviour
 {
     [SerializeField] private DialogueBox thinkingBox;
-    [SerializeField] private float thoughtDuration = 1500f;
     private CancellationTokenSource textCtxSource = new CancellationTokenSource();
 
     [SerializeField] private List<String> wingBrokenHints;
+    [SerializeField] private int wingbrokenHintDuration = 1500;
+    [System.Serializable]
+    public struct SleepingHint
+    {
+        public List<StoryFlag> requiredFlags;
+        public List<ItemData> requiredItems;
+        public List<StoryFlag> absentFlags;
+        public List<ItemData> absentItems;
+        public string hint;
+    }
+    [SerializeField] private List<SleepingHint> sleepingHints;
+    [SerializeField] private int sleepingHintDuration = 3000;
     
+    void OnEnable()
+    {
+        StoryFlagManager.onStoryFlagsLoaded += ShowSleepingHint;
+    }
+
+    void OnDisEnable()
+    {
+        StoryFlagManager.onStoryFlagsLoaded -= ShowSleepingHint;
+    }
 
     #region ctx token bollocks
     private void CancelCurrentToken()
@@ -33,18 +56,44 @@ public class PlayerThinkingHints : MonoBehaviour
     }
     #endregion
 
-    #region Data
+    #region API
 
     public void ShowWingBrokenThought()
     {
         int hintindex = UnityEngine.Random.Range(0, wingBrokenHints.Count);
-        ShowThought(wingBrokenHints[hintindex]);
+        ShowThought(wingBrokenHints[hintindex], wingbrokenHintDuration);
+    }
+
+
+    private List<SleepingHint> GetEligibleHints()
+    {
+        var flags = StoryFlagManager.Instance;
+        var inventory = InventoryController.Instance;
+
+        return sleepingHints
+                .Where(s =>
+                    flags.FlagListActive(s.requiredFlags) &&
+                    !flags.AnyFlagActive(s.absentFlags) &&
+                    inventory.seenItems.IsSupersetOf(s.requiredItems) &&
+                    !inventory.seenItems.Overlaps(s.absentItems)).ToList();;
+    }
+
+    public void ShowSleepingHint()
+    {
+        var eligibleHints = GetEligibleHints();
+        if(!eligibleHints.Any())
+        {
+            Debug.LogWarning($"[PlayerThinkingHints] No eligible hints to display?");
+            return;
+        }
+        int hintindex = UnityEngine.Random.Range(0, eligibleHints.Count);
+        ShowThought(eligibleHints[hintindex].hint, sleepingHintDuration);
     }
 
     #endregion
 
     #region dialogue code
-    private async Task ShowThought(string message, DialogueSpeakerType character = DialogueSpeakerType.WizardRock)
+    private async Task ShowThought(string message, int duration, DialogueSpeakerType character = DialogueSpeakerType.WizardRock)
     {
         if(thinkingBox.dialogueOpen) 
         {
@@ -57,7 +106,7 @@ public class PlayerThinkingHints : MonoBehaviour
             thinkingBox.OpenDialogue();
             await thinkingBox.SetText(message, character, textCtxSource.Token);
 
-            await Task.Delay((int)thoughtDuration, textCtxSource.Token);
+            await Task.Delay(duration, textCtxSource.Token);
         }
         catch (OperationCanceledException) { }
         finally

@@ -61342,11 +61342,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thinkingBox: {fileID: 268299972043160823}
-  thoughtDuration: 750
   wingBrokenHints:
   - I can't fly with a broken wing...
   - My wing is broken, I can't fly right now...
   - I need to fix my wing before I can do that...
+  wingbrokenHintDuration: 1500
+  sleepingHints:
+  - requiredFlags: []
+    requiredItems: []
+    absentFlags:
+    - {fileID: 11400000, guid: 4d24183a0342f4993adb8a5c0332f171, type: 2}
+    absentItems: []
+    hint: I must find shelter quick.
+  - requiredFlags:
+    - {fileID: 11400000, guid: 4d24183a0342f4993adb8a5c0332f171, type: 2}
+    requiredItems: []
+    absentFlags:
+    - {fileID: 11400000, guid: 07175500e800146ecb43b8a206818f89, type: 2}
+    absentItems: []
+    hint: I should find help on the island to the north-west.
+  sleepingHintDuration: 2500
 --- !u!4 &8728873764517834064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6312302240274365109, guid: 32cbdcb03bce942c88f1c7a3076d967d, type: 3}
