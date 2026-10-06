@@ -191,7 +191,7 @@ namespace TDK.PlayerSystem
                 float energy = Player.Instance.energy.energy;
                 if(wingLevel == 0)
                 {
-                    Player.Instance.thinkingBoxController.ShowThought("I can't fly with this broken wing...");
+                    Player.Instance.playerThinkingHints.ShowWingBrokenThought();
                 }
                 else if (wingLevel == 1 && energy > Player.Instance.hopEnergy)
                 {

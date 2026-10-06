@@ -52,7 +52,6 @@ namespace NPC
             await CancelAnimations();
             DuckAllForDialogue.start(); //Duck any playing ambience or theme - focus is on the dialogue
             animateIn = AnimateIn(animationCtxSource.Token);
-            dialogueOpen = true;
         }
 
         public async void CloseDialogue()
@@ -60,7 +59,6 @@ namespace NPC
             await CancelAnimations();
             animateOut = AnimateOut(animationCtxSource.Token);
             DuckAllForDialogue.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
-            dialogueOpen = false;
         }
 
         private async Task AnimateIn(CancellationToken ctx)
@@ -80,6 +78,7 @@ namespace NPC
             }
 
             canvas.transform.localScale = Vector3.one;
+            dialogueOpen = true;
         }
 
         private async Task AnimateOut(CancellationToken ctx)
@@ -94,6 +93,7 @@ namespace NPC
                 elapsedTime += Time.deltaTime;
                 await Task.Yield();
             }
+            dialogueOpen = false;
             canvas.transform.localScale = Vector3.zero;
             canvas.gameObject.SetActive(false);
         }

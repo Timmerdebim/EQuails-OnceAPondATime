@@ -3,13 +3,17 @@ using UnityEngine;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 
 [RequireComponent(typeof(DialogueBox))]
-public class PlayerThinkingBoxController : MonoBehaviour
+public class PlayerThinkingHints : MonoBehaviour
 {
     [SerializeField] private DialogueBox thinkingBox;
     [SerializeField] private float thoughtDuration = 1500f;
     private CancellationTokenSource textCtxSource = new CancellationTokenSource();
+
+    [SerializeField] private List<String> wingBrokenHints;
     
 
     #region ctx token bollocks
@@ -29,15 +33,25 @@ public class PlayerThinkingBoxController : MonoBehaviour
     }
     #endregion
 
-    #region actual code
-    public async Task ShowThought(string message, DialogueSpeakerType character = DialogueSpeakerType.WizardRock)
+    #region Data
+
+    public void ShowWingBrokenThought()
     {
-        ResetToken();
+        int hintindex = UnityEngine.Random.Range(0, wingBrokenHints.Count);
+        ShowThought(wingBrokenHints[hintindex]);
+    }
+
+    #endregion
+
+    #region dialogue code
+    private async Task ShowThought(string message, DialogueSpeakerType character = DialogueSpeakerType.WizardRock)
+    {
         if(thinkingBox.dialogueOpen) 
         {
             Debug.LogWarning($"[PlayeerThinkingBoxController]: Dialogue box already open, canceling thought: {message}");
             return;
         }
+        ResetToken();
         try
         {
             thinkingBox.OpenDialogue();
