@@ -1,8 +1,9 @@
 using DG.Tweening;
+using TDK.SaveSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CornerHeadController : MonoBehaviour
+public class CornerHeadController : MonoBehaviour, ISaveable, ILoadable
 {
     private bool _state = false;
     private bool _black = true;
@@ -10,12 +11,14 @@ public class CornerHeadController : MonoBehaviour
 
     [SerializeField] private Image _image;
     [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private Sprite _shownSprite;
+    [SerializeField] private Sprite _hiddenSprite;
+    [SerializeField] private int _saveInt = 0; // 0, 1, 2, or 3.
     private Tween _tween;
 
     void Awake()
     {
-        _canvasGroup.alpha = 0;
-        transform.SetAsFirstSibling();
+        UpdateVisuals(true);
     }
 
     public void SetState(bool state, bool instant = false)
@@ -32,37 +35,44 @@ public class CornerHeadController : MonoBehaviour
         UpdateVisuals();
     }
 
-
     private void UpdateVisuals(bool instant = false)
     {
         _tween?.Kill();
         if (_state && _revealed)
         {
-            if (_black) _image.color = Color.black;
-            else _image.color = Color.white;
+            if (_black) _image.sprite = _hiddenSprite;
+            else _image.sprite = _shownSprite;
+            transform.SetAsLastSibling();
+            gameObject.SetActive(true);
             if (instant)
-            {
                 _canvasGroup.alpha = 1;
-                transform.SetAsFirstSibling();
-            }
             else
-            {
-                _tween = _canvasGroup.DOFade(1, 0.2f).SetEase(Ease.InOutQuad)
-                .OnComplete(() => transform.SetAsFirstSibling());
-            }
+                _tween = _canvasGroup.DOFade(1, 0.5f).SetEase(Ease.InOutQuad);
         }
         else
         {
             if (instant)
             {
                 _canvasGroup.alpha = 0;
-                transform.SetAsLastSibling();
+                gameObject.SetActive(false);
             }
             else
             {
-                _tween = _canvasGroup.DOFade(0, 0.2f).SetEase(Ease.InOutQuad)
-                .OnComplete(() => transform.SetAsLastSibling());
+                _tween = _canvasGroup.DOFade(0, 0.5f).SetEase(Ease.InOutQuad)
+                .OnComplete(() => gameObject.SetActive(false));
             }
         }
+    }
+
+    public void LoadData(WorldSaveData data)
+    {
+        _black = data.cornerHeadsState[_saveInt];
+        _black = data.cornerHeadsBlack[_saveInt];
+    }
+
+    public void SaveData(ref WorldSaveData data)
+    {
+        data.cornerHeadsBlack[_saveInt] = _black;
+        data.cornerHeadsBlack[_saveInt] = _black;
     }
 }
