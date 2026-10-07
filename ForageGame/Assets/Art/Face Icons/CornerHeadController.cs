@@ -66,13 +66,14 @@ public class CornerHeadController : MonoBehaviour, ISaveable, ILoadable
 
     public void LoadData(WorldSaveData data)
     {
-        _black = data.cornerHeadsState[_saveInt];
+        _revealed = data.cornerHeadsState[_saveInt];
         _black = data.cornerHeadsBlack[_saveInt];
+        UpdateVisuals();
     }
 
     public void SaveData(ref WorldSaveData data)
     {
-        data.cornerHeadsBlack[_saveInt] = _black;
+        data.cornerHeadsState[_saveInt] = _revealed;
         data.cornerHeadsBlack[_saveInt] = _black;
     }
 }
