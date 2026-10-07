@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class CornerHeadController : MonoBehaviour, ISaveable, ILoadable
 {
     private bool _state = false;
-    private bool _black = true;
-    private bool _revealed = false; //if npc is not mentioned yet in story do not show indicator (i.e., start only Mosswick is revealed)
+    [SerializeField] private bool _black = true;
+    [SerializeField] private bool _revealed = false; //if npc is not mentioned yet in story do not show indicator (i.e., start only Mosswick is revealed)
 
     [SerializeField] private Image _image;
     [SerializeField] private CanvasGroup _canvasGroup;
@@ -67,6 +67,7 @@ public class CornerHeadController : MonoBehaviour, ISaveable, ILoadable
     public void LoadData(WorldSaveData data)
     {
         _revealed = data.cornerHeadsState[_saveInt];
+        Debug.Log($"[CornerHeadController: {gameObject.name}]: loading data black: {data.cornerHeadsBlack[_saveInt]}, revealed: data.cornerHeadsState[_saveInt]");
         _black = data.cornerHeadsBlack[_saveInt];
         UpdateVisuals();
     }
@@ -75,5 +76,6 @@ public class CornerHeadController : MonoBehaviour, ISaveable, ILoadable
     {
         data.cornerHeadsState[_saveInt] = _revealed;
         data.cornerHeadsBlack[_saveInt] = _black;
+        Debug.Log($"[CornerHeadController: {gameObject.name}]: saving data black: {data.cornerHeadsBlack[_saveInt]}, revealed: data.cornerHeadsState[_saveInt]");
     }
 }
