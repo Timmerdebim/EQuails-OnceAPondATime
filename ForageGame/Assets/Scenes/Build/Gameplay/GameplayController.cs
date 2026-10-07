@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using TDK.SceneSystem;
 using Eflatun.SceneReference;
 using TDK.PlayerSystem;
+using TDK.ItemSystem.Types;
+using TDK.ItemSystem.Inventory;
 
 public class GameplayController : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class GameplayController : MonoBehaviour
 
     [Header("Story Flags")]
     [SerializeField] private StoryFlag firstNight;
+    [SerializeField] private RecipeItem sleepHint;
 
     void Awake()
     {
@@ -95,6 +98,9 @@ public class GameplayController : MonoBehaviour
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
         SetGameState(State.Playing);
+
+        //give the sleeping hint after first night
+        if(isfirstNight) RecipeBookController.Instance.TryAddRecipe(sleepHint);
         Debug.Log("[Gameplay] Player slept.");
 
     }
