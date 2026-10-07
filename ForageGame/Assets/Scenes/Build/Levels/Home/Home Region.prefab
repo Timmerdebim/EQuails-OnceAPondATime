@@ -21922,8 +21922,28 @@ PrefabInstance:
       value: give_flag_grimble_lyria_bowl_o_food_scene
       objectReference: {fileID: 0}
     - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
       propertyPath: dialogueActionMap.Array.data[10].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 4864234113713304297}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: GiveStoryFlag
       objectReference: {fileID: 0}
     - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
       propertyPath: dialogueActionMap.Array.data[10].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -21936,6 +21956,18 @@ PrefabInstance:
     - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
       propertyPath: dialogueActionMap.Array.data[12].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: TryGiveItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: NPC.NpcController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 6a6ca4058202441d9bda22b1105a3a22, type: 2}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: 'Sound not implemented: player_quack'
       objectReference: {fileID: 0}
     - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
       propertyPath: dialogueActionMap.Array.data[10].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
@@ -21958,6 +21990,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 343889629da2f4a99a684dd14f84157b, type: 2}
     - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+      propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: StoryFlag, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365949238527798046, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
       propertyPath: dialogueActionMap.Array.data[10].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -21978,6 +22014,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+--- !u!114 &4864234113713304297 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2571583365670341055, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
+  m_PrefabInstance: {fileID: 6931359052805077846}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70774cf2e1455447d89a2e55330135b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8403476628735611169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1490136420037634679, guid: c360e0473bac04046a1ecbbe9f9d416a, type: 3}
