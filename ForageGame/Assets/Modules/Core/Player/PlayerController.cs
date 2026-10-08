@@ -160,12 +160,15 @@ namespace TDK.PlayerSystem
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            if (context.started
-            && Player.Instance.energy.energy > 0.01f)
+            if (context.started)
             {
-                _animator.IsSprinting(true);
+                if(Player.Instance.energy.energy > 0.01f)
+                {
+                    _animator.IsSprinting(true);
 
-                onSprint?.Invoke();
+                    onSprint?.Invoke();
+                }
+                else Player.Instance.playerThinkingHints.ShowNoEnergyThought();
             }
             else if (context.canceled)
                 _animator.IsSprinting(false);
@@ -174,11 +177,13 @@ namespace TDK.PlayerSystem
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.started
-            && Player.Instance.playerData.attackUnlocked
-            && Player.Instance.energy.energy > Player.Instance.attackEnergy)
+            if (context.started && Player.Instance.playerData.attackUnlocked)
             {
-                _animator.IsAttacking(true);
+                if(Player.Instance.energy.energy > Player.Instance.attackEnergy)
+                {
+                    _animator.IsAttacking(true);
+                }
+                else Player.Instance.playerThinkingHints.ShowNoEnergyThought();
             }
             else if (context.canceled) _animator.IsAttacking(false);
         }
@@ -203,6 +208,7 @@ namespace TDK.PlayerSystem
                     _animator.IsFlying(true);
                     onJump?.Invoke();
                 }
+                else Player.Instance.playerThinkingHints.ShowNoEnergyThought(); //out of energy
             }
             else if (context.canceled)
             {

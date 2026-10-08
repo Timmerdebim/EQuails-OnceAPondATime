@@ -16,9 +16,19 @@ public class PlayerThinkingHints : MonoBehaviour
     [SerializeField] private DialogueBox thinkingBox;
     private CancellationTokenSource textCtxSource = new CancellationTokenSource();
 
-    [SerializeField] private List<String> wingBrokenHints;
+    [Header("Wing Broken")]
+    [SerializeField] private List<string> wingBrokenHints;
     [SerializeField] private int wingbrokenHintDuration = 1500;
 
+    [Header("Not enough Energy")]
+    [SerializeField] private List<string> noEnergyHints;
+    [SerializeField] private int noEnergyHintDuration = 500;
+
+    [Header("Inventory Full")]
+    [SerializeField] private List<string> inventoryFullHints;
+    [SerializeField] private int inventoryFullHintDuration = 1500;
+
+    [Header("Sleeping Hints")]
     public SleepingHintDatabase sleepingHintDatabase;
     [SerializeField] private int sleepingHintDuration = 3000;
     
@@ -50,11 +60,22 @@ public class PlayerThinkingHints : MonoBehaviour
     #endregion
 
     #region API
-
     public void ShowWingBrokenThought()
     {
         int hintindex = UnityEngine.Random.Range(0, wingBrokenHints.Count);
         ShowThought(wingBrokenHints[hintindex], wingbrokenHintDuration);
+    }
+
+    public void ShowNoEnergyThought()
+    {
+        int hintindex = UnityEngine.Random.Range(0, noEnergyHints.Count);
+        ShowThought(noEnergyHints[hintindex], noEnergyHintDuration);
+    }
+
+    public void ShowInventoryFullHint()
+    {
+        int hintindex = UnityEngine.Random.Range(0, inventoryFullHints.Count);
+        ShowThought(inventoryFullHints[hintindex], inventoryFullHintDuration);
     }
 
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TDK.PlayerSystem;
 
 namespace TDK.ItemSystem.Inventory
 {
@@ -40,6 +41,8 @@ namespace TDK.ItemSystem.Inventory
                         return true;
                 }
             }
+            //inventory full, display message
+            Player.Instance.playerThinkingHints.ShowInventoryFullHint();
             return false;
         }
 
