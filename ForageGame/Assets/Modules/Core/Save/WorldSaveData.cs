@@ -21,7 +21,7 @@ namespace TDK.SaveSystem
         public List<GadgetSaveData> Gadgets = new(); // string is GUID
         public List<string> StoryFlagSaveData = new();
         public List<NpcSaveData> NPCs = new();
-        public bool[] cornerHeadsState = new bool[4] { false, false, false, false };
-        public bool[] cornerHeadsBlack = new bool[4] {false, false, false, false};
+        public bool[] cornerHeadsState = new bool[4] {false, false, false, false };
+        public bool[] cornerHeadsBlack = new bool[4] {true, true, true, true };
     }
 }
