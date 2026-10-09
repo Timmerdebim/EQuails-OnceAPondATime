@@ -550,6 +550,9 @@ namespace NPC
 
         #region DialogueActionJargin
 
+        //corner heads
+        public void RevealNpcHead(int npc) => CornerHeadManager.Instance.RevealNpc((DialogueSpeakerType)npc); //Ah yes, more jank. Thanks Unity!
+
         public void InvokeActionOnClose(string actionName)
         {
             if (actionToTriggerAfterDialogue != null) Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] there is already an action set to be triggered after dialogue, overwriting! Previous flag: {actionToTriggerAfterDialogue}, new action: {actionName}");

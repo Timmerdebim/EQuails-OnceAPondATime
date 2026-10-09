@@ -145,6 +145,7 @@ Flags: TutorialComplete
 
 --- Stage
 Flags: ObtainedGreenthumbPotionRecipe
+Absent-Flags: GrimbleFirstWallInteractionDone
 Required-Items:
 
     Location: Home 
@@ -160,51 +161,37 @@ Required-Items:
 
         Stage: 2
         Actions: play_sound_open_recipe_book
-        Oh, a crafting recipe?
+        Oh, a crafting recipe? Must be from Bracken...
 
         Stage: 3
-        Must be from Bracken...
+        Sorry... I don't know how those crafting pots work...
 
         Stage: 4
-        Sorry... I don't know how those crafting pots work either...
+        Emotion: HappyTalking
+        Oh? but I see it needs Echo Dust.
 
         Stage: 5
-        Emotion: HappyTalking
-        But I know there is one at the big tree!
+        Hmm? ...it needs Echo Dust...
 
         Stage: 6
-        Hmm? ...it needs Echo Dust...
+        That's found in Grimble's cave, just east of here.
 
         Stage: 7
         Emotion: SadTalking
-        That's only in Grimble's cave
+        ...I guess you're going to meet him, then.
 
         Stage: 8
-        Emotion: ExtraSad
-        ...I guess they're still not on speaking terms then...
-
---- Stage
-Flags: ObtainedGreenthumbPotionRecipe
-Required-Items:
-
-    Location: Home 
-    BaseEmotion: Sad
-
-        Stage: 0
-        Emotion: SadTalking
-        Oh right! Grimble's cave is west of here.
-
-        Stage: 1
         Grimble can be... a bit brash...
 
-        Stage: 2
-        But don't worry, he's just acting tough.
+        Stage: 9
+        But he's a good guy, really.
 
-        Stage: 3
-        He can be a bit sensitive, actually...
+        Stage: 10
+        Actions: reveal_npc_grimble
+        You'll be fine, don't worry.
 
-        Stage: 4
-        ...Especially when it comes to his music.
+        Stage: repeat
+        Echo Dust is found in Grimble's Cave, just east of here.
 
 
 
@@ -216,9 +203,7 @@ Required-Items:
 
 
 --- Stage
-Flags: LyriaPlaysKalimba
-Required-Items:
-<RequireTimePassing>
+Flags: LyriaPlaysKalimba, GrimbleFirstWallInteractionDone
 
     Location: Home 
     <main>
@@ -232,123 +217,86 @@ Required-Items:
         I just heard Lyria play her kalimba.
 
         Stage: 2
-        She hasn't done that in a bit.
+        It's been a while since I've heard it.
 
         Stage: 3
         It was nice...
 
         Stage: 4
+        Emotion: Happy
         ...
 
         Stage: 5
-        Emotion: SadTalking
-        She's the only one still playing...
+        Emotion: HappyTalking
+        We used to play together, you know?
 
---- Stage
-Flags: LyriaPlaysKalimba
-Required-Items:
+        Stage: 6
+        We'd meet up at the campfire at the Big Tree.
 
+        Stage: 7
+        And play the music Grimble composed for us.
 
-    Location: Home 
-    <main>
-    BaseEmotion: Sad
+        Stage: 8
+        Lyria had her kalimba, Bracken their guitar...
 
-        Stage: 0
-        Emotion: SadTalking
-        We all had our own part in Grimble's pieces.
+        Stage: 9
+        And I played my flute.
 
-        Stage: 1
-        Lyria had her Kalimba...
-
-        Stage: 2
-        Bracken played guitar...
-
-        Stage: 3
-        ...And I played my flute.
-
-        Stage: 4
+        Stage: 10
         Emotion: Sad
         ...
 
-        Stage: 5
-        Emotion: SadTalking
-        I loved playing it.
-
-        Stage: 6
-        Whenever I'd get scared or anxious...
-
-        Stage: 7
-        ...It would always calm me down.
-
-        Stage: 8
-        Remind me there would always be a next...
-
-        Stage: 9
-        Emotion: ExtraSad
-        A next meeting at the tree...
-
 --- Stage
-Flags: LyriaPlaysKalimba
-Required-Items:
+Flags: LyriaPlaysKalimba, GrimbleFirstWallInteractionDone
 
     Location: Home 
     <main>
     BaseEmotion: Sad
 
         Stage: 0
-        ...
-
-        Stage: 1
         Emotion: SadTalking
-        I liked practicing on my own.
-
-        Stage: 2
+        I liked practising my parts here, by myself...
+        
+        Stage: 1
         Emotion: HappyTalking
         But hearing it all come together with the others...
 
+        Stage: 2
+        That's what it was really about.
+        
         Stage: 3
-        That was my favourite part.
+        Emotion: Happy
+        ...
 
         Stage: 4
-        Even the birds and insects would go all silent.
+        Emotion: SadTalking
+        It's been a while though.
 
         Stage: 5
-        Just to hear us play.
+        Not since I-
 
         Stage: 6
-        Emotion: Sad
+        Emotion: ExtraSad
         ...
 
         Stage: 7
         Emotion: SadTalking
-        I kept going back there for a while.
-
-        Stage: 8
-        Just in case.
-
-        Stage: 9
-        I kept practising, too.
-
-        Stage: 10
-        Emotion: ExtraSad
-        But without the others...
-
-        Stage: 11
-        The songs aren't complete.
+        Actions: give_flag_mosswick_music_exposition
+        I just... hope we can still play together again, someday.
 
 
 --- Stage
-Flags: LyriaPlaysKalimba
-Required-Items:
+Flags: MosswickMusicExposition
 
     Location: Home 
-    BaseEmotion: Happy
+    BaseEmotion: Sad
 
         Stage: 0
-        Emotion: HappyTalking
+        Emotion: Happy
         ...
 
         Stage: 1
+        Emotion: HappyTalking
         You are a good listener, you know?
 
         Stage: 2
@@ -364,8 +312,15 @@ Required-Items:
         ...Friend.
 
 
+
+
+
+
+
+
+
 --- Stage
-Flags: LyriaPlaysKalimba
+Flags: MosswickMusicExposition
 Required-Items: TemporaryWingfix
 
     Location: Home 
@@ -399,7 +354,7 @@ Required-Items: TemporaryWingfix
 
 
 --- Stage
-Flags: LyriaPlaysKalimba
+Flags: MosswickMusicExposition
 Required-Items: TemporaryWingfix
 
     Location: Home 
