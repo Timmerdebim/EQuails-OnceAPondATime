@@ -369,21 +369,28 @@ Required-Items: TemporaryWingfix
 
 
 
+
+
+
+
+
+
+
+
 --- Stage
 Flags: LyriaGrieving
 Required-Items:
 
-    Location: OldHome 
+    Location: Sanctuary 
     <main>
     BaseEmotion: Sad
 
         Stage: 0
-        Actions: face_away_from_player
         Emotion: Sad
         ...
 
         Stage:  1
-        Emotion: HappyTalking
+        Emotion: Surprised
         Ah - hey friend!
 
         Stage: 2
@@ -397,30 +404,30 @@ Required-Items:
         ...She looked really upset.
 
         Stage: 5
-        I've never seen her like that before.
+        So... I tried to cheer her up.
 
         Stage: 6
-        So... I tried to help her.
+        ...She said she was sorry about my flowers.
 
         Stage: 7
-        She said she was sorry.
+        That she'd let all of them die.
 
         Stage: 8
-        ...That she let all my flowers die.
+        Emotion: Sad
+        "..."
 
         Stage: 9
-        Emotion: Sad
         ...
 
         Stage: 10
         Emotion: HappyTalking
-        I was a bit surprised, actually.
+        Well, I was a bit surprised, actually.
 
         Stage: 11
-        Those were just small presents.
+        Those flowers were just small presents.
 
         Stage: 12
-        I didn't expect them to last, haha.
+        I don't expect plucked flowers to last, you know?
 
         Stage: 13
         Emotion: Happy
@@ -436,101 +443,79 @@ Required-Items:
         Stage: 16
         She said she doesn't want flowers anymore.
 
+        Stage: 17
+        ...She asked me to play my flute for her.
+
+        Stage: 18
+        I told her I'd left it at home.
+
+
+
 --- Stage
 Flags: LyriaGrieving
 Required-Items:
 
-    Location: OldHome 
+    Location: Sanctuary 
     <main>
     BaseEmotion: Sad
 
         Stage: 0
-        Emotion: Sad
-        ...
+        Emotion: SadTalking
+        ...I have it here, actually.
 
         Stage: 1
-        Emotion: SadTalking
-        She asked me to play my flute for her.
-
-        Stage: 2
-        ...I told her I forgot it at my old place.
-
-        Stage: 3
-        I have it here... actually.
-
-        Stage: 4
         But I can't play it... anymore.
 
-        Stage: 5
-        It cracked.
+        Stage: 2
+        I cracked it a while ago.
 
-        Stage: 6
+        Stage: 3
         ...But I kept playing it anyway...
 
-        Stage: 7
+        Stage: 4
         Emotion: ExtraSad
-        ... And I only made it worse.
+        ...And I only made it worse.
 
         Stage: 8
-        Now I can barely get any notes out.
+        Now I can barely get any notes out of it.
 
         Stage: 9
         Emotion: SadTalking
-        So.. I'm trying to fix it.
+        So... I'm trying to fix it.
 
         Stage: 10
-        I can't let her down...
-
-        Stage: 11
+        Actions: give_flag_mosswick_lyria_scene_done
         But... I don't know how...
 
---- Stage
-Flags: LyriaGrieving
-Required-Items:
 
-    Location: OldHome 
-    <main>
+
+
+--- Stage
+Flags: MosswickLyriaSceneDone
+Absent-Items: BogRootFlute
+
+    Location: Sanctuary 
     BaseEmotion: Sad
 
         Stage: 0
         Emotion: SadTalking
-        Actions: face_away_from_player
-        This is... made from a bog-root fossil...
+        ...I hope Lyria's still waiting for me.
 
         Stage: 1
-        Actions: face_away_from_player
-        ...And those whispering reeds...
+        Emotion: ExtraSad
+        I don't want to let her down...
 
-        Stage: 2
-        Actions: face_away_from_player
-        Woven through it...?
 
-        Stage: 3
-        Actions: give_recipe_bogroot_flute_on_close
-        How... does that even work?
 
---- Stage
-Flags: LyriaGrieving
-Required-Items:
-    
-    Location: OldHome 
-    BaseEmotion: Sad
 
-        Stage: 0
-        Emotion: SadTalking
-        ...Bracken offered to show me once.
 
-        Stage: 1
-        Emotion: SadTalking
-        Said I'd look into it... later...
 
-        Stage: 2
-        Emotion: Sad
-        ...
+
+
 
 
 --- Stage
-Flags: LyriaGrieving
+Flags: MosswickLyriaSceneDone
 Required-Items: BogRootFlute
 
     Location: Home 
@@ -595,7 +580,7 @@ Required-Items:
     BaseEmotion: Happy
 
         Stage: 0
-        Emition: Surprised
+        Emotion: Surprised
         You... stayed?
 
         Stage: 1
