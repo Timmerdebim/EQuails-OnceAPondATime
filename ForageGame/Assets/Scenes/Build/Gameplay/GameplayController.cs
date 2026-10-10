@@ -142,11 +142,16 @@ public class GameplayController : MonoBehaviour
         _cutoutController.UseCutout(false, true);
     }
 
-    public async Task InGameCutsceneStop(bool useTransitionScreen)
+    public async Task InGameCutsceneStop(bool useTransitionScreen, bool endGame = false)
     {
         if (!_isCutsceneActive) return;
         _isCutsceneActive = false;
         SetGameState(State.Playing);
+        if (endGame)
+        {
+            await FinishGame();
+            return;
+        }
         if (useTransitionScreen)
         {
             await AwaitPadding();

@@ -5,6 +5,7 @@ namespace InGameCutscenes
 {
     public class InGameCutsceneState : StateMachineBehaviour
     {
+        [SerializeField] private bool _endGame = false;
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
         }
@@ -15,7 +16,7 @@ namespace InGameCutscenes
 
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            InGameCutsceneManager.Instance.OnStateExit();
+            InGameCutsceneManager.Instance.OnStateExit(_endGame);
         }
     }
 }

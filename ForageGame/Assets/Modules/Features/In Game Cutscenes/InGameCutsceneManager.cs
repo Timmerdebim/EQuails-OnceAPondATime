@@ -43,9 +43,9 @@ public class InGameCutsceneManager : MonoBehaviour
         _ = GameplayController.Instance?.InGameCutsceneStart(_animator, cutsceneName, lockInputs, pauseTime, useFadeOnStart);
     }
 
-    public void OnStateExit()
+    public void OnStateExit(bool useEndOnStop = false)
     {
-        _ = GameplayController.Instance?.InGameCutsceneStop(_useFadeOnStop);
+        _ = GameplayController.Instance?.InGameCutsceneStop(_useFadeOnStop, useEndOnStop);
         _cutoutController.UseCutout(true, true);
         ResetCamera();
         _isPlaying = false;
