@@ -1,13 +1,12 @@
 --- Stage
 Flags: 
-Required-Items:
 
 
 --- Stage
 Flags: BrackenInspectingBoat
-Required-Items:
 
-    Location: Pier1
+    Location: Pier
+    <main>
     BaseEmotion: Happy
 
         Stage: 0
@@ -15,7 +14,7 @@ Required-Items:
         Oh - Hey Duckie.
 
         Stage: 1
-        I'm investigating Mossie's boat.
+        I'm taking a look at Mossie's boat.
 
         Stage: 2
         Actions: face_left
@@ -23,9 +22,10 @@ Required-Items:
 
 --- Stage
 Flags: BrackenInspectingBoat
-Required-Items:
+Actions:start_animation_bracken_busy_aft
 
-    Location: Pier2
+    Location: BoatAft
+    <main>
     BaseEmotion: Neutral
 
         Stage: 0
@@ -37,16 +37,14 @@ Required-Items:
         Actions: face_left
         Make sure it still holds weight...
 
-        Stage: 2
-        Actions: face_left
-        Give me a second, yeah?
 
 
 --- Stage
 Flags: BrackenInspectingBoat
-Required-Items:
+Actions:start_animation_bracken_busy_fore
 
-    Location: Pier1
+    Location: BoatFore
+    <main>
     BaseEmotion: Neutral
 
         Stage: 0
@@ -64,9 +62,10 @@ Required-Items:
 
 --- Stage
 Flags: BrackenInspectingBoat
-Required-Items:
+Actions:start_animation_bracken_busy_aft
 
-    Location: Pier2
+    Location: BoatAft
+    <main>
     BaseEmotion: Happy
 
         Stage: 0
@@ -80,9 +79,10 @@ Required-Items:
 
 --- Stage
 Flags: BrackenInspectingBoat
-Required-Items:
+Actions:start_animation_bracken_busy_fore
 
-    Location: Pier1
+    Location: BoatFore
+    <main>
     BaseEmotion: Neutral
 
         Stage: 0
@@ -105,9 +105,9 @@ Required-Items:
 
 --- Stage
 Flags: BoatInspectionComplete
-Required-Items:
 
-    Location: Pier1
+    Location: Pier
+    <main>
     BaseEmotion: Happy
 
         Stage: 0
@@ -119,14 +119,14 @@ Required-Items:
 
         Stage: 2
         Emotion: NeutralTalking
-        But its gonna take some work.
+        But it's gonna take some work.
 
         Stage: 3
-        First, I'll work on the rudder and steering
+        First, I'll be fixing the rudder.
 
         Stage: 4
         Actions: face_right
-        Mosswick, I'll need you gathering Mushy Logs.
+        Mosswick, I'll need you to gather some Mushy Logs.
 
         Stage: 5
         Actions: face_right
@@ -144,7 +144,7 @@ Required-Items:
         Let's see...
 
         Stage: 9
-        If you can make this kit, we should be set.
+        If you can make this kit, we should be set there too.
 
         Stage: 10
         Actions: face_left
@@ -159,20 +159,45 @@ Required-Items:
 
 
 
+
+
+
+
 --- Stage
 Flags: ObtainedBoatRepairKitRecipe
-Required-Items:
+Absent-Items: BoatRepairKit
+Actions:start_animation_bracken_busy_aft
+
+    Location: BoatAft
+    BaseEmotion: Happy
+
+        Stage: 0
+        Emotion: NeutralTalking
+        Oh, uhm, Duckie.
+        
+        Stage: 1
+        I'm pretty busy with this rudder right now.
+        
+        Stage: 2
+        Emotion: HappyTalking
+        Can you focus on getting us the Repair Kit for the sail?
+
+
+
+
+
+
+
 
 --- Stage
-Flags: BoatInspectionComplete
+Flags: ObtainedBoatRepairKitRecipe
 Required-Items: BoatRepairKit
 
-    Location: Pier1
+    Location: Pier
     <main>
     BaseEmotion: Neutral
 
         Stage: 0
-        Actions: face_left
         Hmm?
 
         Stage: 1
@@ -188,7 +213,7 @@ Required-Items: BoatRepairKit
 Flags: BoatRepairKitGiven
 Required-Items: 
 
-    Location: Pier1
+    Location: Pier
     <main>
     BaseEmotion: Happy
 
@@ -237,7 +262,7 @@ Required-Items:
 Flags: BoatFixed
 Required-Items: 
 
-    Location: Pier1
+    Location: Pier
     BaseEmotion: Happy
 
         Stage: 0

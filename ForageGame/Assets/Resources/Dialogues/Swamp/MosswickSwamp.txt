@@ -747,7 +747,6 @@ Required-Items: SturdyWingfix
 
 --- Stage
 Flags: BrackenInspectingBoat
-Required-Items:
 
     Location: Pier
     <main>
@@ -768,24 +767,33 @@ Required-Items:
 
         Stage: 4
         Emotion: HappyTalking
+        Actions:give_flag_boat_inspection_complete
         This is... much nicer, though.
 
         Stage: repeat
         Emotion: HappyTalking
-        Let's wait until Bracken's done investigating.
+        Let's wait until Bracken's done assessing the damage.
 
 
 --- Stage
 Flags: BoatInspectionComplete
-Required-Items:
-
     Location: Pier
     BaseEmotion: Happy
 
         Stage: 0
-        Actions: face_left
-        Emotion: ExtraSad
-        TEMP DIALOGUE
+        Emotion: HappyTalking
+        Let's wait until Bracken's done assessing the damage.
+
+        Stage: 1
+        Emotion: SadTalking
+        I hope it's not too bad...
+
+
+
+
+
+
+
 
 
 --- Stage
