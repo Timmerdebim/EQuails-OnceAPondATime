@@ -518,7 +518,7 @@ Absent-Items: BogRootFlute
 Flags: MosswickLyriaSceneDone
 Required-Items: BogRootFlute
 
-    Location: Home 
+    Location: Sanctuary 
     <main>
     BaseEmotion: Sad
 
@@ -537,7 +537,7 @@ Required-Items: BogRootFlute
 Flags: BogRootFluteGiven
 Required-Items:
 
-    Location: Home
+    Location: Sanctuary
     <main>
     BaseEmotion: Happy
 
@@ -552,7 +552,7 @@ Required-Items:
         For me?
 
         Stage: 3
-        You made me...
+        You made me a new flute...?
 
         Stage: 4
         I never even...?
@@ -570,13 +570,13 @@ Required-Items:
         Stage: 8
         Actions: face_away_from_player, start_cutscene_mosswick_flute_on_close
         Emotion: Flute
-        I... want to test it out.
+        I... want to try it out.
 
 --- Stage
 Flags: StayedForFluteConcert
 Required-Items:
 
-    Location: Home
+    Location: Sanctuary
     BaseEmotion: Happy
 
         Stage: 0
@@ -603,7 +603,7 @@ Required-Items:
 Flags: FluteConcertDone
 Required-Items:
 
-    Location: Home
+    Location: Sanctuary
     <main>
     BaseEmotion: Happy
 
@@ -628,23 +628,22 @@ Required-Items:
 
         Stage: 5
         Emotion: HappyTalking
-        I was going to try and make one myself...
+        I was going to try making one myself...
 
         Stage: 6
-        ...found myself another bog-root fossil...
+        I even found myself another Bog-Root Fossil...
 
         Stage: 7
-        But... I guess that wouldn't have turned out well, haha...
+        But... I don't think I would've managed, haha...
 
         Stage: 8
-        Actions: give_item_bog-root_fossil
-        ...you should have it.
+        ...You should have it.
 
         Stage: 9
         Bracken always needs these things for their inventions.
 
         Stage: 10
-        Maybe you'll get some use out of it.
+        Maybe you'll find some use for it.
 
         Stage: 11
         Emotion: Happy
@@ -652,7 +651,18 @@ Required-Items:
 
         Stage: 12
         Emotion: SadTalking
-        Where did you even learn how to use those pots anyway?
+        Actions: give_item_bog-root_fossil_on_close
+        Where did you even learn how to make flutes, anyway?
+
+        Stage: repeat
+        Emotion: SadTalking
+        Where did you even learn how to make flutes, anyway?
+
+
+
+
+
+
 
 
 
@@ -660,7 +670,7 @@ Required-Items:
 
 
 --- Stage
-Flags: FluteConcertDone
+Flags: FluteConcertDone, LyriaPrincessClosureSceneDone
 Required-Items: SturdyWingfix
 <RequireTimePassing>
 
@@ -673,60 +683,66 @@ Required-Items: SturdyWingfix
         Hello again, friend!
 
         Stage: 1
-        How is it going?
-
-        Stage: 2
         Oh hey - your wing!
 
-        Stage: 3
+        Stage: 2
         That must feel much better now, right?
 
-        Stage: 4
+        Stage: 3
         ...
 
-        Stage: 5
+        Stage: 4
         Actions: face_left
         Emotion: SadTalking
         ...Looks like a lot of work..
 
-        Stage: 6
+        Stage: 5
         ...Hey friend.
 
-        Stage: 7
+        Stage: 6
         Can you... wait here for a moment?
 
-        Stage: 8
+        Stage: 7
         Actions: face_away_from_player
         Emotion: Sad
         ...
 
-        Stage: 9
-        Actions: give_item_boat_damage_report
-        ...
-
-        Stage: 10
+        Stage: 8
         Emotion: HappyTalking
         Could you give this to Bracken?
 
-        Stage: 11
+        Stage: 9
         I want to fix my boat.
 
-        Stage: 12
+        Stage: 10
+        Emotion: SadTalking
         I... want to go back...
 
-        Stage: 13
-        Emotion: SadTalking
+        Stage: 11
+        Emotion: ExtraSad
         B-but I don't want to bother them right away...
 
-        Stage: 14
+        Stage: 12
+        Emotion: SadTalking
         So maybe with this...
 
-        Stage: 15
+        Stage: 13
         They can just tell me what to do.
 
-        Stage: 16
+        Stage: 14
         Emotion: HappyTalking
+        Actions: give_item_boat_damage_report_on_close
         Could you do that for me?
+
+
+        Stage: repeat
+        Emotion: HappyTalking
+        Could you show Bracken the Boat Damage Report please?
+
+
+
+
+
 
 
 --- Stage
@@ -751,8 +767,12 @@ Required-Items:
         ...I would've asked much sooner.
 
         Stage: 4
-        Emotion: Happy
+        Emotion: HappyTalking
         This is... much nicer, though.
+
+        Stage: repeat
+        Emotion: HappyTalking
+        Let's wait until Bracken's done investigating.
 
 
 --- Stage
