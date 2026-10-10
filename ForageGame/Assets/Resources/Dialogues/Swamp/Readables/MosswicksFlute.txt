@@ -1,0 +1,72 @@
+--- Stage
+Actions: hide_self
+
+
+--- Stage
+Flags: MosswickLyriaSceneDone
+Actions: show_self
+
+    <main>
+
+        Stage: 0
+        This is Mosswick's old flute.
+
+        Stage: 1
+        It's wrapped safely in a piece of fabric.
+
+        Stage: 2
+        ...The flute looks beyond repair.
+
+        Stage: 3
+        (!)
+
+        Stage: 4
+        There's a note tucked into the fabric with the flute.
+
+        Stage: 5
+        "I thought of something special for you, Mossie!"
+
+        Stage: 6
+        "I made your Bog-Root Flute twin barrelled..."
+        
+        Stage: 7
+        "So it can produce two sounds at once!"
+        
+        Stage: 8
+        "To bring out the second tone of the Whispering Reeds..."
+        
+        Stage: 9
+        "You simply need to blow more vigorously."
+        
+        Stage: 10
+        "But with your air capacity, that should be no problem right?"
+        
+        Stage: 11
+        "Please tell me if you like this one better!"
+
+        Stage: 12
+        ...
+
+        Stage: 13
+        Actions: give_recipe_bogroot_flute_on_close
+        I think I can figure out how to make one from this.
+
+
+--- Stage
+Flags: MosswicksFluteInspected
+Absent-Items: BogRootFlute
+
+        Stage: 0
+        I don't think I should take Mosswick's flute.
+
+        Stage: 1
+        It's obviously important to him.
+
+        Stage: 2
+        I can try making a new one, though.
+
+
+--- Stage
+Flags: LyriaGrieving
+Required-Items: BogRootFlute
+Actions: hide_self
