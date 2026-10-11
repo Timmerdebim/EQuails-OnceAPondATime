@@ -8,56 +8,33 @@ public class InGameHintElement : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private InputActionReference _inputActionReference;
     [SerializeField] private Image _image;
-    private Tween tween;
     private bool _isShown = false;
+    private Tween tween;
 
-    void Start()
+    void Awake()
     {
         _canvasGroup.alpha = 0;
         gameObject.SetActive(false);
     }
 
-    public void SetActive(bool show, bool instant = false)
+    public void SetState(bool showHint)
     {
-        if (show) Show(instant);
-        else Hide(instant);
-    }
-
-    public void Show(bool instant = false)
-    {
-        if (_isShown) return;
-        else _isShown = true;
-
-        gameObject.SetActive(true);
-        RefreshVisuals();
+        if (showHint == _isShown) return;
+        _isShown = showHint;
 
         tween?.Kill();
-        if (instant)
-            _canvasGroup.alpha = 1;
-        else
-            tween = _canvasGroup.DOFade(1, 1).SetEase(Ease.InOutQuad);
-    }
 
-    public void Hide(bool instant = false)
-    {
-        if (!_isShown) return;
-        else _isShown = false;
-
-        tween?.Kill();
-        if (instant)
+        if (showHint)
         {
-            _canvasGroup.alpha = 0;
-            gameObject.SetActive(false);
+            _image.sprite = KeybindSystem.GetLastUsedKeybindVisual(_inputActionReference.action);
+            transform.SetAsFirstSibling();
+            gameObject.SetActive(true);
+            tween = _canvasGroup.DOFade(1, 1).SetEase(Ease.InOutQuad);
         }
         else
         {
             tween = _canvasGroup.DOFade(0, 0.2f).SetEase(Ease.InOutQuad)
             .OnComplete(() => gameObject.SetActive(false));
         }
-    }
-
-    public void RefreshVisuals()
-    {
-        _image.sprite = KeybindSystem.GetKeybindVisual(_inputActionReference.action, KeybindSystem.DeviceType.LastUsed);
     }
 }

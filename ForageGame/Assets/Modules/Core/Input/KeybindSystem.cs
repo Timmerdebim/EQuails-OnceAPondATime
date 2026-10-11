@@ -2,48 +2,36 @@ using System.Linq;
 using Project.Menus.Keybind;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.Utilities;
 using UnityEngine.U2D;
+using System;
 
 public static class KeybindSystem
 {
-    public enum DeviceType { Keyboard, Gamepad, LastUsed, LastConnected }
-
-    public static InputControl GetInputControlByDeviceType(DeviceType deviceType)
+    private static InputDevice lastDevice;
+    private static IDisposable subscription;
+ 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void Initialize()
     {
-        InputControl result;
-        switch (deviceType)
-        {
-            case DeviceType.Keyboard:
-                break; // TODO
-
-            case DeviceType.Gamepad:
-                break; // TODO
-
-            case DeviceType.LastUsed:
-                result = InputSystem.devices
-                .Where(d => d.lastUpdateTime > 0)
-                .OrderByDescending(d => d.lastUpdateTime)
-                .FirstOrDefault();
-                if (result != null) return result;
-                break;
-
-            case DeviceType.LastConnected:
-                result = InputSystem.devices
-                .OrderByDescending(d => d.lastUpdateTime)
-                .FirstOrDefault();
-                if (result != null) return result;
-                break;
-        }
-        // Default to first available device
-        result = InputSystem.devices[0];
-        if (result != null) return result;
-        Debug.Log("This is a major error - you have royally fucked up ngl...");
-        return null;
+        lastDevice = null;
+ 
+        subscription?.Dispose();
+        subscription = InputSystem.onAnyButtonPress.Call(control => lastDevice = control.device);
     }
 
-    public static Sprite GetKeybindVisual(InputAction action, DeviceType device)
+    public static InputControl GetLastUsedInputControl()
     {
-        InputControl inputControl = GetInputControlByDeviceType(device);
+        if (lastDevice is Gamepad gamepad && gamepad.added)
+            return gamepad;
+ 
+        return Keyboard.current;
+    }
+
+    public static Sprite GetLastUsedKeybindVisual(InputAction action)
+    {
+        InputControl inputControl = GetLastUsedInputControl();
 
         if (action == null) return null;
 
@@ -62,14 +50,4 @@ public static class KeybindSystem
         }
         return null;
     }
-
-    // public SpriteAtlas GetDeviceInputAtlas(DeviceType device)
-    // {
-
-    // }
-
-    // public SpriteAtlas GetInputSprite(InputControl controlScheme, InputAction action)
-    // {
-
-    // }
 }
