@@ -551,6 +551,43 @@ Actions: start_animation_grimble_eating
 
 
 
+--- Stage
+Flags: LanternCrafted
+Absent-Flags: GrimbleRejectedMosswick, GrimbleMosswickBoatInteractionDone
+
+    Location: DeepDark
+    BaseEmotion: Neutral
+        
+        Stage: 0
+        Emotion: TalkingNeutral
+        ...Boo.
+
+        Stage: 1
+        Emotion: TalkingAngry
+        Could you make that lantern any brighter?
+        
+        Stage: 2
+        I can't see a thing anymore.
+
+        Stage: 3
+        This place is SUPPOSED to be dark, you know?
+
+        Stage: 4
+        Emotion: Neutral
+        ...
+
+        Stage: 5
+        Emotion: NeutralTalking
+        Actions: face_away_from_player
+        Watch out for the spike crystal pit.
+
+        Stage: repeat
+        Emotion: NeutralTalking
+        Watch out for the spike crystal pit.
+
+
+
+
 
 
 --- Stage
