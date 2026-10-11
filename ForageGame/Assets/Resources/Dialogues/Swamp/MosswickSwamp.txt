@@ -363,6 +363,52 @@ Required-Items: TemporaryWingfix
 
 
 
+    Location: Sanctuary 
+    BaseEmotion: Sad
+
+        Stage: 0
+        Actions: hide_mosswick_home
+        Emotion: HappyTalking
+        Oh, hey friend!
+
+        Stage: 1
+        I... wasn't expecting you here!
+
+        Stage: 2
+        Not many animals find this place, with all that poison next door.
+
+        Stage: 3
+        Emotion: SadTalking
+        This is, uhm, kind of my little safe space.
+
+        Stage: 4
+        When everything gets a little overwhelming, you know?
+
+        Stage: 5
+        Emotion: HappyTalking
+        It's peaceful and quiet here.
+
+        Stage: 6
+        ...I like it.
+
+        Stage: 7
+        Emotion: Surprised
+        Oh - you can stay here too if you want!
+
+        Stage: 8
+        Emotion: HappyTalking
+        No worries, you're a friend after all!
+
+        Stage: 9
+        I'd love to sit here together... with you.
+
+
+        Stage: repeat
+        Emotion: HappyTalking
+        Stay as long as you like, I don't mind.
+
+
+
 
 
 
@@ -798,7 +844,33 @@ Flags: BoatInspectionComplete
 
 --- Stage
 Flags: ObtainedBoatRepairKitRecipe
-Required-Items:
+
+    Location: FireflyLake
+    BaseEmotion: Sad
+
+        Stage: 0
+        *huff puff*
+
+        Stage: 1
+        Emotion: Surprised
+        W-What? No, I-I'm not slacking off!
+        
+        Stage: 2
+        Emotion: SadTalking
+        I'm just... catching my breath...
+
+        Stage: 3
+        Bracken's working so fast
+
+        Stage: 4
+        And I just can't... keep up...
+
+        Stage: 5
+        These stubby legs aren't exactly made for this...
+
+        Stage: repeat
+        Emotion: SadTalking
+        So, how's the repair kit coming along for you?
 
 
 --- Stage
@@ -810,23 +882,31 @@ Required-Items: BoatRepairKit
 
         Stage: 0
         Emotion: HappyTalking
-        Oh... hey.
+        Oh hey, we just finished up the hull.
 
         Stage: 1
-        Actions: face_left
-        Sorry I ... can't talk.
+        Emotion: SadTalking
+        Bracken told me to take a break...
 
         Stage: 2
-        Actions: face_left
-        Bracken's working so fast...
+        Emotion: ExtraSad
+        ...Now I feel even more guilty.
 
         Stage: 3
-        Actions: face_left
-        I need to... keep up...
+        Emotion: SadTalking
+        How can they just keep going like that?
 
-        Stage: 3
-        Actions: face_left
-        Don't want to ... let them down...
+        Stage: 4
+        They don't even look remotely tired...
+
+        Stage: repeat
+        Emotion: HappyTalking
+        I'll be there to help in a bit, don't worry.
+
+
+
+
+
 
 
 --- Stage
