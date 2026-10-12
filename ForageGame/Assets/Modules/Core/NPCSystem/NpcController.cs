@@ -64,14 +64,15 @@ namespace NPC
             StoryFlagManager.onFlagAdded += OnNewStoryFlag;
             StoryFlagManager.onTimePassing += OnTimePassing;
             InventoryController.onNewItemSeen += OnNewItemSeen;
-            StoryFlagManager.onStoryFlagsLoaded += OnTimePassing; //just re-evaluate, needs not special handling
+            //NPCs and Readables do not respond to all flags being reloaded, since they already resume their state from save file
+           //StoryFlagManager.onStoryFlagsLoaded += OnTimePassing; //just re-evaluate, needs not special handling
         }
         void OnDisable()
         {
             StoryFlagManager.onFlagAdded -= OnNewStoryFlag;
             StoryFlagManager.onTimePassing -= OnTimePassing;
             InventoryController.onNewItemSeen -= OnNewItemSeen;
-            StoryFlagManager.onStoryFlagsLoaded -= OnTimePassing;
+            //StoryFlagManager.onStoryFlagsLoaded -= OnTimePassing;
         }
         //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
         private void Start()
