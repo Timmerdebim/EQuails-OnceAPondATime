@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2638040060402772585}
   m_Layer: 0
-  m_Name: BrackenLog
+  m_Name: BrackenFile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5904840502150886038}
   - {fileID: 5711139161816607608}
@@ -42,8 +42,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 2638040060402772585}
     m_Modifications:
     - target: {fileID: 3741376606801008150, guid: 07d3cb4794b8d0844b5d911dd85ce3be, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741376606801008150, guid: 07d3cb4794b8d0844b5d911dd85ce3be, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741376606801008150, guid: 07d3cb4794b8d0844b5d911dd85ce3be, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3741376606801008150, guid: 07d3cb4794b8d0844b5d911dd85ce3be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -116,6 +124,14 @@ PrefabInstance:
       propertyPath: _visuals
       value: 
       objectReference: {fileID: 1647555906751615904}
+    - target: {fileID: 2615941826176621022, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615941826176621022, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2920056586756819921, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
