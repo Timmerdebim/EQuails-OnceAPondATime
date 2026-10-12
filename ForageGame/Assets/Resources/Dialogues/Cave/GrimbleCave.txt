@@ -825,14 +825,16 @@ Flags: GrimbleBrackenSceneDone
 --- Stage
 Flags: GrimbleFinaleStarted
 
-    Location: Room
+    Location: RoomFinale
     <main>
     BaseEmotion: Neutral
 
         Stage: 0
+        Actions: face_left
         ...
 
         Stage: 1
+        Actions: face_left
         ...
 
         Stage: 2
@@ -840,7 +842,6 @@ Flags: GrimbleFinaleStarted
         They'd still... play it?
 
         Stage: 3
-        Actions: face_away_from_player
         After this?
 
         Stage: 4
@@ -850,7 +851,7 @@ Flags: GrimbleFinaleStarted
 
         Stage: 5
         Actions: face_away_from_player
-        *sniff sniff*
+        *sniffle*
 
         Stage: 6
         Actions: face_away_from_player
@@ -881,7 +882,7 @@ Flags: GrimbleFinaleStarted
 
 --- Stage
 Flags: GrimbleFinaleDone
-    Location: Room
+    Location: RoomFinale
     <main>
     BaseEmotion: Neutral
 
@@ -909,54 +910,50 @@ Flags: GrimbleFinaleDone
         I was just...
 
         Stage: 5
-        Actions: face_right
-        So scared...
-
-        Stage: 6
         Actions: face_left
         Emotion: Neutral
         So scared...
 
-        Stage: 7
+        Stage: 6
         Actions: face_left
         Emotion: Relieved
         B-but-
 
-        Stage: 8
+        Stage: 7
         Actions: face_left
         Emotion: Relieved
         You guys never really left.
 
-        Stage: 9
+        Stage: 8
         Actions: face_right
         Emotion: Relieved
         Did you?
 
+        Stage: 9
+        Actions: face_right
+        ...
+
         Stage: 10
         Actions: face_right
+        Emotion: Neutral
         ...
 
         Stage: 11
         Actions: face_right
         Emotion: Neutral
-        ...
+        Can we go back?
 
         Stage: 12
         Actions: face_right
         Emotion: Neutral
-        Can we go back?
-
-        Stage: 13
-        Actions: face_right
-        Emotion: Neutral
         Please?
 
-        Stage: 14
+        Stage: 13
         Actions: face_left
         Emotion: Relieved
         I - uhm...
 
-        Stage: 15
+        Stage: 14
         Actions: face_right, start_cutscene_final_on_close
         Emotion: Relieved
         Have some new things I want us to play.
