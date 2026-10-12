@@ -97,6 +97,7 @@ public class GameplayController : MonoBehaviour
         await LoadWorld();
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
+        StoryFlagManager.Instance.OnTimePassing();
         SetGameState(State.Playing);
 
         //give the sleeping hint after first night
@@ -120,6 +121,7 @@ public class GameplayController : MonoBehaviour
 
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
+        StoryFlagManager.Instance.OnTimePassing(); //we'll count dying as 'sleeping' too, since that's where the player wakes up anyway
         SetGameState(State.Playing);
         Debug.Log("[Gameplay] Player died.");
     }
@@ -224,7 +226,7 @@ public class GameplayController : MonoBehaviour
         Debug.Log("[Gameplay] Unloading World.");
         await _tsc.FadeOutAsync();
         await AwaitPadding();
-        StoryFlagManager.Instance.OnTimePassing();
+        //StoryFlagManager.Instance.OnTimePassing(); //no, only when sleeping, not general unload
         SaveManager.Instance.SaveWorld();
         await SceneServices.UnloadScene(_worldScene);
         Player.Instance.ResetAnimator();
