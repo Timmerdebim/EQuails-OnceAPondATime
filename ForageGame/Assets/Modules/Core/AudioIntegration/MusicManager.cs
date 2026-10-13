@@ -11,7 +11,7 @@ namespace AudioIntegration
     public class MusicTheme : ScriptableObject
     {
         public EventReference eventRef;
-        public bool instant; //for home base, so it doesn't stop when sleeping, might be unused actually, build it into sleeping itself
+        public bool instant = false; //for home base, so it doesn't stop when sleeping, might be unused actually, build it into sleeping itself
         public float cooldownSeconds = 120f;
     }
 
@@ -115,7 +115,7 @@ namespace AudioIntegration
             //sanity check
             if ((state != MusicManagerState.Scheduling && state != MusicManagerState.Playing) || !unlockedThemes.ContainsKey(theme))
             {
-                Debug.LogWarning($"[GameplayMusicManager]: Event theme play attempt ignored for theme:  {theme.name}, theme not unlocked!");
+                Debug.LogWarning($"[GameplayMusicManager]: Event theme play attempt ignored for theme:  {theme.name}, theme not unlocked or suspended!");
                 return;
             }
             //stop any currently playing theme
@@ -191,7 +191,7 @@ namespace AudioIntegration
                 Debug.Log($"[GemeplayMusicManager]: newly activated theme {theme.name} is instant, playing as event theme!");
                 PlayEventTheme(theme);
             }
-            Debug.Log($"[GameplayMusicManager] Theme added to active list: {theme.name}");
+            else Debug.Log($"[GameplayMusicManager] Theme added to active list: {theme.name}");
         }
 
         public void ThemeDeactivated(MusicTheme theme)

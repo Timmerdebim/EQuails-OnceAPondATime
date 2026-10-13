@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using FMODUnity;
 using Weather;
+using AudioIntegration;
 
 /// <summary>
 /// One Region in the game world, for audio and weather purposes.
@@ -26,6 +27,8 @@ public class Region : MonoBehaviour
     [SerializeField] private List<ParticleSystem> regionParticles;
 
     private Coroutine _waitForParticlesCoroutine;
+
+    [SerializeField] private List<MusicTheme> musicThemes = new List<MusicTheme>();
 
     private void Awake()
     {
@@ -63,6 +66,11 @@ public class Region : MonoBehaviour
             // Debug.Log($"[Region: {gameObject.name}]: enabling particle systems: {ps.gameObject.name}");
             ps.Play();
         }
+
+        foreach(var theme in musicThemes)
+        {
+            GameplayMusicManager.Instance.ThemeActivated(theme);
+        }
     }
 
     void OnDisable()
@@ -80,6 +88,11 @@ public class Region : MonoBehaviour
             }
         }
         if (anyPlaying) _waitForParticlesCoroutine = StartCoroutine(WaitForParticlesAndStop());
+
+        foreach(var theme in musicThemes)
+        {
+            GameplayMusicManager.Instance.ThemeDeactivated(theme);
+        }
     }
     private IEnumerator WaitForParticlesAndStop()
     {
