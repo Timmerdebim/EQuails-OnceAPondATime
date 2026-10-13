@@ -6,6 +6,6 @@ using FMODUnity;
 public class MusicTheme : ScriptableObject
 {
     public EventReference eventRef;
-    public bool instant = false; //for home base, so it doesn't stop when sleeping, might be unused actually, build it into sleeping itself
+    public bool instant = false; //for home base, so it starts instantly and bypasses scheduling
     public float cooldownSeconds = 120f;
 }
