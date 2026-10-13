@@ -7,14 +7,6 @@ using System.Linq;
 
 namespace AudioIntegration
 {
-    [CreateAssetMenu(menuName = "Audio/Music Theme")]
-    public class MusicTheme : ScriptableObject
-    {
-        public EventReference eventRef;
-        public bool instant = false; //for home base, so it doesn't stop when sleeping, might be unused actually, build it into sleeping itself
-        public float cooldownSeconds = 120f;
-    }
-
     /// <summary>
     /// Handles the random triggering of general music themes, also with events in mind
     /// </summary>

@@ -1,16 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using FMODUnity;
 
-[RequireComponent(typeof(BoxCollider))]
-public abstract class MusicTrigger : MonoBehaviour
+[CreateAssetMenu(menuName = "Audio/Music Theme")]
+public class MusicTheme : ScriptableObject
 {
-    //Apparently Unity declarations are private instead of protected by default lol ~Lars
-    protected BoxCollider col;
-
-    [SerializeField] public FMODUnity.EventReference theme;  // FMOD event path
-
-    [HideInInspector] public float lastPlayedTime = -Mathf.Infinity; //for theme cooldown
-
-    public abstract float GetScheduledTime();
-
+    public EventReference eventRef;
+    public bool instant = false; //for home base, so it doesn't stop when sleeping, might be unused actually, build it into sleeping itself
+    public float cooldownSeconds = 120f;
 }
