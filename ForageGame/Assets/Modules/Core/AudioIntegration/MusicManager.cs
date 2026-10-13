@@ -113,7 +113,7 @@ namespace AudioIntegration
         public void PlayEventTheme(MusicTheme theme)
         {
             //sanity check
-            if (!unlockedThemes.ContainsKey(theme))
+            if ((state != MusicManagerState.Scheduling && state != MusicManagerState.Playing) || !unlockedThemes.ContainsKey(theme))
             {
                 Debug.LogWarning($"[GameplayMusicManager]: Event theme play attempt ignored for theme:  {theme.name}, theme not unlocked!");
                 return;
