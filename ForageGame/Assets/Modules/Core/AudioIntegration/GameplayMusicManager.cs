@@ -181,7 +181,7 @@ namespace AudioIntegration
             if(theme.instant)
             {
                 Debug.Log($"[GemeplayMusicManager]: newly activated theme {theme.name} is instant, playing as event theme!");
-                PlayEventTheme(theme);
+                PlayTheme(theme);
             }
             else Debug.Log($"[GameplayMusicManager] Theme added to active list: {theme.name}");
         }
