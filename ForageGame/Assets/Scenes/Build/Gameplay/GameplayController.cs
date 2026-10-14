@@ -24,9 +24,11 @@ public class GameplayController : MonoBehaviour
     [SerializeField] private SceneReference _pauseScene;
     [SerializeField] private SceneReference _cutscene;
 
-    [Header("Story Flags")]
+    [Header("First night cutscene stuff")]
     [SerializeField] private StoryFlag firstNight;
     [SerializeField] private RecipeItem sleepHint;
+    [SerializeField] private MusicTheme firstNightTheme1;
+    [SerializeField] private MusicTheme firstNightTheme2;
 
     void Awake()
     {
@@ -87,6 +89,7 @@ public class GameplayController : MonoBehaviour
         {
             await AwaitSaftey();
             await SceneServices.LoadScene(_cutscene);
+            //GameplayMusicManager.Instance.ForcePlayTheme(firstNightTheme1);
             await AwaitPadding();
             await ImageCutsceneController.Instance.PlayFirstNightSequence();
             await AwaitPadding();
@@ -96,6 +99,10 @@ public class GameplayController : MonoBehaviour
 
         Player.Instance.playerController.IsSleeping(false);
         await LoadWorld();
+
+        //if(isfirstNight) GameplayMusicManager.Instance.ForcePlayTheme(firstNightTheme2); //part 2, so will override part 1's reverb tail
+
+        GameplayMusicManager.Instance.RestartScheduling();
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
         StoryFlagManager.Instance.OnTimePassing();

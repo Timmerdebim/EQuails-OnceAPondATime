@@ -147,6 +147,20 @@ namespace AudioIntegration
             unlockedThemes[theme] = Time.time + theme.cooldownSeconds;
         }
 
+        public void ForcePlayTheme(MusicTheme theme)
+        {
+            StopCurrentTheme();
+            state = MusicManagerState.Playing;
+            Debug.Log($"[GameplayMusicManager]: force play theme started: {theme.name}");
+        
+            currentThemeInstance = FMODUnity.RuntimeManager.CreateInstance(theme.eventRef);
+            currentThemeInstance.start();
+            currentTheme = theme;
+
+            //set cooldown timer, only if actually unlocked (force play ignores that)
+            if(unlockedThemes.ContainsKey(theme)) unlockedThemes[theme] = Time.time + theme.cooldownSeconds;
+        }
+
         //FMOD is restarted and requires this tomfoolery
         bool IsPlaying() 
         {
