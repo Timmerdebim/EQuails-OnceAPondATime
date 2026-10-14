@@ -8,7 +8,8 @@ using System.Linq;
 namespace AudioIntegration
 {
     /// <summary>
-    /// Handles the random triggering of general music themes, also with events in mind
+    /// Handles the random triggering of general music themes
+    /// Cutscenes and other special events should suspend this one and play independently, and restart this one once done.
     /// </summary>
     public class GameplayMusicManager : MonoBehaviour, IManagedAudioSource
     {
@@ -17,8 +18,7 @@ namespace AudioIntegration
         {
             Suspended, //no scheduling or playback, used for when transitioning out of gameplay
             Scheduling,
-            Playing, //regular scheduled play, stops theme if no region is found for it
-            SuspendedForEvent //does not have the region leave logic, only stops once event done or scene unloaded
+            Playing //regular scheduled play, stops theme if no region is found for it
         }
 
         //list of unlocked themes, with their cooldown time.
@@ -31,8 +31,9 @@ namespace AudioIntegration
 
         [SerializeField] private MusicManagerState state = MusicManagerState.Suspended; //manager starts suspended to give the save manager time to teleport the player to the correct location before playing anything
         private float nextScheduleTime; //next time the manager will attempt to play something
-        [SerializeField] private float minScheduleDelay = 10f;
-        [SerializeField] private float maxScheduleDelay = 40f;
+        [SerializeField] private Vector2 scheduleDelayRange = new Vector2(10f, 40f);
+        [SerializeField] private Vector2 priorityScheduleDelayRange = new(4f, 8f);
+        private MusicTheme priorityTheme; //these are themes that are tried first, mostly used for newly unlocked themes.
 
         void OnEnable()  => AudioManager.Instance.Register(this);
         void OnDisable() => AudioManager.Instance.Unregister(this);
@@ -61,7 +62,7 @@ namespace AudioIntegration
         bool OnCooldown(MusicTheme t) => unlockedThemes.TryGetValue(t, out var end) && Time.time < end;
 
 
-        private void SetNewScheduleTime() => nextScheduleTime = Time.time + Random.Range(minScheduleDelay, maxScheduleDelay);
+        private void SetNewScheduleTime() => nextScheduleTime = Time.time + Random.Range(scheduleDelayRange.x, scheduleDelayRange.y);
 
         private void TrySchedule()
         {
@@ -72,7 +73,15 @@ namespace AudioIntegration
                 Debug.Log($"[GameplayMusicManager]: No eligible themes to play, retrying in {nextScheduleTime - Time.time} seconds");
                 return; 
             }
-            PlayTheme(pool[Random.Range(0, pool.Count)]);
+            else if (priorityTheme != null && pool.Contains(priorityTheme)) //priority themes
+            {
+                PlayTheme(priorityTheme);
+                priorityTheme = null;
+            }
+            else //regular scheduling
+            {
+                PlayTheme(pool[Random.Range(0, pool.Count)]);
+            }
         }
 
         void Update()
@@ -82,8 +91,7 @@ namespace AudioIntegration
                 case MusicManagerState.Scheduling:
                     if (Time.time >= nextScheduleTime) TrySchedule();
                     break;
-                case MusicManagerState.Playing: //yes, this is allowed apparently in C#
-                case MusicManagerState.SuspendedForEvent: //leaving logic is done on Region leave and such
+                case MusicManagerState.Playing:
                     if (!IsPlaying()) 
                     { 
                         Debug.Log($"[GameplayMusicManager]: Theme finished! scheduling next theme...");
@@ -100,26 +108,22 @@ namespace AudioIntegration
 
         #region Playback and Control
 
-        //Event themes go until completion, no matter what (unless game close of course)
-        //remember that UnityEvents may only have one argument, hence the roundabout call chain
-        public void PlayEventTheme(MusicTheme theme)
+        //Marks 'theme' as priority, meaning it will be played next if possible.
+        public void QueuePriorityTheme(MusicTheme theme)
         {
             //sanity check
             if (state != MusicManagerState.Scheduling && state != MusicManagerState.Playing)
             {
-                Debug.LogWarning($"[GameplayMusicManager]: Event theme play attempt ignored for theme:  {theme.name}, musicmanager suspended!");
+                Debug.LogWarning($"[GameplayMusicManager]: Priority theme play attempt ignored for theme:  {theme.name}, musicmanager suspended!");
                 return;
             }
-            //stop any currently playing theme
+            //stop any currently playing theme, prevent overlap
             StopCurrentTheme();
-            Debug.Log($"[GameplayMusicManager]: Event theme started: {theme.name}");
-            state = MusicManagerState.SuspendedForEvent;
-            currentThemeInstance = FMODUnity.RuntimeManager.CreateInstance(theme.eventRef);
-            currentThemeInstance.start();
-            currentTheme = theme;
+            Debug.Log($"[GameplayMusicManager]: Priority theme queued: {theme.name}");
 
-            //set cooldown timer
-            unlockedThemes[theme] = Time.time + theme.cooldownSeconds;
+            state = MusicManagerState.Scheduling;
+            priorityTheme = theme;
+            nextScheduleTime = Time.time + Random.Range(priorityScheduleDelayRange.x, priorityScheduleDelayRange.y); //manual schedule time that is shorter
         }
 
         //regular 
@@ -146,6 +150,7 @@ namespace AudioIntegration
         //FMOD is restarted and requires this tomfoolery
         bool IsPlaying() 
         {
+            if (!currentThemeInstance.isValid()) return false;
             FMOD.Studio.PLAYBACK_STATE eventState;   
             currentThemeInstance.getPlaybackState(out eventState);
             return eventState != FMOD.Studio.PLAYBACK_STATE.STOPPED;
@@ -162,6 +167,7 @@ namespace AudioIntegration
             }
         }
 
+        //called by SaveManager after game has finished loading
         public void RestartScheduling()
         {
             StopCurrentTheme(); //should never have an effect
@@ -182,7 +188,7 @@ namespace AudioIntegration
             }
         }
 
-        public void ThemeActivated(MusicTheme theme)
+        public void RegionActivated(MusicTheme theme)
         {
             activeRegionThemes.Add(theme);
             if(theme.instant)
@@ -193,13 +199,13 @@ namespace AudioIntegration
             else Debug.Log($"[GameplayMusicManager] Theme added to active list: {theme.name}");
         }
 
-        public void ThemeDeactivated(MusicTheme theme)
+        public void RegionDeactivated(MusicTheme theme)
         {
             activeRegionThemes.Remove(theme);
-            //If currently playing this theme
-            if(state == MusicManagerState.Playing && currentTheme == theme)
+            //If the playing theme is no longer in an active region
+            if(state == MusicManagerState.Playing && !activeRegionThemes.Contains(currentTheme))
             {
-                Debug.Log($"[GameplayMusicManager]: Player exited region for current theme {theme.name}, stopping and restarting scheduling...");
+                Debug.Log($"[GameplayMusicManager]: Player exited region for current theme {currentTheme}, stopping and restarting scheduling...");
                 StopCurrentTheme();
                 SetNewScheduleTime();
                 state = MusicManagerState.Scheduling;

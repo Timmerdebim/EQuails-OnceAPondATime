@@ -556,7 +556,7 @@ namespace NPC
         public void RevealNpcHead(int npc) => CornerHeadManager.Instance.RevealNpc((DialogueSpeakerType)npc); //Ah yes, more jank. Thanks Unity!
 
         public void UnlockMusicTheme(MusicTheme theme) => GameplayMusicManager.Instance.UnlockTheme(theme);
-        public void PlayMusicTheme(MusicTheme theme) => GameplayMusicManager.Instance.PlayEventTheme(theme);
+        public void QueueMusicTheme(MusicTheme theme) => GameplayMusicManager.Instance.QueuePriorityTheme(theme);
 
         public void InvokeActionOnClose(string actionName)
         {
