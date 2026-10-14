@@ -69,7 +69,7 @@ public class Region : MonoBehaviour
 
         foreach(var theme in musicThemes)
         {
-            GameplayMusicManager.Instance.ThemeActivated(theme);
+            GameplayMusicManager.Instance.RegionActivated(theme);
         }
     }
 
@@ -91,7 +91,7 @@ public class Region : MonoBehaviour
 
         foreach(var theme in musicThemes)
         {
-            GameplayMusicManager.Instance.ThemeDeactivated(theme);
+            GameplayMusicManager.Instance.RegionDeactivated(theme);
         }
     }
     private IEnumerator WaitForParticlesAndStop()
