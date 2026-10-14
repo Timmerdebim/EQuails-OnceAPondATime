@@ -113,7 +113,7 @@
 	<object class="MixerBusPanner" id="{ccf21f22-f5d6-494f-9a04-6fc838bbf6b7}" />
 	<object class="SingleSound" id="{65dbb263-75af-48b8-b0a6-939fb01468be}">
 		<property name="start">
-			<value>0.75</value>
+			<value>72.75</value>
 		</property>
 		<property name="length">
 			<value>72</value>
@@ -124,7 +124,7 @@
 	</object>
 	<object class="SingleSound" id="{d455fc91-bc22-4a29-8379-5fc4c9f5a105}">
 		<property name="length">
-			<value>0.75</value>
+			<value>72.75</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{948f3f29-31be-49f9-9b05-4d7830394593}</destination>
@@ -151,10 +151,13 @@
 	</object>
 	<object class="SnapshotModule" id="{661985ee-267d-42f9-9ebd-8e88c4b9e467}">
 		<property name="length">
-			<value>72.75</value>
+			<value>144.75</value>
 		</property>
 		<relationship name="automators">
 			<destination>{9d0a8de5-78a8-44a0-8504-e89f2edf0c35}</destination>
+		</relationship>
+		<relationship name="modulators">
+			<destination>{29a9c714-d7b9-4dc3-8a91-88db854773ae}</destination>
 		</relationship>
 		<relationship name="fadeOutCurve">
 			<destination>{9ce45b27-dad0-4c1e-8b81-5969f60b38fc}</destination>
@@ -179,7 +182,7 @@
 	</object>
 	<object class="TempoMarker" id="{9613293b-985f-40e3-a3c2-ab6321318fb0}">
 		<property name="position">
-			<value>0</value>
+			<value>0.78179166666666666</value>
 		</property>
 		<property name="tempo">
 			<value>80</value>
@@ -193,7 +196,7 @@
 	</object>
 	<object class="LoopRegion" id="{de4d8087-460e-468b-a9b6-2682f0e9e683}">
 		<property name="position">
-			<value>0.75</value>
+			<value>72.75</value>
 		</property>
 		<property name="length">
 			<value>72</value>
@@ -243,6 +246,23 @@
 			<destination>{08729fcd-eb48-425d-b8e3-8fc4145698aa}</destination>
 		</relationship>
 	</object>
+	<object class="ADSRModulator" id="{29a9c714-d7b9-4dc3-8a91-88db854773ae}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>intensity</value>
+		</property>
+		<property name="attackTime">
+			<value>0</value>
+		</property>
+		<property name="peakValue">
+			<value>100</value>
+		</property>
+		<property name="sustainValue">
+			<value>100</value>
+		</property>
+		<property name="releaseTime">
+			<value>5000</value>
+		</property>
+	</object>
 	<object class="FadeCurve" id="{9ce45b27-dad0-4c1e-8b81-5969f60b38fc}">
 		<relationship name="startPoint">
 			<destination>{ddde9a70-6043-4c1a-8673-2cf4f7b519e8}</destination>
@@ -266,13 +286,11 @@
 		<relationship name="automationPoints">
 			<destination>{97d7ab63-d94b-4396-b4d7-add3af77e9ea}</destination>
 			<destination>{ee62385e-0005-4eb6-a8f7-afc3c44dff37}</destination>
-			<destination>{04e196b2-5234-4fcb-a5eb-995cdb151010}</destination>
-			<destination>{ff15e4ce-ae09-4d72-957d-07d76f474796}</destination>
 		</relationship>
 	</object>
 	<object class="AutomationPoint" id="{ddde9a70-6043-4c1a-8673-2cf4f7b519e8}">
 		<property name="position">
-			<value>72.75</value>
+			<value>144.75</value>
 		</property>
 		<property name="value">
 			<value>100</value>
@@ -280,7 +298,7 @@
 	</object>
 	<object class="AutomationPoint" id="{0e3b0fac-54e3-49bd-a793-bc6d99c07636}">
 		<property name="position">
-			<value>72.75</value>
+			<value>144.75</value>
 		</property>
 		<property name="value">
 			<value>0</value>
@@ -289,7 +307,7 @@
 	<object class="MixerBusFader" id="{09cd8923-4472-4581-9856-1d914d19ddb0}" />
 	<object class="AutomationPoint" id="{97d7ab63-d94b-4396-b4d7-add3af77e9ea}">
 		<property name="position">
-			<value>5.5172499999999998</value>
+			<value>0.78179166666666688</value>
 		</property>
 		<property name="value">
 			<value>0</value>
@@ -300,23 +318,7 @@
 			<value>19.310354166666666</value>
 		</property>
 		<property name="value">
-			<value>40</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{04e196b2-5234-4fcb-a5eb-995cdb151010}">
-		<property name="position">
-			<value>46.896541666666664</value>
-		</property>
-		<property name="value">
-			<value>40</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{ff15e4ce-ae09-4d72-957d-07d76f474796}">
-		<property name="position">
-			<value>57.931041666666665</value>
-		</property>
-		<property name="value">
-			<value>0</value>
+			<value>20</value>
 		</property>
 	</object>
 </objects>
