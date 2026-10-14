@@ -13,6 +13,7 @@ using TDK.PlayerSystem;
 using TDK.ItemSystem.Types;
 using TDK.SaveSystem;
 using TDK.InteractionSystem;
+using AudioIntegration;
 
 namespace NPC
 {
@@ -553,6 +554,9 @@ namespace NPC
 
         //corner heads
         public void RevealNpcHead(int npc) => CornerHeadManager.Instance.RevealNpc((DialogueSpeakerType)npc); //Ah yes, more jank. Thanks Unity!
+
+        public void UnlockMusicTheme(MusicTheme theme) => GameplayMusicManager.Instance.UnlockTheme(theme);
+        public void PlayMusicTheme(MusicTheme theme) => GameplayMusicManager.Instance.PlayEventTheme(theme);
 
         public void InvokeActionOnClose(string actionName)
         {

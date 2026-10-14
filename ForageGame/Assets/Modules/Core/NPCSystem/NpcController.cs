@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using TDK.ItemSystem.Types;
 using TDK.SaveSystem;
 using System;
+using AudioIntegration;
 
 namespace NPC
 {
@@ -405,6 +406,9 @@ namespace NPC
         public void MakeCornerHeadNotBlack() => CornerHeadManager.Instance.MakeNotBlack(character);
         public void RevealNpcHead(int npc) => CornerHeadManager.Instance.RevealNpc((DialogueSpeakerType)npc); //Ah yes, more jank. Thanks Unity!
 
+        public void UnlockMusicTheme(MusicTheme theme) => GameplayMusicManager.Instance.UnlockTheme(theme);
+        public void PlayMusicTheme(MusicTheme theme) => GameplayMusicManager.Instance.PlayEventTheme(theme);
+    
         public void InvokeActionOnClose(string actionName)
         {
             if (actionToTriggerAfterDialogue != null) Debug.LogWarning($"[NpcController: {character}] there is already an action set to be triggered after dialogue, overwriting! Previous flag: {actionToTriggerAfterDialogue}, new action: {actionName}");

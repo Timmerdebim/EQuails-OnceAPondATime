@@ -25,7 +25,7 @@ namespace AudioIntegration
         //TODO: SAVESAVE
         private Dictionary<MusicTheme, float> unlockedThemes = new Dictionary<MusicTheme, float>();
         //the current list of themes that could play in this area based on the active regions
-        private List<MusicTheme> activeRegionThemes = new List<MusicTheme>();
+        [SerializeField] private List<MusicTheme> activeRegionThemes = new List<MusicTheme>();
         [SerializeField] private MusicTheme currentTheme;
         [SerializeField] private FMOD.Studio.EventInstance currentThemeInstance; 
 
@@ -105,9 +105,9 @@ namespace AudioIntegration
         public void PlayEventTheme(MusicTheme theme)
         {
             //sanity check
-            if ((state != MusicManagerState.Scheduling && state != MusicManagerState.Playing) || !unlockedThemes.ContainsKey(theme))
+            if (state != MusicManagerState.Scheduling && state != MusicManagerState.Playing)
             {
-                Debug.LogWarning($"[GameplayMusicManager]: Event theme play attempt ignored for theme:  {theme.name}, theme not unlocked or suspended!");
+                Debug.LogWarning($"[GameplayMusicManager]: Event theme play attempt ignored for theme:  {theme.name}, musicmanager suspended!");
                 return;
             }
             //stop any currently playing theme
@@ -166,7 +166,7 @@ namespace AudioIntegration
 
         #region Region Management
 
-        public void UnlockNewTheme(MusicTheme theme)
+        public void UnlockTheme(MusicTheme theme)
         {
             if (!unlockedThemes.ContainsKey(theme))
             {
