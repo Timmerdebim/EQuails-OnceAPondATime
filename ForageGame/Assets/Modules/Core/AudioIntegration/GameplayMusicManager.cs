@@ -29,7 +29,7 @@ namespace AudioIntegration
         [SerializeField] private MusicTheme currentTheme;
         [SerializeField] private FMOD.Studio.EventInstance currentThemeInstance; 
 
-        [SerializeField] private MusicManagerState state = MusicManagerState.Scheduling;
+        [SerializeField] private MusicManagerState state = MusicManagerState.Suspended; //manager starts suspended to give the save manager time to teleport the player to the correct location before playing anything
         private float nextScheduleTime; //next time the manager will attempt to play something
         [SerializeField] private float minScheduleDelay = 10f;
         [SerializeField] private float maxScheduleDelay = 40f;
@@ -162,6 +162,13 @@ namespace AudioIntegration
             }
         }
 
+        public void RestartScheduling()
+        {
+            StopCurrentTheme(); //should never have an effect
+            SetNewScheduleTime();
+            state = MusicManagerState.Scheduling;
+        }
+
         #endregion
 
         #region Region Management
@@ -180,7 +187,7 @@ namespace AudioIntegration
             activeRegionThemes.Add(theme);
             if(theme.instant)
             {
-                Debug.Log($"[GemeplayMusicManager]: newly activated theme {theme.name} is instant, playing as event theme!");
+                Debug.Log($"[GemeplayMusicManager]: newly activated theme {theme.name} is instant, playing now!");
                 PlayTheme(theme);
             }
             else Debug.Log($"[GameplayMusicManager] Theme added to active list: {theme.name}");

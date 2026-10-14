@@ -7,6 +7,7 @@ using Eflatun.SceneReference;
 using TDK.PlayerSystem;
 using TDK.ItemSystem.Types;
 using TDK.ItemSystem.Inventory;
+using AudioIntegration;
 
 public class GameplayController : MonoBehaviour
 {
@@ -218,6 +219,7 @@ public class GameplayController : MonoBehaviour
         await AwaitSaftey();
         await AwaitPadding();
         _tsc.FadeIn();
+        GameplayMusicManager.Instance.RestartScheduling();
         Debug.Log("[Gameplay] Loaded World.");
     }
 
