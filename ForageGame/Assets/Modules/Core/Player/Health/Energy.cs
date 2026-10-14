@@ -97,7 +97,7 @@ public class Energy : MonoBehaviour, IHitHandler
     // Updates the UI bars positions based on current energy and damage.
     private void UpdateEnergyBar()
     {
-        float energyGap = 0.005f;
+        float energyGap = 0; // 0.005f;
         if (energyFill != null)
         {
             // Move energy bar left as energy decreases (anchored at right)
