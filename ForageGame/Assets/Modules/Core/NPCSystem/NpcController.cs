@@ -518,10 +518,10 @@ namespace NPC
                     }
                     _lastCompletedStageIndex = npcSaveData.LastCompletedStageIndex;
                     StartNewStoryStage(_database.storyStages[npcSaveData.currentStageIndex]);
-                    break;
+                    return;
                 }
             }
-            EvaluateActiveStage(true);
+            EvaluateActiveStage();
         }
         #endregion
     }

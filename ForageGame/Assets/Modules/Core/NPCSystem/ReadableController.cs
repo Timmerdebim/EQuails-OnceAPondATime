@@ -101,7 +101,7 @@ namespace NPC
                                     StoryFlagManager.Instance.flagDatabase.AsDictionary(),
                                     dialogueReferences.GetItemDataMap(),
                                     dialogueReferences.GetDialogueActionMap());
-            EvaluateActiveStage();
+            //EvaluateActiveStage();
 
             //Player.Instance.thinkingBox.syllableCountCurve = syllableCountCurve;
             textCtxSource = new CancellationTokenSource();
@@ -706,10 +706,10 @@ namespace NPC
                     }
                     _lastCompletedStageIndex = npcSaveData.LastCompletedStageIndex;
                     StartNewStoryStage(_database.storyStages[npcSaveData.currentStageIndex]);
-                    break;
+                    return;
                 }
             }
-            EvaluateActiveStage(true);
+            EvaluateActiveStage();
         }
         #endregion
     }
