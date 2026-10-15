@@ -46,7 +46,6 @@ namespace NPC
             GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject.transform.parent.gameObject)); //oof nasty hack to get the position right hehe
             if (!DuckAllForDialogueSnapshot.IsNull) 
             {
-                Debug.Log($"I like Lying: '{DuckAllForDialogueSnapshot.ToString()}'");
                 DuckAllForDialogue = FMODUnity.RuntimeManager.CreateInstance(DuckAllForDialogueSnapshot);
             }
         }
