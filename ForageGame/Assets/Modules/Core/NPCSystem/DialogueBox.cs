@@ -44,13 +44,17 @@ namespace NPC
             
             GibberishSpeech = FMODUnity.RuntimeManager.CreateInstance(GibberishSpeechEvent);
             GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject.transform.parent.gameObject)); //oof nasty hack to get the position right hehe
-            DuckAllForDialogue = FMODUnity.RuntimeManager.CreateInstance(DuckAllForDialogueSnapshot);
+            if (!DuckAllForDialogueSnapshot.IsNull) 
+            {
+                Debug.Log($"I like Lying: '{DuckAllForDialogueSnapshot.ToString()}'");
+                DuckAllForDialogue = FMODUnity.RuntimeManager.CreateInstance(DuckAllForDialogueSnapshot);
+            }
         }
 
         public async void OpenDialogue()
         {
             await CancelAnimations();
-            DuckAllForDialogue.start(); //Duck any playing ambience or theme - focus is on the dialogue
+            if (DuckAllForDialogue.isValid())  DuckAllForDialogue.start(); //Duck any playing ambience or theme - focus is on the dialogue
             animateIn = AnimateIn(animationCtxSource.Token);
         }
 
@@ -58,7 +62,7 @@ namespace NPC
         {
             await CancelAnimations();
             animateOut = AnimateOut(animationCtxSource.Token);
-            DuckAllForDialogue.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
+            if (DuckAllForDialogue.isValid())  DuckAllForDialogue.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
         }
 
         private async Task AnimateIn(CancellationToken ctx)

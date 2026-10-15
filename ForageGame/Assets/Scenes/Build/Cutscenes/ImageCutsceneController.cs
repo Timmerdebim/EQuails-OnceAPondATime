@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Threading.Tasks;
+using AudioIntegration;
 
 [RequireComponent(typeof(Animator))]
 public class ImageCutsceneController : MonoBehaviour
@@ -43,5 +44,11 @@ public class ImageCutsceneController : MonoBehaviour
     {
         _animator.SetTrigger("FirstNight");
         await Task.Delay(Mathf.CeilToInt(_firstNightDuration * 1000));
+    }
+
+    //called by animation itself via event
+    public void PlayCutsceneMusic(MusicTheme theme)
+    {
+        GameplayMusicManager.Instance.ForcePlayEventTheme(theme);
     }
 }

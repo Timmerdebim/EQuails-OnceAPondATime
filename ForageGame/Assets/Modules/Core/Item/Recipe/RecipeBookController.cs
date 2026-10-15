@@ -59,6 +59,8 @@ namespace TDK.ItemSystem.Inventory
             SetVisualization(!IsVisualized);
         }
 
+        
+
         public void SetVisualization(bool isEnabled)
         {
             if (isEnabled == IsVisualized) return;

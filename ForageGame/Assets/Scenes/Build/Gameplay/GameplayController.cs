@@ -92,24 +92,24 @@ public class GameplayController : MonoBehaviour
             //GameplayMusicManager.Instance.ForcePlayTheme(firstNightTheme1);
             await AwaitPadding();
             await ImageCutsceneController.Instance.PlayFirstNightSequence();
-            await AwaitPadding();
+            //await AwaitPadding();
             await SceneServices.UnloadScene(_cutscene);
-            await AwaitSaftey();
+            //await AwaitSaftey();
         }
 
         Player.Instance.playerController.IsSleeping(false);
         await LoadWorld();
-
-        //if(isfirstNight) GameplayMusicManager.Instance.ForcePlayTheme(firstNightTheme2); //part 2, so will override part 1's reverb tail
-
-        GameplayMusicManager.Instance.RestartScheduling();
         Player.Instance.energy.TakeDamage(-9999);
         Player.Instance.energy.AddEnergy(9999);
         StoryFlagManager.Instance.OnTimePassing();
         SetGameState(State.Playing);
 
         //give the sleeping hint after first night
-        if(isfirstNight) RecipeBookController.Instance.TryAddRecipe(sleepHint);
+        if(isfirstNight) 
+        {
+            GameplayMusicManager.Instance.ForcePlayTheme(firstNightTheme2); //part 2, so will override part 1's reverb tail
+            RecipeBookController.Instance.TryAddRecipe(sleepHint);
+        }
         Debug.Log("[Gameplay] Player slept.");
 
     }

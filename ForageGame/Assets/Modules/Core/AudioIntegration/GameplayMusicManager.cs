@@ -19,7 +19,8 @@ namespace AudioIntegration
         {
             Suspended, //no scheduling or playback, used for when transitioning out of gameplay
             Scheduling,
-            Playing //regular scheduled play, stops theme if no region is found for it
+            Playing, //regular scheduled play, stops theme if no region is found for it
+            PlayingEvent //for cutscenes, does not get interrupted lifetime / region and just forces completion
         }
         [SerializeField] private MusicDatabase _database;
 
@@ -94,6 +95,7 @@ namespace AudioIntegration
                     if (Time.time >= nextScheduleTime) TrySchedule();
                     break;
                 case MusicManagerState.Playing:
+                case MusicManagerState.PlayingEvent:
                     if (!IsPlaying()) 
                     { 
                         Debug.Log($"[GameplayMusicManager]: Theme finished! scheduling next theme...");
@@ -163,6 +165,20 @@ namespace AudioIntegration
             if(unlockedThemes.ContainsKey(theme)) unlockedThemes[theme] = Time.time + theme.cooldownSeconds;
         }
 
+        public void ForcePlayEventTheme(MusicTheme theme)
+        {
+            StopCurrentTheme();
+            state = MusicManagerState.PlayingEvent;
+            Debug.Log($"[GameplayMusicManager]: force play event theme started: {theme.name}");
+        
+            currentThemeInstance = FMODUnity.RuntimeManager.CreateInstance(theme.eventRef);
+            currentThemeInstance.start();
+            currentTheme = theme;
+
+            //set cooldown timer, only if actually unlocked (force play ignores that)
+            if(unlockedThemes.ContainsKey(theme)) unlockedThemes[theme] = Time.time + theme.cooldownSeconds;
+        }
+
         //FMOD is restarted and requires this tomfoolery
         bool IsPlaying() 
         {
@@ -174,6 +190,7 @@ namespace AudioIntegration
 
         private void StopCurrentTheme()
         {
+            Debug.Log($"Stopping current theme???");
             if(IsPlaying() && currentThemeInstance.isValid())
             {
                 currentThemeInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -186,6 +203,7 @@ namespace AudioIntegration
         //called by SaveManager after game has finished loading
         public void RestartScheduling()
         {
+            if(state == MusicManagerState.PlayingEvent) return; //cutscene music is bleeding over, let it
             StopCurrentTheme(); //should never have an effect
             SetNewScheduleTime();
             state = MusicManagerState.Scheduling;
@@ -207,7 +225,7 @@ namespace AudioIntegration
         public void RegionActivated(MusicTheme theme)
         {
             activeRegionThemes.Add(theme);
-            if(theme.instant)
+            if(theme.instant && unlockedThemes.ContainsKey(theme))
             {
                 Debug.Log($"[GemeplayMusicManager]: newly activated theme {theme.name} is instant, playing now!");
                 PlayTheme(theme);
