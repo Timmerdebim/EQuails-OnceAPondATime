@@ -520,7 +520,7 @@ namespace NPC
                     break;
                 }
             }
-            //EvaluateActiveStage(true); //done at the end by time passing anyway!
+            EvaluateActiveStage(true);
         }
         #endregion
     }
