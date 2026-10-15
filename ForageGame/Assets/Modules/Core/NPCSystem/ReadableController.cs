@@ -72,6 +72,7 @@ namespace NPC
 
         [Tooltip("For readables that are one-time readables (i.e. use main dialogue) but are not mandatory")]
         [SerializeField] private bool showsExclamationMark = true; 
+        [SerializeField] private bool _debugMode = false;
 
         private bool isBeingDisabled = false; //insane stupid bullshit hack to not have the popup thing pop up when being disabled
 
@@ -114,7 +115,7 @@ namespace NPC
                 _interactable.SetInteractibility(false);
                 HideStatusIndicator();
                 isBeingDisabled = false;
-                Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Interactable {_interactable.name} Disabled!");
+                if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Interactable {_interactable.name} Disabled!");
             }
         }
 
@@ -123,7 +124,7 @@ namespace NPC
             if (_interactable != null)
             {
                 _interactable.SetInteractibility(true);
-                Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Interactable {_interactable.name} Enabled!");
+                if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Interactable {_interactable.name} Enabled!");
             }
         }
 
@@ -180,13 +181,13 @@ namespace NPC
         {
             if (actionToTriggerAfterDialogue != null)
             {
-                Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] invoking action {actionToTriggerAfterDialogue} after dialogue as planned");
+                if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] invoking action {actionToTriggerAfterDialogue} after dialogue as planned");
                 actionToTriggerAfterDialogue.Invoke();
                 actionToTriggerAfterDialogue = null;
             }
             if (FlagToSetAfterDialogue != null)
             {
-                Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Setting storyflag {FlagToSetAfterDialogue.id} after dialogue as planned");
+                if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Setting storyflag {FlagToSetAfterDialogue.id} after dialogue as planned");
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);
                 FlagToSetAfterDialogue = null;
             }
@@ -194,7 +195,7 @@ namespace NPC
         }
         private void EvaluateActiveStage(bool timePassed = false)
         {
-            // Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Re-evaluating active stage, current stage index is {GetActiveStageIndex()}");
+            if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Re-evaluating active stage, current stage index is {GetActiveStageIndex()}");
 
             var flags = StoryFlagManager.Instance;
             var inventory = InventoryController.Instance;
@@ -211,7 +212,7 @@ namespace NPC
 
             if (next == _activeStage || next == null)
             {
-                // Debug.Log($"[ReadableController: {character}] No new Active StoryStage detected");
+                if (_debugMode) Debug.Log($"[ReadableController: {character}] No new Active StoryStage detected");
                 return; //if makes no difference nothing changes!
             }
 
@@ -232,7 +233,7 @@ namespace NPC
 
             //switch the stage
             _activeStage = stage;
-            Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] New active StoryStage set with index {GetActiveStageIndex()}");
+            if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] New active StoryStage set with index {GetActiveStageIndex()}");
             if (_activeStage == null)
             {
                 Debug.LogError($"[ReadableController: {transform.parent.gameObject.name}] No active StoryStage");
@@ -264,7 +265,7 @@ namespace NPC
                 ShowStatusIndicator();
                 if (!ld.isMainDialogue) 
                 {
-                    Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
+                    if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
                     _lastCompletedStageIndex = GetActiveStageIndex();
                 }
             }
@@ -314,16 +315,16 @@ namespace NPC
             //Repeat logic
             if (_lineIndex >= dialogue.StandardLines.Count)
             {
-                Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Regular dialogue stages exhausted...");
+                if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Regular dialogue stages exhausted...");
                 var repeatLine = dialogue.GetSpecialLine("repeat");
                 if (repeatLine != null)
                 {
-                    Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] ...Displaying repeat stage");
+                    if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] ...Displaying repeat stage");
                     return new DialogueResult(repeatLine, true);
                 }
                 else
                 {
-                    Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] ...But no repeat stage assigned, restarting _locationDialogue");
+                    if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] ...But no repeat stage assigned, restarting _locationDialogue");
                     _lineIndex = 0;
                 }
             }
@@ -337,11 +338,11 @@ namespace NPC
             //check if _locDialogue is complete
             if (_lineIndex >= dialogue.StandardLines.Count)
             {
-                Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Finished locationDialogue");
+                if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Finished locationDialogue");
                 res.CloseAfter = true;
                 if (dialogue.isMainDialogue)
                 {
-                    Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Finished MAIN locationDialogue");
+                    if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Finished MAIN locationDialogue");
                     _lastCompletedStageIndex = GetActiveStageIndex();
                     SetStatusIndicatorText(false); //set indicator text to '...' (main dialogue is done)
                 }
@@ -386,7 +387,7 @@ namespace NPC
             }
             if (_lastCompletedStageIndex != GetActiveStageIndex())
             {
-                Debug.Log($"[ReadableController]: Leave_polite dialogue requested for non-finished StoryStage, ignored!");
+                if (_debugMode) Debug.Log($"[ReadableController]: Leave_polite dialogue requested for non-finished StoryStage, ignored!");
                 return null;
             }
             return dialogue.GetSpecialLine("leave_polite"); //will be null anyway if none found
@@ -573,7 +574,7 @@ namespace NPC
 
         public void TryTakeItem(ItemTakeActionsArgs args)
         {
-            Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to take item {args.item} from player inventory");
+            if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to take item {args.item} from player inventory");
             if (InventoryController.Instance.TryRemoveItemAtAny(args.item))
             {
                 StoryFlagManager.Instance.AddFlag(args.OnSuccess);
@@ -586,7 +587,7 @@ namespace NPC
         //IMPORTANT: this does not actually take the item on close, but just sets the flag on close. Use regular InvokeActionOnClose for the former
         public void TryTakeItemOnClose(ItemTakeActionsArgs args)
         {
-            Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to take item {args.item} from player inventory");
+            if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to take item {args.item} from player inventory");
             if (InventoryController.Instance.TryRemoveItemAtAny(args.item))
             {
                 FlagToSetAfterDialogue = args.OnSuccess;
@@ -602,7 +603,7 @@ namespace NPC
                 Debug.LogError($"[ReadableController: {transform.parent.gameObject.name}] Can't use item {args.item} because it is not a Consumable!");
                 return;
             }
-            Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to use consumable item {args.item} from player inventory");
+            if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to use consumable item {args.item} from player inventory");
             if (args.item.TryUse())
             {
                 StoryFlagManager.Instance.AddFlag(args.OnSuccess);
@@ -625,10 +626,10 @@ namespace NPC
 
         public void GiveRecipe(RecipeItem item)
         {
-            Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to give recipe {item} to player recipe book");
+            if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Trying to give recipe {item} to player recipe book");
             if (RecipeBookController.Instance.TryAddRecipe(item))
             {
-                Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Successfully gave recipe {item} to player recipe book");
+                if (_debugMode) Debug.Log($"[ReadableController: {transform.parent.gameObject.name}] Successfully gave recipe {item} to player recipe book");
                 //StoryFlagManager.Instance.AddFlag(args.OnSuccess);
                 //MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item giving instead of closing and re-opening
             }

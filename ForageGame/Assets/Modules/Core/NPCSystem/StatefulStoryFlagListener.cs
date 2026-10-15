@@ -52,7 +52,7 @@ public class StatefulStoryFlagListener : MonoBehaviour
             if (entry.flag == null || StoryFlagManager.Instance.FlagActive(entry.flag))
             {
                 activeEntry = entry;
-                if (entry.flag == null) Debug.Log($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: None flag");
+                if (entry.flag == null) Debug.LogWarning($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: None flag");
                 else Debug.Log($"[StatefulStoryFlagListener]: {gameObject.name} new active StoryFlagListenerEntry: {entry.flag.id}");
                 activeEntry.action?.Invoke();
                 return;

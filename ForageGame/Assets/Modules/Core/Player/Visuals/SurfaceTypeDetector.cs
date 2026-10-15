@@ -24,6 +24,7 @@ public class SurfaceTypeDetector : MonoBehaviour
 
     [SerializeField] private SurfaceTypeEntry defaultSurfaceTypeEntry = new SurfaceTypeEntry {type = SurfaceType.Grass, dustColor = Color.clear};
 
+    [SerializeField] private bool _debugMode = false;
 
     private void Awake()
     {
@@ -38,7 +39,7 @@ public class SurfaceTypeDetector : MonoBehaviour
         terrain = t;
         terrainData = t.terrainData;
         terrainPosition = t.transform.position;
-        Debug.Log($"[SurfaceTypeDetector]: Player entered island terrain zone: {t.terrainData}");
+        if (_debugMode) Debug.Log($"[SurfaceTypeDetector]: Player entered island terrain zone: {t.terrainData}");
     }
 
     ///IMPORTANT: in between islands, this means terrain will be null
@@ -51,7 +52,7 @@ public class SurfaceTypeDetector : MonoBehaviour
         terrain = null;
         terrainData = null;
         //terrainPosition = null; //does not need to be cleared
-        Debug.Log($"[SurfaceTypeDetector]: Player left island terrain zone: {t.terrainData}");
+        if (_debugMode) Debug.Log($"[SurfaceTypeDetector]: Player left island terrain zone: {t.terrainData}");
     }
 
     public SurfaceTypeEntry GetSurfaceType()
@@ -115,7 +116,7 @@ public class SurfaceTypeDetector : MonoBehaviour
         if (terrain == null || terrainData.terrainLayers.Length == 0)
         {
             // Debug disabled by Tim; WAY TO MANY ERRORS, PLEASE STOP!!!
-            Debug.Log($"[SurfaceTypeDetector]: No terrain active or terrain has no layers, defaulting to Grass!");
+            if (_debugMode) Debug.Log($"[SurfaceTypeDetector]: No terrain active or terrain has no layers, defaulting to Grass!");
             return defaultSurfaceTypeEntry;
         }
         int textureIndex;
@@ -125,7 +126,7 @@ public class SurfaceTypeDetector : MonoBehaviour
         }
         catch(Exception e)
         {
-            Debug.Log($"[SurfaceTypeDetector]: caught error {e}. defaulting to grass terrain!");
+            if (_debugMode) Debug.Log($"[SurfaceTypeDetector]: caught error {e}. defaulting to grass terrain!");
             return defaultSurfaceTypeEntry;
         }
         //int textureIndex = GetDominantTextureIndex(transform.position);
@@ -176,7 +177,7 @@ public class SurfaceTypeDetector : MonoBehaviour
     {
         if (surfaceTypeLayerDict != null && surfaceTypeLayerDict.TryGetValue(layer, out var entry))
             return entry;
-        Debug.Log("Terrain Type not present in TerrainMap, falling back to Grass with no dust!");
+        if (_debugMode) Debug.Log("Terrain Type not present in TerrainMap, falling back to Grass with no dust!");
         return defaultSurfaceTypeEntry;
     }
 

@@ -55,6 +55,7 @@ namespace NPC
         [SerializeField] private StoryFlag FlagToSetAfterDialogue = null;
 
         [SerializeField] private UnityEvent actionToTriggerAfterDialogue = null;
+        [SerializeField] private bool _debugMode = false;
 
         void Awake()
         {
@@ -115,13 +116,13 @@ namespace NPC
 
             if (actionToTriggerAfterDialogue != null)
             {
-                Debug.Log($"[NpcController: {character}] invoking action {actionToTriggerAfterDialogue} after dialogue as planned");
+                if (_debugMode) Debug.Log($"[NpcController: {character}] invoking action {actionToTriggerAfterDialogue} after dialogue as planned");
                 actionToTriggerAfterDialogue.Invoke();
                 actionToTriggerAfterDialogue = null;
             }
             if (FlagToSetAfterDialogue != null)
             {
-                Debug.Log($"[NpcController: {character}] Setting storyflag {FlagToSetAfterDialogue.id} after dialogue as planned");
+                if (_debugMode) Debug.Log($"[NpcController: {character}] Setting storyflag {FlagToSetAfterDialogue.id} after dialogue as planned");
                 StoryFlagManager.Instance.AddFlag(FlagToSetAfterDialogue);
                 FlagToSetAfterDialogue = null;
             }
@@ -134,7 +135,7 @@ namespace NPC
         }
         private void EvaluateActiveStage(bool timePassed = false)
         {
-            // Debug.Log($"[NpcController: {character}] Re-evaluating active stage, current stage index is {GetActiveStageIndex()}");
+            if (_debugMode) Debug.Log($"[NpcController: {character}] Re-evaluating active stage, current stage index is {GetActiveStageIndex()}");
 
             var flags = StoryFlagManager.Instance;
             var inventory = InventoryController.Instance;
@@ -152,7 +153,7 @@ namespace NPC
 
             if (next == _activeStage || next == null)
             {
-                // Debug.Log($"[NpcController: {character}] No new Active StoryStage detected");
+                if (_debugMode) Debug.Log($"[NpcController: {character}] No new Active StoryStage detected");
                 return; //if makes no difference nothing changes!
             }
 
@@ -161,7 +162,7 @@ namespace NPC
 
         private void StartNewStoryStage(StoryStage stage)
         {
-            Debug.Log($"[NpcController: {character}] New StoryStage found with index {_database.storyStages.IndexOf(stage)}");
+            if (_debugMode) Debug.Log($"[NpcController: {character}] New StoryStage found with index {_database.storyStages.IndexOf(stage)}");
 
             //first, disable the old stage's locations that are no longer active
             //allow them to unfocus themselves and close any dialogue
@@ -191,7 +192,7 @@ namespace NPC
             //if the current stage has no main dialogue to display, auto-complete it
             if (ActiveStageEmpty())
             {
-                Debug.Log($"[NpcController: {character}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
+                if (_debugMode) Debug.Log($"[NpcController: {character}] Active StoryStage {GetActiveStageIndex()} has no main dialogue to display, auto-completing!");
                 _lastCompletedStageIndex = GetActiveStageIndex();
                 //NOTE: I do not re-check for new active stage since an empty storystage is a deliberate choice, to have a break in the story.
                 //Thus, this will only be done when picking up a new flag or item.
@@ -302,16 +303,16 @@ namespace NPC
             //Repeat logic
             if (_lineIndices[location] >= dialogue.StandardLines.Count)
             {
-                Debug.Log($"[NpcController: {character}] Regular dialogue stages exhausted...");
+                if (_debugMode) Debug.Log($"[NpcController: {character}] Regular dialogue stages exhausted...");
                 var repeatLine = dialogue.GetSpecialLine("repeat");
                 if (repeatLine != null)
                 {
-                    Debug.Log($"[NpcController: {character}] ...Displaying repeat stage");
+                    if (_debugMode) Debug.Log($"[NpcController: {character}] ...Displaying repeat stage");
                     return new DialogueResult(repeatLine, true);
                 }
                 else
                 {
-                    Debug.Log($"[NpcController: {character}] ...But no repeat stage assigned, restarting LocationDialogue");
+                    if (_debugMode) Debug.Log($"[NpcController: {character}] ...But no repeat stage assigned, restarting LocationDialogue");
                     _lineIndices[location] = 0;
                 }
             }
@@ -325,11 +326,11 @@ namespace NPC
             //check if LocationDialogue is complete
             if (_lineIndices[location] >= dialogue.StandardLines.Count)
             {
-                Debug.Log($"[NpcController: {character}] Finished locationDialogue");
+                if (_debugMode) Debug.Log($"[NpcController: {character}] Finished locationDialogue");
                 res.CloseAfter = true;
                 if (dialogue.isMainDialogue)
                 {
-                    Debug.Log($"[NpcController: {character}] Finished MAIN locationDialogue");
+                    if (_debugMode) Debug.Log($"[NpcController: {character}] Finished MAIN locationDialogue");
                     _lastCompletedStageIndex = GetActiveStageIndex();
                     location.SetStatusIndicatorText(false); //set indicator text to '...' (main dialogue is done)
                     //EvaluateActiveStage(); //TODO: only do after the box is closed
@@ -376,7 +377,7 @@ namespace NPC
             }
             if (_lastCompletedStageIndex != GetActiveStageIndex())
             {
-                Debug.Log($"[NpcController: {character}]: Leave_polite dialogue requested for non-finished StoryStage, ignored!");
+                if (_debugMode) Debug.Log($"[NpcController: {character}]: Leave_polite dialogue requested for non-finished StoryStage, ignored!");
                 return null;
             }
             return dialogue.GetSpecialLine("leave_polite"); //will be null anyway if none found
@@ -434,7 +435,7 @@ namespace NPC
 
         public void TryTakeItem(ItemTakeActionsArgs args)
         {
-            Debug.Log($"[NpcController: {gameObject.name}] Trying to take item {args.item} from player inventory");
+            if (_debugMode) Debug.Log($"[NpcController: {gameObject.name}] Trying to take item {args.item} from player inventory");
             if (InventoryController.Instance.TryRemoveItemAtAny(args.item))
             {
                 StoryFlagManager.Instance.AddFlag(args.OnSuccess);
@@ -449,7 +450,7 @@ namespace NPC
                 Debug.LogError($"[NpcController: {gameObject.name}] Can't use item {args.item} because it is not a Consumable!");
                 return;
             }
-            Debug.Log($"[NpcController: {gameObject.name}] Trying to use consumable item {args.item} from player inventory");
+            if (_debugMode) Debug.Log($"[NpcController: {gameObject.name}] Trying to use consumable item {args.item} from player inventory");
             if (args.item.TryUse())
             {
                 StoryFlagManager.Instance.AddFlag(args.OnSuccess);
@@ -459,23 +460,23 @@ namespace NPC
 
         public void TryGiveItem(ItemData item)
         {
-            Debug.Log($"[NpcLocation: {gameObject.name}] Trying to give item {item} from player inventory");
+            if (_debugMode) Debug.Log($"[NpcLocation: {gameObject.name}] Trying to give item {item} from player inventory");
             
             //try to give the item directly to the inventory (items handle this themselves)
             if (!item.TryWorldItemInteract())
             {
                 //player inventory full, spawn on ground instead (at last interacted NpcLocation)
-                Debug.Log($"[NpcLocation: {gameObject.name}] Player inventory full, spawning item {item} with itemspawner of NpcLocation {_lastActiveLocation.gameObject.name}");
+                if (_debugMode) Debug.Log($"[NpcLocation: {gameObject.name}] Player inventory full, spawning item {item} with itemspawner of NpcLocation {_lastActiveLocation.gameObject.name}");
                 _lastActiveLocation.GetComponent<SimpleItemSpawner>().SetAndSpawnItemLocal(item);
             }
         }
 
         public void GiveRecipe(RecipeItem item)
         {
-            Debug.Log($"[NpcLocation: {gameObject.name}] Trying to give recipe {item} to player recipe book");
+            if (_debugMode) Debug.Log($"[NpcLocation: {gameObject.name}] Trying to give recipe {item} to player recipe book");
             if (RecipeBookController.Instance.TryAddRecipe(item))
             {
-                Debug.Log($"[NpcLocation: {gameObject.name}] Successfully gave recipe {item} to player recipe book");
+                if (_debugMode) Debug.Log($"[NpcLocation: {gameObject.name}] Successfully gave recipe {item} to player recipe book");
                 //StoryFlagManager.Instance.AddFlag(args.OnSuccess);
                 //MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item giving instead of closing and re-opening
             }
