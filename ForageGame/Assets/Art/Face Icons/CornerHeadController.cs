@@ -67,7 +67,6 @@ public class CornerHeadController : MonoBehaviour, ISaveable, ILoadable
     public void LoadData(WorldSaveData data)
     {
         _revealed = data.cornerHeadsState[_saveInt];
-        Debug.Log($"[CornerHeadController: {gameObject.name}]: loading data black: {data.cornerHeadsBlack[_saveInt]}, revealed: data.cornerHeadsState[_saveInt]");
         _black = data.cornerHeadsBlack[_saveInt];
         UpdateVisuals();
     }
@@ -76,6 +75,5 @@ public class CornerHeadController : MonoBehaviour, ISaveable, ILoadable
     {
         data.cornerHeadsState[_saveInt] = _revealed;
         data.cornerHeadsBlack[_saveInt] = _black;
-        Debug.Log($"[CornerHeadController: {gameObject.name}]: saving data black: {data.cornerHeadsBlack[_saveInt]}, revealed: data.cornerHeadsState[_saveInt]");
     }
 }
