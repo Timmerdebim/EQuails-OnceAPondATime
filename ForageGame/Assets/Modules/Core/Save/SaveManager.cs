@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TDK.ItemSystem.Inventory;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace TDK.SaveSystem
 {

@@ -4,6 +4,7 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 using System.Linq;
+using TDK.SaveSystem;
 
 namespace AudioIntegration
 {
@@ -11,7 +12,7 @@ namespace AudioIntegration
     /// Handles the random triggering of general music themes
     /// Cutscenes and other special events should suspend this one and play independently, and restart this one once done.
     /// </summary>
-    public class GameplayMusicManager : MonoBehaviour, IManagedAudioSource
+    public class GameplayMusicManager : MonoBehaviour, IManagedAudioSource, ISaveable, ILoadable
     {
         public static GameplayMusicManager Instance { get; private set; }
         public enum MusicManagerState
@@ -20,6 +21,7 @@ namespace AudioIntegration
             Scheduling,
             Playing //regular scheduled play, stops theme if no region is found for it
         }
+        [SerializeField] private MusicDatabase _database;
 
         //list of unlocked themes, with their cooldown time.
         //TODO: SAVESAVE
@@ -239,6 +241,20 @@ namespace AudioIntegration
         {
             StopCurrentTheme();
             state = MusicManagerState.Suspended;
+        }
+
+        public void SaveData(ref WorldSaveData data)
+        {
+            data.UnlockedMusic = new();
+            foreach (MusicTheme asset in unlockedThemes.Keys)
+                data.UnlockedMusic.Add(_database.GetId(asset));
+        }
+
+        public void LoadData(WorldSaveData data)
+        {
+            unlockedThemes = new();
+            foreach (string id in data.UnlockedMusic)
+                unlockedThemes.Add(_database.GetAsset(id),0f);
         }
     }
 }
