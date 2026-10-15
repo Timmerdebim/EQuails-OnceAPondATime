@@ -85,7 +85,7 @@ namespace TDK.InteractionSystem
         {
             if (_currentFocus == null || !_currentFocus._isInteractable || !AppController.Instance.IsInputsActive)
             {
-                // @Lars put quack funtion here
+                PlayerSounds.Instance.PlayQuack();
                 return;
             }
             Player.Instance.playerController.ViewDirection = _currentFocus.transform.position - Player.Instance.transform.position; //make duck face the target ~Lars

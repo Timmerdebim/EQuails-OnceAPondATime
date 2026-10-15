@@ -63,5 +63,7 @@ namespace TDK.PlayerSystem
         public void PlayWingFlap() => FMODUnity.RuntimeManager.PlayOneShot(wingFlapEvent, transform.position);
 
         public void PlayWingSlap() => FMODUnity.RuntimeManager.PlayOneShot(wingSlapEvent, transform.position);
+
+        public void PlayQuack() => FMODUnity.RuntimeManager.PlayOneShot(quackEvent, transform.position);
     }
 }
