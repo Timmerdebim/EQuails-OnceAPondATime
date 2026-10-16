@@ -13,17 +13,23 @@ public class UICursor : MonoBehaviour
 
     [SerializeField] private RectTransform _cursorRect;
     private RectTransform _targetRect;
+    private RectTransform _priorTragetRect;
     private RectTransform _parent;
 
     private readonly Vector3[] _corners = new Vector3[4];
 
     private void Update()
     {
+        _priorTragetRect = _targetRect;
         _targetRect = null;
-        if (EventSystem.current == null) return;
-        if (EventSystem.current.currentSelectedGameObject == null) return;
-        EventSystem.current.currentSelectedGameObject.TryGetComponent(out _targetRect);
-        if (_targetRect == null) return;
+        if (EventSystem.current != null)
+            if (EventSystem.current.currentSelectedGameObject != null)
+                EventSystem.current.currentSelectedGameObject.TryGetComponent(out _targetRect);
+        if (_targetRect == null)
+        {
+            if (_priorTragetRect == null) return;
+            _targetRect = _priorTragetRect;
+        }
 
         // Get the selected UI element's world-space corners.
         _targetRect.GetWorldCorners(_corners);
