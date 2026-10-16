@@ -18,7 +18,6 @@ namespace TDK.EnemySystem.States
 
         // Private state variables
         private EnemyController _enemy;
-        private CharacterController characterController;
         private float timer;
         private Vector3 targetDir;
 
@@ -26,31 +25,37 @@ namespace TDK.EnemySystem.States
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _enemy = animator.GetComponent<EnemyController>();
-            characterController = _enemy.GetComponent<CharacterController>();
 
             timer = 0f;
-            _enemy.navMeshAgent.enabled = false; // Disable NavMeshAgent
+            //_enemy.navMeshAgent.enabled = false; // Disable NavMeshAgent
+            _enemy.StopNavMovement();
 
             // Set attack hitbox
             targetDir = _enemy._lastPlayerPos - _enemy.transform.position;
             targetDir.y = 0f;
             targetDir = targetDir.normalized;
             _enemy.SetHitboxDirection(targetDir);
+            _isLunging = false;
         }
 
+        private bool _isLunging = false;
         // OnStateUpdate is called on each Update frame
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             timer += Time.deltaTime;
 
             if (timer > _lungeStart && timer < _lungeStop)
-                characterController.Move(_lungeSpeed * Time.deltaTime * targetDir);
+            {
+                if (!_isLunging) _enemy.SetNavDestination(_lungeSpeed* targetDir, _lungeSpeed);
+                _isLunging = true;
+            }
+                //characterController.Move(_lungeSpeed * Time.deltaTime * targetDir);
         }
 
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _enemy.SetHitboxInactive();
-            _enemy.navMeshAgent.enabled = true;
+            _enemy.StopNavMovement();
         }
     }
 }
