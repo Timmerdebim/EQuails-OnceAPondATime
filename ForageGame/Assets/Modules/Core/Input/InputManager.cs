@@ -77,13 +77,12 @@ public class InputManager : MonoBehaviour
 
     public void Scroll(InputAction.CallbackContext context)
     {
-        print("scroll");
         if (AppController.Instance._state != AppController.State.Gameplay) return;
         if (GameplayController.Instance._state != GameplayController.State.Playing) return;
-
-        if (context.ReadValue<float>() > 0.01f)
+        float scroll = context.ReadValue<Vector2>().y;
+        if (scroll > 0.01f)
             InventoryServices.Next();
-        else if (context.ReadValue<float>() < -0.01f)
+        else if (scroll < -0.01f)
             InventoryServices.Previous();
     }
 
