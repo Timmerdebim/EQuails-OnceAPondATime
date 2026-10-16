@@ -35,6 +35,8 @@ namespace TDK.PlayerSystem
         public void IsGrounded(bool isGrounded) => _animator.SetBool(IsGroundedHash, isGrounded);
         public void IsDead(bool isDead) => _animator.SetBool(IsDeadHash, isDead);
 
+        public bool GetSprinting() => _animator.GetBool(RunHash); //ONLY used for quack particle offset
+
         public void Reset()
         {
             IsSwimming(false);

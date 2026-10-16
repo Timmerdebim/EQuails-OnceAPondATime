@@ -76,6 +76,8 @@ namespace TDK.PlayerSystem
             }
         }
 
+        public bool isSprinting => _animator.GetSprinting();  //literally only used for the quack's offset, 
+
         #endregion
 
         #region Triggers

@@ -52,6 +52,9 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] private int hitParticlesSaturationCount = 10;
     private float hitParticlesDamageSaturation;
 
+    [Header("Quack")]
+    [SerializeField] private ParticleSystem quackParticles;
+
     private void Awake()
     {
         pc = GetComponentInParent<PlayerController>();
@@ -203,6 +206,25 @@ public class PlayerEffects : MonoBehaviour
     private void JumpEffect()
     {
        // wingFlapParticles.Play(); //nothing
+    }
+
+    //I definitely did not spend too much time here
+    public void QuackEffect()
+    {
+        //look offset
+        quackParticles.GetComponent<ParticleSystemRenderer>().flip = new Vector3(pv.IsFacingLeft ? 1 : 0, 0, 0);
+        quackParticles.transform.rotation = Quaternion.Euler(0,0, pv.IsFacingLeft ? 0 : 180);
+
+        //sprinting offset y (player leans forward and down with their head)
+        // ...and front/back, 3d facade (player wing should be in front when facing back)
+        quackParticles.transform.localPosition = new Vector3(0, pc.isSprinting ? .3f: .4f, pv.IsFacingFront ? 0 : .1f);
+        
+
+        //sprinting offset x (is easier this way since the particle system needs to rotate for L/R)
+        var shape = quackParticles.shape;
+        shape.position = new Vector3(pc.isSprinting ? -.3f: -.22f, 0, 0);
+        quackParticles.Play();
+        PlayerSounds.Instance.PlayQuack();
     }
 
     public void WingFlapEffects()

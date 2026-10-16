@@ -26,6 +26,7 @@ namespace TDK.PlayerSystem
         [SerializeField] public Hitbox hitbox;
         [SerializeField] public TrailRenderer trailRenderer;
         [SerializeField] public PlayerVisuals visuals;
+        [SerializeField] public PlayerEffects effects; //only used for quack, other effects go via event listeners
         [SerializeField] public DialogueBox thinkingBox;
         [SerializeField] public PlayerThinkingHints playerThinkingHints;
         [SerializeField] public Transform _cameraTarget;
