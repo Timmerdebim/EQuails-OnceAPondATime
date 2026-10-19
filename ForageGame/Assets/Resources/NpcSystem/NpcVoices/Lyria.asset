@@ -14,10 +14,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voiceEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  syllableVariants: []
-  jitter: 0.05
+      Data1: -1523182607
+      Data2: 1307989666
+      Data3: 283260556
+      Data4: 930699178
+    Path: event:/Dialogue/LyriaSpeech
+  syllableVariants:
+  - label: 0
+    clipLength: 0.12
+    weight: 0.8
+  - label: 1
+    clipLength: 0.07
+    weight: 0.4
+  syllableCountCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.25714287
+      outSlope: 0.25714287
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 35
+      value: 10
+      inSlope: 0.19523811
+      outSlope: 0.19523811
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 50
+      value: 12
+      inSlope: 0.13333334
+      outSlope: 0.13333334
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  jitter: 0.02

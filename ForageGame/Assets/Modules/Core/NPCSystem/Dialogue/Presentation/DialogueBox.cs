@@ -23,37 +23,27 @@ namespace NPC
         [SerializeField] private Vector3 rightPos;
         [SerializeField] private Vector3 leftPos;
 
-        public AnimationCurve syllableCountCurve;
+        [Header("Audio / Speaking")]
+
+        [SerializeField] GibberishSpeaker speaker;
+
 
         //CancellationTokenSource textCtxSource;
         CancellationTokenSource animationCtxSource;
         Task animateOut;
         Task animateIn;
 
-        //FMOD stuff
-        public FMODUnity.EventReference GibberishSpeechEvent;
-        public FMODUnity.EventReference DuckAllForDialogueSnapshot;
-        FMOD.Studio.EventInstance GibberishSpeech; 
-        FMOD.Studio.EventInstance DuckAllForDialogue; 
-
 
         private void Start()
         {
             canvas.gameObject.SetActive(false);
             canvas.transform.localScale = Vector3.zero;
-            
-            GibberishSpeech = FMODUnity.RuntimeManager.CreateInstance(GibberishSpeechEvent);
-            GibberishSpeech.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject.transform.parent.gameObject)); //oof nasty hack to get the position right hehe
-            if (!DuckAllForDialogueSnapshot.IsNull) 
-            {
-                DuckAllForDialogue = FMODUnity.RuntimeManager.CreateInstance(DuckAllForDialogueSnapshot);
-            }
         }
 
         public async void OpenDialogue()
         {
             await CancelAnimations();
-            if (DuckAllForDialogue.isValid())  DuckAllForDialogue.start(); //Duck any playing ambience or theme - focus is on the dialogue
+            speaker.DialogueOpened();
             animateIn = AnimateIn(animationCtxSource.Token);
         }
 
@@ -61,7 +51,7 @@ namespace NPC
         {
             await CancelAnimations();
             animateOut = AnimateOut(animationCtxSource.Token);
-            if (DuckAllForDialogue.isValid())  DuckAllForDialogue.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
+            speaker.DialogueClosed();
         }
 
         private async Task AnimateIn(CancellationToken ctx)
@@ -155,11 +145,7 @@ namespace NPC
             Task typewriting = dialogueText.TypewriteText(text, ctx);
 
             //start gibberish speech, by name is inefficient but who cares.
-            int syllables = Math.Clamp(Mathf.RoundToInt(syllableCountCurve.Evaluate(text.Length)), 1, 10);
-            Debug.Log($"Speaking, {syllables} Syllables!");
-            GibberishSpeech.setParameterByName("Syllable Count", syllables);
-            GibberishSpeech.setParameterByName("DialogueSpeakerType", (int) speakerType);
-            GibberishSpeech.start();
+            speaker.Speak(text.Length);
 
             if (animateIn?.IsCompleted == false)
             {

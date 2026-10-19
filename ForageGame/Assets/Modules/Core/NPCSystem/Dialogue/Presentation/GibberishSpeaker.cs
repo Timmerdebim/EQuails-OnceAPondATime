@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -13,6 +14,13 @@ public class GibberishSpeaker : MonoBehaviour
     private int remaining;
     private float timer;
 
+    void Start()
+    {
+        if (!DuckAllForDialogueSnapshot.IsNull) 
+        {
+            DuckAllForDialogue = FMODUnity.RuntimeManager.CreateInstance(DuckAllForDialogueSnapshot);
+        }
+    }
 
     public void DialogueOpened()
     {
@@ -25,39 +33,43 @@ public class GibberishSpeaker : MonoBehaviour
     }
 
     // Call on every new textbox. Replaces any speech still in progress.
-    public void Speak(int syllables) 
+    public void Speak(int textLength) 
     { 
-        remaining = syllables; 
+        remaining = Math.Clamp(Mathf.RoundToInt(profile.syllableCountCurve.Evaluate(textLength)), 1, 15); 
         timer = 0f;
     }
 
     private void Update()
     {
         if (remaining <= 0) return;
-        timer -= Time.unscaledDeltaTime; //basically: unaffected by timescale
+        timer -= Time.unscaledDeltaTime; //basically: unaffected by timescale set to 0
         if (timer > 0f) return;
 
         int i = Pick();
         var inst = RuntimeManager.CreateInstance(profile.voiceEvent);
         var speakerLoc = speakerTransform is null ? speakerTransform : transform;
         inst.set3DAttributes(RuntimeUtils.To3DAttributes(speakerLoc));
-        inst.setParameterByNameWithLabel("Syllable", profile.syllableVariants[i].label);
+        inst.setParameterByName("SyllableVariant", (float)profile.syllableVariants[i].label);
         inst.start();
         inst.release();
 
         remaining--;
-        timer += profile.syllableVariants[i].clipLength * Random.Range(1f - profile.jitter, 1f + profile.jitter);
+        timer += profile.syllableVariants[i].clipLength * UnityEngine.Random.Range(1f - profile.jitter, 1f + profile.jitter);
     }
 
     //random choic from weighted list
     private int Pick()
     {
-        float r = Random.value; //remember weights sum to 1
+        float r = UnityEngine.Random.value; //remember weights sum to 1
 
         for (int i = 0; i < profile.syllableVariants.Length; i++)
         {
             r -= profile.syllableVariants[i].weight;
-            if (r <= 0f) return i;
+            if (r <= 0f) 
+            {
+                Debug.LogError($"[GibberishSpeaker]: picking syllable: {i}");
+                return i;
+            }
         }
         Debug.LogError($"[GibberishSpeaker]: no syllable variant selected? check voice profile weights: {profile.name}");
         return 0;

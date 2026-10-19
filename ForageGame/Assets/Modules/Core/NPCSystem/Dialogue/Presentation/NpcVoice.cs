@@ -6,7 +6,7 @@ using FMOD.Studio;
 [System.Serializable]
 public struct Syllable 
 { 
-    public string label; //correspond to FMOD parameter value
+    public int label; //correspond to FMOD parameter value, should be an int but FMOD sucks and only takes string arguments, very cool!
     public float clipLength; //length of this clip, in seconds
     public float weight; //normalized 0-1 chance of this syllable being picked
     }

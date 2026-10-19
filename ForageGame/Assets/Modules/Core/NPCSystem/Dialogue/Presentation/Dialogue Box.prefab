@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6312302240274365109}
   - component: {fileID: 3243660896502442770}
+  - component: {fileID: 7250287769045664059}
   m_Layer: 0
   m_Name: Dialogue Box
   m_TagString: Untagged
@@ -141,19 +142,24 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   openCloseDuration: 1
-  syllableCountCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  GibberishSpeechEvent:
-    Guid:
-      Data1: -22492690
-      Data2: 1262413764
-      Data3: 921604781
-      Data4: 1779319337
-    Path: event:/Dialogue/Dialogue
+  dialogueOpen: 0
+  rightPos: {x: 0, y: 0, z: 0}
+  leftPos: {x: 0, y: 0, z: 0}
+  speaker: {fileID: 7250287769045664059}
+--- !u!114 &7250287769045664059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538503904355750503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38cc0094ffe264756945ed5c69dae9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 0}
+  speakerTransform: {fileID: 0}
   DuckAllForDialogueSnapshot:
     Guid:
       Data1: -756185597

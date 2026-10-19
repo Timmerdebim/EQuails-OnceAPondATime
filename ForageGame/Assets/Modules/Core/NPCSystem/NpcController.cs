@@ -86,11 +86,11 @@ namespace NPC
                                     dialogueReferences.GetDialogueActionMap());
             //EvaluateActiveStage(); //taken care of by save manager
 
-            //this sucks but I have to since only this object knows how long a given line is
-            foreach (DialogueBox box in GetComponentsInChildren<DialogueBox>())
-            {
-                box.syllableCountCurve = syllableCountCurve;
-            }
+            // //this sucks but I have to since only this object knows how long a given line is
+            // foreach (DialogueBox box in GetComponentsInChildren<DialogueBox>())
+            // {
+            //     box.syllableCountCurve = syllableCountCurve; //no longer required, part of NPC voice
+            // }
         }
         #region Stage Management
 
