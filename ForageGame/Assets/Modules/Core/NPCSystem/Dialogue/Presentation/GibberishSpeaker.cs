@@ -60,18 +60,31 @@ public class GibberishSpeaker : MonoBehaviour
     //random choic from weighted list
     private int Pick()
     {
-        float r = UnityEngine.Random.value; //remember weights sum to 1
+        bool isLast = remaining == 1;
+        float r = isLast ? UnityEngine.Random.Range(0f, GetEndSyllableTotal()): UnityEngine.Random.value; //remember weights sum to 1 normally
 
         for (int i = 0; i < profile.syllableVariants.Length; i++)
         {
             r -= profile.syllableVariants[i].weight;
-            if (r <= 0f) 
+            if (r <= 0f && (!isLast || profile.syllableVariants[i].canEnd)) 
             {
-                Debug.LogError($"[GibberishSpeaker]: picking syllable: {i}");
+                //Debug.Log($"[GibberishSpeaker]: picking syllable: {i}");
                 return i;
             }
         }
         Debug.LogError($"[GibberishSpeaker]: no syllable variant selected? check voice profile weights: {profile.name}");
         return 0;
+    }
+
+    private float GetEndSyllableTotal()
+    {
+        float r = 0f;
+
+        foreach (Syllable s in profile.syllableVariants)
+        {
+            if (s.canEnd) r += s.weight;
+        }
+        // Debug.Log($"End Syllable total is {r}");
+        return r;
     }
 }

@@ -9,6 +9,7 @@ public struct Syllable
     public int label; //correspond to FMOD parameter value, should be an int but FMOD sucks and only takes string arguments, very cool!
     public float clipLength; //length of this clip, in seconds
     public float weight; //normalized 0-1 chance of this syllable being picked
+    public bool canEnd; //can we end on this syllable? some syllables sound awkward at the end.
     }
 
 [CreateAssetMenu(fileName = "NpcVoice", menuName = "Audio/NpcVoice")]
