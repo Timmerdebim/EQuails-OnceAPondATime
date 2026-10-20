@@ -47,7 +47,7 @@ public class GibberishSpeaker : MonoBehaviour
 
         int i = Pick();
         var inst = RuntimeManager.CreateInstance(profile.voiceEvent);
-        var speakerLoc = speakerTransform is null ? speakerTransform : transform;
+        var speakerLoc = speakerTransform is null ? transform : speakerTransform;
         inst.set3DAttributes(RuntimeUtils.To3DAttributes(speakerLoc));
         inst.setParameterByName("SyllableVariant", (float)profile.syllableVariants[i].label);
         inst.start();
