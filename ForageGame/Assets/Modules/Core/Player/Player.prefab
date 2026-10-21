@@ -35108,7 +35108,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0.75
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -35915,7 +35915,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.07
+      scalar: 0.05419391
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -36301,8 +36301,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
+        key1: {r: 1, g: 1, b: 1, a: 0}
+        key2: {r: 0, g: 0, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -36317,8 +36317,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 52428
-        atime2: 65535
+        atime1: 65535
+        atime2: 61873
         atime3: 0
         atime4: 0
         atime5: 0
@@ -36327,7 +36327,7 @@ ParticleSystem:
         m_Mode: 0
         m_ColorSpace: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 3
+        m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -66306,6 +66306,7 @@ MonoBehaviour:
   inventoryFullHintDuration: 400
   sleepingHintDatabase: {fileID: 11400000, guid: df844213256044953a383c317c9c9a34, type: 2}
   sleepingHintDuration: 2500
+  recipeToGiveOnClose: {fileID: 0}
 --- !u!4 &8728873764517834064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6312302240274365109, guid: 32cbdcb03bce942c88f1c7a3076d967d, type: 3}

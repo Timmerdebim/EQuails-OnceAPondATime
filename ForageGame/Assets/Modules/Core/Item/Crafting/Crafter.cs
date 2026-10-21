@@ -11,6 +11,10 @@ namespace TDK.ItemSystem.Inventory
         [SerializeField] private Animator _animator;
         [SerializeField] private StoryFlag crafterUsedFlag;
 
+        [Header("Particles")]
+        [SerializeField] private ParticleSystem lidClosedParticles;
+        [SerializeField] private ParticleSystem lidOpenedParticles;
+
         private bool craftInProgress = false;
 
         public void TryCraftVoid() => TryCraft();
@@ -49,6 +53,7 @@ namespace TDK.ItemSystem.Inventory
 
         public void AnimatorOnLidClose()
         {
+            lidClosedParticles.Play();
             List<ItemController> itemControllers = new(_itemRack.GetItemControllers()); // Make a copy
             foreach (ItemController item in itemControllers)
                 Destroy(item.gameObject);
@@ -56,6 +61,7 @@ namespace TDK.ItemSystem.Inventory
 
         public void AnimatorOnLidOpen()
         {
+            lidOpenedParticles.Play();
             _itemSpawner.SpawnLocal();
             craftInProgress = false;
         }

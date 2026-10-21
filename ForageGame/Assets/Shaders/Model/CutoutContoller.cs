@@ -35,6 +35,11 @@ public class CutoutController : MonoBehaviour
         Instance = this;
     }
 
+    void Start()
+    {
+        UpdateCutout(false);
+    }
+
     public void UseCutout(bool useCutout, bool instant)
     {
         if (_useCutout != useCutout)
