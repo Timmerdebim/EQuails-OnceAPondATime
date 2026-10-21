@@ -108,7 +108,8 @@ public class GameplayController : MonoBehaviour
         if(isfirstNight) 
         {
             GameplayMusicManager.Instance.ForcePlayTheme(firstNightTheme2); //part 2, so will override part 1's reverb tail
-            RecipeBookController.Instance.TryAddRecipe(sleepHint);
+            Player.Instance.playerThinkingHints.recipeToGiveOnClose = sleepHint; //so it gives it on hint close (do not throw in face, ruins the experience)
+            // RecipeBookController.Instance.TryAddRecipe(sleepHint);
         }
         Debug.Log("[Gameplay] Player slept.");
 

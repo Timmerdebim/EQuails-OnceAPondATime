@@ -9,6 +9,8 @@ using Unity.Burst.CompilerServices;
 using TDK.ItemSystem;
 using TDK.ItemSystem.Inventory;
 using System.Collections;
+using UnityEngine.Events;
+using TDK.ItemSystem.Types;
 
 [RequireComponent(typeof(DialogueBox))]
 public class PlayerThinkingHints : MonoBehaviour
@@ -35,6 +37,9 @@ public class PlayerThinkingHints : MonoBehaviour
     [Header("Sleeping Hints")]
     public SleepingHintDatabase sleepingHintDatabase;
     [SerializeField] private int sleepingHintDuration = 3000;
+
+    public RecipeItem recipeToGiveOnClose;
+
     
     void OnEnable()
     {
@@ -143,6 +148,12 @@ public class PlayerThinkingHints : MonoBehaviour
         finally
         {
             thinkingBox.CloseDialogue();
+            //first night cutscene bollocks
+            if(recipeToGiveOnClose != null) 
+            {
+                RecipeBookController.Instance.TryAddRecipe(recipeToGiveOnClose);
+                recipeToGiveOnClose = null;
+            }
             CancelCurrentToken();
         }
     }
