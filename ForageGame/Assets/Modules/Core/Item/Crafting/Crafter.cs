@@ -14,6 +14,8 @@ namespace TDK.ItemSystem.Inventory
         [Header("Particles")]
         [SerializeField] private ParticleSystem lidClosedParticles;
         [SerializeField] private ParticleSystem lidOpenedParticles;
+        [SerializeField] private ParticleSystem fireParticles;
+        [SerializeField] private ParticleSystem fireSmokeParticles;
 
         private bool craftInProgress = false;
 
@@ -54,6 +56,8 @@ namespace TDK.ItemSystem.Inventory
         public void AnimatorOnLidClose()
         {
             lidClosedParticles.Play();
+            fireParticles.Play();
+            fireSmokeParticles.Play();
             List<ItemController> itemControllers = new(_itemRack.GetItemControllers()); // Make a copy
             foreach (ItemController item in itemControllers)
                 Destroy(item.gameObject);
