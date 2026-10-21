@@ -179,13 +179,20 @@ namespace TDK.PlayerSystem
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.started && Player.Instance.playerData.attackUnlocked)
+            if (context.started)
             {
-                if(Player.Instance.energy.energy > Player.Instance.attackEnergy)
+                if (Player.Instance.playerData.attackUnlocked)
                 {
-                    _animator.IsAttacking(true);
+                    if(Player.Instance.energy.energy > Player.Instance.attackEnergy)
+                    {
+                        _animator.IsAttacking(true);
+                    }
+                    else Player.Instance.playerThinkingHints.ShowNoEnergyThought(); //no energy
                 }
-                else Player.Instance.playerThinkingHints.ShowNoEnergyThought();
+                else //not unlocked
+                {
+                    Player.Instance.playerThinkingHints.ShowAttackNotUnlockedThought();
+                }
             }
             else if (context.canceled) _animator.IsAttacking(false);
         }

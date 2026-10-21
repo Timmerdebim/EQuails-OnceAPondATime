@@ -20,6 +20,10 @@ public class PlayerThinkingHints : MonoBehaviour
     [SerializeField] private List<string> wingBrokenHints;
     [SerializeField] private int wingbrokenHintDuration = 1500;
 
+    [Header("Attack not unlocked")]
+    [SerializeField] private List<string> attackNotUnlockedHints;
+    [SerializeField] private int attackNotUnlockedHintDuration = 1500;
+
     [Header("Not enough Energy")]
     [SerializeField] private List<string> noEnergyHints;
     [SerializeField] private int noEnergyHintDuration = 500;
@@ -64,6 +68,12 @@ public class PlayerThinkingHints : MonoBehaviour
     {
         int hintindex = UnityEngine.Random.Range(0, wingBrokenHints.Count);
         ShowThought(wingBrokenHints[hintindex], wingbrokenHintDuration);
+    }
+
+    public void ShowAttackNotUnlockedThought()
+    {
+        int hintindex = UnityEngine.Random.Range(0, attackNotUnlockedHints.Count);
+        ShowThought(attackNotUnlockedHints[hintindex], attackNotUnlockedHintDuration);
     }
 
     public void ShowNoEnergyThought()
