@@ -4,6 +4,7 @@ using Project.Menus.Keybind;
 using Project.Menus.Graphics;
 using Project.Menus.Audio;
 using System.Threading.Tasks;
+using FMODUnity;
 
 namespace Project.Menus
 {
@@ -25,9 +26,15 @@ namespace Project.Menus
         [Header("Page Flutter")]
         [SerializeField] private Animator _pageFlutter;
 
+        [Header("SFX")]
+        [SerializeField] private EventReference openMenuSfx;
+        [SerializeField] private EventReference pageFlutterSfx;
+
         public override void OnEnteringMenu()
         {
-            OnKeybindsClicked();
+            // OnKeybindsClicked();
+            _ = GoToSubMenu(keybindSettingsMenu, false); //bypasses the other sound effect
+            RuntimeManager.PlayOneShot(openMenuSfx);
         }
 
         public override void OnExitingMenu()
@@ -61,10 +68,11 @@ namespace Project.Menus
             _ = GoToSubMenu(keybindSettingsMenu);
         }
 
-        private async Task GoToSubMenu(Menu menu)
+        private async Task GoToSubMenu(Menu menu, bool playSfx = true)
         {
             if (_submenuManager.currentMenu == menu) return;
             _pageFlutter.SetTrigger("Trigger");
+            if(playSfx) RuntimeManager.PlayOneShot(pageFlutterSfx);
             graphicsButton.interactable = false;
             audioButton.interactable = false;
             keybindsButton.interactable = false;
