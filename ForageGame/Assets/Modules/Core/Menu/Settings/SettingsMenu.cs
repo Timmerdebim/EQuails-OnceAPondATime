@@ -28,6 +28,7 @@ namespace Project.Menus
 
         [Header("SFX")]
         [SerializeField] private EventReference openMenuSfx;
+        [SerializeField] private EventReference closeMenuSfx;
         [SerializeField] private EventReference pageFlutterSfx;
 
         public override void OnEnteringMenu()
@@ -40,6 +41,7 @@ namespace Project.Menus
         public override void OnExitingMenu()
         {
             KeybindSettingsManager.Instance.SaveSettings();
+            RuntimeManager.PlayOneShot(closeMenuSfx);
         }
 
         public override void Escape()
