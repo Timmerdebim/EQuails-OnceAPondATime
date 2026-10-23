@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using FMODUnity;
 
 [RequireComponent(typeof(RectTransform))]
 public class UICursor : MonoBehaviour
@@ -18,6 +19,9 @@ public class UICursor : MonoBehaviour
 
     private readonly Vector3[] _corners = new Vector3[4];
 
+    [Header("Sfx")]
+    [SerializeField] private EventReference selectSfx;
+
     private void Update()
     {
         _priorTragetRect = _targetRect;
@@ -27,10 +31,12 @@ public class UICursor : MonoBehaviour
                 EventSystem.current.currentSelectedGameObject.TryGetComponent(out _targetRect);
         if (_targetRect == null)
         {
-            if (_priorTragetRect == null) return;
+            if (_priorTragetRect == null) return; //for startup
             _targetRect = _priorTragetRect;
         }
-
+        //play sfx if target changed
+        if (_targetRect != _priorTragetRect) RuntimeManager.PlayOneShot(selectSfx);
+        
         // Get the selected UI element's world-space corners.
         _targetRect.GetWorldCorners(_corners);
 
