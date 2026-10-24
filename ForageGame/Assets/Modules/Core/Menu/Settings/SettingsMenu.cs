@@ -27,9 +27,6 @@ namespace Project.Menus
         [SerializeField] private Animator _pageFlutter;
 
         [Header("SFX")]
-        [SerializeField] private UICursor _cursor;
-
-        [Header("SFX")]
         [SerializeField] private EventReference openMenuSfx;
         [SerializeField] private EventReference closeMenuSfx;
         [SerializeField] private EventReference pageFlutterSfx;
@@ -38,14 +35,12 @@ namespace Project.Menus
         {
             // OnKeybindsClicked();
             _ = GoToSubMenu(keybindSettingsMenu, false); //bypasses the other sound effect
-            _cursor.gameObject.SetActive(true);
             RuntimeManager.PlayOneShot(openMenuSfx);
         }
 
         public override void OnExitingMenu()
         {
             KeybindSettingsManager.Instance.SaveSettings();
-            _cursor.gameObject.SetActive(false);
             RuntimeManager.PlayOneShot(closeMenuSfx);
         }
 
