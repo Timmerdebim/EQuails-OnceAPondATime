@@ -35,8 +35,8 @@ public class UICursor : MonoBehaviour
             _targetRect = _priorTragetRect;
         }
         //play sfx if target changed
-        if (_targetRect != _priorTragetRect) RuntimeManager.PlayOneShot(selectSfx);
-        
+        if (_priorTragetRect != null && _targetRect != _priorTragetRect) RuntimeManager.PlayOneShot(selectSfx);
+
         // Get the selected UI element's world-space corners.
         _targetRect.GetWorldCorners(_corners);
 
