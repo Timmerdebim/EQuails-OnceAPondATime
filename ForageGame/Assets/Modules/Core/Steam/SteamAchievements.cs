@@ -31,7 +31,7 @@ public class SteamAchievements : MonoBehaviour
             return;
         }
         Instance = this;
-        // DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
         // Sanity checks recommended by Steamworks.NET
         if (!Packsize.Test())
