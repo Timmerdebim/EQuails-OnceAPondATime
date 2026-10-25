@@ -72,25 +72,25 @@ public class PlayerThinkingHints : MonoBehaviour
     public void ShowWingBrokenThought()
     {
         int hintindex = UnityEngine.Random.Range(0, wingBrokenHints.Count);
-        ShowThought(wingBrokenHints[hintindex], wingbrokenHintDuration);
+        _ = ShowThought(wingBrokenHints[hintindex], wingbrokenHintDuration);
     }
 
     public void ShowAttackNotUnlockedThought()
     {
         int hintindex = UnityEngine.Random.Range(0, attackNotUnlockedHints.Count);
-        ShowThought(attackNotUnlockedHints[hintindex], attackNotUnlockedHintDuration);
+        _ = ShowThought(attackNotUnlockedHints[hintindex], attackNotUnlockedHintDuration);
     }
 
     public void ShowNoEnergyThought()
     {
         int hintindex = UnityEngine.Random.Range(0, noEnergyHints.Count);
-        ShowThought(noEnergyHints[hintindex], noEnergyHintDuration);
+        _ = ShowThought(noEnergyHints[hintindex], noEnergyHintDuration);
     }
 
     public void ShowInventoryFullHint()
     {
         int hintindex = UnityEngine.Random.Range(0, inventoryFullHints.Count);
-        ShowThought(inventoryFullHints[hintindex], inventoryFullHintDuration);
+        _ = ShowThought(inventoryFullHints[hintindex], inventoryFullHintDuration);
     }
 
 
@@ -119,11 +119,11 @@ public class PlayerThinkingHints : MonoBehaviour
         var eligibleHints = GetEligibleHints();
         if(!eligibleHints.Any())
         {
-            Debug.LogWarning($"[PlayerThinkingHints] No eligible hints to display?");
+            Debug.Log($"[PlayerThinkingHints] No eligible hints to display?");
             yield break; //stop routine
         }
         int hintindex = UnityEngine.Random.Range(0, eligibleHints.Count);
-        ShowThought(eligibleHints[hintindex].hint, sleepingHintDuration);
+        _ = ShowThought(eligibleHints[hintindex].hint, sleepingHintDuration);
     }
 
     #endregion

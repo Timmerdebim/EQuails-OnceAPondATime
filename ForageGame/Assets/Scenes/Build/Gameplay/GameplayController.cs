@@ -239,7 +239,9 @@ public class GameplayController : MonoBehaviour
         await AwaitPadding();
         //StoryFlagManager.Instance.OnTimePassing(); //no, only when sleeping, not general unload
         SaveManager.Instance.SaveWorld();
+        await AwaitSaftey();
         await SceneServices.UnloadScene(_worldScene);
+        await AwaitSaftey();
         Player.Instance.ResetAnimator();
         Debug.Log("[Gameplay] Unloaded World.");
     }

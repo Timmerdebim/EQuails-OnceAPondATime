@@ -40,7 +40,7 @@ namespace NPC
         [SerializeField] private DialogueReferences dialogueReferences;
 
         [Header("Current State")]
-        [SerializeField] private bool isEnabled = true;
+        // [SerializeField] private bool isEnabled = true;
         [SerializeField] private ReadableStage _activeStage;
         [SerializeField] private int _lineIndex = 0;
         [SerializeField] private int _lastCompletedStageIndex = -1; //replaces the hashset, which was redundant and clogs up the save file
@@ -226,7 +226,7 @@ namespace NPC
             if (ld == null || ld.StandardLines.Count == 0)
             {
                 Debug.LogWarning($"[ReadableController: {transform.parent.gameObject.name}] Active StoryStage has no locationDialogue, Readable will be disabled!");
-                isEnabled = false;
+                // isEnabled = false;
                 DisableInteractable();
             }
 

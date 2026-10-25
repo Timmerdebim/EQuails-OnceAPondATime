@@ -23,7 +23,7 @@ public class NpcMusicCutscene : MonoBehaviour
     public void StartMusicCutscene(MusicTheme theme)
     {
         instance = RuntimeManager.CreateInstance(theme.eventRef);
-        RuntimeManager.AttachInstanceToGameObject(instance, transform);
+        RuntimeManager.AttachInstanceToGameObject(instance, transform.gameObject);
 
         callback = new EVENT_CALLBACK(EventCallback);
         instance.setCallback(callback,

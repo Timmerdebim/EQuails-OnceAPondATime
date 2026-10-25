@@ -40,7 +40,7 @@ namespace Project.Menus
 
         private async Task MainMenuSequence()
         {
-            await _menuManager.ToMenu(null);
+            await GameplayController.Instance.ResumeGame();
             await GameplayController.Instance.QuitToMainMenu();
         }
 
