@@ -147,7 +147,7 @@ namespace TDK.ItemSystem.Inventory
         public void LoadData(WorldSaveData data)
         {
             CollectedRecipes = ItemsToRecipes(ItemServices.Instance.Database.GetAssets(data.Inventory.CollectedRecipes));
-            UsedRecipes = ItemsToRecipes(ItemServices.Instance.Database.GetAssets(data.Inventory.CollectedRecipes));
+            UsedRecipes = ItemsToRecipes(ItemServices.Instance.Database.GetAssets(data.Inventory.UsedRecipes));
         }
 
         public void SaveData(ref WorldSaveData data)
