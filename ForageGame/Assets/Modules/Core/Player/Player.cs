@@ -87,6 +87,10 @@ namespace TDK.PlayerSystem
         #endregion
 
         #region Upgrades
+
+        [SerializeField] private StoryFlag _wingLevel1Flag;
+      [SerializeField] private StoryFlag _wingLevel2Flag;
+
         public void Upgrade(PlayerUpgradeType upgradeType)
         {
             switch (upgradeType)
@@ -107,6 +111,8 @@ namespace TDK.PlayerSystem
                 case PlayerUpgradeType.Wing:
                     playerData.wingLevel += 1;
                     visuals.UpdateWingVisuals(playerData.wingLevel);
+                    if (playerData.wingLevel == 1) StoryFlagManager.Instance.AddFlag(_wingLevel1Flag);
+                    else if (playerData.wingLevel == 2) StoryFlagManager.Instance.AddFlag(_wingLevel2Flag);
                     break;
             }
         }
