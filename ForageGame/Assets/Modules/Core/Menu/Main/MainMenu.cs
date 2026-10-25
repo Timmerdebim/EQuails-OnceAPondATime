@@ -17,20 +17,9 @@ namespace Project.Menus
         [SerializeField] private Menu settingsMenu;
         [SerializeField] private Menu creditsMenu;
 
-        [Header("Sfx")]
-        [SerializeField] private EventReference openMenuSfx;
-        [SerializeField] private EventReference closeMenuSfx;
-
         public override void OnEnteringMenu()
         {
             RefreshVisuals();
-            RuntimeManager.PlayOneShot(openMenuSfx);
-        }
-
-
-        public override void OnExitingMenu()
-        {
-            RuntimeManager.PlayOneShot(closeMenuSfx);
         }
 
         public override void Escape()
