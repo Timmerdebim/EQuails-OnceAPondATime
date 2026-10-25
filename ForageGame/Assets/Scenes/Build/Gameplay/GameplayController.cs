@@ -192,6 +192,7 @@ public class GameplayController : MonoBehaviour
         if (_state == State.Busy) return;
         SetGameState(State.Busy);
         Debug.Log("[Gameplay] Resuming game.");
+        await PauseMenuController.Instance.ExitAllMenus();
         await SceneServices.UnloadScene(_pauseScene);
         SetGameState(State.Playing);
         Debug.Log("[Gameplay] Resumed game.");
