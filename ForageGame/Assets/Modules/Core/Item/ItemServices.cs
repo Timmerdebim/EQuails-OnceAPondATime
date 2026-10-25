@@ -25,10 +25,7 @@ namespace TDK.ItemSystem
         {
             return SpawnItem(itemData, position, Vector3.up);
         }
-        public ItemController SpawnItem(ItemSaveData data)
-        {
-            return SpawnItem(data.GetItemData(), data.Position, new(0, 0, 0));
-        }
+
         public ItemController SpawnItem(ItemData itemData, Vector3 position, Vector3 velocity)
         {
             GameObject gameObject = Instantiate(_itemPrefab, position, Quaternion.identity, transform);
@@ -45,7 +42,7 @@ namespace TDK.ItemSystem
                 GameObject.Destroy(child.gameObject);
 
             foreach (ItemSaveData dataEntry in data.Items)
-                SpawnItem(dataEntry);
+                SpawnItem(dataEntry.GetItemData(), dataEntry.Position + Vector3.up * 0.1f);
         }
     }
 }

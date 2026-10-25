@@ -115,7 +115,12 @@ namespace TDK.ItemSystem.Inventory
             if (!TryRemoveAnyAtCurrent())
                 return false;
 
-            ItemServices.Instance.SpawnItem(item, Player.Instance.transform.position);
+            float randomVal = UnityEngine.Random.Range(0f, 1f);
+            ItemServices.Instance.SpawnItem(item, Player.Instance.transform.position, 
+            (Vector3.up * (2.5f + randomVal)) 
+            + (Player.Instance.playerController.ViewDirection * (2f + randomVal))
+            + (Vector3.forward * UnityEngine.Random.Range(-0.8f, 0.8f))
+            + (Vector3.right * UnityEngine.Random.Range(-0.8f, 0.8f)));
             return true;
         }
 
