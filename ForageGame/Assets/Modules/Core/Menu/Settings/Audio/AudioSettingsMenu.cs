@@ -8,17 +8,17 @@ namespace Project.Menus.Audio
     public class AudioSettingsMenu : Menu
     {
         [Header("UI References")]
-        [SerializeField] private Slider _masterVolume;
-        [SerializeField] private Slider _musicVolume;
-        [SerializeField] private Slider _sfxVolume;
-        [SerializeField] private Slider _ambienceVolume;
+        [SerializeField] private SliderUIElement _masterVolume;
+        [SerializeField] private SliderUIElement _musicVolume;
+        [SerializeField] private SliderUIElement _sfxVolume;
+        [SerializeField] private SliderUIElement _ambienceVolume;
 
         public override void OnEnteringMenu()
         {
-            _masterVolume.value = AudioSettingsManager.Instance.MasterVolume;
-            _musicVolume.value = AudioSettingsManager.Instance.MusicVolume;
-            _sfxVolume.value = AudioSettingsManager.Instance.SfxVolume;
-            _ambienceVolume.value = AudioSettingsManager.Instance.AmbienceVolume;
+            _masterVolume.SetSliderValue(AudioSettingsManager.Instance.MasterVolume);
+            _musicVolume.SetSliderValue(AudioSettingsManager.Instance.MusicVolume);
+            _sfxVolume.SetSliderValue(AudioSettingsManager.Instance.SfxVolume);
+            _ambienceVolume.SetSliderValue(AudioSettingsManager.Instance.AmbienceVolume);
         }
 
         // ------------ Buttons ------------

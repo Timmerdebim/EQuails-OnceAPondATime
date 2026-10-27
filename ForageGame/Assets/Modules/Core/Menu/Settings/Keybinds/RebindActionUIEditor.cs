@@ -30,6 +30,10 @@ namespace Project.Menus.Keybind
             m_RebindStopEventProperty = serializedObject.FindProperty("m_RebindStopEvent");
             m_DisplayStringOptionsProperty = serializedObject.FindProperty("m_DisplayStringOptions");
 
+            m_RebindStartSfxProperty = serializedObject.FindProperty("rebindStartSfx");
+            m_RebindCompleteSfxProperty = serializedObject.FindProperty("rebindCompleteSfx");
+            m_RebindCancelledSfxProperty = serializedObject.FindProperty("rebindCancelledSfx");
+
             RefreshBindingOptions();
         }
 
@@ -78,6 +82,16 @@ namespace Project.Menus.Keybind
                 EditorGUILayout.PropertyField(m_RebindStartEventProperty);
                 EditorGUILayout.PropertyField(m_RebindStopEventProperty);
                 EditorGUILayout.PropertyField(m_UpdateBindingUIEventProperty);
+            }
+
+            // Sfx section.
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField(m_SfxLabel, Styles.boldLabel);
+            using (new EditorGUI.IndentLevelScope())
+            {
+                EditorGUILayout.PropertyField(m_RebindStartSfxProperty);
+                EditorGUILayout.PropertyField(m_RebindCompleteSfxProperty);
+                EditorGUILayout.PropertyField(m_RebindCancelledSfxProperty);
             }
 
             if (EditorGUI.EndChangeCheck())
@@ -168,10 +182,15 @@ namespace Project.Menus.Keybind
         private SerializedProperty m_UpdateBindingUIEventProperty;
         private SerializedProperty m_DisplayStringOptionsProperty;
 
+        private SerializedProperty m_RebindStartSfxProperty;
+        private SerializedProperty m_RebindCompleteSfxProperty;
+        private SerializedProperty m_RebindCancelledSfxProperty;
+
         private GUIContent m_BindingLabel = new GUIContent("Binding");
         private GUIContent m_DisplayOptionsLabel = new GUIContent("Display Options");
         private GUIContent m_UILabel = new GUIContent("UI");
         private GUIContent m_EventsLabel = new GUIContent("Events");
+        private GUIContent m_SfxLabel = new GUIContent("Sfx");
         private GUIContent[] m_BindingOptions;
         private string[] m_BindingOptionValues;
         private int m_SelectedBindingOption;

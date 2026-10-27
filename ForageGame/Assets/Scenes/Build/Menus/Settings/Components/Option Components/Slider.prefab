@@ -299,6 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9018809696927747995}
   - component: {fileID: 5158758086214557086}
+  - component: {fileID: 3526653950912632251}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -336,6 +337,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6432932738666676367}
   m_CullTransparentMesh: 1
+--- !u!114 &3526653950912632251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6432932738666676367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba26214111b5d4f649767daa1bf2130c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slider: {fileID: 244652315963573119}
+  _text: {fileID: 878575774317611658}
+  scribbleEvent:
+    Guid:
+      Data1: -1646086769
+      Data2: 1327480494
+      Data3: -1787982675
+      Data4: 335283910
+    Path: event:/Sfx/UI/UISlider
+  IdleTimeout: 0.15
 --- !u!1001 &8134615287895556406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -485,26 +508,71 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 878575774317611658}
+      objectReference: {fileID: 3526653950912632251}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3526653950912632251}
     - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnValueChanged
+      value: OnSliderValueChanged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnSliderValueChanged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SliderUIText, Assembly-CSharp
+      value: SliderUIElement, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SliderUIElement, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: FMODUnity.StudioEventEmitter, FMODUnity
       objectReference: {fileID: 0}
     - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324578994385470025, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 610555412558533482, guid: de0b7d047cc33454e804b1c3fd965ade, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

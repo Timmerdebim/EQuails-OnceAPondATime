@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
+using FMODUnity;
 
 ////TODO: localization support
 
@@ -18,6 +19,11 @@ namespace Project.Menus.Keybind
     /// </summary>
     public class RebindActionUI : MonoBehaviour
     {
+        [Header("Sfx")]
+        [SerializeField] private EventReference rebindStartSfx;
+        [SerializeField] private EventReference rebindCompleteSfx;
+        [SerializeField] private EventReference rebindCancelledSfx;
+
         [Tooltip("Reference to action that is to be rebound from the UI.")]
         [SerializeField]
         private InputActionReference m_Action;
@@ -287,6 +293,7 @@ namespace Project.Menus.Keybind
             if (!ResolveActionAndBinding(out var action, out var bindingIndex))
                 return;
 
+            RuntimeManager.PlayOneShot(rebindStartSfx);
             // If the binding is a composite, we need to rebind each part in turn.
             if (action.bindings[bindingIndex].isComposite)
             {
@@ -349,6 +356,7 @@ namespace Project.Menus.Keybind
                             m_RebindOverlay.SetActive(false);
                         UpdateBindingDisplay();
                         CleanUp();
+                        RuntimeManager.PlayOneShot(rebindCancelledSfx);
                     })
                 .OnComplete(
                     operation =>
@@ -359,6 +367,8 @@ namespace Project.Menus.Keybind
                         UpdateBindingDisplay();
                         CleanUp();
 
+                        RuntimeManager.PlayOneShot(rebindCompleteSfx); //play on every composite part too, since the UI updates anyway
+
                         // If there's more composite parts we should bind, initiate a rebind
                         // for the next part.
                         if (allCompositeParts)
@@ -367,6 +377,7 @@ namespace Project.Menus.Keybind
                             if (nextBindingIndex < action.bindings.Count && action.bindings[nextBindingIndex].isPartOfComposite)
                                 PerformInteractiveRebind(action, nextBindingIndex, true);
                         }
+
                     });
 
             // If it's a part binding, show the name of the part in the UI.

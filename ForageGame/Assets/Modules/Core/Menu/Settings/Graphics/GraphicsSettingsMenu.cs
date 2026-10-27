@@ -13,7 +13,7 @@ namespace Project.Menus.Graphics
         [Header("UI References")]
         [SerializeField] private SelectionUIElement _fullscreen;
         [SerializeField] private SelectionUIElement _resolution;
-        [SerializeField] private Slider _framerate;
+        [SerializeField] private SliderUIElement _framerate;
         [SerializeField] private SelectionUIElement _textureQuality;
         [SerializeField] private SelectionUIElement _lightingQuality;
         [SerializeField] private SelectionUIElement _terrainQuality;
@@ -50,7 +50,7 @@ namespace Project.Menus.Graphics
         {
             _fullscreen.SetCurrentOption(GraphicsSettingsManager.Instance.FullScreen);
             _resolution.SetCurrentOption(GraphicsSettingsManager.Instance.Resolution);
-            _framerate.value = GraphicsSettingsManager.Instance.Framerate;
+            _framerate.SetSliderValue(GraphicsSettingsManager.Instance.Framerate);
             _textureQuality.SetCurrentOption(GraphicsSettingsManager.Instance.TextureQuality);
             _lightingQuality.SetCurrentOption(GraphicsSettingsManager.Instance.LightingQuality);
             _terrainQuality.SetCurrentOption(GraphicsSettingsManager.Instance.TerrainQuality);
