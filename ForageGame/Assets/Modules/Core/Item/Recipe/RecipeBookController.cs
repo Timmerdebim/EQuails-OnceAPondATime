@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using UnityEngine.UI;
 using TDK.PlayerSystem;
+using FMODUnity;
 
 namespace TDK.ItemSystem.Inventory
 {
@@ -15,6 +16,11 @@ namespace TDK.ItemSystem.Inventory
 
         public List<RecipeItem> CollectedRecipes { get; private set; } = new();
         private List<RecipeItem> UsedRecipes = new();
+
+        [Header("Sfx")]
+        [SerializeField] private EventReference openBookSfx;
+        [SerializeField] private EventReference closeBookSfx;
+        [SerializeField] private EventReference pageFlipSfx;
 
         void Awake()
         {
@@ -73,6 +79,10 @@ namespace TDK.ItemSystem.Inventory
                 currentPageIndex = (currentPageIndex % CollectedRecipes.Count + CollectedRecipes.Count) % CollectedRecipes.Count; // yes I have to do this (look up how the mod opperator works with negative numbers)
                 _leftPage.sprite = CollectedRecipes[currentPageIndex].GetRecipeVisualizationSprite();
                 _rightPage.sprite = CollectedRecipes[currentPageIndex].GetRecipeVisualizationSprite();
+
+                //Getting real tired of these state-agnostic function Tim, I need to put the statefullness back in anyway for sfx
+                if(IsVisualized) RuntimeManager.PlayOneShot(openBookSfx);
+                else RuntimeManager.PlayOneShot(closeBookSfx);
             }
             _bookAnimator.SetBool("OpenRecipeBook", IsVisualized);
             // DestroyStack();
@@ -92,6 +102,7 @@ namespace TDK.ItemSystem.Inventory
 
                 print($"flipping page {currentPageIndex} left");
                 _pageAnimator.SetTrigger("FlipLeft");
+                RuntimeManager.PlayOneShot(pageFlipSfx);
             }
         }
 
@@ -108,6 +119,7 @@ namespace TDK.ItemSystem.Inventory
 
                 print($"flipping page {currentPageIndex} right");
                 _pageAnimator.SetTrigger("FlipRight");
+                RuntimeManager.PlayOneShot(pageFlipSfx);
             }
         }
 
