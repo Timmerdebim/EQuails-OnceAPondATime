@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using TDK.PlayerSystem;
 using UnityEngine;
+using FMODUnity;
 
 namespace Project.Menus
 {
@@ -10,10 +11,26 @@ namespace Project.Menus
         [SerializeField] private MenuManager _menuManager;
         [SerializeField] private Menu settingsMenu;
 
+        [Header("Sfx")]
+        [SerializeField] private EventReference openSfx;
+        [SerializeField] private EventReference closeSfx;
+
+        public override void OnEnteringMenu()
+        {
+            RuntimeManager.PlayOneShot(openSfx);
+        }
+
+        public override void OnExitingMenu()
+        {
+            RuntimeManager.PlayOneShot(closeSfx);
+        }
+
         public override void Escape()
         {
             _ = GameplayController.Instance.ResumeGame();
         }
+
+        
 
         // ------------ Buttons ------------
 

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4255478488930762593}
   - component: {fileID: 2323978310045501860}
   - component: {fileID: 812338567015715873}
+  - component: {fileID: 1842626874275547446}
+  - component: {fileID: 2447118384211020341}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -133,6 +135,68 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2447118384211020341}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1842626874275547446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641659813958025339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048e519c536a94164bf25327cdd8ac81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectSfx:
+    Guid:
+      Data1: -73023586
+      Data2: 1135808786
+      Data3: 284560311
+      Data4: -1705903668
+    Path: event:/Sfx/UI/UI Wood Select
+--- !u!114 &2447118384211020341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641659813958025339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1028785182
+      Data2: 1247127705
+      Data3: 2083153061
+      Data4: -1532030344
+    Path: event:/Sfx/UI/UI Wood Confirm
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &806937814327004286
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +209,8 @@ GameObject:
   - component: {fileID: 229068614246991319}
   - component: {fileID: 7321044748517361453}
   - component: {fileID: 7626915575815586591}
+  - component: {fileID: 6193072573359712599}
+  - component: {fileID: 8579626848909332240}
   m_Layer: 5
   m_Name: Respawn Button
   m_TagString: Untagged
@@ -266,6 +332,68 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8579626848909332240}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6193072573359712599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806937814327004286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048e519c536a94164bf25327cdd8ac81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectSfx:
+    Guid:
+      Data1: -73023586
+      Data2: 1135808786
+      Data3: 284560311
+      Data4: -1705903668
+    Path: event:/Sfx/UI/UI Wood Select
+--- !u!114 &8579626848909332240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806937814327004286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1028785182
+      Data2: 1247127705
+      Data3: 2083153061
+      Data4: -1532030344
+    Path: event:/Sfx/UI/UI Wood Confirm
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1340350493705869176
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,6 +475,20 @@ MonoBehaviour:
   _fadeOutDuration: 0.333
   _menuManager: {fileID: 0}
   settingsMenu: {fileID: 0}
+  openSfx:
+    Guid:
+      Data1: 991913808
+      Data2: 1085130401
+      Data3: 1735546543
+      Data4: -1666772023
+    Path: event:/Sfx/UI/PauseMenuOpen
+  closeSfx:
+    Guid:
+      Data1: -1962417101
+      Data2: 1140317217
+      Data3: 234036370
+      Data4: 1871709709
+    Path: event:/Sfx/UI/PauseMenuClose
 --- !u!95 &5579255456613422475
 Animator:
   serializedVersion: 7
@@ -493,6 +635,8 @@ GameObject:
   - component: {fileID: 2007201619826577784}
   - component: {fileID: 1492150482448755779}
   - component: {fileID: 200425216958995804}
+  - component: {fileID: 6211672455816482824}
+  - component: {fileID: 9097076924201272423}
   m_Layer: 5
   m_Name: Settings Button
   m_TagString: Untagged
@@ -614,6 +758,68 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 9097076924201272423}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6211672455816482824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3643102199499818403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048e519c536a94164bf25327cdd8ac81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectSfx:
+    Guid:
+      Data1: -73023586
+      Data2: 1135808786
+      Data3: 284560311
+      Data4: -1705903668
+    Path: event:/Sfx/UI/UI Wood Select
+--- !u!114 &9097076924201272423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3643102199499818403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1028785182
+      Data2: 1247127705
+      Data3: 2083153061
+      Data4: -1532030344
+    Path: event:/Sfx/UI/UI Wood Confirm
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &3765526777597856973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,6 +1424,8 @@ GameObject:
   - component: {fileID: 2735603289982406081}
   - component: {fileID: 4971333727525396668}
   - component: {fileID: 752594183227240550}
+  - component: {fileID: 5631442696380982409}
+  - component: {fileID: 4794282214579235979}
   m_Layer: 5
   m_Name: Main Menu Button
   m_TagString: Untagged
@@ -1339,6 +1547,68 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4794282214579235979}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5631442696380982409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035513861925419476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048e519c536a94164bf25327cdd8ac81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectSfx:
+    Guid:
+      Data1: -73023586
+      Data2: 1135808786
+      Data3: 284560311
+      Data4: -1705903668
+    Path: event:/Sfx/UI/UI Wood Select
+--- !u!114 &4794282214579235979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035513861925419476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1028785182
+      Data2: 1247127705
+      Data3: 2083153061
+      Data4: -1532030344
+    Path: event:/Sfx/UI/UI Wood Confirm
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &5719206056197203837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,6 +1757,8 @@ GameObject:
   - component: {fileID: 5120637054157715506}
   - component: {fileID: 3226518196889205628}
   - component: {fileID: 5511975366440852913}
+  - component: {fileID: 2848619755556596768}
+  - component: {fileID: 8977199189720442498}
   m_Layer: 5
   m_Name: Resume Button
   m_TagString: Untagged
@@ -1608,6 +1880,68 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8977199189720442498}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2848619755556596768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6210664730371649251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048e519c536a94164bf25327cdd8ac81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectSfx:
+    Guid:
+      Data1: -73023586
+      Data2: 1135808786
+      Data3: 284560311
+      Data4: -1705903668
+    Path: event:/Sfx/UI/UI Wood Select
+--- !u!114 &8977199189720442498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6210664730371649251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1028785182
+      Data2: 1247127705
+      Data3: 2083153061
+      Data4: -1532030344
+    Path: event:/Sfx/UI/UI Wood Confirm
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &8764094712442507767
 GameObject:
   m_ObjectHideFlags: 0
