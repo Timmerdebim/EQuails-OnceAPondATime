@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using TDK.PlayerSystem;
 using UnityEngine;
 using FMODUnity;
+using FMOD.Studio;
 
 namespace Project.Menus
 {
@@ -14,10 +15,22 @@ namespace Project.Menus
         [Header("Sfx")]
         [SerializeField] private EventReference openSfx;
         [SerializeField] private EventReference closeSfx;
+        [SerializeField] private EventReference duckMusicAndAmbienceSnapshot;
+        private EventInstance duckMusicAndAmbience;
+
+        void Awake()
+        {
+            if (!duckMusicAndAmbienceSnapshot.IsNull) 
+            {
+                duckMusicAndAmbience = FMODUnity.RuntimeManager.CreateInstance(duckMusicAndAmbienceSnapshot);
+            }
+        }
+
 
         public override void OnEnteringMenu()
         {
             RuntimeManager.PlayOneShot(openSfx);
+            if (duckMusicAndAmbience.isValid())  duckMusicAndAmbience.start(); 
         }
 
         public override void OnExitingMenu()
@@ -28,6 +41,8 @@ namespace Project.Menus
         public override void Escape()
         {
             _ = GameplayController.Instance.ResumeGame();
+            //NOTE: not on exiting menu, because that also triggers when entering settings!
+            if (duckMusicAndAmbience.isValid())  duckMusicAndAmbience.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
         }
 
         

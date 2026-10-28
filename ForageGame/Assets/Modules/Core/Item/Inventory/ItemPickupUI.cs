@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using DG.Tweening;
+using FMODUnity;
 
 namespace TDK.ItemSystem.Inventory
 {
@@ -12,6 +13,9 @@ namespace TDK.ItemSystem.Inventory
         public Image itemIcon;
         public TextMeshProUGUI itemName;
         public TextMeshProUGUI itemDescription;
+
+        [Header("Sfx")]
+        [SerializeField] private EventReference newItemJingle;
 
         private void Awake()
         {
@@ -27,6 +31,7 @@ namespace TDK.ItemSystem.Inventory
             itemIcon.sprite = item.GetSprite();
             itemName.text = item.GetName();
             itemDescription.text = item.GetDescription();
+            RuntimeManager.PlayOneShot(newItemJingle);
             StartCoroutine(ShowPopup());
         }
 
