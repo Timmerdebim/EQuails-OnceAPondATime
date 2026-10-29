@@ -229,7 +229,6 @@ public class PlayerEffects : MonoBehaviour
 
     public void WingFlapEffects()
     {
-        Debug.Log("double pranked!");
         wingFlapParticles.Play();
         PlayerSounds.Instance.PlayWingFlap();
     }

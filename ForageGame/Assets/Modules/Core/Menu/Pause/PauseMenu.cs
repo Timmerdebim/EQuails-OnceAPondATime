@@ -3,6 +3,7 @@ using TDK.PlayerSystem;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using AudioIntegration;
 
 namespace Project.Menus
 {
@@ -30,7 +31,15 @@ namespace Project.Menus
         public override void OnEnteringMenu()
         {
             RuntimeManager.PlayOneShot(openSfx);
-            if (duckMusicAndAmbience.isValid())  duckMusicAndAmbience.start(); 
+            if (duckMusicAndAmbience.isValid() && !IsPlaying())  duckMusicAndAmbience.start();  //to prevent 'double start' when returning from settings tab
+        }
+
+        bool IsPlaying() 
+        {
+            if (!duckMusicAndAmbience.isValid()) return false;
+            FMOD.Studio.PLAYBACK_STATE eventState;   
+            duckMusicAndAmbience.getPlaybackState(out eventState);
+            return eventState != FMOD.Studio.PLAYBACK_STATE.STOPPED;
         }
 
         public override void OnExitingMenu()
@@ -62,6 +71,7 @@ namespace Project.Menus
         private async Task Respawn()
         {
             await GameplayController.Instance.ResumeGame();
+            if (duckMusicAndAmbience.isValid())  duckMusicAndAmbience.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
             await GameplayController.Instance.Death();
         }
 
@@ -73,6 +83,7 @@ namespace Project.Menus
         private async Task MainMenuSequence()
         {
             await GameplayController.Instance.ResumeGame();
+            if (duckMusicAndAmbience.isValid())  duckMusicAndAmbience.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //Return the audio level
             await GameplayController.Instance.QuitToMainMenu();
         }
 

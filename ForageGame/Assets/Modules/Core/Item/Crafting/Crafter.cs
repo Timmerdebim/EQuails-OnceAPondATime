@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TDK.ItemSystem.Types;
 using UnityEngine;
+using FMODUnity;
 
 namespace TDK.ItemSystem.Inventory
 {
@@ -16,6 +17,9 @@ namespace TDK.ItemSystem.Inventory
         [SerializeField] private ParticleSystem lidOpenedParticles;
         [SerializeField] private ParticleSystem fireParticles;
         [SerializeField] private ParticleSystem fireSmokeParticles;
+
+        [Header("Sfx")]
+        [SerializeField] private EventReference craftSfx;
 
         private bool craftInProgress = false;
 
@@ -51,6 +55,7 @@ namespace TDK.ItemSystem.Inventory
             if (!recipeItem.GetIsRepeatCraftable()) RecipeBookController.Instance?.TryRemoveRecipe(recipeItem);
             _itemSpawner.SetItem(recipeItem.GetCraftingResult());
             _animator.SetTrigger("Craft");
+            RuntimeManager.PlayOneShot(craftSfx, transform.position);
         }
 
         public void AnimatorOnLidClose()

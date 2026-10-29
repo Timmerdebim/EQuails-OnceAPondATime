@@ -111,7 +111,6 @@ namespace TDK.PlayerSystem
         //Called by animator, and just forwards it to the unity event
         public void OnWingFlap()
         {
-            Debug.Log("pranked!");
             onWingFlap?.Invoke();
         }
 
