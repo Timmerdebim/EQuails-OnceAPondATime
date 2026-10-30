@@ -43,6 +43,7 @@ namespace AudioIntegration
             {
                 // Debug.Log($"[AudioManager] Stopping and releasing audio instance: {source.GetType().Name}.");
                 source.StopAndRelease();
+                _pausablesBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); //not all pausables are IManagedAudioSources, so make sure their sfx don't resume on re-entering game
             }  
         }
 
