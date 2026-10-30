@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TDK.PlayerSystem;
+using FMODUnity;
 
 namespace TDK.ItemSystem.Inventory
 {
@@ -8,7 +9,8 @@ namespace TDK.ItemSystem.Inventory
     {
         public List<ItemSlot> Slots { get; protected set; } = new();
         protected int currentSlotIndex = 0;
-
+        [SerializeField] private EventReference itemPickupSfx;
+ 
         #region Add Functions
 
         public bool TryAddItemAtIndex(ItemData item, int slotIndex, int quantity = 1)
@@ -29,7 +31,10 @@ namespace TDK.ItemSystem.Inventory
                 if (slot.ContainsItem(item))
                 {
                     if (slot.TryAddItem(item, quantity))
+                    {
+                        RuntimeManager.PlayOneShot(itemPickupSfx); //I know this is ugly but 
                         return true;
+                    }
                 }
             }
             // Then try to find an empty slot
@@ -38,7 +43,10 @@ namespace TDK.ItemSystem.Inventory
                 if (slot.IsEmpty())
                 {
                     if (slot.TryAddItem(item, quantity))
+                    {   
+                        RuntimeManager.PlayOneShot(itemPickupSfx);
                         return true;
+                    }
                 }
             }
             //inventory full, display message
