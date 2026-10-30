@@ -179,6 +179,7 @@ public class GameplayController : MonoBehaviour
     public async Task PauseGame()
     {
         if (_state == State.Busy) return;
+        AudioManager.Instance.OnGamePaused(); //timing is important, to not desync sfx
         SetGameState(State.Busy);
         Debug.Log("[Gameplay] Pausing game.");
         await SceneServices.LoadScene(_pauseScene);
@@ -195,6 +196,7 @@ public class GameplayController : MonoBehaviour
         await PauseMenuController.Instance.ExitAllMenus();
         await SceneServices.UnloadScene(_pauseScene);
         SetGameState(State.Playing);
+        AudioManager.Instance.OnGameResumed();
         Debug.Log("[Gameplay] Resumed game.");
     }
 

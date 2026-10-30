@@ -5,6 +5,7 @@ using TDK.PlayerSystem;
 using System;
 using DG.Tweening;
 using System.Linq;
+using FMODUnity;
 
 namespace TDK.ItemSystem.Inventory
 {
@@ -22,6 +23,8 @@ namespace TDK.ItemSystem.Inventory
         public static event Action<ItemData> onNewItemSeen;
 
         public HashSet<ItemData> seenItems = new();
+
+        [SerializeField] private EventReference dropItemSfx;
 
         public void TryAddUnseenItem(ItemData item)
         {
@@ -121,6 +124,8 @@ namespace TDK.ItemSystem.Inventory
             + (Player.Instance.playerController.ViewDirection * (2f + randomVal))
             + (Vector3.forward * UnityEngine.Random.Range(-0.8f, 0.8f))
             + (Vector3.right * UnityEngine.Random.Range(-0.8f, 0.8f)));
+
+            RuntimeManager.PlayOneShot(dropItemSfx);
             return true;
         }
 

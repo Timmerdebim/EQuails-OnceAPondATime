@@ -22,11 +22,16 @@ namespace AudioIntegration
 
         private List<IManagedAudioSource> _registeredSources = new(); 
 
+        [SerializeField] private string pausablesBusPath;
+        private FMOD.Studio.Bus _pausablesBus;
+
+
         void Awake()
         {
             if (Instance != null) { Destroy(gameObject); return; }
             Instance = this;
             // DontDestroyOnLoad(gameObject);
+            _pausablesBus = FMODUnity.RuntimeManager.GetBus(pausablesBusPath);
         }
 
         public void Register(IManagedAudioSource source)   => _registeredSources.Add(source);
@@ -39,6 +44,16 @@ namespace AudioIntegration
                 // Debug.Log($"[AudioManager] Stopping and releasing audio instance: {source.GetType().Name}.");
                 source.StopAndRelease();
             }  
+        }
+
+        public void OnGamePaused()
+        {
+            _pausablesBus.setPaused(true);
+        }
+
+        public void OnGameResumed()
+        {
+            _pausablesBus.setPaused(false);
         }
     }
 
