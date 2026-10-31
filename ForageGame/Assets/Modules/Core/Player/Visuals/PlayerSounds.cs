@@ -24,6 +24,7 @@ namespace TDK.PlayerSystem
 
         [Header("Combat")]
         [SerializeField] private FMODUnity.EventReference wingSlapEvent;
+        [SerializeField] private FMODUnity.EventReference hurtEvent;
 
         public static PlayerSounds Instance { get; private set; } //yes, this sucks, but I HAVE to do it because FMOD SUCKS
 
@@ -63,6 +64,7 @@ namespace TDK.PlayerSystem
         public void PlayWingFlap() => FMODUnity.RuntimeManager.PlayOneShot(wingFlapEvent, transform.position);
 
         public void PlayWingSlap() => FMODUnity.RuntimeManager.PlayOneShot(wingSlapEvent, transform.position);
+        public void PlayHurt() => FMODUnity.RuntimeManager.PlayOneShot(hurtEvent, transform.position);
 
         public void PlayQuack() => FMODUnity.RuntimeManager.PlayOneShot(quackEvent, transform.position);
     }

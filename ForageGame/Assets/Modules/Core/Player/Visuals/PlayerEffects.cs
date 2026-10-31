@@ -241,6 +241,7 @@ public class PlayerEffects : MonoBehaviour
         hitParticles.emission.SetBurst(0, burst);
         hitParticles.time = 0f;
         hitParticles.Play();
+        PlayerSounds.Instance.PlayHurt();
     }
 
     private void LandEffect()
