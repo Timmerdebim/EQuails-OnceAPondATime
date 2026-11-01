@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using TDK.ItemSystem.Types;
 using UnityEngine;
 using FMODUnity;
+using TDK.SaveSystem;
 
 namespace TDK.ItemSystem.Inventory
 {
-    public class Crafter : MonoBehaviour
+    public class Crafter : MonoBehaviour, ISaveable, ILoadable
     {
         [SerializeField] private ItemRackController _itemRack;
         [SerializeField] private SimpleItemSpawner _itemSpawner;
@@ -54,6 +55,7 @@ namespace TDK.ItemSystem.Inventory
             craftInProgress = true;
             if (!recipeItem.GetIsRepeatCraftable()) RecipeBookController.Instance?.TryRemoveRecipe(recipeItem);
             _itemSpawner.SetItem(recipeItem.GetCraftingResult());
+            _currentItemID = recipeItem.GetCraftingResult().GetId();
             _animator.SetTrigger("Craft");
             RuntimeManager.PlayOneShot(craftSfx, transform.position);
         }
@@ -70,9 +72,28 @@ namespace TDK.ItemSystem.Inventory
 
         public void AnimatorOnLidOpen()
         {
+            _currentItemID = null;
             lidOpenedParticles.Play();
             _itemSpawner.SpawnLocal();
             craftInProgress = false;
+        }
+
+        [SerializeField] private int _saveID = 0;
+        private string _currentItemID = null;
+
+        public void SaveData(ref WorldSaveData data)
+        {
+            data.CrafterSpawnItemFix[_saveID] = _currentItemID;
+        }
+
+        public void LoadData(WorldSaveData data)
+        {
+            _currentItemID = data.CrafterSpawnItemFix[_saveID];
+            if (_currentItemID != null)
+            {
+                _itemSpawner.SetItem(ItemServices.Instance?.Database.GetAsset(_currentItemID));
+                _itemSpawner.SpawnLocal();
+            }
         }
     }
 }

@@ -24,5 +24,6 @@ namespace TDK.SaveSystem
         public bool[] cornerHeadsState = new bool[4] {false, false, false, false };
         public bool[] cornerHeadsBlack = new bool[4] {true, true, true, true };
         public List<string> UnlockedMusic = new();
+        public string[] CrafterSpawnItemFix = new string[4];
     }
 }
