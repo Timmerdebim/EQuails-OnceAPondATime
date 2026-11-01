@@ -12,7 +12,7 @@ using AudioIntegration;
 /// </summary>
 public class HazardExposure : MonoBehaviour
 {
-    [SerializeField] int damage = 8;
+    [SerializeField] int damage = 4;
     [SerializeField] float buildUpTime = 0.5f;
     [SerializeField] float decayDelay = 0.5f;
     [SerializeField] float decayTime = 2f;

@@ -11,7 +11,6 @@ using AudioIntegration;
 /// </summary>
 public class HazardZone : MonoBehaviour, IManagedAudioSource
 {
-    public int damage = 24;
     public LayerMask targetLayers;
     [SerializeField] private EventReference onTriggerStayEvent;
     private EventInstance onTriggerStay;
@@ -40,5 +39,6 @@ public class HazardZone : MonoBehaviour, IManagedAudioSource
     public void StopAndRelease()
     {
         onTriggerStay.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        onTriggerStay.release();
     }
 }
