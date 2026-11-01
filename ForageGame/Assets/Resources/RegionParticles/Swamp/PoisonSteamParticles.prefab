@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8031677391187415876}
   - component: {fileID: 2123330793004160686}
+  - component: {fileID: 1876974779713016022}
   - component: {fileID: 7242394666851615092}
   - component: {fileID: 2003712188869715986}
   m_Layer: 14
@@ -4766,6 +4767,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1876974779713016022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8155459772464183730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38fe87259eea4edba70fe984d67ad3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!199 &7242394666851615092
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4864,8 +4877,8 @@ MonoBehaviour:
       Data4: 168333811
     Path: event:/Ambience/GeneralAmbience/Swamp/Emitters/AcidPool
   Event: 
-  EventPlayTrigger: 1
-  EventStopTrigger: 0
+  EventPlayTrigger: 11
+  EventStopTrigger: 12
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0

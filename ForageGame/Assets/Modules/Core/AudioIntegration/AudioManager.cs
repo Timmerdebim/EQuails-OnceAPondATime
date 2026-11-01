@@ -20,6 +20,7 @@ namespace AudioIntegration
     {
         public static AudioManager Instance { get; private set; }
 
+        //this list is required since I can't search for ImanagedAudioSources given it's not an Object
         private List<IManagedAudioSource> _registeredSources = new(); 
 
         [SerializeField] private string pausablesBusPath;
