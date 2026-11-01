@@ -26,6 +26,8 @@ public class HazardExposure : MonoBehaviour
     public void Enter() => overlaps++;
     public void Exit()  => overlaps = Mathf.Max(0, overlaps - 1);
 
+    public void ExitAll()  => overlaps = 0;
+
     void Update()
     {
         if (overlaps > 0)

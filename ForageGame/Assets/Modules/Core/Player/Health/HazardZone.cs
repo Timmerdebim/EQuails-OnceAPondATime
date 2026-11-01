@@ -15,10 +15,14 @@ public class HazardZone : MonoBehaviour, IManagedAudioSource
     [SerializeField] private EventReference onTriggerStayEvent;
     private EventInstance onTriggerStay;
 
+    void OnEnable()  => AudioManager.Instance.Register(this);
+    void OnDisable() => AudioManager.Instance.Unregister(this);
+
     void Awake()
     {
         onTriggerStay = RuntimeManager.CreateInstance(onTriggerStayEvent);
     }
+
 
     void OnTriggerEnter(Collider other)
     {
