@@ -94,6 +94,7 @@ namespace TDK.ItemSystem.Inventory
                 _itemSpawner.SetItem(ItemServices.Instance?.Database.GetAsset(_currentItemID));
                 _itemSpawner.SpawnLocal();
             }
+            _currentItemID = null;
         }
     }
 }
