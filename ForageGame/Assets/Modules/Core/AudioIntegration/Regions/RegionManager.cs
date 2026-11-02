@@ -187,7 +187,20 @@ public class RegionManager : MonoBehaviour
             else if (ambience.TryGetValue(region.ambienceEvent, out float existing))
                 ambience[region.ambienceEvent] = existing + weight;
             else
+            {
                 ambience[region.ambienceEvent] = weight;
+            }
+
+            //acoustics snapshot, is just an event reference in the end
+            if(!region.acousticsSnapshot.IsNull)
+            {
+                if (ambience.TryGetValue(region.acousticsSnapshot, out float existing))
+                    ambience[region.acousticsSnapshot] = existing + weight;
+                else
+                {
+                    ambience[region.acousticsSnapshot] = weight;
+                } 
+            }
         }
 
         return ambience;

@@ -18,6 +18,8 @@ public class Region : MonoBehaviour
     public float blendDistance = 20f;
 
     [SerializeField] public EventReference ambienceEvent;
+    [Tooltip("Optional, mostly for cave reverb snapshots")]
+    [SerializeField] public EventReference acousticsSnapshot;
     [SerializeField] public WeatherTypeProfile weatherTypeProfile;
 
     [SerializeField] public float dustiness = 0f;

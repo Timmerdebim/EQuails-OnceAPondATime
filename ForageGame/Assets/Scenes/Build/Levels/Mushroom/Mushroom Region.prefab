@@ -19008,8 +19008,8 @@ GameObject:
   - component: {fileID: 1053720272445971275}
   - component: {fileID: 3890489524944815035}
   - component: {fileID: 5355705976071065463}
-  - component: {fileID: 8853392852881260063}
   - component: {fileID: 2642153206665133826}
+  - component: {fileID: 4990723450860931703}
   m_Layer: 0
   m_Name: PolyShape (3)
   m_TagString: Untagged
@@ -19497,24 +19497,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &8853392852881260063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4780106476154043168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monoHit: 0
-  attackDamage: 2
-  attacksPerSecond: 2
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!114 &2642153206665133826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19528,6 +19510,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnItem: {fileID: 11400000, guid: c103a0f4cda7aa64da2a2302e3fadefc, type: 2}
+--- !u!114 &4990723450860931703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4780106476154043168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bd647390fe64a74b72f7bb0e9899ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  onTriggerStayEvent:
+    Guid:
+      Data1: 689787725
+      Data2: 1313583709
+      Data3: -138004050
+      Data4: 144440999
+    Path: event:/Sfx/Misc/AcidPoolEnter
 --- !u!1 &4807803395664202647
 GameObject:
   m_ObjectHideFlags: 0
@@ -27448,8 +27452,8 @@ GameObject:
   - component: {fileID: 7845243295572098530}
   - component: {fileID: 1965333865648923881}
   - component: {fileID: 9005238178756822009}
-  - component: {fileID: 4890005069434259149}
   - component: {fileID: 9075850334787647559}
+  - component: {fileID: 6144184610931088346}
   m_Layer: 0
   m_Name: PolyShape (2)
   m_TagString: Untagged
@@ -27899,24 +27903,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &4890005069434259149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6827025411283199832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monoHit: 0
-  attackDamage: 2
-  attacksPerSecond: 2
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!114 &9075850334787647559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27930,6 +27916,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnItem: {fileID: 11400000, guid: c103a0f4cda7aa64da2a2302e3fadefc, type: 2}
+--- !u!114 &6144184610931088346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6827025411283199832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bd647390fe64a74b72f7bb0e9899ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  onTriggerStayEvent:
+    Guid:
+      Data1: 689787725
+      Data2: 1313583709
+      Data3: -138004050
+      Data4: 144440999
+    Path: event:/Sfx/Misc/AcidPoolEnter
 --- !u!1 &6897136400210793990
 GameObject:
   m_ObjectHideFlags: 0
@@ -31757,7 +31765,7 @@ GameObject:
   - component: {fileID: 1939898295662481057}
   - component: {fileID: 7970517976947257308}
   - component: {fileID: 1646488675467438278}
-  - component: {fileID: 1899269315619431289}
+  - component: {fileID: 846621835105317572}
   m_Layer: 0
   m_Name: PolyShape
   m_TagString: Untagged
@@ -32334,7 +32342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnItem: {fileID: 11400000, guid: c103a0f4cda7aa64da2a2302e3fadefc, type: 2}
---- !u!114 &1899269315619431289
+--- !u!114 &846621835105317572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32343,15 +32351,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7895790284357409615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
+  m_Script: {fileID: 11500000, guid: b4bd647390fe64a74b72f7bb0e9899ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monoHit: 0
-  attackDamage: 2
-  attacksPerSecond: 2
   targetLayers:
     serializedVersion: 2
     m_Bits: 512
+  onTriggerStayEvent:
+    Guid:
+      Data1: 689787725
+      Data2: 1313583709
+      Data3: -138004050
+      Data4: 144440999
+    Path: event:/Sfx/Misc/AcidPoolEnter
 --- !u!1 &7928303234607141358
 GameObject:
   m_ObjectHideFlags: 0
