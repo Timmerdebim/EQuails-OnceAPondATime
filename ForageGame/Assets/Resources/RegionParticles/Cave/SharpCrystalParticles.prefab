@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5191809973107052304}
   - component: {fileID: 3439872349141069062}
   - component: {fileID: 220028235840447805}
+  - component: {fileID: 1527641181974343937}
+  - component: {fileID: 8034213978594858659}
   m_Layer: 14
   m_Name: SharpCrystalParticles
   m_TagString: Untagged
@@ -4857,3 +4859,48 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1527641181974343937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4267725453766903000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1981690576
+      Data2: 1284119316
+      Data3: -1403891067
+      Data4: -379099658
+    Path: event:/Ambience/GeneralAmbience/Cave/Emitters/SharpCrystalPit
+  Event: 
+  EventPlayTrigger: 11
+  EventStopTrigger: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params:
+  - Name: AcidPoolSize
+    Value: 3
+  OverrideAttenuation: 0
+  OverrideMinDistance: 8
+  OverrideMaxDistance: 20
+--- !u!114 &8034213978594858659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4267725453766903000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38fe87259eea4edba70fe984d67ad3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

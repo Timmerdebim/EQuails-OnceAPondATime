@@ -5083,7 +5083,7 @@ GameObject:
   - component: {fileID: 942020098571087473}
   - component: {fileID: 406180426561625689}
   - component: {fileID: 4590338035960508862}
-  - component: {fileID: 2092643144848065780}
+  - component: {fileID: 1826280020619328779}
   m_Layer: 13
   m_Name: Spikes (2)
   m_TagString: Untagged
@@ -5495,7 +5495,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &2092643144848065780
+--- !u!114 &1826280020619328779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5504,15 +5504,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2155646207691113806}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
+  m_Script: {fileID: 11500000, guid: b4bd647390fe64a74b72f7bb0e9899ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monoHit: 0
-  attackDamage: 3
-  attacksPerSecond: 2
   targetLayers:
     serializedVersion: 2
     m_Bits: 512
+  onTriggerStayEvent:
+    Guid:
+      Data1: 689787725
+      Data2: 1313583709
+      Data3: -138004050
+      Data4: 144440999
+    Path: event:/Sfx/Misc/AcidPoolEnter
 --- !u!1 &2167197447981260765
 GameObject:
   m_ObjectHideFlags: 0
@@ -6721,7 +6725,7 @@ GameObject:
   - component: {fileID: 7085546434198106709}
   - component: {fileID: 5553957821255482251}
   - component: {fileID: 2029180855732419510}
-  - component: {fileID: 7768685104764711968}
+  - component: {fileID: 6285956356518315027}
   m_Layer: 13
   m_Name: Spikes
   m_TagString: Untagged
@@ -7057,7 +7061,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &7768685104764711968
+--- !u!114 &6285956356518315027
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7066,15 +7070,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2668522299182936151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
+  m_Script: {fileID: 11500000, guid: b4bd647390fe64a74b72f7bb0e9899ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monoHit: 0
-  attackDamage: 3
-  attacksPerSecond: 2
   targetLayers:
     serializedVersion: 2
     m_Bits: 512
+  onTriggerStayEvent:
+    Guid:
+      Data1: 689787725
+      Data2: 1313583709
+      Data3: -138004050
+      Data4: 144440999
+    Path: event:/Sfx/Misc/AcidPoolEnter
 --- !u!1 &2768574755119055751
 GameObject:
   m_ObjectHideFlags: 0
@@ -20853,7 +20861,7 @@ GameObject:
   - component: {fileID: 1937303784454826458}
   - component: {fileID: 6480097651497018245}
   - component: {fileID: 3189585371951365972}
-  - component: {fileID: 1574521984667157714}
+  - component: {fileID: 523194990431018357}
   m_Layer: 13
   m_Name: Spikes (1)
   m_TagString: Untagged
@@ -21189,7 +21197,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &1574521984667157714
+--- !u!114 &523194990431018357
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21198,15 +21206,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4952107402033400921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc3b8be7928b5b138326da310097b3b, type: 3}
+  m_Script: {fileID: 11500000, guid: b4bd647390fe64a74b72f7bb0e9899ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monoHit: 0
-  attackDamage: 3
-  attacksPerSecond: 2
   targetLayers:
     serializedVersion: 2
     m_Bits: 512
+  onTriggerStayEvent:
+    Guid:
+      Data1: 689787725
+      Data2: 1313583709
+      Data3: -138004050
+      Data4: 144440999
+    Path: event:/Sfx/Misc/AcidPoolEnter
 --- !u!1 &4963810434721881072
 GameObject:
   m_ObjectHideFlags: 0
@@ -77038,6 +77050,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6080408692840171036}
     m_Modifications:
+    - target: {fileID: 1527641181974343937, guid: d8a5c35003f734cb1b30038b02c8ea0c, type: 3}
+      propertyPath: Params.Array.data[0].Value
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4267725453766903000, guid: d8a5c35003f734cb1b30038b02c8ea0c, type: 3}
       propertyPath: m_Name
       value: SharpCrystalsNW
@@ -114866,6 +114882,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 364019744365118666}
     m_Modifications:
+    - target: {fileID: 1527641181974343937, guid: d8a5c35003f734cb1b30038b02c8ea0c, type: 3}
+      propertyPath: Params.Array.data[0].Value
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3439872349141069062, guid: d8a5c35003f734cb1b30038b02c8ea0c, type: 3}
       propertyPath: ShapeModule.m_Scale.x
       value: 29
@@ -119507,6 +119527,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6080408692840171036}
     m_Modifications:
+    - target: {fileID: 1527641181974343937, guid: d8a5c35003f734cb1b30038b02c8ea0c, type: 3}
+      propertyPath: Params.Array.data[0].Value
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3439872349141069062, guid: d8a5c35003f734cb1b30038b02c8ea0c, type: 3}
       propertyPath: ShapeModule.m_Scale.x
       value: 10
