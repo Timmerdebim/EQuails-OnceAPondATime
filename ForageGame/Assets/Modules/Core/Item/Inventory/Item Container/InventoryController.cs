@@ -57,7 +57,7 @@ namespace TDK.ItemSystem.Inventory
             foreach (Transform child in _itemSlotsParent) Destroy(child.gameObject);
             AddSlots(slotCount, true, false);
             currentSlotIndex = 0;
-            SelectSlot(currentSlotIndex);
+            SelectSlot(currentSlotIndex, false); //so no sfx plays
         }
         public void Initialize(List<ItemSlotSaveData> data)
         {
@@ -71,7 +71,7 @@ namespace TDK.ItemSystem.Inventory
             }
             AdjustBeltVisual(false);
             currentSlotIndex = 0;
-            SelectSlot(currentSlotIndex);
+            SelectSlot(currentSlotIndex, false);
         }
 
         public ItemSlot AddSlot(bool refreshVisual = true, bool animateVisual = true)

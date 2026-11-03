@@ -10,6 +10,7 @@ namespace TDK.ItemSystem.Inventory
         public List<ItemSlot> Slots { get; protected set; } = new();
         protected int currentSlotIndex = 0;
         [SerializeField] private EventReference itemPickupSfx;
+        [SerializeField] private EventReference selectSlotSfx;
  
         #region Add Functions
 
@@ -92,7 +93,7 @@ namespace TDK.ItemSystem.Inventory
 
         #region Slot Selection
 
-        public void SelectSlot(int index)
+        public void SelectSlot(int index, bool playSfx=true)
         {
             index = (index % Slots.Count + Slots.Count) % Slots.Count;
             if (IsSlotValid(index))
@@ -101,6 +102,7 @@ namespace TDK.ItemSystem.Inventory
                     Slots[currentSlotIndex].SetSelected(false);
                 currentSlotIndex = index;
                 Slots[currentSlotIndex].SetSelected(true);
+                if (playSfx) RuntimeManager.PlayOneShot(selectSlotSfx);
             }
         }
 
