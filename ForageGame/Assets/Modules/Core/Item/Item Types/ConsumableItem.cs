@@ -27,7 +27,8 @@ namespace TDK.ItemSystem.Types
             if (!InventoryController.Instance.TryRemoveItemAtCurrent(this))
                 return false;
 
-            Player.Instance.energy.TakeDamage(-consumableEnergy); // a little botched but ok...
+            if(consumableEnergy >= 0) Player.Instance.energy.AddEnergy(-consumableEnergy);
+            else Player.Instance.energy.Hit(consumableEnergy); //plays the vfx/sfx, but is throttled by iframes (won't fix)
 
             if (returnItem != null)
             {
