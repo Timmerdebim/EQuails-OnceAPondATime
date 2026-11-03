@@ -24,7 +24,7 @@ namespace TDK.ItemSystem.Inventory
 
         public bool TryAddItemAtCurrent(ItemData item, int quantity = 1) => TryAddItemAtIndex(item, currentSlotIndex, quantity);
 
-        public bool TryAddItemAtAny(ItemData item, int quantity = 1)
+        public bool TryAddItemAtAny(ItemData item, bool playSfx=true, int quantity = 1)
         {
             // First try to stack with existing items
             foreach (ItemSlot slot in Slots)
@@ -33,7 +33,7 @@ namespace TDK.ItemSystem.Inventory
                 {
                     if (slot.TryAddItem(item, quantity))
                     {
-                        RuntimeManager.PlayOneShot(itemPickupSfx); //I know this is ugly but 
+                        if (playSfx) RuntimeManager.PlayOneShot(itemPickupSfx); //I know this is ugly but 
                         return true;
                     }
                 }
@@ -45,7 +45,7 @@ namespace TDK.ItemSystem.Inventory
                 {
                     if (slot.TryAddItem(item, quantity))
                     {   
-                        RuntimeManager.PlayOneShot(itemPickupSfx);
+                        if (playSfx) RuntimeManager.PlayOneShot(itemPickupSfx);
                         return true;
                     }
                 }

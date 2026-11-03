@@ -34,7 +34,7 @@ namespace TDK.ItemSystem.Types
                     if (!InventoryController.Instance.TryRemoveItemAtCurrent(this))
                         return false;
 
-                    if (!handler.returnItem.TryWorldItemInteract())
+                    if (!InventoryController.Instance.TryAddItemAtAny(handler.returnItem, false)) //bypass the sound effect for picking up the item
                         ItemServices.Instance?.SpawnItem(handler.returnItem, Player.Instance.transform.position);
 
                     RuntimeManager.PlayOneShot(fillSfx);
@@ -50,7 +50,7 @@ namespace TDK.ItemSystem.Types
             if (!InventoryController.Instance.TryRemoveItemAtCurrent(this))
                 return false;
 
-            if (!InventoryController.Instance.TryAddItemAtAny(item))
+            if (!InventoryController.Instance.TryAddItemAtAny(item, false))
                 ItemServices.Instance?.SpawnItem(item, Player.Instance.transform.position);
             return true;
         }
