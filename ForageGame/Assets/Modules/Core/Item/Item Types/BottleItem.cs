@@ -1,6 +1,7 @@
 using UnityEngine;
 using TDK.ItemSystem.Inventory;
 using TDK.PlayerSystem;
+using FMODUnity;
 
 namespace TDK.ItemSystem.Types
 {
@@ -11,6 +12,7 @@ namespace TDK.ItemSystem.Types
         [SerializeField] protected ItemData pollenBottle;
         [SerializeField] protected ItemData sporeBottle;
         [SerializeField] protected ItemData fireflyBottle;
+        [SerializeField] protected EventReference fillSfx;
 
         public override bool TryWorldItemInteract()
         {
@@ -35,6 +37,7 @@ namespace TDK.ItemSystem.Types
                     if (!handler.returnItem.TryWorldItemInteract())
                         ItemServices.Instance?.SpawnItem(handler.returnItem, Player.Instance.transform.position);
 
+                    RuntimeManager.PlayOneShot(fillSfx);
                     return true;
                 }
             }
