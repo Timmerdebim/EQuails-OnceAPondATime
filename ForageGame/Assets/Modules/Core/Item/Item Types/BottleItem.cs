@@ -25,7 +25,7 @@ namespace TDK.ItemSystem.Types
 
         public override bool TryUse()
         {
-            Collider[] colliders = Physics.OverlapSphere(Player.Instance.transform.position, 3);
+            Collider[] colliders = Physics.OverlapSphere(Player.Instance.transform.position, .5f);
 
             foreach (Collider collider in colliders)
             {
