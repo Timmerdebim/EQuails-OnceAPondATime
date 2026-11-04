@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using TDK.ItemSystem.Inventory;
 using UnityEngine;
 using TDK.PlayerSystem;
+using FMODUnity;
 
 namespace TDK.ItemSystem.Types
 {
@@ -12,6 +13,7 @@ namespace TDK.ItemSystem.Types
     {
         [SerializeField] protected float consumableEnergy;
         [SerializeField] protected ItemData returnItem;
+        [SerializeField] private EventReference consumeSfx; //i.e. is this a drink or an eat
 
         public override bool TryWorldItemInteract()
         {
@@ -27,6 +29,7 @@ namespace TDK.ItemSystem.Types
             if (!InventoryController.Instance.TryRemoveItemAtCurrent(this))
                 return false;
 
+            RuntimeManager.PlayOneShot(consumeSfx);
             if(consumableEnergy >= 0) Player.Instance.energy.AddEnergy(-consumableEnergy);
             else Player.Instance.energy.Hit(consumableEnergy); //plays the vfx/sfx, but is throttled by iframes (won't fix)
 
