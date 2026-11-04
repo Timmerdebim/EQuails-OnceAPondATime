@@ -25,6 +25,7 @@ namespace TDK.ItemSystem.Inventory
         public HashSet<ItemData> seenItems = new();
 
         [SerializeField] private EventReference dropItemSfx;
+        [SerializeField] private EventReference slotAddedSfx;
 
         public void TryAddUnseenItem(ItemData item)
         {
@@ -94,7 +95,11 @@ namespace TDK.ItemSystem.Inventory
         {
             Vector2 sizeDelta = _belt.sizeDelta;
             sizeDelta.x = _beltOffsetWidth + Slots.Count * _beltExtensionWidth;
-            if (animate) _belt.DOSizeDelta(sizeDelta, 1f);
+            if (animate) 
+            {
+                RuntimeManager.PlayOneShot(slotAddedSfx);
+                _belt.DOSizeDelta(sizeDelta, 1f);
+            }
             else _belt.sizeDelta = sizeDelta;
         }
 
