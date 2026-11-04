@@ -30,7 +30,7 @@ namespace TDK.ItemSystem.Types
                 return false;
 
             RuntimeManager.PlayOneShot(consumeSfx);
-            if(consumableEnergy >= 0) Player.Instance.energy.AddEnergy(-consumableEnergy);
+            if(consumableEnergy >= 0) Player.Instance.energy.TakeDamage(-consumableEnergy); //now I see why you did it like this, 10/10 code
             else Player.Instance.energy.Hit(consumableEnergy); //plays the vfx/sfx, but is throttled by iframes (won't fix)
 
             if (returnItem != null)

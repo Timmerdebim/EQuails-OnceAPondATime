@@ -100,13 +100,28 @@ namespace TDK.ItemSystem.Inventory
 
         #region Triggers
 
+        //use the quack as the general "no you can't do this"
         public bool TryUseItem()
         {
             if (!IsSlotValid(currentSlotIndex))
+            {
+                Player.Instance.effects.QuackEffect();
                 return false;
+            }
             if (Slots[currentSlotIndex].IsEmpty())
+            {
+                Player.Instance.effects.QuackEffect();
                 return false;
-            return Slots[currentSlotIndex].Item.TryUse();
+            }
+            if(Slots[currentSlotIndex].Item.TryUse())
+            {
+                return true;
+            }
+            else 
+            {
+                Player.Instance.effects.QuackEffect();
+                return false;
+            }
         }
 
         public bool TryDropItem()
