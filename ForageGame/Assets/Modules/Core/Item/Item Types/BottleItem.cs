@@ -36,6 +36,7 @@ namespace TDK.ItemSystem.Types
 
                     if (!InventoryController.Instance.TryAddItemAtAny(handler.returnItem, false)) //bypass the sound effect for picking up the item
                         ItemServices.Instance?.SpawnItem(handler.returnItem, Player.Instance.transform.position);
+                    else InventoryController.Instance.TryAddUnseenItem(handler.returnItem); //still update the seen items list regardless
 
                     RuntimeManager.PlayOneShot(fillSfx);
                     return true;
