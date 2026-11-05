@@ -123,6 +123,7 @@ public class GameplayController : MonoBehaviour
 
 
         Player.Instance._playerAnimator.IsDead(true);
+        Player.Instance.playerController.WaterDeathCheck(); //ensures the 'waterwalking' doesn't happen when dying/respawning while swimming
         await Task.Delay(Mathf.CeilToInt(0.5f * 1000)); //animation (1 sec.) (cut at 0.5 sec.)
 
         await UnloadWorld();

@@ -108,6 +108,13 @@ namespace TDK.PlayerSystem
             _animator.IsSwimming(false);
         }
 
+        public void WaterDeathCheck()
+        {
+            _animator.IsSwimming(false);
+            Player.Instance.effects.StopWakeTrail();
+            GetComponentInChildren<PlayerWaterHandler>().Reset();
+        }
+
         //Called by animator, and just forwards it to the unity event
         public void OnWingFlap()
         {

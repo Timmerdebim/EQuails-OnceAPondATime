@@ -30,5 +30,6 @@ public class PlayerWaterHandler : MonoBehaviour
         _colliderCounter = Math.Max(0, _colliderCounter + value);
     }
 
-    public void Reset() => AddCounter(-_colliderCounter);
+    //public void Reset() => AddCounter(-_colliderCounter);
+    public void Reset() => _colliderCounter = 0; //reset should be silent, so no effects play
 }

@@ -179,6 +179,12 @@ public class PlayerEffects : MonoBehaviour
         PlayerSounds.Instance.PlayWaterLeave();
     }
 
+    //safety for when dying/respawning when in water, to stop the wake trail without playing the full 'water leave' stuff
+    public void StopWakeTrail()
+    {
+        wakeTrail.SetSwimming(false);
+    }
+
     //is hooked up to OnMove()
     public void WaterChangeMovementEffects(Vector3 inputVector)
     {
