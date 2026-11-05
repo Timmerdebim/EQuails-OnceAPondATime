@@ -3,6 +3,7 @@ using TDK.ItemSystem.Types;
 using UnityEngine;
 using FMODUnity;
 using TDK.SaveSystem;
+using System;
 
 namespace TDK.ItemSystem.Inventory
 {
@@ -89,7 +90,7 @@ namespace TDK.ItemSystem.Inventory
         public void LoadData(WorldSaveData data)
         {
             _currentItemID = data.CrafterSpawnItemFix[_saveID];
-            if (_currentItemID != null)
+            if (!String.IsNullOrEmpty(_currentItemID))
             {
                 _itemSpawner.SetItem(ItemServices.Instance?.Database.GetAsset(_currentItemID));
                 _itemSpawner.SpawnLocal();
