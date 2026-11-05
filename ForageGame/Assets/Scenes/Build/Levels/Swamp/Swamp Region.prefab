@@ -230305,7 +230305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[10].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[11].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -230438,7 +230438,7 @@ PrefabInstance:
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[10].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4124176034107227479}
+      objectReference: {fileID: 569216403860609453}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[11].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -230681,7 +230681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[10].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SendMessage
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[11].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -230813,7 +230813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[10].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: FMODUnity.StudioEventEmitter, FMODUnity
       objectReference: {fileID: 0}
     - target: {fileID: 7085379914656279805, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       propertyPath: dialogueActionMap.Array.data[11].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -231361,8 +231361,47 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 208158245290208660, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4633552958006092699}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5874195236534444314, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 569216403860609453}
   m_SourcePrefab: {fileID: 100100000, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+--- !u!1 &682739689933736598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5874195236534444314, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
+  m_PrefabInstance: {fileID: 6412212521668897676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &569216403860609453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682739689933736598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1315029064
+      Data2: 1233880480
+      Data3: 1630959510
+      Data4: -1165577314
+    Path: event:/Sfx/UI/RecipeBookOpen
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!4 &849280281240523915 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5995978554477068039, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
@@ -231393,7 +231432,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4497202806532132490, guid: 699ab3160c36348489c1e05c1a4c1003, type: 3}
   m_PrefabInstance: {fileID: 6412212521668897676}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 682739689933736598}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52e8d7dc38f6b41d6abe12f963e7ea85, type: 3}

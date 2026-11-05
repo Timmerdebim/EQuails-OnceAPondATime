@@ -14,6 +14,7 @@ using TDK.ItemSystem.Types;
 using TDK.SaveSystem;
 using TDK.InteractionSystem;
 using AudioIntegration;
+using FMODUnity;
 
 namespace NPC
 {

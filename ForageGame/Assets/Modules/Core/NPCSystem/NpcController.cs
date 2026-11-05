@@ -8,6 +8,7 @@ using TDK.ItemSystem.Types;
 using TDK.SaveSystem;
 using System;
 using AudioIntegration;
+using FMODUnity;
 
 namespace NPC
 {
