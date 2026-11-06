@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2519861794163939370}
   - component: {fileID: 5181973878552297696}
-  - component: {fileID: 7251266655386944958}
+  - component: {fileID: 8523773412715477812}
   m_Layer: 13
   m_Name: Bed
   m_TagString: Untagged
@@ -241,7 +241,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eeb46b5e9fb7a54f99d3b9a65f93dbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1103871770814022486}
   _animationLength: 5
+  bedPlaceSfx:
+    Guid:
+      Data1: -769068737
+      Data2: 1127496193
+      Data3: -439719256
+      Data4: 178515269
+    Path: event:/Sfx/Misc/PlaceBed
   gettingInBedSfx:
     Guid:
       Data1: -69033375
@@ -256,7 +264,7 @@ MonoBehaviour:
       Data3: -521884791
       Data4: 966253746
     Path: event:/Sfx/Player/WakeUp
---- !u!114 &7251266655386944958
+--- !u!114 &8523773412715477812
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,37 +273,87 @@ MonoBehaviour:
   m_GameObject: {fileID: 3085869830601259148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0b572298e41e4f9daece84a1a7b9634, type: 3}
+  m_Script: {fileID: 11500000, guid: ea007a3417a2c435f9b4d7df7e409ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flag: {fileID: 11400000, guid: 4e548ad9978e04086b80e256fc934ea2, type: 2}
-  onFlagAdded:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6009235633650728741}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1188854372826028911}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+  storyFlagActionMap:
+  - flag: {fileID: 0}
+    action:
+      m_PersistentCalls:
+        m_Calls: []
+  - flag: {fileID: 11400000, guid: 4e548ad9978e04086b80e256fc934ea2, type: 2}
+    action:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6009235633650728741}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1188854372826028911}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 5181973878552297696}
+          m_TargetAssemblyTypeName: Bed, Assembly-CSharp
+          m_MethodName: PlaceBed
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - flag: {fileID: 11400000, guid: 4d24183a0342f4993adb8a5c0332f171, type: 2}
+    action:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6009235633650728741}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1188854372826028911}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  activeEntry:
+    flag: {fileID: 0}
+    action:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &3445414062182152042
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,7 +1364,7 @@ PrefabInstance:
       objectReference: {fileID: 1188854372826028911}
     - target: {fileID: 4753878957824698557, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
       propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4753878957824698557, guid: 05581b7aea155c24c854485efe6ea992, type: 3}
       propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
