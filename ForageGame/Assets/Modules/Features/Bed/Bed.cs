@@ -1,14 +1,17 @@
 using System.Threading.Tasks;
 using TDK.PlayerSystem;
 using UnityEngine;
+using FMODUnity;
 
 public class Bed : MonoBehaviour
 {
     [SerializeField] private float _animationLength;
+    [SerializeField] private EventReference gettingInBedSfx;
     public void Interact()
     {
         if (!AppController.Instance.IsInputsActive) return;
         AppController.Instance.SetInputsActive(false);
+        RuntimeManager.PlayOneShot(gettingInBedSfx);
         _ = Sleep();
     }
 
