@@ -8,6 +8,7 @@ using TDK.PlayerSystem;
 using TDK.ItemSystem.Types;
 using TDK.ItemSystem.Inventory;
 using AudioIntegration;
+using UnityEngine.Events;
 
 public class GameplayController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameplayController : MonoBehaviour
     [SerializeField] private TransitionScreenController _tsc;
     [SerializeField] public SaveManager _saveManager;
     [SerializeField] private CutoutController _cutoutController;
+    [SerializeField] public UnityEvent onWakeUp; //for the bed to respond to it with an sfx
 
     [Header("Scenes")]
     [SerializeField] private SceneReference _worldScene;
@@ -111,6 +113,7 @@ public class GameplayController : MonoBehaviour
             Player.Instance.playerThinkingHints.recipeToGiveOnClose = sleepHint; //so it gives it on hint close (do not throw in face, ruins the experience)
             // RecipeBookController.Instance.TryAddRecipe(sleepHint);
         }
+        onWakeUp?.Invoke();
         Debug.Log("[Gameplay] Player slept.");
 
     }
@@ -133,6 +136,7 @@ public class GameplayController : MonoBehaviour
         Player.Instance.energy.AddEnergy(9999);
         StoryFlagManager.Instance.OnTimePassing(); //we'll count dying as 'sleeping' too, since that's where the player wakes up anyway
         SetGameState(State.Playing);
+        onWakeUp?.Invoke(); //death also puts the player at the bed
         Debug.Log("[Gameplay] Player died.");
     }
 
