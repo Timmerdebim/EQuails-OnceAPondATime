@@ -3,6 +3,7 @@ using TDK.SaveSystem;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using FMODUnity;
 
 namespace TDK.EnemySystem
 {
@@ -26,6 +27,11 @@ namespace TDK.EnemySystem
         private Transform _player;
 
         public UnityEvent<float> onHurt;
+
+        [Header("Sfx")]
+        [SerializeField] private EventReference footstepEvent;
+        [SerializeField] private EventReference alertEvent;
+        [SerializeField] private EventReference questionEvent;
 
         void Awake()
         {
@@ -104,6 +110,7 @@ namespace TDK.EnemySystem
                 _popupTextbox.SetText("?");
                 _popupTextbox.ShowTextbox(true);
                 _animator.SetTrigger("AlertLevel1");
+                Play3DSfx(questionEvent);
 
             }
             else if (level == 2)
@@ -111,6 +118,7 @@ namespace TDK.EnemySystem
                 _popupTextbox.SetText("!");
                 _popupTextbox.ShowTextbox(true);
                 _animator.SetTrigger("AlertLevel2");
+                Play3DSfx(alertEvent);
             }
         }
 
@@ -176,7 +184,7 @@ namespace TDK.EnemySystem
             SetNavDestination(_lastPlayerPos, speed);
         }
 
-        // ------------ HEALTH ------------
+        #region Health
 
         [Header("Health")]
         public float maxHealth = 100f;
@@ -195,6 +203,23 @@ namespace TDK.EnemySystem
                 SetAlertLevel(0);
             }
         }
+
+        #endregion
+
+        #region Sfx
+
+        private void Play3DSfx(EventReference reference)
+        {
+            var inst = RuntimeManager.CreateInstance(reference);
+            inst.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+            inst.start();
+            inst.release();
+        }
+
+        public void OnFootStep() => Play3DSfx(footstepEvent);
+
+
+        #endregion
 
         // #region Save & Load
         // // ------------ SAVE & LOAD ------------
