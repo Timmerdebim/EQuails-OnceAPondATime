@@ -148,6 +148,20 @@ MonoBehaviour:
   OnUnlock:
     m_PersistentCalls:
       m_Calls: []
+  activateEvent:
+    Guid:
+      Data1: -1854299829
+      Data2: 1273204219
+      Data3: -231194452
+      Data4: 1131997006
+    Path: event:/Sfx/Gadgets/PunchingBagBreak
+  deactivateEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   _solutionSequence: 000000000000000000000000
   OnFailed:
     m_PersistentCalls:
@@ -10117,6 +10131,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 244203651838551283, guid: 05a1e31c1657035438fae2ef2d61072c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1541675698346265487}
+    - targetCorrespondingSourceObject: {fileID: 244203651838551283, guid: 05a1e31c1657035438fae2ef2d61072c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4323244846570126039}
   m_SourcePrefab: {fileID: 100100000, guid: 05a1e31c1657035438fae2ef2d61072c, type: 3}
 --- !u!1 &3417129733925768687 stripped
 GameObject:
@@ -10162,6 +10179,49 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4323244846570126039}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4323244846570126039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417129733925768687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 513795543
+      Data2: 1215697408
+      Data3: 1112510080
+      Data4: 1695764627
+    Path: event:/Sfx/Gadgets/GeneralHit
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!4 &7241871287594040943 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5228621027218954099, guid: 05a1e31c1657035438fae2ef2d61072c, type: 3}
