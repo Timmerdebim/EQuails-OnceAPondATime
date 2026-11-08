@@ -28,10 +28,14 @@ namespace TDK.EnemySystem
 
         public UnityEvent<float> onHurt;
 
-        [Header("Sfx")]
+        [Header("Vfx/Sfx")]
         [SerializeField] private EventReference footstepEvent;
         [SerializeField] private EventReference alertEvent;
         [SerializeField] private EventReference questionEvent;
+        [SerializeField] private EventReference attackEvent;
+        [SerializeField] private ParticleSystem attackParticles;
+        [SerializeField] private EventReference hurtEvent;
+        [SerializeField] private EventReference deadEvent;
 
         void Awake()
         {
@@ -192,6 +196,7 @@ namespace TDK.EnemySystem
 
         public void Hit(float damage)
         {
+            if(_isDead) return; //nothing to be done
             currentHealth -= damage;
             Debug.Log(gameObject.name + " took " + damage + " damage. Current health: " + currentHealth);
             onHurt.Invoke(damage);
@@ -201,7 +206,9 @@ namespace TDK.EnemySystem
                 _animator.SetBool("isDead", true);
                 SetSensorLevel(0);
                 SetAlertLevel(0);
+                Play3DSfx(deadEvent);
             }
+            else Play3DSfx(hurtEvent);
         }
 
         #endregion
@@ -217,6 +224,14 @@ namespace TDK.EnemySystem
         }
 
         public void OnFootStep() => Play3DSfx(footstepEvent);
+
+        public void OnAttack()
+        {
+            var yrotation = _spriteRenderer.flipX? -90 : 90;
+            attackParticles.transform.rotation = Quaternion.Euler(0, yrotation, 0);
+            attackParticles.Play();
+            Play3DSfx(attackEvent);
+        }
 
 
         #endregion
