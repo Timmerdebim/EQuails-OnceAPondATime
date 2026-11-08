@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8868989403008259921}
   - component: {fileID: 5895698955685527259}
   - component: {fileID: 8944637372589554495}
+  - component: {fileID: 1797492413522845918}
   m_Layer: 13
   m_Name: Particles
   m_TagString: Untagged
@@ -4866,6 +4867,37 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1797492413522845918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4986618808773690172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 195383876
+      Data2: 1315471065
+      Data3: 1886526398
+      Data4: 702298899
+    Path: event:/Sfx/Gadgets/TorchFire
+  Event: 
+  EventPlayTrigger: 11
+  EventStopTrigger: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &1027676930922404939
 PrefabInstance:
   m_ObjectHideFlags: 0
