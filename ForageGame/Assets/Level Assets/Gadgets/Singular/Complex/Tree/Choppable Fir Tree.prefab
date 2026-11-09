@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c41fe17e5609a4c83e8c1b6ba4171a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _guid: 
   _animator: {fileID: 446107211602753064}
   _initialState: 0
   _singleUse: 1
@@ -150,6 +151,26 @@ MonoBehaviour:
   OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+  OnLock:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnlock:
+    m_PersistentCalls:
+      m_Calls: []
+  activateEvent:
+    Guid:
+      Data1: 517548423
+      Data2: 1255447459
+      Data3: -1420164210
+      Data4: -326136660
+    Path: event:/Sfx/Gadgets/ChoppableTreeChop
+  deactivateEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!95 &446107211602753064
 Animator:
   serializedVersion: 7
@@ -354,8 +375,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0.5
+      minMaxState: 3
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1166,7 +1187,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 4
+        scalar: 10
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1216,7 +1237,7 @@ ParticleSystem:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-      cycleCount: 10
+      cycleCount: 8
       repeatInterval: 0.05
       probability: 1
   SizeModule:
@@ -1553,7 +1574,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.25, g: 0.15, b: 0.049999997, a: 0}
-        key1: {r: 0.5, g: 0.45000002, b: 0.4, a: 0.3137255}
+        key1: {r: 0.5, g: 0.45000002, b: 0.4, a: 0.627451}
         key2: {r: 0.8, g: 0.8, b: 0.8, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1561,7 +1582,7 @@ ParticleSystem:
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 13107
+        ctime1: 9830
         ctime2: 65535
         ctime3: 0
         ctime4: 0
@@ -1612,8 +1633,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
-    mode: 0
+    enabled: 1
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -1731,7 +1752,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: 8cdc8bc45774b40f9a8ebcebbe829c2f, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -2657,11 +2678,11 @@ ParticleSystem:
       m_Bits: 4294967295
     influenceList: []
   ClampVelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2767,7 +2788,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2820,7 +2841,7 @@ ParticleSystem:
     magnitude:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2870,7 +2891,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    separateAxis: 0
+    separateAxis: 1
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
@@ -2878,7 +2899,7 @@ ParticleSystem:
     drag:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.35
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5024,7 +5045,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 264759fdd0eca3046a58427bbe778045, type: 2}
+  - {fileID: 2100000, guid: 2ef03eaa7ceac491e8e9825f59e70c5f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
