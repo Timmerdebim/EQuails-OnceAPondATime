@@ -82,7 +82,6 @@ MonoBehaviour:
   _database:
     storyStages: []
   dialogueReferences: {fileID: 5202161501044935352}
-  isEnabled: 1
   _activeStage:
     RequiredFlags: []
     RequiredAbsentFlags: []
@@ -96,6 +95,8 @@ MonoBehaviour:
       Lines: []
   _lineIndex: 0
   _lastCompletedStageIndex: -1
+  thinkingBox: {fileID: 0}
+  thinkingBoxFacesRight: 1
   syllableCountCurve:
     serializedVersion: 2
     m_Curve: []
@@ -109,6 +110,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   statusIndicator: {fileID: 3013340971194140558}
+  showsExclamationMark: 1
+  _debugMode: 0
   _guid: 
 --- !u!114 &8131746875913874286
 MonoBehaviour:
@@ -124,6 +127,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _item: {fileID: 0}
   _position: {x: 1, y: 0, z: 0}
+  spawnSfx:
+    Guid:
+      Data1: -2975050
+      Data2: 1218964801
+      Data3: 1249918372
+      Data4: -117317329
+    Path: event:/Sfx/Gadgets/ItemSpawn
 --- !u!1001 &4598386861473278787
 PrefabInstance:
   m_ObjectHideFlags: 0

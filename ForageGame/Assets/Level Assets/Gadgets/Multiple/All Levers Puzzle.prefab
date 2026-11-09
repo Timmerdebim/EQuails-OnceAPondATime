@@ -145,6 +145,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _item: {fileID: 11400000, guid: e0a3bb2b2e8b31c419f23f12ca2d9238, type: 2}
   _position: {x: 0, y: 0, z: 0}
+  spawnSfx:
+    Guid:
+      Data1: -2975050
+      Data2: 1218964801
+      Data3: 1249918372
+      Data4: -117317329
+    Path: event:/Sfx/Gadgets/ItemSpawn
 --- !u!1 &6449427792501672471
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9454856fa6c3bc040ae387ea68a77929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _guid: 
   _animator: {fileID: 7899922854393521171}
   _initialState: 0
   _singleUse: 1
@@ -216,6 +224,26 @@ MonoBehaviour:
   OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+  OnLock:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnlock:
+    m_PersistentCalls:
+      m_Calls: []
+  activateEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  deactivateEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   _solution:
   - gadget: {fileID: 1646492575486079321}
     targetState: 1
