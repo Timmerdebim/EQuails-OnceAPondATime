@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 186344788858791884}
   - component: {fileID: 7950734440670660179}
   - component: {fileID: 5888389598208393216}
+  - component: {fileID: 6270768497699249925}
   m_Layer: 12
   m_Name: Visuals
   m_TagString: Untagged
@@ -136,6 +137,18 @@ MonoBehaviour:
             m_StringArgument: SoilPlaced
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 6270768497699249925}
+          m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SoilPlaced
+            m_BoolArgument: 0
+          m_CallState: 2
   - flag: {fileID: 11400000, guid: 2b0d854e032d448929649686f3a0bfd6, type: 2}
     action:
       m_PersistentCalls:
@@ -157,6 +170,37 @@ MonoBehaviour:
     action:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &6270768497699249925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8248263931534090665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1087715476
+      Data2: 1248597947
+      Data3: -1302689639
+      Data4: -172558457
+    Path: event:/Sfx/Misc/PlaceBloomingSoil
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &1880036870595707678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -579,7 +623,7 @@ PrefabInstance:
       objectReference: {fileID: 120405106724512544}
     - target: {fileID: 2615941826176621022, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.45
+      value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 2615941826176621022, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: m_LocalPosition.z
@@ -587,15 +631,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2920056586756819921, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2920056586756819921, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2920056586756819921, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2920056586756819921, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: m_LocalPosition.x
@@ -636,6 +680,10 @@ PrefabInstance:
     - target: {fileID: 2920056586756819921, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920056586756819921, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4165233173356872626, guid: d02c64b4e095a40ddb51c8041fc7e691, type: 3}
       propertyPath: _sourceFile
