@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5318436687535231820}
   - component: {fileID: 1949088556745209629}
   - component: {fileID: 2130544845401123170}
+  - component: {fileID: 6836384222597779966}
   m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
@@ -157,6 +158,37 @@ MonoBehaviour:
     action:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &6836384222597779966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613740736144311193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1192451159
+      Data2: 1094955792
+      Data3: 290377376
+      Data4: 674440421
+    Path: event:/Sfx/Misc/PrincessWatered
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &7352591126649121302
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +596,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8034213978594858659, guid: d8a5c35003f734cb1b30038b02c8ea0c, type: 3}
+    - {fileID: 1527641181974343937, guid: d8a5c35003f734cb1b30038b02c8ea0c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

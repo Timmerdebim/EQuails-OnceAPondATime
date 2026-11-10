@@ -451,8 +451,9 @@ namespace NPC
                 Debug.LogError($"[NpcController: {gameObject.name}] Can't use item {args.item} because it is not a Consumable!");
                 return;
             }
+            var it = (ConsumableItem)args.item; //messy at best, I know
             if (_debugMode) Debug.Log($"[NpcController: {gameObject.name}] Trying to use consumable item {args.item} from player inventory");
-            if (args.item.TryUse())
+            if (it.TryUseOther())
             {
                 StoryFlagManager.Instance.AddFlag(args.OnSuccess);
                 _lastActiveLocation.MessageRead = false; //IMPORTANT: this hack is what makes it seem like dialogue is continuous in our item taking instead of closing and re-opening

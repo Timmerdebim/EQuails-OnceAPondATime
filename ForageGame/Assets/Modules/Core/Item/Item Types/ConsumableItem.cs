@@ -24,6 +24,19 @@ namespace TDK.ItemSystem.Types
             return true;
         }
 
+        public bool TryUseOther() //i.e. Princess 'using' the bottle of water; skip all the player focused stuff, like Sfx
+        {
+            if (!InventoryController.Instance.TryRemoveItemAtCurrent(this))
+                return false;
+
+            if (returnItem != null)
+            {
+                if (!InventoryController.Instance.TryAddItemAtAny(returnItem, false))
+                    ItemServices.Instance?.SpawnItem(returnItem, Player.Instance.transform.position);
+            }
+            return true;
+        }
+
         public override bool TryUse()
         {
             if (!InventoryController.Instance.TryRemoveItemAtCurrent(this))
