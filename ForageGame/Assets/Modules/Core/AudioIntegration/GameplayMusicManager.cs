@@ -200,13 +200,30 @@ namespace AudioIntegration
             }
         }
 
+        public bool CheckInstantThemeEligible()
+        {
+            foreach (MusicTheme theme in activeRegionThemes)
+            {
+                if(theme.instant && unlockedThemes.ContainsKey(theme))
+                {
+                    Debug.Log($"[GemeplayMusicManager]: theme {theme.name} is instant, playing now!");
+                    PlayTheme(theme);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //called by SaveManager after game has finished loading
         public void RestartScheduling()
         {
             if(state == MusicManagerState.PlayingEvent) return; //cutscene music is bleeding over, let it
-            StopCurrentTheme(); //should never have an effect
-            SetNewScheduleTime();
+            StopCurrentTheme(); //will insta-quit the home base theme (it is always activated before GameplayController is done), so restart in next statement
             state = MusicManagerState.Scheduling;
+            if(!CheckInstantThemeEligible())
+            {
+                SetNewScheduleTime();
+            }
         }
 
         #endregion
