@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1425527657390646673}
+  - component: {fileID: 6461507178782485141}
+  - component: {fileID: 767733294930739502}
   m_Layer: 7
   m_Name: Trash Prefab 3
   m_TagString: Untagged
@@ -36,6 +38,49 @@ Transform:
   - {fileID: 2776682999735622922}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6461507178782485141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2317192874985842198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1852469962
+      Data2: 1119630909
+      Data3: -34908737
+      Data4: 162834489
+    Path: event:/Ambience/GeneralAmbience/Cave/Emitters/TrashFlies
+  Event: 
+  EventPlayTrigger: 11
+  EventStopTrigger: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &767733294930739502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2317192874985842198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38fe87259eea4edba70fe984d67ad3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5234331879954762462
 GameObject:
   m_ObjectHideFlags: 0
