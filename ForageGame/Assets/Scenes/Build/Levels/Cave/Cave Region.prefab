@@ -123216,7 +123216,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1583992508519378491, guid: b1c9e606e2ac24aef95065e53cd7c042, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1490858260372123484}
   m_SourcePrefab: {fileID: 100100000, guid: b1c9e606e2ac24aef95065e53cd7c042, type: 3}
 --- !u!1 &491479188526304466 stripped
 GameObject:
@@ -123228,6 +123231,42 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6607262902619686430, guid: b1c9e606e2ac24aef95065e53cd7c042, type: 3}
   m_PrefabInstance: {fileID: 5870058974093125600}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4939845444760455643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1583992508519378491, guid: b1c9e606e2ac24aef95065e53cd7c042, type: 3}
+  m_PrefabInstance: {fileID: 5870058974093125600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1490858260372123484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4939845444760455643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1632354688
+      Data2: 1339341598
+      Data3: 525548202
+      Data4: -1904518291
+    Path: event:/Sfx/Misc/GrimbleEat
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!114 &7583506407556260674 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4055673361666147490, guid: b1c9e606e2ac24aef95065e53cd7c042, type: 3}
