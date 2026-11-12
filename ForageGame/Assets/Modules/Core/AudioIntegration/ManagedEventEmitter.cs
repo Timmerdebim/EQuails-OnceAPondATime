@@ -26,7 +26,11 @@ namespace AudioIntegration
 
         public void StopAndRelease()
         {
-            studioEventEmitter.Stop();
+            foreach (StudioEventEmitter emitter in GetComponents<StudioEventEmitter>())
+            {
+                emitter.Stop();
+            }
+            //studioEventEmitter.Stop();
         }
     }
 }

@@ -445,14 +445,14 @@ Flags: BrackenPlaysGuitar, LyriaGrieving
         Stage: 8
         Actions: face_left
         Emotion: Sad
-        What would the steps even be?
+        What should the settings even be?
 
-        Stage: 7
+        Stage: 9
         Emotion: NeutralTalking
         Actions: face_left
         I'll figure it out...
 
-        Stage: 7
+        Stage: 10
         Actions: face_left, give_recipe_blooming_soil_on_close
         I have to.
 
@@ -612,74 +612,62 @@ Required-Items:
         ...
 
         Stage: 8
-        Actions: face_left
+        Actions: face_left, play_sound_machine_alarm
         Emotion: NeutralTalking
         Wait-
 
         Stage: 9
-        Actions: face_left
+        Actions: face_left, explode_machine_on_close
         no no NO-
 
-        Stage: 10
-        Actions: face_left, explode_machine
-        Emotion: Exploded
-        ...
-
-        Stage: 11
-        Actions: face_left
-        Emotion: Exploded
-        ...
-
-        Stage: 12
-        Actions: face_left
-        Emotion: Sad
-        ...
-
 --- Stage
-Flags: BrackenExaminingBloomingSoil
+Flags: BrackenMachineExploded
 Required-Items:
     Location: Machine
     <main>
-    BaseEmotion: Sad
+    BaseEmotion: Exploded
+
 
         Stage: 0
         Actions: face_left
-        Emotion: Sad
-        Hey Duckie.
+        Emotion: Exploded
+        ...
 
         Stage: 1
         Actions: face_left
-        I guess you saw that...
-
-        Stage: 2
-        It shouldn't have worked.
-
-        Stage: 3
-        That flower, I mean.
-
-        Stage: 4
-        The soil, it's tuned...
-
-        Stage: 5
-        For one type of plant.
-
-        Stage: 6
-        That flower...
-
-        Stage: 7
-        Wasn't.
-
-        Stage: 8
-        Actions: face_left
+        Emotion: Exploded
         ...
 
-        Stage: 9
+        Stage: 2
         Actions: face_left
-        I got it wrong...
+        Emotion: Sad
+        ...
+
+        Stage: 3
+        Actions: face_left
+        Hey Duckie.
+
+        Stage: 4
+        Actions: face_left
+        I guess you saw that...
+
+        Stage: 5
+        It shouldn't have worked.
+
+        Stage: 6
+        That flower, I mean.
+
+        Stage: 7
+        The soil, it's tuned...
+
+        Stage: 8
+        For one type of plant.
+
+        Stage: 9
+        That flower...
 
         Stage: 10
-        Actions: face_left
-        Again.
+        Wasn't.
 
         Stage: 11
         Actions: face_left
@@ -687,9 +675,21 @@ Required-Items:
 
         Stage: 12
         Actions: face_left
-        Now what?
+        I got it wrong...
 
         Stage: 13
+        Actions: face_left
+        Again.
+
+        Stage: 14
+        Actions: face_left
+        ...
+
+        Stage: 15
+        Actions: face_left
+        Now what?
+
+        Stage: 16
         Actions: face_left
         I need to get out of here...
 
@@ -706,7 +706,7 @@ Required-Items:
 
 
 --- Stage
-Flags: BrackenExaminingBloomingSoil
+Flags: BrackenMachineExploded
 Required-Items:
     Location: RedwoodBench
     BaseEmotion: Sitting
@@ -721,7 +721,7 @@ Required-Items:
 
 
 --- Stage
-Flags: LyriaHome
+Flags: LyriaHome, BrackenMachineExploded
 Required-Items:
 <RequireTimePassing>
     Location: RedwoodBench
@@ -756,7 +756,7 @@ Required-Items:
         Actions: give_flag_bracken_redwood_scene
         I made that so long ago...
 
---- Stage
+--- Stage 
 Flags: BrackenRedwoodScene
 Required-Items:
     Location: RedwoodBench
