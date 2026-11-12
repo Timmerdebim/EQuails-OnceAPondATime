@@ -436,7 +436,7 @@ Flags: BrackenPlaysGuitar, LyriaGrieving
         I'll need you to handle the base mixture.
 
         Stage: 6
-        Then I'll need to finish it here, with this machine.
+        Then I'll need to finish it here, with this machine behind me.
 
         Stage: 7
         Actions: face_left
@@ -533,11 +533,11 @@ Required-Items:
         ...
 
         Stage: 4
-        Actions: face_left
+        Actions: face_left, play_sound_lever_clunk
         ...
 
         Stage: 5
-        Actions: face_left
+        Actions: face_left, play_sound_item_pickup
         Emotion: NeutralTalking
         And... that should do it.
 
@@ -573,6 +573,7 @@ Required-Items:
 --- Stage
 Flags: BrackenExaminingBloomingSoil
 Required-Items:
+Actions: reset_lever
     Location: Machine
     <main>
     BaseEmotion: Neutral
