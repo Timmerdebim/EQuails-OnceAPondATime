@@ -58,6 +58,7 @@ namespace NPC
         //THIS animation ALREADY DISABLES THE GAMEOBJECT
         public void ShrinkAway()
         {
+            Debug.Log($"Shrunk away?: {gameObject.name}");
             isBeingDisabled = true;
             HideStatusIndicator();
             _interactable.DisableInteraction();

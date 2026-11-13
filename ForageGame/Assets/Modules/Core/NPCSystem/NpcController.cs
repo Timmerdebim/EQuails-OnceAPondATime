@@ -218,6 +218,7 @@ namespace NPC
             {
                 if (!newStage.locationDialogues.ContainsKey(loc))
                 {
+                    Debug.Log($"[NpcController: {character}]. Shrinking away {loc} because it is not in {newStage}");
                     loc.ShrinkAway(); //play the shrink away animation before auto-deactivating
                 }
             }
@@ -231,9 +232,11 @@ namespace NPC
                 return;
             }
 
+            Debug.Log($"[NpcController: {character}]. Enabling new locations. These are {_activeStage.locationDialogues.Keys}");
             //enable and set emotion
             foreach (var loc in _activeStage.locationDialogues.Keys)
             {
+                Debug.Log($"[NpcController: {character}]. Enabling new location: {loc}");
                 loc.gameObject.SetActive(true); //will play the popup animation if not already active
                 if (!string.IsNullOrEmpty(_activeStage.locationDialogues[loc].baseEmotion)) loc.SetEmotion(_activeStage.locationDialogues[loc].baseEmotion);
                 loc.SetStatusIndicatorText(_activeStage.locationDialogues[loc].isMainDialogue); //shows the '!' or '...' indicator
