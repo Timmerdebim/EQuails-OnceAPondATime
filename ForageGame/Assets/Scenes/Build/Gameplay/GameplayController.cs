@@ -77,6 +77,7 @@ public class GameplayController : MonoBehaviour
 
         // I hate my life fr chat
         Debug.Log("[Gameplay] Unloading World.");
+        AudioManager.Instance.StopAndReleaseAll();
         await _tsc.FadeOutAsync();
         await AwaitPadding();
         StoryFlagManager.Instance.OnTimePassing();
@@ -149,6 +150,7 @@ public class GameplayController : MonoBehaviour
         _isCutsceneActive = true;
         AppController.Instance.SetInputsActive(lockInputs);
         Time.timeScale = pauseTime ? 0 : 1;
+        GameplayMusicManager.Instance.StopAndRelease(); //stop only the music, not the sfx / ambience
         if (useTransitionScreen)
         {
             await _tsc.FadeOutAsync();
@@ -171,6 +173,7 @@ public class GameplayController : MonoBehaviour
         if (useTransitionScreen)
         {
             await AwaitPadding();
+            GameplayMusicManager.Instance.RestartScheduling();
             _tsc.FadeIn();
         }
     }
@@ -242,6 +245,7 @@ public class GameplayController : MonoBehaviour
     private async Task UnloadWorld() // PRIVATE == skip saftey check
     {
         Debug.Log("[Gameplay] Unloading World.");
+        AudioManager.Instance.StopAndReleaseAll();
         await _tsc.FadeOutAsync();
         await AwaitPadding();
         //StoryFlagManager.Instance.OnTimePassing(); //no, only when sleeping, not general unload

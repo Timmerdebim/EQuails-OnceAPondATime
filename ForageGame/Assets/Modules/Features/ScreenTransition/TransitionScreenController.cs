@@ -19,7 +19,6 @@ public class TransitionScreenController : MonoBehaviour
 
     public async Task FadeOutAsync()
     {
-        AudioManager.Instance.StopAndReleaseAll();
         _animator.SetTrigger("Enter");
         await Task.Delay(Mathf.CeilToInt(_enterDuration * 1000));
     }
