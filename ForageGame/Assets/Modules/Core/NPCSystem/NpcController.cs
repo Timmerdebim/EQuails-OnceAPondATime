@@ -216,11 +216,12 @@ namespace NPC
                 return;
             }
 
-            // Debug.Log($"[NpcController: {character}]. Enabling new locations. These are {_activeStage.locationDialogues.Keys}");
+            // Debug.Log($"[NpcController: {character}]. Enabling new locations. There are {_activeStage.locationDialogues.Keys.Count}");
             //enable and set emotion
             foreach (var loc in _activeStage.locationDialogues.Keys)
             {
                 // Debug.Log($"[NpcController: {character}]. Enabling new location: {loc}");
+                loc.shrinkAwayCanceled = true; //fuck you unity fuck you unity fuck you unity
                 loc.gameObject.SetActive(true); //will play the popup animation if not already active
                 if (!string.IsNullOrEmpty(_activeStage.locationDialogues[loc].baseEmotion)) loc.SetEmotion(_activeStage.locationDialogues[loc].baseEmotion);
                 loc.SetStatusIndicatorText(_activeStage.locationDialogues[loc].isMainDialogue); //shows the '!' or '...' indicator

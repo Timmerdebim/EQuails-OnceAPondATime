@@ -57,7 +57,16 @@ namespace NPC
         //super sucks to do hehe but I don't want to do animation detection
         public void ShrinkAwayFinished()
         {
-            transform.parent.gameObject.SetActive(false);
+            if(!transform.parent.GetComponent<NpcLocation>().shrinkAwayCanceled) 
+            {
+                // Debug.Log("shrink away finished and not canceled! disabling!");
+                transform.parent.gameObject.SetActive(false);
+            }
+            else 
+            {
+                Debug.Log($"Shrink away cancelled! {transform.parent.gameObject.name}. Thank you unity, very cool.");
+                transform.parent.GetComponent<NpcLocation>().OnEnable(); //yeah yeah sincerely fuck unity, I need to reset it
+            }
         }
 
         public override void FaceTowardPlayer()

@@ -29,6 +29,8 @@ namespace NPC
 
         [SerializeField] private Interactable _interactable;
 
+        [SerializeField] public bool shrinkAwayCanceled = false; //the super duper epic fuck-you-unity-and-your-shitty-race-conditions boolean
+
 
         //Public getter, TODO: unused publicly?
         public bool MessageRead = false;
@@ -43,8 +45,9 @@ namespace NPC
             textCtxSource = new CancellationTokenSource();
         }
 
-        private void OnEnable()
+        public void OnEnable()
         {
+            // Debug.Log($"Enable: {gameObject.name}");
             _interactable.EnableInteraction();
             visuals.OnPopUp();
             ///IMPORTANT: this is what prevents leave_rude dialogue to be displayed upon not talking to fresh locations and leaving 
@@ -58,6 +61,7 @@ namespace NPC
         //THIS animation ALREADY DISABLES THE GAMEOBJECT
         public void ShrinkAway()
         {
+            shrinkAwayCanceled = false;
             // Debug.Log($"Shrunk away?: {gameObject.name}");
             isBeingDisabled = true;
             HideStatusIndicator();
