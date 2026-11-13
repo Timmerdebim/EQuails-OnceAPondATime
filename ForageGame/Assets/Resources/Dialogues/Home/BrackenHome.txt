@@ -412,35 +412,51 @@ Required-Items: BoatDamageReport
         Hey Duckie! What's up?
 
         Stage: 1
+        Actions: item_take_boat_damage_report
+        Emotion: SittingNeutralTalking
+        What? You got something for me?
+
+
+--- Stage
+Flags: BoatDamageReportGiven
+
+    Location: Log
+    <main>
+    BaseEmotion: Sitting
+
+
+        Stage: 0
         Emotion: SittingNeutralTalking
         Huh? Oh, this is Mosswick's writing...
 
-        Stage: 2
+        Stage: 1
         His boat got wrecked?
         
-        Stage: 3
+        Stage: 2
         Oh of course... the storm.
 
-        Stage: 4
+        Stage: 3
+        Emotion: Sitting
         ...
 
-        Stage: 5
+        Stage: 4
+        Emotion: SittingNeutralTalking
         Well, this report is uhm...
 
-        Stage: 6
+        Stage: 5
         Let's go with inconclusive.
 
-        Stage: 7
+        Stage: 6
         Emotion: SittingHappyTalking
         But he probably tried his best!
 
-        Stage: 8
+        Stage: 7
         It'd be much easier to just go there myself anyway.
 
-        Stage: 9
+        Stage: 8
         I don't want him stuck out there.
 
-        Stage: 10
+        Stage: 9
         Emotion: HappyTalking
         Actions: give_flag_bracken_inspecting_boat
         Well, time for a little swim!

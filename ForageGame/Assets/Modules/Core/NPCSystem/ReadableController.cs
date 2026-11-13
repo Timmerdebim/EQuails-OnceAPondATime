@@ -93,20 +93,20 @@ namespace NPC
             //StoryFlagManager.onStoryFlagsLoaded -= OnTimePassing;
         }
         //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
-        private void Start()
-        {
-            //if not set, use the player's box
-            if (thinkingBox == null) thinkingBox = Player.Instance.thinkingBox;
+        // private void Start()
+        // {
+        //     //if not set, use the player's box
+        //     if (thinkingBox == null) thinkingBox = Player.Instance.thinkingBox;
 
-            _database = parser.ParseReadable(_sourceFile.text,
-                                    StoryFlagManager.Instance.flagDatabase.AsDictionary(),
-                                    dialogueReferences.GetItemDataMap(),
-                                    dialogueReferences.GetDialogueActionMap());
-            //EvaluateActiveStage();
+        //     _database = parser.ParseReadable(_sourceFile.text,
+        //                             StoryFlagManager.Instance.flagDatabase.AsDictionary(),
+        //                             dialogueReferences.GetItemDataMap(),
+        //                             dialogueReferences.GetDialogueActionMap());
+        //     //EvaluateActiveStage();
 
-            //Player.Instance.thinkingBox.syllableCountCurve = syllableCountCurve;
-            textCtxSource = new CancellationTokenSource();
-        }
+        //     //Player.Instance.thinkingBox.syllableCountCurve = syllableCountCurve;
+        //     textCtxSource = new CancellationTokenSource();
+        // }
 
         public void DisableInteractable()
         {
@@ -695,6 +695,18 @@ namespace NPC
 
         public void LoadData(WorldSaveData data)
         {
+            //this is stuff from Start() moved here due to race condition
+            //if not set, use the player's box
+            if (thinkingBox == null) thinkingBox = Player.Instance.thinkingBox;
+
+            _database = parser.ParseReadable(_sourceFile.text,
+                                    StoryFlagManager.Instance.flagDatabase.AsDictionary(),
+                                    dialogueReferences.GetItemDataMap(),
+                                    dialogueReferences.GetDialogueActionMap());
+
+            textCtxSource = new CancellationTokenSource();
+
+            
             foreach (NpcSaveData npcSaveData in data.NPCs)
             {
                 if (npcSaveData.Guid == _guid)

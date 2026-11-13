@@ -77,22 +77,6 @@ namespace NPC
             InventoryController.onNewItemSeen -= OnNewItemSeen;
             //StoryFlagManager.onStoryFlagsLoaded -= OnTimePassing;
         }
-        //Changed to Start() from Awake() since it gave inconsistent behavior in terms of timing ~Lars
-        private void Start()
-        {
-            _database = parser.Parse(_sourceFile.text,
-                                    StoryFlagManager.Instance.flagDatabase.AsDictionary(),
-                                    dialogueReferences.GetItemDataMap(),
-                                    dialogueReferences.GetNpcLocationsMap(),
-                                    dialogueReferences.GetDialogueActionMap());
-            //EvaluateActiveStage(); //taken care of by save manager
-
-            // //this sucks but I have to since only this object knows how long a given line is
-            // foreach (DialogueBox box in GetComponentsInChildren<DialogueBox>())
-            // {
-            //     box.syllableCountCurve = syllableCountCurve; //no longer required, part of NPC voice
-            // }
-        }
         #region Stage Management
 
         private int GetActiveStageIndex() => _activeStage == null ? -1 : _database.storyStages.IndexOf(_activeStage);
@@ -218,7 +202,7 @@ namespace NPC
             {
                 if (!newStage.locationDialogues.ContainsKey(loc))
                 {
-                    Debug.Log($"[NpcController: {character}]. Shrinking away {loc} because it is not in {newStage}");
+                    // Debug.Log($"[NpcController: {character}]. Shrinking away {loc} because it is not in {newStage}");
                     loc.ShrinkAway(); //play the shrink away animation before auto-deactivating
                 }
             }
@@ -232,11 +216,11 @@ namespace NPC
                 return;
             }
 
-            Debug.Log($"[NpcController: {character}]. Enabling new locations. These are {_activeStage.locationDialogues.Keys}");
+            // Debug.Log($"[NpcController: {character}]. Enabling new locations. These are {_activeStage.locationDialogues.Keys}");
             //enable and set emotion
             foreach (var loc in _activeStage.locationDialogues.Keys)
             {
-                Debug.Log($"[NpcController: {character}]. Enabling new location: {loc}");
+                // Debug.Log($"[NpcController: {character}]. Enabling new location: {loc}");
                 loc.gameObject.SetActive(true); //will play the popup animation if not already active
                 if (!string.IsNullOrEmpty(_activeStage.locationDialogues[loc].baseEmotion)) loc.SetEmotion(_activeStage.locationDialogues[loc].baseEmotion);
                 loc.SetStatusIndicatorText(_activeStage.locationDialogues[loc].isMainDialogue); //shows the '!' or '...' indicator
@@ -510,6 +494,13 @@ namespace NPC
 
         public void LoadData(WorldSaveData data)
         {
+            //moved here due to race condition between this function and Start()
+            _database = parser.Parse(_sourceFile.text,
+                                    StoryFlagManager.Instance.flagDatabase.AsDictionary(),
+                                    dialogueReferences.GetItemDataMap(),
+                                    dialogueReferences.GetNpcLocationsMap(),
+                                    dialogueReferences.GetDialogueActionMap());
+
             foreach (NpcSaveData npcSaveData in data.NPCs)
             {
                 if (npcSaveData.Guid == _guid)
