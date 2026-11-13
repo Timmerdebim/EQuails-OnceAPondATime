@@ -18,7 +18,7 @@ namespace TDK.PlayerSystem.States
 
             Player.Instance.hitbox.Reset();
             Player.Instance.hitbox.PivotTarget(Player.Instance.playerController.ViewDirection);
-            Player.Instance.hitbox.gameObject.SetActive(true);
+            // Player.Instance.hitbox.gameObject.SetActive(true);
 
             Player.Instance.playerController.Reset();
             Player.Instance.playerController.SetGravity(false);
