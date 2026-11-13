@@ -289,7 +289,7 @@ namespace AudioIntegration
         {
             unlockedThemes = new();
             foreach (string id in data.UnlockedMusic)
-                unlockedThemes.Add(_database.GetAsset(id),0f);
+                unlockedThemes.Add(_database.GetAsset(id), Random.Range(0f, 0.5f*_database.GetAsset(id).cooldownSeconds)); //give it a random cooldown on startup, so no instant blasting of music
         }
     }
 }
