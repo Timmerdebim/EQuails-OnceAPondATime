@@ -292,11 +292,14 @@ Actions: give_flag_princess_wilted
         Actions: face_right, give_flag_princess_wilted_inspected
         Please don't tell me...
 
+--- Stage
+Flags: PrincessWiltedInspected
+
+    Location: Cage 
+    BaseEmotion: Sad
+
         Stage: repeat
-        She's going to be fine, right?
-
-
-
+        My baby's going to be fine, right?
     
 
 
@@ -350,11 +353,19 @@ Required-Items:
         Emotion: HappyTalking
         You can look at my baby as much as you want now!
 
+
+
+
+--- Stage
+Flags: PrincessWatered
+Required-Items:
+
+    Location: Cage 
+    BaseEmotion: Happy
+
         Stage: repeat
-        Actions: face_right, unlock_theme_flowerfieldlullaby
         Emotion: HappyTalking
         I'm just so relieved you're back, my precious.
-
 
 
     Location: Blossom 
@@ -417,7 +428,6 @@ Actions: give_flag_princess_drowned, face_left
         Right...?
 
 
-
  
 
 
@@ -457,11 +467,18 @@ Actions: face_left
         Emotion: Sad
         ...
 
+
+--- Stage
+Flags: PrincessDrownedInspected
+Actions: face_left
+
+    Location: NextToCage 
+    BaseEmotion: Sad
+
         Stage: repeat
         Actions: face_left
         Emotion: SadTalking
         What did I do wrong this time?
-
 
 
 
@@ -637,6 +654,28 @@ Required-Items:
         We should give yours a name.
 
 
+--- Stage
+Flags: LyriaPrincessClosureSceneStarted
+
+    Location: FlowerGraveyard 
+    BaseEmotion: Sad
+
+        Stage: 0
+        Actions: face_left
+        Emotion: SadTalking
+        I'll be back soon.
+
+        Stage: 1
+        Actions: face_left
+        Just... give me a minute here.
+
+        Stage: 2
+        Actions: face_left
+        When I get back...
+
+        Stage: 3
+        Emotion: HappyTalking
+        We should give yours a name.
 
 
 

@@ -188,6 +188,10 @@ Absent-Items: CrispDynamite
 
 
 
+
+
+
+
 --- Stage
 Flags: GrimbleWallFreshAirInspected
 Required-Items: CrispDynamite
@@ -267,10 +271,16 @@ Flags: GrimbleWallBlownUp
         Stage: 6
         Now can you leave me be for once?
 
+
+--- Stage
+Flags: GrimbleWallBlownUp
+
+    Location: Room 
+    BaseEmotion: Angry
+
         Stage: repeat
         Emotion: TalkingAngry
         Can you leave me be for once?
-
 
 
     Location: GrimblesDomain 
@@ -652,10 +662,19 @@ Flags: GrimbleMosswickBoatInteractionDone
         Actions: face_right, give_flag_grimble_mosswick_scene_done
         It must have been them again.
 
+
+
+--- Stage
+Flags: GrimbleMosswickBoatInteractionDone
+
+    Location: RoomWall
+    BaseEmotion: Neutral
+
         Stage: repeat
         Actions: face_right
-        Emotion: Angry
-        ...
+        Emotion: TalkingAngry
+        It must have been their doing again.
+
 
 
 
