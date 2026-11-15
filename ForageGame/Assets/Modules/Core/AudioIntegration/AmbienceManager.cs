@@ -60,8 +60,8 @@ namespace AudioIntegration
             if (!activeEvents.TryGetValue(e, out var instance))
             {
                 instance = FMODUnity.RuntimeManager.CreateInstance(e);
-                FMODUnity.RuntimeManager.AttachInstanceToGameObject(instance, playerListener); //Dear FMOD, sincerely: fuck you ~Lars
                 instance.start(); //e is a class, so this is fine
+                FMODUnity.RuntimeManager.AttachInstanceToGameObject(instance, playerListener); //Dear FMOD, sincerely: fuck you ~Lars
                 activeEvents[e] = instance;
                 Debug.Log($"Event {e} started");
             }
@@ -97,8 +97,10 @@ namespace AudioIntegration
                 {
                     Debug.Log($"Event {reference} started");
                     instance = FMODUnity.RuntimeManager.CreateInstance(reference);
-                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(instance, playerListener); //Dear FMOD, sincerely: fuck you ~Lars
                     instance.start();
+                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(instance, playerListener); //Dear FMOD, sincerely: fuck you ~Lars
+                    instance.get3DAttributes(out var a);
+                    Debug.LogWarning($"Fuck you FMOD: a.forward: {a.forward.x}, {a.forward.y}, {a.forward.z}, a.up: {a.up.x}, {a.up.y}, {a.up.z},");
                     activeEvents[reference] = instance;
                 }
 
