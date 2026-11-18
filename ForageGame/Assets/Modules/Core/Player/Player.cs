@@ -69,7 +69,11 @@ namespace TDK.PlayerSystem
 
         public void SaveData(ref WorldSaveData data)
         {
-            if (_playerAnimator._animator.GetBool("isDead")) playerData.spawnPosition = new(0, 10.5f, 0);
+            if (_playerAnimator._animator.GetBool("isDead")) 
+            {
+                playerData.spawnPosition = new(0, 10.5f, 0);
+                playerController.transform.position = playerData.spawnPosition;
+            }
             else playerData.spawnPosition = transform.position;
             playerData.damageAmount = energy.damage;
             data.Player = playerData;
