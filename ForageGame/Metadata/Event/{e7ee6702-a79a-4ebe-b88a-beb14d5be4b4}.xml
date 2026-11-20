@@ -56,7 +56,7 @@
 			<destination>{ce7d9ce4-44f2-4451-9b5d-1ae553cf4165}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{83c6523b-4582-45d2-9d7b-07f958584b81}</destination>
+			<destination>{1ec99efa-c75c-46d4-a479-fd300a903d65}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{928229d1-b0cf-4d36-aa1f-d9960ee814e1}" />
@@ -73,7 +73,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{66c5fd42-7341-4598-8b00-980d11702ccf}">
 		<property name="volume">
-			<value>-12</value>
+			<value>-14</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{4d3820c6-9cbc-4c6f-99b0-a81b2ff5aee3}</destination>
@@ -107,6 +107,9 @@
 		<property name="looping">
 			<value>true</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{6500e980-848e-4dbf-89d8-1d7023c61979}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{a5703bf0-cde5-4e2d-b07b-8b819bd5ae7e}</destination>
 		</relationship>
@@ -124,13 +127,21 @@
 			<value>1</value>
 		</property>
 		<property name="soundSize">
-			<value>11</value>
+			<value>20</value>
 		</property>
 		<property name="minimumExtent">
 			<value>100</value>
 		</property>
 		<property name="userStereoSeparation">
 			<value>-18.3113251</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{6500e980-848e-4dbf-89d8-1d7023c61979}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>startOffset</value>
+		</property>
+		<property name="amount">
+			<value>100</value>
 		</property>
 	</object>
 </objects>
