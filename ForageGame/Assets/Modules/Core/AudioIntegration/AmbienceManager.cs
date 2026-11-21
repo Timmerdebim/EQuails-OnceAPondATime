@@ -99,8 +99,6 @@ namespace AudioIntegration
                     instance = FMODUnity.RuntimeManager.CreateInstance(reference);
                     instance.start();
                     FMODUnity.RuntimeManager.AttachInstanceToGameObject(instance, playerListener); //Dear FMOD, sincerely: fuck you ~Lars
-                    instance.get3DAttributes(out var a);
-                    Debug.LogWarning($"Fuck you FMOD: a.forward: {a.forward.x}, {a.forward.y}, {a.forward.z}, a.up: {a.up.x}, {a.up.y}, {a.up.z},");
                     activeEvents[reference] = instance;
                 }
 

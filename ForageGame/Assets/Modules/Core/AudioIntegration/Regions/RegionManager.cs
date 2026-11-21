@@ -18,6 +18,7 @@ public class RegionManager : MonoBehaviour
     [SerializeField] private Player player;
 
     [SerializeField] public WeatherTypeProfile defaultWeather;
+    [SerializeField] public FMODUnity.EventReference defaultAmbience;
 
     [SerializeField] public float currentDustiness = 0f;
 
@@ -161,7 +162,6 @@ public class RegionManager : MonoBehaviour
                 weather[region.weatherTypeProfile.Id] = weight;
         }
         //fill the weather with default weather if required
-        //Important: this is not done for audio
         float total = weather.Values.Sum();
         if (total < 1f)
         {
@@ -201,6 +201,17 @@ public class RegionManager : MonoBehaviour
                     ambience[region.acousticsSnapshot] = weight;
                 } 
             }
+        }
+
+        //fill with default ambience (open water)
+        float total = ambience.Values.Sum();
+        if (total < .8f) //leave some room for inaccurate transitions
+        {
+            Debug.Log("Filling with default ambience!");
+            if (ambience.TryGetValue(defaultAmbience, out float existing)) //do not override if the default ambience is already present (somehow)
+                ambience[defaultAmbience] = existing + (1f-total);
+            else
+                ambience[defaultAmbience] = 1f-total;
         }
 
         return ambience;
