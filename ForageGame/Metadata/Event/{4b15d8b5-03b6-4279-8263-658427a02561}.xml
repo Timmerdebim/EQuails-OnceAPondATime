@@ -106,6 +106,7 @@
 		<relationship name="sounds">
 			<destination>{325a7a7f-6c9a-47bf-ba1b-c25e8fe5bd21}</destination>
 			<destination>{751d525e-1769-46cd-a622-2efcca2f7e93}</destination>
+			<destination>{4994197d-9cb3-41a4-9b71-cb8d5a49f1a5}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{a6c0dd0a-a4a2-4aad-aae4-079f408714a5}">
@@ -198,6 +199,9 @@
 	</object>
 	<object class="MixerBusPanner" id="{54b497aa-461e-4758-8247-06014632511a}" />
 	<object class="SingleSound" id="{325a7a7f-6c9a-47bf-ba1b-c25e8fe5bd21}">
+		<property name="volume">
+			<value>2.5</value>
+		</property>
 		<property name="looping">
 			<value>true</value>
 		</property>
@@ -209,9 +213,6 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{751d525e-1769-46cd-a622-2efcca2f7e93}">
-		<property name="volume">
-			<value>-2</value>
-		</property>
 		<property name="looping">
 			<value>true</value>
 		</property>
@@ -220,6 +221,20 @@
 		</relationship>
 		<relationship name="audioFile">
 			<destination>{0c0bc776-aea4-4491-b95f-02a545176fa1}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{4994197d-9cb3-41a4-9b71-cb8d5a49f1a5}">
+		<property name="volume">
+			<value>-2</value>
+		</property>
+		<property name="looping">
+			<value>true</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{ef70c609-e0b0-4f18-a8f5-0eef70db015e}</destination>
+		</relationship>
+		<relationship name="audioFile">
+			<destination>{591876ad-0457-4221-968f-7051d2de2794}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{5bd54a5f-52b7-43ca-aba3-2abd2de76306}" />
@@ -244,6 +259,14 @@
 		</property>
 	</object>
 	<object class="RandomizerModulator" id="{6bd9d938-45b6-41e7-954c-ae2a084cb89f}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>startOffset</value>
+		</property>
+		<property name="amount">
+			<value>100</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{ef70c609-e0b0-4f18-a8f5-0eef70db015e}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>startOffset</value>
 		</property>

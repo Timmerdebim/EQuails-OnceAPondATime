@@ -20,7 +20,11 @@ namespace AudioIntegration
         [SerializeField] private AnimationCurve volumeCurve;
 
         void OnEnable()  => AudioManager.Instance.Register(this);
-        void OnDisable() => AudioManager.Instance.Unregister(this);
+        void OnDisable()
+        {
+            AudioManager.Instance.Unregister(this);
+            StopAllEvents();
+        }
 
         private void Awake() 
         { 

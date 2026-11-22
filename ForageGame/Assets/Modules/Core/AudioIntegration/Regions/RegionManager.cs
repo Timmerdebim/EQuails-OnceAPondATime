@@ -205,7 +205,7 @@ public class RegionManager : MonoBehaviour
 
         //fill with default ambience (open water)
         float total = ambience.Values.Sum();
-        if (total < .8f) //leave some room for inaccurate transitions
+        if (total < .85f) //leave some room for inaccurate transitions
         {
             Debug.Log("Filling with default ambience!");
             if (ambience.TryGetValue(defaultAmbience, out float existing)) //do not override if the default ambience is already present (somehow)
