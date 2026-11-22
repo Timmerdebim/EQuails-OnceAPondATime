@@ -105,6 +105,7 @@
 		</property>
 		<relationship name="sounds">
 			<destination>{879db52b-68d5-403f-b255-da027b0994ab}</destination>
+			<destination>{7e46b546-847b-4ef9-b0fe-a5d2b7a48ae1}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{a02f80e7-8c52-4c9f-b44e-ccedd83e7426}">
@@ -147,7 +148,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{aefa3e31-a70d-4e30-9792-b08e793e4d0a}">
 		<property name="volume">
-			<value>-6</value>
+			<value>-80</value>
 		</property>
 		<property name="name">
 			<value>Seagulls</value>
@@ -198,7 +199,7 @@
 	<object class="MixerBusPanner" id="{6eb06d1c-dd1e-445c-a8a9-da2d67eef51b}" />
 	<object class="SingleSound" id="{879db52b-68d5-403f-b255-da027b0994ab}">
 		<property name="volume">
-			<value>3</value>
+			<value>-1</value>
 		</property>
 		<property name="looping">
 			<value>true</value>
@@ -208,6 +209,20 @@
 		</relationship>
 		<relationship name="audioFile">
 			<destination>{ca914c11-17c5-48e5-8d58-767db573581d}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{7e46b546-847b-4ef9-b0fe-a5d2b7a48ae1}">
+		<property name="volume">
+			<value>-3</value>
+		</property>
+		<property name="looping">
+			<value>true</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{86280c79-37c0-4996-b841-30e402070db3}</destination>
+		</relationship>
+		<relationship name="audioFile">
+			<destination>{b159ed34-116e-4e92-9703-9383d62ba0db}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{9629e8fe-38fe-4d53-b67b-718c34e3c9a8}" />
@@ -224,6 +239,14 @@
 	<object class="MixerBusPanner" id="{5c6d870b-9b47-4598-8b23-b0b826472e9c}" />
 	<object class="MixerBusFader" id="{20703df0-8a05-4fa3-8e89-feaff55b0c0b}" />
 	<object class="RandomizerModulator" id="{85a11f21-109e-4c89-aa37-c094017a3f1b}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>startOffset</value>
+		</property>
+		<property name="amount">
+			<value>100</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{86280c79-37c0-4996-b841-30e402070db3}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>startOffset</value>
 		</property>

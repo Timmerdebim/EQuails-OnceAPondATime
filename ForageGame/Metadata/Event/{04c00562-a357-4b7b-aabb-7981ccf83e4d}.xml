@@ -121,16 +121,16 @@
 			<value>0</value>
 		</property>
 		<property name="minimumTimeDelay">
-			<value>5800</value>
+			<value>2600</value>
 		</property>
 		<property name="maximumTimeDelay">
-			<value>9600</value>
+			<value>6800</value>
 		</property>
 		<property name="minimumTimeBetweenSounds">
-			<value>6000</value>
+			<value>3000</value>
 		</property>
 		<property name="maximumTimeBetweenSounds">
-			<value>12000</value>
+			<value>6000</value>
 		</property>
 		<property name="minimumScatterDistance">
 			<value>9</value>
@@ -139,7 +139,7 @@
 			<value>25</value>
 		</property>
 		<property name="pitchRandomization">
-			<value>1</value>
+			<value>0.5</value>
 		</property>
 		<relationship name="sound">
 			<destination>{92b8a5e3-cc76-4b87-99b5-9b7195223d2c}</destination>
@@ -147,10 +147,10 @@
 	</object>
 	<object class="EventMixerGroup" id="{8e06cdcb-10d6-43d8-a26e-03f294313eec}">
 		<property name="volume">
-			<value>-80</value>
+			<value>-7</value>
 		</property>
 		<property name="name">
-			<value>Hawk</value>
+			<value>MysteriousBird</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{904755db-e9a5-4874-919f-1dfc7c69cd55}</destination>
@@ -198,7 +198,7 @@
 	<object class="MixerBusPanner" id="{73478caf-9b6b-417b-901c-353d568c2d7e}" />
 	<object class="SingleSound" id="{db30a02e-b849-4180-9082-c74ceb15ceb2}">
 		<property name="volume">
-			<value>-1</value>
+			<value>-2</value>
 		</property>
 		<property name="looping">
 			<value>true</value>
@@ -213,7 +213,7 @@
 	<object class="MixerBusFader" id="{4fd49429-34c6-436c-81f5-ba2c902e8c49}" />
 	<object class="MultiSound" id="{92b8a5e3-cc76-4b87-99b5-9b7195223d2c}">
 		<relationship name="sounds">
-			<destination>{fd877758-72a1-4c2b-b320-cee30a90ce3a}</destination>
+			<destination>{b1c51ec3-f4ea-45e5-923f-f8f8f28f7270}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{904755db-e9a5-4874-919f-1dfc7c69cd55}">
@@ -231,9 +231,9 @@
 			<value>100</value>
 		</property>
 	</object>
-	<object class="EventSound" id="{fd877758-72a1-4c2b-b320-cee30a90ce3a}">
+	<object class="EventSound" id="{b1c51ec3-f4ea-45e5-923f-f8f8f28f7270}">
 		<relationship name="event">
-			<destination>{376a2cb4-6ec6-4b49-9727-7396366498a1}</destination>
+			<destination>{2b1851b9-72c8-4de9-a215-108469f670b7}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{b60309aa-fcfa-46b0-bb2f-262071c1440e}" />

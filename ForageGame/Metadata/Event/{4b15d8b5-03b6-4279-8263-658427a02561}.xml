@@ -123,19 +123,19 @@
 			<value>0</value>
 		</property>
 		<property name="minimumTimeDelay">
-			<value>5800</value>
+			<value>3200</value>
 		</property>
 		<property name="maximumTimeDelay">
-			<value>9600</value>
+			<value>5400</value>
 		</property>
 		<property name="minimumTimeBetweenSounds">
-			<value>6000</value>
+			<value>3500</value>
 		</property>
 		<property name="maximumTimeBetweenSounds">
-			<value>12000</value>
+			<value>5500</value>
 		</property>
 		<property name="minimumScatterDistance">
-			<value>9</value>
+			<value>10</value>
 		</property>
 		<property name="maximumScatterDistance">
 			<value>25</value>
@@ -149,10 +149,10 @@
 	</object>
 	<object class="EventMixerGroup" id="{4260cbaa-37d4-4b81-a529-c655ad3d40b5}">
 		<property name="volume">
-			<value>-80</value>
+			<value>-3</value>
 		</property>
 		<property name="name">
-			<value>Hawk</value>
+			<value>FieldBird</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{0d83f292-1d25-48f1-8698-2cc8e42834c6}</destination>
@@ -199,9 +199,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{54b497aa-461e-4758-8247-06014632511a}" />
 	<object class="SingleSound" id="{325a7a7f-6c9a-47bf-ba1b-c25e8fe5bd21}">
-		<property name="volume">
-			<value>1.5</value>
-		</property>
 		<property name="looping">
 			<value>true</value>
 		</property>
@@ -214,7 +211,7 @@
 	</object>
 	<object class="SingleSound" id="{751d525e-1769-46cd-a622-2efcca2f7e93}">
 		<property name="volume">
-			<value>-1</value>
+			<value>-2</value>
 		</property>
 		<property name="looping">
 			<value>true</value>
@@ -228,7 +225,7 @@
 	</object>
 	<object class="SingleSound" id="{4994197d-9cb3-41a4-9b71-cb8d5a49f1a5}">
 		<property name="volume">
-			<value>-2</value>
+			<value>-3</value>
 		</property>
 		<property name="looping">
 			<value>true</value>
@@ -243,7 +240,7 @@
 	<object class="MixerBusFader" id="{5bd54a5f-52b7-43ca-aba3-2abd2de76306}" />
 	<object class="MultiSound" id="{a927034b-d97b-46fe-91b8-92ff5cf2ec87}">
 		<relationship name="sounds">
-			<destination>{3f9ff1ad-ab85-45f9-951e-942391335961}</destination>
+			<destination>{68def5b5-8b64-4c49-a65b-7a9483f1dbdd}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{0d83f292-1d25-48f1-8698-2cc8e42834c6}">
@@ -277,9 +274,9 @@
 			<value>100</value>
 		</property>
 	</object>
-	<object class="EventSound" id="{3f9ff1ad-ab85-45f9-951e-942391335961}">
+	<object class="EventSound" id="{68def5b5-8b64-4c49-a65b-7a9483f1dbdd}">
 		<relationship name="event">
-			<destination>{376a2cb4-6ec6-4b49-9727-7396366498a1}</destination>
+			<destination>{16b1831b-fda1-4b46-9ee3-1de9573dfe9a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{f07fe871-3c72-497d-96f9-549d01af8341}" />
