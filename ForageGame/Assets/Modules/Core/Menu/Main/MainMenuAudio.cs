@@ -32,7 +32,6 @@ public class MainMenuAudio : MonoBehaviour
     public void Start()
     {
         snapshot = RuntimeManager.CreateInstance(duckMusicAndAmbienceSnapshot);
-        snapshot.setVolume(.1f);
         ambience = RuntimeManager.CreateInstance(ambienceEvent);
     }
 
