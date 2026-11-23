@@ -19,7 +19,13 @@ namespace Project.Menus
 
         public override void OnEnteringMenu()
         {
+            MainMenuAudio.Instance.EnterMainScreen();
             RefreshVisuals();
+        }
+
+        public override void OnExitingMenu()
+        {
+            MainMenuAudio.Instance.ExitMainScreen();
         }
 
         public override void Escape()

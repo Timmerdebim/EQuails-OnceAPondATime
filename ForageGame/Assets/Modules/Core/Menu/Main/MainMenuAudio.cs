@@ -1,6 +1,7 @@
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using TDK.SaveSystem;
 
 /// <summary>
 /// Just plays the ambience and the correct theme for the main menu (i.e. none, SafeSpace, or credits)
@@ -12,6 +13,7 @@ public class MainMenuAudio : MonoBehaviour
     [Tooltip("Only played when finishing the game, not when going through main menu")]
     [SerializeField] private EventReference creditsMusic;
     [SerializeField] private EventReference duckMusicAndAmbienceSnapshot;
+    [SerializeField] private StoryFlag unlockMusicFlag;
     private EventInstance music;
     private EventInstance ambience;
     private EventInstance snapshot;
@@ -30,6 +32,7 @@ public class MainMenuAudio : MonoBehaviour
     public void Start()
     {
         snapshot = RuntimeManager.CreateInstance(duckMusicAndAmbienceSnapshot);
+        snapshot.setVolume(.1f);
         ambience = RuntimeManager.CreateInstance(ambienceEvent);
     }
 
@@ -43,11 +46,32 @@ public class MainMenuAudio : MonoBehaviour
             music = RuntimeManager.CreateInstance(creditsMusic);
             music.start();
         }
-        else if (true) //TODO: check save file
+        else if (TutorialCompleted())
         {
             music = RuntimeManager.CreateInstance(mainMenuMusic);
             music.start();
         }
+    }
+
+    //Check if any save file has completed the tutorial
+    private bool TutorialCompleted()
+    {
+        for(int i = 0; i< 3; i++) //each save slot
+        {
+            // Debug.Log($"Checking file: {i}");
+            if (SaveServices.ExistsWorld(i.ToString()))
+            {
+                // Debug.Log($"world {i} exists...");
+                WorldSaveData data = SaveServices.GetWorld(i.ToString());
+                if(data.StoryFlagSaveData.Contains(unlockMusicFlag.id))
+                {
+                    // Debug.Log($"file: {i} contains the tutorialcomplete flag");
+                    return true;
+                }
+            }
+        }
+        // Debug.Log("No files have finished the tutorial");
+        return false;
     }
 
     public void EnterMainScreen()
