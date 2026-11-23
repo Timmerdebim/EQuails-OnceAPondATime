@@ -81,8 +81,11 @@ public class GameplayController : MonoBehaviour
         await _tsc.FadeOutAsync();
         await AwaitPadding();
         StoryFlagManager.Instance.OnTimePassing();
+
         bool isfirstNight = !StoryFlagManager.Instance.FlagActive(firstNight);
         StoryFlagManager.Instance.AddFlag(this.firstNight);// it does not matter if we keep adding the flag after the first night, nothing will change: this is here
+
+        //TODO: just use await UnloadWorld()?
         SaveManager.Instance.SaveWorld();
         await SceneServices.UnloadScene(_worldScene);
         Player.Instance.ResetAnimator();

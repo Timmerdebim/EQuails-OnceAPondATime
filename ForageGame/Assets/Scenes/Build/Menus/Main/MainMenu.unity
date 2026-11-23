@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 346068415}
   - component: {fileID: 346068420}
   - component: {fileID: 346068419}
+  - component: {fileID: 346068421}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -367,6 +368,47 @@ MonoBehaviour:
   _mainMenu: {fileID: 558853834}
   _creditsMenu: {fileID: 1432390789}
   _tsc: {fileID: 1498462382}
+  menuAudio: {fileID: 346068421}
+--- !u!114 &346068421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346068414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c784163fb61344cab1c9a99433aba15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ambienceEvent:
+    Guid:
+      Data1: -1495148859
+      Data2: 1245781129
+      Data3: -748306027
+      Data4: -338759997
+    Path: event:/Ambience/GeneralAmbience/HomeBase/Morning
+  mainMenuMusic:
+    Guid:
+      Data1: -1449399939
+      Data2: 1297830612
+      Data3: -1923820104
+      Data4: -1713562881
+    Path: event:/Music/EventThemes/MySafeSpace
+  creditsMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  duckMusicAndAmbienceSnapshot:
+    Guid:
+      Data1: -756185597
+      Data2: 1295844216
+      Data3: 2146937731
+      Data4: -695875014
+    Path: snapshot:/DuckMusicAndAmbience
 --- !u!1001 &558853832
 PrefabInstance:
   m_ObjectHideFlags: 0

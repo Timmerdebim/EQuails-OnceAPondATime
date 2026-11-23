@@ -29,6 +29,7 @@ namespace Project.Menus
         public async Task Load(bool loadCredits = false)
         {
             _tsc.FadeIn();
+            MainMenuAudio.Instance.OnEnterMenu(loadCredits);
             if (loadCredits)
                 await _menuManager.ToMenu(_creditsMenu);
             else
@@ -39,6 +40,7 @@ namespace Project.Menus
 
         public async Task ExitMainMenu()
         {
+            MainMenuAudio.Instance.OnExitMenu();
             await _tsc.FadeOutAsync();
         }
     }
