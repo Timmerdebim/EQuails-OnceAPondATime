@@ -81,6 +81,14 @@ namespace Weather
             volume.enabled = true;
         }
 
+        public void KillAllParticles()
+        {
+            foreach (var ps in particleSystems.Keys)
+            {
+                ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+        }
+
         void OnDisable()
         {
             //Debug.Log($"[WeatherTypeProfile: {gameObject.name}]: disabled!");

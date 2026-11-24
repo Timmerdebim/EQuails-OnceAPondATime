@@ -77,6 +77,7 @@ public class GameplayController : MonoBehaviour
 
         // I hate my life fr chat
         Debug.Log("[Gameplay] Unloading World.");
+        RegionManager.Instance.DisableScanning();
         AudioManager.Instance.StopAndReleaseAll();
         await _tsc.FadeOutAsync();
         await AwaitPadding();
@@ -241,6 +242,7 @@ public class GameplayController : MonoBehaviour
         await AwaitSaftey();
         await AwaitPadding();
         _tsc.FadeIn();
+        RegionManager.Instance.EnableScanning();
         GameplayMusicManager.Instance.RestartScheduling();
         Debug.Log("[Gameplay] Loaded World.");
     }
@@ -248,6 +250,7 @@ public class GameplayController : MonoBehaviour
     private async Task UnloadWorld() // PRIVATE == skip saftey check
     {
         Debug.Log("[Gameplay] Unloading World.");
+        RegionManager.Instance.DisableScanning();
         AudioManager.Instance.StopAndReleaseAll();
         await _tsc.FadeOutAsync();
         await AwaitPadding();

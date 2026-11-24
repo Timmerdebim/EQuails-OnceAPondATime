@@ -78,7 +78,6 @@ public class Region : MonoBehaviour
     void OnDisable()
     {
         // Debug.Log($"[Region: {gameObject.name}]: disabled!"); // TIM SAYS: shhhhhh - quite down buddy
-
         //turn off the particle emitters, and wait for their particles to die and stop them fully (resources)
         bool anyPlaying = false;
         foreach (var ps in regionParticles)
@@ -90,7 +89,6 @@ public class Region : MonoBehaviour
             }
         }
         if (anyPlaying) _waitForParticlesCoroutine = StartCoroutine(WaitForParticlesAndStop());
-
         foreach(var theme in musicThemes)
         {
             GameplayMusicManager.Instance.RegionDeactivated(theme);

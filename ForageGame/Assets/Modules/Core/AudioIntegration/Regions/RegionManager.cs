@@ -21,6 +21,7 @@ public class RegionManager : MonoBehaviour
     [SerializeField] public FMODUnity.EventReference defaultAmbience;
 
     [SerializeField] public float currentDustiness = 0f;
+    [SerializeField] private bool isActive = false; //gets set by gameplaycontroller
 
     private Dictionary<Region, float> _lastRegionInfluences = new();
     
@@ -43,34 +44,62 @@ public class RegionManager : MonoBehaviour
         } 
     }
 
-
-    private void Start()
+    public void EnableScanning()
     {
-        var regionInfluences = EvaluateRegionBlend(player.transform.position);
+        WeatherManager.Instance.KillAllParticles(); //get rid, thanks Unity and your terrible timing issues
+        //update this stuff instantly, tho the player's interpolated teleport will still fuck this up if he's not @ home
 
-        //only apply the blending if the result is different
-        if (regionInfluences.OrderBy(kv => kv.Key.GetInstanceID()).SequenceEqual(_lastRegionInfluences.OrderBy(kv => kv.Key.GetInstanceID()))) 
-        {
-            //Debug.LogError("[RegionManager] EvaluateRegionBlend returned no influences on startup, check the player spawn position!");
-            //return;
-        }
+        var regionInfluences = EvaluateRegionBlend(player.transform.position);
         //turn on and off the profiles, to disable the world particles in them when unused
         foreach (var region in regionInfluences.Keys)
                 region.enabled = true;
-        
-        foreach (var region in _lastRegionInfluences.Keys)
-                region.enabled = !regionInfluences.ContainsKey(region);
 
+        // foreach (var region in _lastRegionInfluences.Keys)
+        // {
+        //         Debug.Log($"Fuck?: {region.name}");
+        //         region.enabled = !regionInfluences.ContainsKey(region);
+        // }
         _lastRegionInfluences = regionInfluences;
-
         //make the weather snap on startup, no transition
         WeatherManager.Instance.SetRegionInfluencesInstant(ToWeatherInfluences(regionInfluences));
         AmbienceManager.Instance.SetRegionInfluences(ToAmbienceInfluences(regionInfluences));
+        isActive = true;
     }
+
+    public void DisableScanning()
+    {
+        isActive = false;
+    }
+
+    // private void Start()
+    // {
+    //     var regionInfluences = EvaluateRegionBlend(player.transform.position);
+
+    //     //only apply the blending if the result is different
+    //     if (regionInfluences.OrderBy(kv => kv.Key.GetInstanceID()).SequenceEqual(_lastRegionInfluences.OrderBy(kv => kv.Key.GetInstanceID()))) 
+    //     {
+    //         //Debug.LogError("[RegionManager] EvaluateRegionBlend returned no influences on startup, check the player spawn position!");
+    //         //return;
+    //     }
+    //     //turn on and off the profiles, to disable the world particles in them when unused
+    //     foreach (var region in regionInfluences.Keys)
+    //             region.enabled = true;
+        
+    //     foreach (var region in _lastRegionInfluences.Keys)
+    //             region.enabled = !regionInfluences.ContainsKey(region);
+
+    //     _lastRegionInfluences = regionInfluences;
+
+    //     //make the weather snap on startup, no transition
+    //     WeatherManager.Instance.SetRegionInfluencesInstant(ToWeatherInfluences(regionInfluences));
+    //     AmbienceManager.Instance.SetRegionInfluences(ToAmbienceInfluences(regionInfluences));
+    // }
 
     //TODO: this timer causes choppyness on weather blending... smoothen it out or just take the performance hit
     private void Update()
     {
+        if (!isActive) return;
+
         _timer += Time.deltaTime;
         if (_timer < updateInterval) return;
         _timer = 0f;

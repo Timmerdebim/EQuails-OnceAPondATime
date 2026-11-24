@@ -147,6 +147,16 @@ namespace Weather
             SnapWeatherToTarget();
         }
 
+        public void KillAllParticles() //because fuck unity's timing issues
+        {
+            foreach (var (type, profile) in profiles)
+            {
+                //profile.gameObject.SetActive(weatherTypeProfiles.ContainsKey(type));
+                profile.enabled = false;
+                profile.KillAllParticles();
+            }
+        }
+
         public void SetRegionInfluences(Dictionary<string, float> influences)
         { 
             //dynamically turn on and off (un)used profiles
