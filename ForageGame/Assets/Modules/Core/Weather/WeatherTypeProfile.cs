@@ -68,7 +68,8 @@ namespace Weather
             //turn on the behaviors
             foreach(var behavior in _behaviours)
             {
-               behavior.enabled = true; 
+                Debug.LogError($"[Weather: {Id}]: ENABLING {behavior}");
+                behavior.enabled = true; 
             }
 
             /// Okay so Unity is le stupid
@@ -106,6 +107,7 @@ namespace Weather
             //turn off the behaviors too
             foreach(var behavior in _behaviours)
             {
+                Debug.LogError($"[Weather: {Id}]: DISABLING {behavior}");
                 behavior.SetBlend(0f); //mostly for resuming purposes
                 behavior.enabled = false; 
             }

@@ -51,15 +51,20 @@ namespace Weather
             //build runtime dict
             profiles = new Dictionary<string, WeatherTypeProfile>();
 
+            Debug.LogError("[WeatherManager]: Building dict");
             foreach (var profile in GetComponentsInChildren<WeatherTypeProfile>(true))
             {
                 // Debug.Log($"What the fuck am I doing?: {profile}");
                 if (profiles.TryGetValue(profile.Id, out var e)) //do not override if the default weather is already present
                     Debug.LogError($"[WeatherManager]: duplicate weather type profile entry: {profile.Id}");
                 else
+                {
+                    Debug.LogError($"[WeatherManager]: adding entry {profile.Id}");
                     profiles[profile.Id] = profile;
+                }
                 
                 //turn everything off by default
+                Debug.LogError($"[WeatherManager]: TURNING OFF: {profile.Id}");
                 profile.enabled = false;
                 //profile.gameObject.SetActive(false);
             }

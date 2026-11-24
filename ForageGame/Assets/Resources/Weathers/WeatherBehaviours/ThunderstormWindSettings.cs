@@ -32,6 +32,7 @@ namespace Weather
 
         private void OnEnable()
         {
+            Debug.LogError("Thunder behavior ENABLED!!!");
             _originalTree    = ReadState(homeTreeMaterial);
             _originalFoliage = ReadState(homeFoliageMaterial);
 
@@ -42,6 +43,7 @@ namespace Weather
         //resets the state of the material, let's hope this actually works
         private void OnDisable()
         {
+            Debug.LogError("Thunder behavior DISABLED");
             RestoreState(homeTreeMaterial,    _originalTree);
             RestoreState(homeFoliageMaterial, _originalFoliage);
         }
