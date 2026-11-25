@@ -59,7 +59,7 @@ namespace Weather
                     Debug.LogError($"[WeatherManager]: duplicate weather type profile entry: {profile.Id}");
                 else
                 {
-                    Debug.LogError($"[WeatherManager]: adding entry {profile.Id}");
+                    // Debug.LogError($"[WeatherManager]: adding entry {profile.Id}");
                     profiles[profile.Id] = profile;
                 }
                 
