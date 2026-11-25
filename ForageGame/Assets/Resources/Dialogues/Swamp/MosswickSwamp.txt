@@ -618,12 +618,41 @@ Required-Items:
         Emotion: Flute
         I... want to try it out.
 
+
+--- Stage
+Flags: BogRootFluteGiven
+Required-Items:
+
+    Location: Sanctuary
+    BaseEmotion: Flute
+
+        Stage: 0
+        Emotion: Surprised
+        It's... just like I remember it.
+
+        Stage: 1
+        Emotion: HappyTalking
+        Thank you so much for the flute.
+
+        Stage: 2
+        It's... really nice.
+
+        Stage: 3
+        Emotion: SadTalking 
+        I'll still keep the old one though...
+
+        Stage: 4
+        Actions: give_flag_flute_concert_done
+        Emotion: Sad
+        ...
+
 --- Stage
 Flags: StayedForFluteConcert
 Required-Items:
 
     Location: Sanctuary
-    BaseEmotion: Flute
+    <main>
+    BaseEmotion: Happy
 
         Stage: 0
         Emotion: Surprised
@@ -645,55 +674,51 @@ Required-Items:
         Stage: 5
         You staying helped a lot.
 
+        Stage: 6
+        Emotion: Happy
+        ...
+
+        Stage: 7
+        Emotion: HappyTalking
+        The flute you made is really nice.
+
+        Stage: 8
+        Actions: give_flag_flute_concert_done
+        Emotion: SadTalking 
+        I'll still keep the old one though...
+
 --- Stage
 Flags: FluteConcertDone
 Required-Items:
 
     Location: Sanctuary
     <main>
-    BaseEmotion: Flute
+    BaseEmotion: Happy
 
         Stage: 0
         Emotion: HappyTalking
-        Hey friend.
-
-        Stage: 1
-        Thank you for the flute.
-
-        Stage: 2
-        It's... really nice.
-
-        Stage: 3
-        Emotion: SadTalking 
-        I'll still keep the old one though...
-
-        Stage: 4
-        ...
-
-        Stage: 5
-        Emotion: HappyTalking
         I was going to try making one myself...
 
-        Stage: 6
+        Stage: 1
         I even found myself another Bog-Root Fossil...
 
-        Stage: 7
+        Stage: 2
         But... I don't think I would've managed, haha...
 
-        Stage: 8
+        Stage: 3
         You should have it.
 
-        Stage: 9
+        Stage: 4
         Bracken always needs these things for their inventions.
 
-        Stage: 10
+        Stage: 5
         Maybe you'll find some use for it.
 
-        Stage: 11
+        Stage: 6
         Emotion: Happy
         ...
 
-        Stage: 12
+        Stage: 7
         Emotion: SadTalking
         Actions: give_item_bog-root_fossil_on_close
         Where did you even learn how to make flutes, anyway?

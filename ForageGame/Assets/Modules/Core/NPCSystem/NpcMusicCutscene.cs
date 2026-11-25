@@ -70,7 +70,7 @@ public class NpcMusicCutscene : MonoBehaviour
         if (!instance.isValid()) return false;
         FMOD.Studio.PLAYBACK_STATE eventState;   
         instance.getPlaybackState(out eventState);
-        return eventState != FMOD.Studio.PLAYBACK_STATE.STOPPED;
+        return !(eventState == FMOD.Studio.PLAYBACK_STATE.STOPPED || eventState == FMOD.Studio.PLAYBACK_STATE.STOPPING);
     }
 
 
