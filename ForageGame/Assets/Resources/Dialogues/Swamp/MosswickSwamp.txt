@@ -614,7 +614,7 @@ Required-Items:
         Thank you so much, friend.
 
         Stage: 8
-        Actions: face_away_from_player, start_cutscene_mosswick_flute_on_close
+        Actions: start_cutscene_mosswick_flute_on_close
         Emotion: Flute
         I... want to try it out.
 
@@ -623,7 +623,7 @@ Flags: StayedForFluteConcert
 Required-Items:
 
     Location: Sanctuary
-    BaseEmotion: Happy
+    BaseEmotion: Flute
 
         Stage: 0
         Emotion: Surprised
@@ -651,7 +651,7 @@ Required-Items:
 
     Location: Sanctuary
     <main>
-    BaseEmotion: Happy
+    BaseEmotion: Flute
 
         Stage: 0
         Emotion: HappyTalking
@@ -664,12 +664,10 @@ Required-Items:
         It's... really nice.
 
         Stage: 3
-        Actions: face_away_from_player
         Emotion: SadTalking 
-        I'll still keep this one though...
+        I'll still keep the old one though...
 
         Stage: 4
-        Actions: face_away_from_player
         ...
 
         Stage: 5
@@ -698,14 +696,18 @@ Required-Items:
         Stage: 12
         Emotion: SadTalking
         Actions: give_item_bog-root_fossil_on_close
-        Where did you even learn how to make flutes anyway?
+        Where did you even learn how to make flutes, anyway?
+
+--- Stage
+Flags: FluteConcertDone
+Required-Items:
+
+    Location: Sanctuary
+    BaseEmotion: Happy
 
         Stage: repeat
         Emotion: SadTalking
-        Where did you even learn how to make flutes anyway?
-
-
-
+        Where did you even learn how to make flutes, anyway?
 
 
 

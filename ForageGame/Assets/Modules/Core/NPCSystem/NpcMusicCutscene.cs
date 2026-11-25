@@ -41,6 +41,7 @@ public class NpcMusicCutscene : MonoBehaviour
         instance.start();
         active = true;
     }
+    
 
     //can also be called by the npc upon time passing
     public void EndMusicCutscene()
