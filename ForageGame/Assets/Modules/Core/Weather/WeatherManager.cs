@@ -51,7 +51,7 @@ namespace Weather
             //build runtime dict
             profiles = new Dictionary<string, WeatherTypeProfile>();
 
-            Debug.LogError("[WeatherManager]: Building dict");
+            //Debug.LogError("[WeatherManager]: Building dict");
             foreach (var profile in GetComponentsInChildren<WeatherTypeProfile>(true))
             {
                 // Debug.Log($"What the fuck am I doing?: {profile}");
@@ -64,7 +64,7 @@ namespace Weather
                 }
                 
                 //turn everything off by default
-                Debug.LogError($"[WeatherManager]: TURNING OFF: {profile.Id}");
+                //Debug.LogError($"[WeatherManager]: TURNING OFF: {profile.Id}");
                 profile.enabled = false;
                 //profile.gameObject.SetActive(false);
             }

@@ -48162,6 +48162,55 @@ Transform:
   - {fileID: 5601425325472695983}
   m_Father: {fileID: 8179510560544267722}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3787318570643793059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2137224124987383128}
+  - component: {fileID: 7607764764369143699}
+  m_Layer: 12
+  m_Name: MusicCutscene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2137224124987383128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787318570643793059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7697931743346364578}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7607764764369143699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787318570643793059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 981a4e63714ef4095b5c9d2b84b9f374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theme: {fileID: 11400000, guid: 707107a6ddf1f4eaeb657c72f00f6e2e, type: 2}
+  tempo: 1
+  npcLocation: {fileID: 0}
+  npcInteractable: {fileID: 1962972819307606240}
+  animator: {fileID: 492154115773396842}
 --- !u!1 &3815850204483588357
 GameObject:
   m_ObjectHideFlags: 0
@@ -82534,7 +82583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7750279635565863383, guid: 5328952fe4e54463da1a4dfd3fdcbe49, type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8593888011489708407, guid: 5328952fe4e54463da1a4dfd3fdcbe49, type: 3}
       propertyPath: m_Radius
@@ -113552,7 +113601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.size
@@ -113600,7 +113649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -113709,7 +113758,7 @@ PrefabInstance:
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 8317565807604700511}
+      objectReference: {fileID: 7607764764369143699}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -113908,7 +113957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: UnlockMusicTheme
+      value: StartMusicCutscene
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -114020,7 +114069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: NPC.NpcController, Assembly-CSharp
+      value: NpcMusicCutscene, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[9].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -114157,7 +114206,7 @@ PrefabInstance:
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 11400000, guid: 2327a68b1be7b4c13878f8ac3a216309, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -114312,7 +114361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[6].gadgetAction.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: MusicTheme, Assembly-CSharp
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1396771461992121879, guid: 073b8326375a243a39bece6768201d44, type: 3}
       propertyPath: dialogueActionMap.Array.data[7].gadgetAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -114572,8 +114621,16 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8346719951622539134, guid: 073b8326375a243a39bece6768201d44, type: 3}
       insertIndex: 3
       addedObject: {fileID: 4102170270932139216}
+    - targetCorrespondingSourceObject: {fileID: 6733723562716799307, guid: 073b8326375a243a39bece6768201d44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2137224124987383128}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 073b8326375a243a39bece6768201d44, type: 3}
+--- !u!95 &492154115773396842 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3562921569713899139, guid: 073b8326375a243a39bece6768201d44, type: 3}
+  m_PrefabInstance: {fileID: 4010017612635615721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1801080415274183996 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3411697571601587413, guid: 073b8326375a243a39bece6768201d44, type: 3}
@@ -114583,6 +114640,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1962972819307606240 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3214321798185681161, guid: 073b8326375a243a39bece6768201d44, type: 3}
+  m_PrefabInstance: {fileID: 4010017612635615721}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4987bce5442a4e843b56f23050c90731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!198 &3821341135992922579 stripped
@@ -114611,6 +114679,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4987bce5442a4e843b56f23050c90731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7697931743346364578 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6733723562716799307, guid: 073b8326375a243a39bece6768201d44, type: 3}
+  m_PrefabInstance: {fileID: 4010017612635615721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8317565807604700511 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4957231518977238198, guid: 073b8326375a243a39bece6768201d44, type: 3}

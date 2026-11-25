@@ -68,7 +68,7 @@ namespace Weather
             //turn on the behaviors
             foreach(var behavior in _behaviours)
             {
-                Debug.LogError($"[Weather: {Id}]: ENABLING {behavior}");
+                //Debug.LogError($"[Weather: {Id}]: ENABLING {behavior}");
                 behavior.enabled = true; 
             }
 

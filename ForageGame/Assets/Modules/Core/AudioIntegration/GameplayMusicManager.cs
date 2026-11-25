@@ -87,6 +87,14 @@ namespace AudioIntegration
             }
         }
 
+        public void AddCoolDownTime(MusicTheme theme)
+        {
+            if(unlockedThemes.TryGetValue(theme, out var b))
+            {
+                unlockedThemes[theme] = Time.time + theme.cooldownSeconds;
+            } 
+        }
+
         void Update()
         {
             switch (state)

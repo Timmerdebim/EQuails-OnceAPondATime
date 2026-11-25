@@ -43,7 +43,7 @@ namespace Weather
         //resets the state of the material, let's hope this actually works
         private void OnDisable()
         {
-            Debug.LogError("Thunder behavior DISABLED");
+            //Debug.LogError("Thunder behavior DISABLED");
             RestoreState(homeTreeMaterial,    _originalTree);
             RestoreState(homeFoliageMaterial, _originalFoliage);
         }
