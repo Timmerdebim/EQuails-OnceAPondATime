@@ -18,10 +18,10 @@ public class NpcMusicCutscene : MonoBehaviour
     [SerializeField] private float tempo = 1;
     private EventInstance instance;
 
-    [SerializeField] private NpcLocation npcLocation;
     [SerializeField] private Interactable npcInteractable; //disables this one
 
     [SerializeField] private Animator animator;
+    bool active = false;
 
 
     public void StartMusicCutscene()
@@ -34,25 +34,29 @@ public class NpcMusicCutscene : MonoBehaviour
         GameplayMusicManager.Instance.AddCoolDownTime(theme);
 
         instance = RuntimeManager.CreateInstance(theme.eventRef);
-        RuntimeManager.AttachInstanceToGameObject(instance, transform.gameObject);
+        //RuntimeManager.AttachInstanceToGameObject(instance, transform.gameObject);
         animator.SetTrigger("Custom 1");
         animator.speed = tempo;
 
         instance.start();
+        active = true;
     }
 
     //can also be called by the npc upon time passing
     public void EndMusicCutscene()
     {
         Debug.Log($"[NpcMusicCutscene]: Returning control to Npc!");
+        animator.ResetTrigger("Custom 1");
+        animator.SetTrigger("Interact");
         animator.speed = 1f;
         GameplayMusicManager.Instance.RestartScheduling();
         npcInteractable.EnableInteraction();
+        active = false;
     }
 
     void Update()
     {
-        if (!IsPlaying()) 
+        if (active && !IsPlaying()) 
         { 
             Debug.Log($"[NpcMusicCutscene]: Theme finished!");
             EndMusicCutscene();
