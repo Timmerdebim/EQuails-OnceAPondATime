@@ -152,7 +152,7 @@ Flags: FinaleBrackenGrabbingGuitar, FinaleMosswickPresent, FinaleLyriaPresent
         Five... Six... Seven...
 
         Stage: 4
-        Actions: face_right, start_cutscene_grimble_finale
+        Actions: face_right, start_cutscene_grimble_finale_on_close
         ...Eight.
 
 
@@ -160,14 +160,13 @@ Flags: FinaleBrackenGrabbingGuitar, FinaleMosswickPresent, FinaleLyriaPresent
 
 --- Stage
 Flags: GrimbleFinaleStarted
-Actions: disable_outside_grimbles_room_interactable
     
     Location: OutsideGrimblesRoom
-    BaseEmotion: Happy
+    BaseEmotion: Guitar
 
-        Stage: 0
-        Emotion: ExtraSad
-        Error! I should never say this line of dialogue!
+        Stage: repeat
+        Emotion: NeutralTalking
+        Can you... check on him?
 
 
 
