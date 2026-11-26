@@ -76,12 +76,15 @@ public class InGameCutsceneManager : MonoBehaviour
         Debug.Log($"[InGameCutsceneManager]: hiding all npcs via camera culling mask");
         Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("NPC"));
         Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("Player"));
+        Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
     }
     public void ShowAllNPCs()
     {
         Debug.Log($"[InGameCutsceneManager]: showing all npcs again via camera culling mask");
         Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("NPC");
         Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("Player");
+        Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("UI");
     }
+
     #endregion
 }

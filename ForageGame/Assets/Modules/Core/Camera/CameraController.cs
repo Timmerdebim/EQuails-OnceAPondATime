@@ -71,6 +71,8 @@ namespace TDK.CameraSystem
                 _orbitalPosition + _translationPosition,
                 _orbitalRotation
                 );
+            
+            _depthOfField.focusDistance.value = Vector3.Distance(transform.position, _targetTransform.position);
         }
 
         void LateUpdate()
