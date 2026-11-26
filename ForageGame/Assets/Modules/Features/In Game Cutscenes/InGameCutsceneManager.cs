@@ -21,6 +21,7 @@ public class InGameCutsceneManager : MonoBehaviour
     [SerializeField] private Transform _cameraTarget;
     [SerializeField] private CameraController _cameraController;
     [SerializeField] private TransitionScreenController _tsc;
+    [SerializeField] private Canvas[] _hideCanvases;
 
     [Header("Animation action values")]
     [SerializeField] private Vector3 caveChuckPosition;
@@ -77,6 +78,8 @@ public class InGameCutsceneManager : MonoBehaviour
         Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("NPC"));
         Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("Player"));
         Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
+        foreach (Canvas c in _hideCanvases)
+            c.enabled = false;
     }
     public void ShowAllNPCs()
     {
@@ -84,6 +87,8 @@ public class InGameCutsceneManager : MonoBehaviour
         Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("NPC");
         Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("Player");
         Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("UI");
+        foreach (Canvas c in _hideCanvases)
+            c.enabled = true;
     }
 
     #endregion
