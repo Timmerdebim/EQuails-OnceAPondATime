@@ -140,8 +140,8 @@ public class PlayerEffects : MonoBehaviour
     //IsOuterFoot only used for footstep particles
     private Vector3 GetParticlePositionOffset(ParticleOffsets offsets, bool isOuterFoot)
     {
-        return new Vector3(//moving offset
-                                    (Mathf.Abs(pc.ViewDirection.x) > 0 ? Mathf.Sign(pc.ViewDirection.x) * offsets.motionXoffset : 0) + 
+        return new Vector3(         //moving offset
+                                    (Mathf.Abs(pc.InputVector.x) > 0 ? pc.InputVector.x * offsets.motionXoffset : 0) + 
                                     //facing direction offset
                                     (pv.IsFacingLeft ? -offsets.viewXoffset : offsets.viewXoffset) + 
                                     //foot offset
@@ -149,7 +149,8 @@ public class PlayerEffects : MonoBehaviour
                     
                                     0, 
 
-                                    (Mathf.Abs(pc.ViewDirection.z) > 0 ? Mathf.Sign(pc.ViewDirection.z) * offsets.motionZoffset : 0));
+                                    //(moving offset z)
+                                    (Mathf.Abs(pc.InputVector.z) > 0 ? pc.InputVector.z * offsets.motionZoffset : 0));
     }
 
     #endregion
