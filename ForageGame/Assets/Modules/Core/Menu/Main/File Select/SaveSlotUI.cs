@@ -23,6 +23,7 @@ namespace Project.Menus.FileSelect
         [Header("Settings")]
         [SerializeField] private string _worldId;
         [SerializeField] private StoryFlagDatabase _storyFlagDatabase;
+        [SerializeField] private StoryFlag completeFlag;
 
 
         public void Refresh()
@@ -81,6 +82,7 @@ namespace Project.Menus.FileSelect
         {
             // Hardcode the number of story flags?
             int value = Mathf.RoundToInt(100 * flags.Count / _storyFlagDatabase.AsDictionary().Count);
+            if(flags.Contains(completeFlag.id)) value = 100;// snap to 100 if gaem done
             return $"{value}% Complete";
         }
     }
