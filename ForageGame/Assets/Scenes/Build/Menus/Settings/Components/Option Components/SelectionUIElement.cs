@@ -37,9 +37,9 @@ public class SelectionUIElement : MonoBehaviour
         {
             _currentOption = newOption;
             if(playSfx) RuntimeManager.PlayOneShot(onChangeSfx);
-            RefreshVisuals();
             OnChange.Invoke();
         }
+        RefreshVisuals();
     }
 
     public void LeftButtonPressed() => SetCurrentOption(_currentOption - 1, true);
