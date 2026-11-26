@@ -59,11 +59,28 @@ public class GameplayController : MonoBehaviour
         await AppController.Instance.ToMainMenu();
     }
 
+    [SerializeField] private Canvas _hideItAll;
+
     public async Task FinishGame()
     {
-        if (_state == State.Busy) return;
-        SetGameState(State.Busy);
-        await UnloadWorld();
+        // if (_state == State.Busy) return;
+        // SetGameState(State.Busy);
+        // await UnloadWorld();
+
+        _hideItAll.gameObject.SetActive(true);
+
+        Debug.Log("[Gameplay] Unloading World.");
+        RegionManager.Instance.DisableScanning();
+        AudioManager.Instance.StopAndReleaseAll();
+        // await _tsc.FadeOutAsync();
+        await AwaitPadding();
+        //StoryFlagManager.Instance.OnTimePassing(); //no, only when sleeping, not general unload
+        SaveManager.Instance.SaveWorld();
+        // await AwaitSaftey();
+        await SceneServices.UnloadScene(_worldScene);
+        await AwaitSaftey();
+        Player.Instance.ResetAnimator();
+        Debug.Log("[Gameplay] Unloaded World.");
         await AppController.Instance.ToCreditsSequence();
     }
 
@@ -168,12 +185,12 @@ public class GameplayController : MonoBehaviour
     {
         if (!_isCutsceneActive) return;
         _isCutsceneActive = false;
-        SetGameState(State.Playing);
         if (endGame)
         {
             await FinishGame();
             return;
         }
+        SetGameState(State.Playing);
         if (useTransitionScreen)
         {
             await AwaitPadding();
