@@ -9,7 +9,7 @@ public class TypewriterTextbox : MonoBehaviour
     [SerializeField] float typeDelay = 0.05f;
     [SerializeField] float clickSpeedMultiplication = 3f;
     [Tooltip("If  true, displays an underscore after the text to show that it's being typed")][SerializeField] bool underscore;
-    [SerializeField] AudioSource typingSound;
+    [SerializeField] GibberishSpeaker typingSound;
     [SerializeField] bool playOnStart = true;
 
     private const string clearText = "<alpha=#00>";
@@ -35,6 +35,10 @@ public class TypewriterTextbox : MonoBehaviour
     {
         textbox.text = "";
         var newText = new System.Text.StringBuilder();
+        if (typingSound != null)
+        {
+            typingSound.Speak(_message.Length); //is fire and forget
+        }
 
         for (int i = 1; i < _message.Length + 1; ++i)
         {
@@ -45,11 +49,6 @@ public class TypewriterTextbox : MonoBehaviour
             newText.Append(_message.Substring(i));
 
             textbox.text = newText.ToString();
-
-            if (typingSound != null)
-            {
-                typingSound.Play();
-            }
 
             float delay = Input.anyKey ? typeDelay / clickSpeedMultiplication : typeDelay;
             await System.Threading.Tasks.Task.Delay((int)(delay * 1000));

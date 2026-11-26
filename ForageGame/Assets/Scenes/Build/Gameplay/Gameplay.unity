@@ -711,6 +711,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3487560478146228756}
     m_Modifications:
+    - target: {fileID: 561970680150144763, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
+      propertyPath: typingSound
+      value: 
+      objectReference: {fileID: 159194389}
     - target: {fileID: 1383745768928084343, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
       propertyPath: m_Pivot.x
       value: 0.525
@@ -815,16 +819,78 @@ PrefabInstance:
       propertyPath: m_text
       value: The Mushroom Forest
       objectReference: {fileID: 0}
+    - target: {fileID: 8263528742098122821, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
+      propertyPath: typingSound
+      value: 
+      objectReference: {fileID: 159194388}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8484892216495518877, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 159194389}
+    - targetCorrespondingSourceObject: {fileID: 613065282173598685, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 159194388}
   m_SourcePrefab: {fileID: 100100000, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
 --- !u!224 &159194385 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6092951742403479866, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
   m_PrefabInstance: {fileID: 159194384}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &159194386 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 613065282173598685, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
+  m_PrefabInstance: {fileID: 159194384}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &159194387 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8484892216495518877, guid: 720cf90e51785f142bcd89764b6a9e53, type: 3}
+  m_PrefabInstance: {fileID: 159194384}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &159194388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159194386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38cc0094ffe264756945ed5c69dae9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 5c15e0a59404c40d38ba2ae140d060c7, type: 2}
+  speakerTransform: {fileID: 2105965133543820608}
+  DuckAllForDialogueSnapshot:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+--- !u!114 &159194389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159194387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38cc0094ffe264756945ed5c69dae9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 5c15e0a59404c40d38ba2ae140d060c7, type: 2}
+  speakerTransform: {fileID: 2105965133543820608}
+  DuckAllForDialogueSnapshot:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &165441449
 GameObject:
   m_ObjectHideFlags: 0
