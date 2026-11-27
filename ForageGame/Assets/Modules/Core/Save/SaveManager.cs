@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDK.SaveSystem
 {
@@ -12,6 +13,8 @@ namespace TDK.SaveSystem
         [Header("Auto Saving")]
         [SerializeField] private bool _useAutoSave = false;
         [SerializeField] private float _autoSaveTimeSeconds = 120f;
+
+        public UnityEvent onSaveWorld; //so anyone can get sneaky changes in before saving actually starts, mostly for finale cutscene for RUDE ppl who want to skip the music
 
         private string CurrentWorldId = "";
         private WorldSaveData CurrentWorldSaveData = new();
@@ -38,6 +41,8 @@ namespace TDK.SaveSystem
 
         public void SaveWorld()
         {
+            onSaveWorld?.Invoke();
+            
             if (CurrentWorldSaveData == null)
             {
                 Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");

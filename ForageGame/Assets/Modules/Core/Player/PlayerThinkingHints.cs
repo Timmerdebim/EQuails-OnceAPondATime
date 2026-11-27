@@ -38,6 +38,10 @@ public class PlayerThinkingHints : MonoBehaviour
     public SleepingHintDatabase sleepingHintDatabase;
     [SerializeField] private int sleepingHintDuration = 3000;
 
+    [Header("Grimble finale Hint")]
+    public string grimbleFinaleHint;
+    [SerializeField] private int grimbleFinaleHintDuration = 1000;
+
     public RecipeItem recipeToGiveOnClose;
 
     
@@ -91,6 +95,11 @@ public class PlayerThinkingHints : MonoBehaviour
     {
         int hintindex = UnityEngine.Random.Range(0, inventoryFullHints.Count);
         _ = ShowThought(inventoryFullHints[hintindex], inventoryFullHintDuration);
+    }
+
+    public void ShowGrimbleFinaleHint()
+    {
+        _ = ShowThought(grimbleFinaleHint, grimbleFinaleHintDuration);
     }
 
 

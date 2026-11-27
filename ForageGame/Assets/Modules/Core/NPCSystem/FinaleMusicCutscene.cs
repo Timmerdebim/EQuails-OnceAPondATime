@@ -7,6 +7,9 @@ using System.Runtime.InteropServices;
 using TDK.InteractionSystem;
 using UnityEngine;
 using NPC;
+using System.Collections;
+using TDK.PlayerSystem;
+using TDK.SaveSystem;
 
 /// <summary>
 /// JUST exists so the NPC head bopping is guaranteed to be in sync with the music
@@ -34,8 +37,19 @@ public class FinaleMusicCutscene : MonoBehaviour
     [SerializeField] private Interactable lyriaInteractable; //disables this one
 
     [SerializeField] private Animator lyriaAnimator;
+
+    [SerializeField] private StoryFlag halfwayFlag;
     bool active = false;
 
+    void OnEnable()
+    {
+        SaveManager.Instance.onSaveWorld.AddListener(SaveScumHack);
+    }
+
+    private void OnDisable()
+    {
+        SaveManager.Instance.onSaveWorld.RemoveListener(SaveScumHack);
+    }
 
     public void StartMusicCutscene()
     {
@@ -58,6 +72,7 @@ public class FinaleMusicCutscene : MonoBehaviour
         lyriaAnimator.speed = tempo;
 
         instance.start();
+        StartCoroutine(WaitForHalfway());
         active = true;
     }
     
@@ -111,9 +126,33 @@ public class FinaleMusicCutscene : MonoBehaviour
         EndMusicCutscene();
     }
 
+    public IEnumerator WaitForHalfway()
+        {
+            // Optional small delay so player can't instantly skip
+            yield return new WaitForSecondsRealtime(49f); //nice eyeballed number halfway through the song
+
+            Debug.Log("[FinaleMusicCutscene]: Music is halfway, giving the halfway flag now");
+            //give the flag, enabling stuff
+            StoryFlagManager.Instance.AddFlag(halfwayFlag);
+            //show player hint
+            Player.Instance.playerThinkingHints.ShowGrimbleFinaleHint();
+            
+        }
+
+    //called on save if active, so the player not soflocked
+    private void SaveScumHack()
+    {
+        if(active)
+        {
+            Debug.Log("[FinaleMusicCutscene]: Yeah fuck you too ig, skipping music on reload");
+            StoryFlagManager.Instance.AddFlag(halfwayFlag);
+        }
+    }
+
 
     void OnDestroy()
     {
+        if(active) StopCoroutine(WaitForHalfway());
         instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         instance.release();
     }
