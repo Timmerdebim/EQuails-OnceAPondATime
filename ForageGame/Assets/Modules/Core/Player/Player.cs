@@ -33,6 +33,7 @@ namespace TDK.PlayerSystem
 
         [Header("Player Data")]
         [SerializeField] public PlayerSaveData playerData;
+        [SerializeField] public Vector3 respawnPosition = new(0, 10.5f, 0); //default spawn position, gets overridden by save data or npc scenes (invisible walls)
         [Header("Energy Requirements")]
         [SerializeField] public float runEnergy = 10f; // this is energy per second
         [SerializeField] public float dashEnergy = 10f;
@@ -71,7 +72,7 @@ namespace TDK.PlayerSystem
         {
             if (_playerAnimator._animator.GetBool("isDead")) 
             {
-                playerData.spawnPosition = new(0, 10.5f, 0);
+                playerData.spawnPosition = respawnPosition;
                 playerController.transform.position = playerData.spawnPosition;
             }
             else playerData.spawnPosition = transform.position;

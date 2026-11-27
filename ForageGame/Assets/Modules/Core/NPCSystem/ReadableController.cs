@@ -706,7 +706,7 @@ namespace NPC
 
             textCtxSource = new CancellationTokenSource();
 
-            
+
             foreach (NpcSaveData npcSaveData in data.NPCs)
             {
                 if (npcSaveData.Guid == _guid)

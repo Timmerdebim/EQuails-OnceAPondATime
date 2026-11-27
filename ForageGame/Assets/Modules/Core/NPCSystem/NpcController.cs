@@ -9,6 +9,7 @@ using TDK.SaveSystem;
 using System;
 using AudioIntegration;
 using FMODUnity;
+using TDK.PlayerSystem;
 
 namespace NPC
 {
