@@ -506,8 +506,62 @@ Flags: MosswickHome
 
 
 
+--- Stage
+Flags: MosswickHome
+<RequireTimePassing>
+    Location: Log
+    BaseEmotion: Sitting
+
+        Stage: 0
+        Emotion: SittingHappyTalking
+        Oh, you're awake!
+
+        Stage: 1
+        Had a good nap, Duckie?
+
+        Stage: 2
+        Don't worry, you were only gone for a little bit.
+
+        Stage: 3
+        Us three just caught up with each other.
+
+        Stage: 4
+        Emotion: SittingNeutralTalking
+        It's... a nice distraction, let's say.
+
+        Stage: repeat
+        Emotion: SittingHappyTalking
+        Oh yeah, I think Mosswick wanted to speak with you.
 
 
+--- Stage
+Flags: GrimbleRejectedMosswick
+    Location: Log
+    BaseEmotion: Sitting
+
+        Stage: 0
+        Emotion: SittingNeutralTalking
+        Mosswick's left already? 
+
+        Stage: 1
+        So soon after we got him back here?
+
+        Stage: 2
+        Emotion: SittingHappyTalking
+        Well, must be something important then.
+
+        Stage: 3
+        Emotion: Sitting
+        ...
+
+        Stage: 4
+        Emotion: SittingNeutralTalking
+        Did he... go to see Grimble?
+
+
+        Stage: repeat
+        Emotion: SittingNeutralTalking
+        Did he... go to see Grimble?
 
 
 
