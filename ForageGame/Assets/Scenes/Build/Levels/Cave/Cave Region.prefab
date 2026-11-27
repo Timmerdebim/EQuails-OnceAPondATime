@@ -4731,13 +4731,14 @@ GameObject:
   m_Component:
   - component: {fileID: 7699684770522781200}
   - component: {fileID: 442964045560043567}
+  - component: {fileID: 2238266848909404646}
   m_Layer: 0
   m_Name: Colliders / ThinkingZones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7699684770522781200
 Transform:
   m_ObjectHideFlags: 0
@@ -4798,6 +4799,20 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _overlapCount: 0
+--- !u!114 &2238266848909404646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627909128179588363}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba961f757c5574d5a883b303066e2845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseRespawnPosition: {x: 0, y: 10.5, z: 0}
+  overrideRespawnPosition: {x: 192, y: 6.5, z: 241}
 --- !u!1 &1702832332961940045
 GameObject:
   m_ObjectHideFlags: 0
@@ -20316,6 +20331,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 2238266848909404646}
+          m_TargetAssemblyTypeName: PlayerRespawnPositionOverride, Assembly-CSharp
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - flag: {fileID: 11400000, guid: 15d87f2520ef74c25baa72dd2a114109, type: 2}
     action:
       m_PersistentCalls:
@@ -20323,6 +20350,18 @@ MonoBehaviour:
         - m_Target: {fileID: 1627909128179588363}
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2238266848909404646}
+          m_TargetAssemblyTypeName: PlayerRespawnPositionOverride, Assembly-CSharp
+          m_MethodName: set_enabled
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -20347,6 +20386,46 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 2238266848909404646}
+          m_TargetAssemblyTypeName: PlayerRespawnPositionOverride, Assembly-CSharp
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - flag: {fileID: 11400000, guid: ab12b4be72b9f4aa888e33ad6e3efb4b, type: 2}
+    action:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1627909128179588363}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 2238266848909404646}
+          m_TargetAssemblyTypeName: PlayerRespawnPositionOverride, Assembly-CSharp
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
           m_CallState: 2
   - flag: {fileID: 11400000, guid: e80f56095503746edbfdf8597580889b, type: 2}
     action:
@@ -28052,13 +28131,14 @@ GameObject:
   m_Component:
   - component: {fileID: 3709048237288074405}
   - component: {fileID: 5738408703876616927}
+  - component: {fileID: 8278750631087565290}
   m_Layer: 0
   m_Name: Colliders / ThinkingZones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3709048237288074405
 Transform:
   m_ObjectHideFlags: 0
@@ -28120,6 +28200,20 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _overlapCount: 0
+--- !u!114 &8278750631087565290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316554395243371424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba961f757c5574d5a883b303066e2845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseRespawnPosition: {x: 0, y: 10.5, z: 0}
+  overrideRespawnPosition: {x: 185, y: 7.3, z: 220}
 --- !u!1 &8324212317595344312
 GameObject:
   m_ObjectHideFlags: 0
